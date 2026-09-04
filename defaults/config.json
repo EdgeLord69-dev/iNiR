@@ -1178,9 +1178,6 @@
             "backdropBlur": 0
         }
     },
-    "profile": {
-        "avatarPath": ""
-    },
     "hacks": {
         "arbitraryRaceConditionDelay": 20
     },

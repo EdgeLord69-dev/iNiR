@@ -23,6 +23,7 @@ ContentPage {
     property bool isIiActive: Config.options?.panelFamily !== "waffle"
 
     property string activeSection: "general"
+    property string pendingProfileAvatarPath: ""
 
     function activateSettingsSearchSection(section: string): bool {
         const normalized = String(section ?? "").trim().toLowerCase()
@@ -39,6 +40,20 @@ ContentPage {
             return false
         root.activeSection = target
         return true
+    }
+
+    function openAccountSettings(): void {
+        AppLauncher.launch("manageUser")
+    }
+
+    Process {
+        id: setProfileAvatarProcess
+        command: [Quickshell.shellPath("scripts/accounts/set-avatar.sh"), root.pendingProfileAvatarPath]
+        onExited: exitCode => {
+            if (exitCode === 0)
+                Directories.userAvatarRevision++
+            root.pendingProfileAvatarPath = ""
+        }
     }
 
     SettingsTaskNavigator {
@@ -437,9 +452,7 @@ ContentPage {
 
                     StyledText {
                         Layout.fillWidth: true
-                        text: (Config.options?.profile?.avatarPath ?? "").length > 0
-                            ? Directories.shortHomePath(Config.options.profile.avatarPath)
-                            : Translation.tr("Default")
+                        text: Translation.tr("Manage my account")
                         font.pixelSize: Appearance.font.pixelSize.small
                         color: Appearance.colors.colSubtext
                         elide: Text.ElideMiddle
@@ -453,10 +466,9 @@ ContentPage {
                     }
 
                     RippleButtonWithIcon {
-                        visible: (Config.options?.profile?.avatarPath ?? "").length > 0
-                        materialIcon: "restart_alt"
-                        mainText: Translation.tr("Reset")
-                        onClicked: Config.setNestedValue("profile.avatarPath", "")
+                        materialIcon: "manage_accounts"
+                        mainText: Translation.tr("Manage my account")
+                        onClicked: root.openAccountSettings()
                     }
                 }
 
@@ -468,8 +480,10 @@ ContentPage {
                         Translation.tr("Images") + " (*.png *.jpg *.jpeg *.webp *.bmp *.avif)",
                         Translation.tr("All files") + " (*)"
                     ]
-                    onAccepted: Config.setNestedValue("profile.avatarPath",
-                        FileUtils.trimFileProtocol(String(selectedFile)))
+                    onAccepted: {
+                        root.pendingProfileAvatarPath = FileUtils.trimFileProtocol(String(selectedFile))
+                        setProfileAvatarProcess.running = true
+                    }
                 }
 
                 SettingsNativeDialogGuard {

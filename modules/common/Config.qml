@@ -3413,12 +3413,6 @@ Singleton {
                 }
             }
 
-            property JsonObject profile: JsonObject {
-                // Optional shell-wide avatar override. Empty keeps the existing
-                // AccountsService / ~/.face fallback chain intact.
-                property string avatarPath: ""
-            }
-
             property JsonObject hacks: JsonObject {
                 property int arbitraryRaceConditionDelay: 20 // milliseconds
             }
