@@ -91,40 +91,16 @@ Item { // Bar content region
     }
     readonly property bool taskbarEnabled: Config.options?.bar?.modules?.taskbar ?? false
 
-    function _moduleBudget(id, level) {
-        if (level >= 1 && (id === "activeWindow" || id === "tray" || id === "utilButtons")) return 0
-        if (level >= 2 && (id === "media" || id === "battery")) return 0
-        const scale = Appearance.fontSizeScale
-        const widths = {
-            "leftSidebarButton": 44, "rightSidebarButton": 44,
-            "activeWindow": 260, "resources": 185, "media": 190,
-            "workspaces": 115, "clock": 135, "utilButtons": 150,
-            "battery": 80, "tray": 180, "timer": 44,
-            "shellUpdate": 44, "weather": 125,
-            "spacer": Math.max(24, root._spacerMinimumWidth),
-        }
-        return (widths[id] ?? 64) * scale
-    }
-    function _zoneBudget(ids, level) {
-        let total = 0
-        for (let i = 0; i < ids.length; ++i)
-            total += root._moduleBudget(ids[i], level)
-        return total
-    }
-    function _layoutBudget(level) {
-        const left = root._zoneBudget(root._leftIds, level) + root._zoneBudget(root._centerLeftIds, level)
-        const right = root._zoneBudget(root._rightIds, level) + root._zoneBudget(root._centerRightIds, level)
-        const center = root._zoneBudget(root._centerIds, level)
-        return center + Math.max(left, right) * 2 + root.hostGap * 4
-    }
-    readonly property real regularLayoutBudget: Math.max(
-        Appearance.sizes.barShortenScreenWidthThreshold, root._layoutBudget(0))
-    readonly property real compactLayoutBudget: Math.max(
-        Appearance.sizes.barHellaShortenScreenWidthThreshold, root._layoutBudget(1))
+    // Compact mode is a physical-output fallback, not a response to where the
+    // user arranged modules. The host-compression path below already prevents
+    // overlap when a custom asymmetric layout or flexible spacer puts more
+    // demand on one side. Using an estimated symmetric layout budget here made
+    // rearranging perfectly valid 1080p layouts silently switch compact mode,
+    // which intentionally hides the tray, quick actions and active window.
     property real useShortenedForm: {
         const width = screen?.width ?? 1920
-        if (width < root.compactLayoutBudget) return 2
-        if (width < root.regularLayoutBudget) return 1
+        if (width <= Appearance.sizes.barHellaShortenScreenWidthThreshold) return 2
+        if (width <= Appearance.sizes.barShortenScreenWidthThreshold) return 1
         return 0
     }
     readonly property int baseCenterSideModuleWidth: (useShortenedForm == 2) ? Appearance.sizes.barCenterSideModuleWidthHellaShortened : (useShortenedForm == 1) ? Appearance.sizes.barCenterSideModuleWidthShortened : Appearance.sizes.barCenterSideModuleWidth
@@ -461,9 +437,22 @@ Item { // Bar content region
     // define order/zone. Falls back to the classic layout until migrated.
     readonly property bool _layoutMigrated: Config.options?.bar?.layout?.migrated === true
     readonly property real _spacerMinimumWidth: Math.max(0, Config.options?.bar?.layout?.spacerWidth ?? 0) * Appearance.fontSizeScale
+    readonly property bool _layoutContainsActiveWindow: ["left", "centerLeft", "center", "centerRight", "right"]
+        .some(zoneName => {
+            const ids = Config.options?.bar?.layout?.[zoneName] ?? []
+            return ids.includes("activeWindow")
+        })
     function _zone(name, fallback) {
         const a = Config.options?.bar?.layout?.[name]
-        return (root._layoutMigrated && a && a.length >= 0) ? a : fallback
+        const ids = (root._layoutMigrated && a && a.length >= 0) ? Array.from(a) : Array.from(fallback)
+        // `taskbar` used to be exposed as a relocatable id even though the
+        // renderer never owned a standalone taskbar component: taskbar replaces
+        // the activeWindow payload. Keep old persisted layouts usable by treating
+        // a lone legacy `taskbar` id as the activeWindow slot and otherwise
+        // dropping the duplicate ghost id when a real activeWindow slot exists.
+        return ids
+            .map(id => id === "taskbar" && !root._layoutContainsActiveWindow ? "activeWindow" : id)
+            .filter(id => id !== "taskbar")
     }
     readonly property var _leftIds:        root._zone("left",        ["leftSidebarButton", "activeWindow"])
     readonly property var _centerLeftIds:  root._zone("centerLeft",  ["resources", "media"])
@@ -529,16 +518,20 @@ Item { // Bar content region
     readonly property string _spacerMode: Config.options?.bar?.layout?.spacerMode ?? "auto"
     function _fillWidth(id, zone) {
         if (id === "spacer") {
+            // Centre groups are content-sized by contract. Even an explicit
+            // "Always elastic" spacer cannot consume slack there because there
+            // is no slack owner; making the Loader fill created circular/unstable
+            // pill geometry. Keep centre spacers fixed/minimum-width instead.
+            if (!root._fillSlot(zone)) return false
             // Islands: edge sections size to content so the island can wrap
             // them — a stretching spacer would inflate the island to the whole
             // edge section. Always degrade to a fixed gap there.
-            if (root.isIslands && root._fillSlot(zone)) return false
+            if (root.isIslands) return false
             // "auto": only stretch where the layout actually has slack (edge
-            // zones); inside content-sized centre pills a greedy spacer fights
-            // the pill sizing and breaks the look — fall back to a fixed gap.
+            // zones). Fixed keeps the configured minimum width; fill and auto
+            // both consume available edge-zone slack.
             if (root._spacerMode === "fixed") return false
-            if (root._spacerMode === "fill") return true
-            return root._fillSlot(zone)
+            return true
         }
         // Islands: edge sections size to content so the island can wrap them —
         // activeWindow adopts its clamped intrinsic width instead of filling.
