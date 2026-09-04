@@ -4,6 +4,7 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import Quickshell
 import Quickshell.Io
+import Quickshell.Widgets
 import qs.services
 import qs.modules.common
 import qs.modules.common.widgets
@@ -22,6 +23,23 @@ ContentPage {
     property bool isIiActive: Config.options?.panelFamily !== "waffle"
 
     property string activeSection: "general"
+
+    function activateSettingsSearchSection(section: string): bool {
+        const normalized = String(section ?? "").trim().toLowerCase()
+        const aliases = ({
+            general: "general",
+            left: "left",
+            right: "right",
+            media: "media",
+            open: "open",
+            opening: "open"
+        })
+        const target = aliases[normalized]
+        if (!target)
+            return false
+        root.activeSection = target
+        return true
+    }
 
     SettingsTaskNavigator {
         icon: "side_navigation"
@@ -353,6 +371,110 @@ ContentPage {
                         { displayName: Translation.tr("Profile card"), icon: "account_box", value: "profile" },
                         { displayName: Translation.tr("Classic"), icon: "view_agenda", value: "classic" }
                     ]
+                }
+
+                ContentSubsectionLabel {
+                    visible: (Config.options?.sidebar?.right?.headerStyle ?? "profile") === "profile"
+                    text: Translation.tr("Profile picture")
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 8
+                    visible: (Config.options?.sidebar?.right?.headerStyle ?? "profile") === "profile"
+
+                    Rectangle {
+                        Layout.preferredWidth: 40
+                        Layout.preferredHeight: 40
+                        radius: width / 2
+                        color: Appearance.colors.colLayer2
+                        border.width: 1
+                        border.color: Appearance.colors.colPrimary
+
+                        ClippingRectangle {
+                            anchors.centerIn: parent
+                            width: parent.width - 4
+                            height: parent.height - 4
+                            radius: width / 2
+                            color: "transparent"
+
+                            Image {
+                                id: profileAvatarPreview
+                                anchors.fill: parent
+                                source: profileAvatarResolver.resolvedSource
+                                fillMode: Image.PreserveAspectCrop
+                                asynchronous: true
+                                cache: true
+                                smooth: true
+                                visible: status === Image.Ready
+                            }
+                        }
+
+                        QtObject {
+                            id: profileAvatarResolver
+                            property int avatarIndex: 0
+                            readonly property string resolvedSource: Directories.avatarSourceAt(avatarIndex)
+                            readonly property string primaryWatch: Directories.userAvatarSourcePrimary
+                            onPrimaryWatchChanged: avatarIndex = 0
+                            readonly property int imgStatus: profileAvatarPreview.status
+                            onImgStatusChanged: {
+                                if (imgStatus !== Image.Error)
+                                    return
+                                const next = avatarIndex + 1
+                                if (next < Directories.userAvatarPaths.length)
+                                    avatarIndex = next
+                            }
+                        }
+
+                        MaterialSymbol {
+                            anchors.centerIn: parent
+                            visible: profileAvatarPreview.status !== Image.Ready
+                            text: "person"
+                            iconSize: 20
+                            color: Appearance.colors.colPrimary
+                        }
+                    }
+
+                    StyledText {
+                        Layout.fillWidth: true
+                        text: (Config.options?.profile?.avatarPath ?? "").length > 0
+                            ? Directories.shortHomePath(Config.options.profile.avatarPath)
+                            : Translation.tr("Default")
+                        font.pixelSize: Appearance.font.pixelSize.small
+                        color: Appearance.colors.colSubtext
+                        elide: Text.ElideMiddle
+                        wrapMode: Text.NoWrap
+                    }
+
+                    RippleButtonWithIcon {
+                        materialIcon: "folder_open"
+                        mainText: Translation.tr("Choose")
+                        onClicked: profileAvatarDialog.open()
+                    }
+
+                    RippleButtonWithIcon {
+                        visible: (Config.options?.profile?.avatarPath ?? "").length > 0
+                        materialIcon: "restart_alt"
+                        mainText: Translation.tr("Reset")
+                        onClicked: Config.setNestedValue("profile.avatarPath", "")
+                    }
+                }
+
+                FileDialog {
+                    id: profileAvatarDialog
+                    title: Translation.tr("Profile picture")
+                    fileMode: FileDialog.OpenFile
+                    nameFilters: [
+                        Translation.tr("Images") + " (*.png *.jpg *.jpeg *.webp *.bmp *.avif)",
+                        Translation.tr("All files") + " (*)"
+                    ]
+                    onAccepted: Config.setNestedValue("profile.avatarPath",
+                        FileUtils.trimFileProtocol(String(selectedFile)))
+                }
+
+                SettingsNativeDialogGuard {
+                    dialog: profileAvatarDialog
+                    dialogKey: "profile-avatar"
                 }
 
                 ContentSubsectionLabel {

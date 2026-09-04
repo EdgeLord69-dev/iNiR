@@ -48,11 +48,13 @@ Singleton {
     property string userAvatarPathAccountsService: FileUtils.trimFileProtocol(`/var/lib/AccountsService/icons/${SystemInfo.username}`)
     property string userAvatarPathRicersAndWeirdSystems: `${Directories.homePath}/.face`
     property string userAvatarPathRicersAndWeirdSystems2: `${Directories.homePath}/.face.icon`
+    property string userAvatarPathCustom: String(Config.options?.profile?.avatarPath ?? "").trim()
     readonly property var userAvatarPaths: [
+        userAvatarPathCustom,
         userAvatarPathAccountsService,
         userAvatarPathRicersAndWeirdSystems,
         userAvatarPathRicersAndWeirdSystems2
-    ]
+    ].filter(path => String(path ?? "").trim().length > 0)
     readonly property string userAvatarSourcePrimary: avatarSourceAt(0)
     property string coverArt: `${Directories.cachePath}/media/coverart`
     property string tempImages: "/tmp/quickshell/media/images"

@@ -1224,6 +1224,13 @@ Singleton {
         {
             pageIndex: 23, pageName: root.pages[23].name,
             section: Translation.tr("Sidebars"),
+            label: Translation.tr("Profile picture"),
+            description: Translation.tr("Profile card with avatar and banner, or the classic uptime row"),
+            keywords: ["profile", "avatar", "picture", "photo", "user", "account", "sidebar", "settings"]
+        },
+        {
+            pageIndex: 23, pageName: root.pages[23].name,
+            section: Translation.tr("Sidebars"),
             label: Translation.tr("Header banner"),
             description: Translation.tr("Live wallpaper, custom media, a solid plate, or no banner at all"),
             keywords: ["sidebar", "header", "banner", "wallpaper", "video", "gif", "image", "solid", "custom", "picture"]
