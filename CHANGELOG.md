@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Fresh-install presets** now combine curated desktop compositions, five coherent visual styles and three graphics budgets, including a low-end mode that keeps the shell styling while disabling live blur.
+
 ### Changed
 
 - **Media From bar** now opens from the actual M3 or Pill bar surface instead of falling back to the shared bottom overlay; Stock, Islands, Scenic, Frame and vertical bars keep their existing anchored path.

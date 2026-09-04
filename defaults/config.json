@@ -72,7 +72,7 @@
             "glass": true,
             "glassBlur": 1
         },
-        "iiMotionProfile": "classic",
+        "iiMotionProfile": "contextual",
         "regalia": {
             "glass": true,
             "glassBlur": 0.72,
@@ -926,7 +926,7 @@
         "borderless": true,
         "bottom": false,
         "cornerStyle": 1,
-        "appearanceStyle": "classic",
+        "appearanceStyle": "m3",
         "customRounding": -1,
         "floatStyleShadow": true,
         "height": 40,
@@ -1115,7 +1115,7 @@
         "separatePinnedFromRunning": true,
         "enableDragReorder": true,
         "notificationBadge": true,
-        "style": "panel"
+        "style": "m3"
     },
     "controlPanel": {
         "keepLoaded": false,
@@ -2069,7 +2069,9 @@
     "welcomeWizard": {
         "completed": false,
         "skipped": false,
-        "profile": "balanced"
+        "profile": "balanced",
+        "stylePreset": "material-flow",
+        "performancePreset": "balanced"
     },
     "waffles": {
         "settings": {

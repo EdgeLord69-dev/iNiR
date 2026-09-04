@@ -317,6 +317,11 @@ wizard = (root / "welcome.qml").read_text(encoding="utf-8")
 checks = {
     "settings rail": config["settingsUi"]["overlayStyle"] == "rail",
     "balanced profile": config["welcomeWizard"]["profile"] == "balanced",
+    "fresh Material Flow preset": config["welcomeWizard"]["stylePreset"] == "material-flow",
+    "fresh balanced graphics budget": config["welcomeWizard"]["performancePreset"] == "balanced",
+    "fresh contextual motion": config["appearance"]["iiMotionProfile"] == "contextual",
+    "fresh M3 bar": config["bar"]["appearanceStyle"] == "m3",
+    "fresh M3 dock": config["dock"]["style"] == "m3",
     "iNiR Alt+Tab opt-in": config["modules"]["altSwitcher"] is False,
     "dock enabled": config["dock"]["enable"] is True,
     "dock pinned": config["dock"]["pinnedOnStartup"] is True,
@@ -334,6 +339,13 @@ if failed:
 
 schema_checks = {
     "schema settings rail": 'property string overlayStyle: "rail"' in schema,
+    "schema contextual motion": 'property string iiMotionProfile: "contextual"' in schema,
+    "schema M3 bar": 'property string appearanceStyle: "m3"' in schema,
+    "schema M3 dock": 'property string style: "m3"' in schema.split(
+        "property JsonObject dock: JsonObject {", 1)[1].split(
+        "property JsonObject controlPanel: JsonObject {", 1)[0],
+    "schema fresh style preset": 'property string stylePreset: "material-flow"' in schema,
+    "schema fresh graphics budget": 'property string performancePreset: "balanced"' in schema,
     "schema iNiR Alt+Tab opt-in": "property bool altSwitcher: false" in schema.split(
         "property JsonObject modules: JsonObject {", 1)[1].split(
         "property JsonObject appearance: JsonObject {", 1)[0],
@@ -350,6 +362,14 @@ schema_checks = {
         and "property bool enable: true" in schema[schema.index("property JsonObject wallhaven: JsonObject {"):],
     "schema news tab": "property JsonObject news: JsonObject {\n                    property bool enable: true" in schema,
     "wizard applies initial profile": "root.applyProfile(root.selectedProfile)" in wizard,
+    "wizard applies initial style": "root.applyStylePreset(root.selectedStylePreset)" in wizard,
+    "wizard applies initial graphics budget": "root.applyPerformancePreset(root.selectedPerformancePreset)" in wizard,
+    "wizard style catalog": all(preset in wizard for preset in [
+        'id: "material-flow"', 'id: "expressive"', 'id: "aurora-islands"', 'id: "inir-terminal"', 'id: "zzz-street"'
+    ]),
+    "wizard graphics catalog": all(preset in wizard for preset in [
+        'id: "minimum"', 'id: "efficient"', 'id: "balanced"'
+    ]),
     "wizard dock pinned": '"dock.pinnedOnStartup": true' in wizard,
     "wizard dock not hover-only": '"dock.hoverToReveal": false' in wizard,
     "wizard right sidebar full height": '"sidebar.collapseEmptyNotifications": false' in wizard,

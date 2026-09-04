@@ -1017,7 +1017,7 @@ Singleton {
                 property string iconTheme: "WhiteSur-dark" // System icon theme (tray, GTK/Qt apps)
                 property string dockIconTheme: "" // Dock icon theme (overrides system for dock only)
                 property real shellScale: 1.0 // Legacy compatibility key. Launcher keeps QT_SCALE_FACTOR=1; use appearance.typography.sizeScale.
-                property string iiMotionProfile: "classic" // "classic" | "contextual"
+                property string iiMotionProfile: "contextual" // "classic" | "contextual"
                 property JsonObject desaturation: JsonObject {
                     property bool enable: false
                     property real saturation: -0.7  // -1 to 0 (0 = normal, -1 = full grayscale)
@@ -2197,7 +2197,7 @@ Singleton {
                 property int height: 40 // Bar content height in px (pre-scale). 0 keeps the theme default (40). Range: 24–80.
                 property real opacity: 1.0 // Background opacity (0–1). Lets you make the bar translucent without changing global style.
                 property int cornerStyle: 1 // 0: Hug | 1: Float | 2: Plain rectangle
-                property string appearanceStyle: "classic" // "classic" | "islands" (separate floating groups; works in both horizontal and vertical bar) | "scenic" (gradient scrim) | "frame" (outlined floating frame) | "m3" (no bar surface; each section is a colLayer0 capsule and each module wears a Material 3 tonal container) | "pill" (morphing centre island, see bar.pill). Horizontal bar only, except islands.
+                property string appearanceStyle: "m3" // "classic" | "islands" (separate floating groups; works in both horizontal and vertical bar) | "scenic" (gradient scrim) | "frame" (outlined floating frame) | "m3" (no bar surface; each section is a colLayer0 capsule and each module wears a Material 3 tonal container) | "pill" (morphing centre island, see bar.pill). Horizontal bar only, except islands.
                 property int customRounding: -1 // -1: use global theme rounding | 0+: override bar rounding (px)
                 property bool floatStyleShadow: true // Show shadow behind bar when cornerStyle == 1 (Float)
                 property bool borderless: true // true for no grouping of items
@@ -2421,7 +2421,7 @@ Singleton {
             }
 
             property JsonObject dock: JsonObject {
-                property string style: "panel" // "panel" | "pill" | "macos" | "island" | "m3"
+                property string style: "m3" // "panel" | "pill" | "macos" | "island" | "m3"
                 property bool cardStyle: false
                 property bool enable: true
                 property bool monochromeIcons: true
@@ -3446,6 +3446,8 @@ Singleton {
                 property bool completed: false
                 property bool skipped: false
                 property string profile: "balanced"
+                property string stylePreset: "material-flow"
+                property string performancePreset: "balanced"
             }
 
             property JsonObject workspaceStrip: JsonObject {
