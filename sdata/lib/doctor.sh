@@ -370,7 +370,15 @@ check_repo_checkout_state() {
                 ;;
             4)
                 doctor_fail "Repo checkout diverged from origin/${tracked_branch}"
-                echo -e "    ${STY_FAINT}If that rewrite was intentional, realign manually before updating${STY_RST}"
+                if declare -F is_upstream_rewrite_divergence >/dev/null 2>&1 \
+                        && is_upstream_rewrite_divergence "$tracked_branch"; then
+                    echo -e "    ${STY_FAINT}Git recorded an upstream force-push; a clean checkout can be recovered automatically.${STY_RST}"
+                fi
+                if declare -F show_repo_realign_guidance >/dev/null 2>&1; then
+                    show_repo_realign_guidance "$tracked_branch"
+                else
+                    echo -e "    ${STY_FAINT}Run: inir update --realign${STY_RST}"
+                fi
                 ;;
         esac
     else
@@ -1523,6 +1531,9 @@ ZEOF
     
     if [[ $legacy_malloc_repaired -gt 0 ]]; then
         doctor_fix "Removed legacy global Quickshell allocator tuning"
+        if [[ "${INIR_LEGACY_MALLOC_ENV_CURRENT_PROCESS:-0}" -gt 0 ]]; then
+            tui_info "This Doctor process inherited the retired allocator values too; the file/user-manager sources are now cleaned for future launches."
+        fi
     fi
 
     if [[ $fixed -gt 0 ]]; then

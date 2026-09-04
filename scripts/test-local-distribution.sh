@@ -143,6 +143,165 @@ if ! grep -Fq 'inir_user_service_is_masked && return 2' "$runtime_root/setup" \
     exit 1
 fi
 
+step "maintenance help is non-destructive"
+setup_update_help="$($runtime_root/setup update --help)"
+inir_update_help="$($runtime_root/scripts/inir update --help)"
+if ! grep -Fq -- '--realign' <<< "$setup_update_help" \
+        || ! grep -Fq -- '--realign' <<< "$inir_update_help" \
+        || grep -Fq 'Checking for updates' <<< "$setup_update_help" \
+        || grep -Fq 'Checking for updates' <<< "$inir_update_help"; then
+    printf 'FAIL: update --help can enter the maintenance workflow or hides recovery options\n' >&2
+    exit 1
+fi
+
+step "legacy allocator repair"
+allocator_root="$(mktemp -d)"
+mkdir -p "$allocator_root/xdg/environment.d" "$allocator_root/bin"
+cat > "$allocator_root/bin/systemctl" <<'SH'
+#!/usr/bin/env bash
+set -euo pipefail
+case "${1:-} ${2:-}" in
+    "--user show-environment")
+        cat "${INIR_TEST_MANAGER_ENV:?}"
+        ;;
+    "--user unset-environment")
+        key="${3:?}"
+        grep -v "^${key}=" "${INIR_TEST_MANAGER_ENV:?}" > "${INIR_TEST_MANAGER_ENV}.tmp" || true
+        mv "${INIR_TEST_MANAGER_ENV}.tmp" "${INIR_TEST_MANAGER_ENV}"
+        ;;
+    *) exit 1 ;;
+esac
+SH
+chmod +x "$allocator_root/bin/systemctl"
+cat > "$allocator_root/xdg/environment.d/quickshell-mem.conf" <<'EOF'
+# Quickshell/iNiR memory optimization
+# Prevents glibc malloc arenas from retaining freed wallpaper textures.
+# See: scripts/quickshell-env.sh for details.
+MALLOC_ARENA_MAX=2
+MALLOC_MMAP_THRESHOLD_=131072
+EOF
+printf 'MALLOC_ARENA_MAX=2\nMALLOC_MMAP_THRESHOLD_=131072\n' > "$allocator_root/manager-env"
+if ! (
+    export XDG_CONFIG_HOME="$allocator_root/xdg"
+    export PATH="$allocator_root/bin:$PATH"
+    export INIR_TEST_MANAGER_ENV="$allocator_root/manager-env"
+    export MALLOC_ARENA_MAX=2 MALLOC_MMAP_THRESHOLD_=131072
+    source "$runtime_root/sdata/lib/functions.sh"
+    repair_legacy_quickshell_malloc_environment
+    [[ ! -e "$allocator_root/xdg/environment.d/quickshell-mem.conf" ]]
+    [[ -z "${MALLOC_ARENA_MAX:-}" && -z "${MALLOC_MMAP_THRESHOLD_:-}" ]]
+    [[ ! -s "$allocator_root/manager-env" ]]
+    [[ "${INIR_LEGACY_MALLOC_ENV_REPAIRED:-0}" -ge 5 ]]
+); then
+    printf 'FAIL: legacy Quickshell allocator repair does not clean file, process and user-manager state\n' >&2
+    rm -rf "$allocator_root"
+    exit 1
+fi
+cat > "$allocator_root/xdg/environment.d/quickshell-mem.conf" <<'EOF'
+MALLOC_ARENA_MAX=8
+MALLOC_MMAP_THRESHOLD_=262144
+EOF
+cp "$allocator_root/xdg/environment.d/quickshell-mem.conf" "$allocator_root/manager-env"
+allocator_before="$(sha256sum "$allocator_root/xdg/environment.d/quickshell-mem.conf" | cut -d' ' -f1)"
+if ! (
+    export XDG_CONFIG_HOME="$allocator_root/xdg"
+    export PATH="$allocator_root/bin:$PATH"
+    export INIR_TEST_MANAGER_ENV="$allocator_root/manager-env"
+    export MALLOC_ARENA_MAX=8 MALLOC_MMAP_THRESHOLD_=262144
+    source "$runtime_root/sdata/lib/functions.sh"
+    repair_legacy_quickshell_malloc_environment
+    [[ "${INIR_LEGACY_MALLOC_ENV_REPAIRED:-0}" -eq 0 ]]
+    [[ "${MALLOC_ARENA_MAX:-}" == 8 && "${MALLOC_MMAP_THRESHOLD_:-}" == 262144 ]]
+); then
+    printf 'FAIL: allocator repair modified custom user allocator values\n' >&2
+    rm -rf "$allocator_root"
+    exit 1
+fi
+allocator_after="$(sha256sum "$allocator_root/xdg/environment.d/quickshell-mem.conf" | cut -d' ' -f1)"
+if [[ "$allocator_before" != "$allocator_after" ]]; then
+    printf 'FAIL: allocator repair rewrote custom environment.d values\n' >&2
+    rm -rf "$allocator_root"
+    exit 1
+fi
+rm -rf "$allocator_root"
+
+step "rewritten remote recovery"
+rewrite_root="$(mktemp -d)"
+remote_repo="$rewrite_root/origin.git"
+seed_repo="$rewrite_root/seed"
+clean_repo="$rewrite_root/clean"
+local_repo="$rewrite_root/local"
+git -c init.defaultBranch=main init --bare -q "$remote_repo"
+git -c init.defaultBranch=main init -q "$seed_repo"
+git -C "$seed_repo" config user.email test@inir.invalid
+git -C "$seed_repo" config user.name 'iNiR test'
+printf 'A\n' > "$seed_repo/history.txt"
+git -C "$seed_repo" add history.txt
+git -C "$seed_repo" commit -qm A
+git -C "$seed_repo" remote add origin "$remote_repo"
+git -C "$seed_repo" push -qu origin main
+printf 'B\n' >> "$seed_repo/history.txt"
+git -C "$seed_repo" commit -qam B
+old_published_tip="$(git -C "$seed_repo" rev-parse HEAD)"
+git -C "$seed_repo" push -qu origin main
+git clone -q "$remote_repo" "$clean_repo"
+git clone -q "$remote_repo" "$local_repo"
+git -C "$local_repo" config user.email test@inir.invalid
+git -C "$local_repo" config user.name 'iNiR test'
+printf 'local\n' >> "$local_repo/history.txt"
+git -C "$local_repo" commit -qam local
+local_tip="$(git -C "$local_repo" rev-parse HEAD)"
+git -C "$seed_repo" reset -q --hard HEAD~1
+printf 'C\n' >> "$seed_repo/history.txt"
+git -C "$seed_repo" commit -qam C
+git -C "$seed_repo" push -q --force origin main
+git -C "$clean_repo" fetch -q origin
+git -C "$local_repo" fetch -q origin
+if ! (
+    export XDG_CONFIG_HOME="$rewrite_root/xdg-clean"
+    export XDG_STATE_HOME="$rewrite_root/state-clean"
+    REPO_ROOT="$clean_repo"
+    source "$runtime_root/sdata/lib/snapshots.sh"
+    is_upstream_rewrite_divergence main
+    realign_repo_to_remote main
+    [[ "$(git -C "$clean_repo" rev-parse HEAD)" == "$(git -C "$clean_repo" rev-parse origin/main)" ]]
+    [[ -n "${INIR_REPO_RECOVERY_REF:-}" ]]
+    [[ "$(git -C "$clean_repo" rev-parse "$INIR_REPO_RECOVERY_REF")" == "$old_published_tip" ]]
+); then
+    printf 'FAIL: clean checkout cannot recover safely from a recorded upstream rewrite\n' >&2
+    rm -rf "$rewrite_root"
+    exit 1
+fi
+if (
+    export XDG_CONFIG_HOME="$rewrite_root/xdg-local"
+    export XDG_STATE_HOME="$rewrite_root/state-local"
+    REPO_ROOT="$local_repo"
+    source "$runtime_root/sdata/lib/snapshots.sh"
+    realign_repo_to_remote main
+); then
+    printf 'FAIL: --realign can reset a clean checkout containing local commits\n' >&2
+    rm -rf "$rewrite_root"
+    exit 1
+fi
+if [[ "$(git -C "$local_repo" rev-parse HEAD)" != "$local_tip" ]]; then
+    printf 'FAIL: rejected --realign changed the local-commit checkout\n' >&2
+    rm -rf "$rewrite_root"
+    exit 1
+fi
+printf 'dirty\n' >> "$clean_repo/history.txt"
+if (
+    export XDG_CONFIG_HOME="$rewrite_root/xdg-dirty"
+    export XDG_STATE_HOME="$rewrite_root/state-dirty"
+    REPO_ROOT="$clean_repo"
+    source "$runtime_root/sdata/lib/snapshots.sh"
+    realign_repo_to_remote main
+); then
+    printf 'FAIL: --realign can reset a dirty checkout\n' >&2
+    rm -rf "$rewrite_root"
+    exit 1
+fi
+rm -rf "$rewrite_root"
+
 step "fresh install defaults"
 python3 - "$runtime_root" <<'PY'
 import json
