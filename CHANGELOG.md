@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Installed runtime** now uses consistent file selection across installation, updates and packages, keeping development tools out while preserving optional mascot packs.
 - **Media From bar** now opens from the actual M3 or Pill bar surface instead of falling back to the shared bottom overlay; Stock, Islands, Scenic, Frame and vertical bars keep their existing anchored path.
 
 ### Fixed

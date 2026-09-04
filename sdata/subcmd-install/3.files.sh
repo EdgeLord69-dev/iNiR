@@ -113,7 +113,7 @@ case "${SKIP_QUICKSHELL}" in
 
     # Generate manifest BEFORE syncing (to know what should exist)
     log_info "Generating file manifest..."
-    generate_manifest "$II_SOURCE" "${II_TARGET}/.inir-manifest.new"
+    generate_manifest "$II_SOURCE" "${II_TARGET}/.inir-manifest.new" || return 1
 
     # Copy all .qml files from root (auto-detect, no manual list needed)
     for qml_file in "${II_SOURCE}"/*.qml; do
@@ -138,7 +138,7 @@ case "${SKIP_QUICKSHELL}" in
       while IFS= read -r dir; do
         [[ -n "$dir" ]] || continue
         if [[ -d "${II_SOURCE}/${dir}" ]]; then
-          install_dir__sync "${II_SOURCE}/${dir}" "${II_TARGET}/${dir}"
+          install_dir__sync "${II_SOURCE}/${dir}" "${II_TARGET}/${dir}" || return 1
         fi
       done < "$runtime_dirs_manifest"
     fi
@@ -149,7 +149,7 @@ case "${SKIP_QUICKSHELL}" in
     # Cleanup orphan files (files that no longer exist in repo)
     if [[ "${IS_UPDATE}" == "true" ]]; then
       log_info "Cleaning up orphan files..."
-      cleanup_orphans "$II_TARGET" "${II_TARGET}/.inir-manifest"
+      cleanup_orphans "$II_TARGET" "${II_TARGET}/.inir-manifest" || return 1
     fi
 
     # Fix script permissions

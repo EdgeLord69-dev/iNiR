@@ -895,30 +895,6 @@ if ! grep -qx 'assets' "$runtime_root/sdata/runtime-payload-dirs.txt"; then
     printf 'FAIL: assets is absent from runtime-payload-dirs.txt\n' >&2
     exit 1
 fi
-if grep -q -- "--exclude='assets/images/mascot/manifest.json'" "$runtime_root/sdata/lib/functions.sh"; then
-    printf 'FAIL: repo-copy sync excludes the mascot runtime manifest\n' >&2
-    exit 1
-fi
-# Payload directories are copied one at a time, so these are relative to
-# assets/ — an 'assets/…' prefix here never matches and the art ships.
-for local_mascot_path in \
-    "images/mascot/*.png" \
-    "images/mascot/*.gif" \
-    "images/mascot/frames/" \
-    "images/mascot/PROMPTS.md"; do
-    if ! grep -Fq -- "--exclude='$local_mascot_path'" "$runtime_root/sdata/lib/functions.sh"; then
-        printf 'FAIL: repo-copy sync can leak local mascot artifact: %s\n' "$local_mascot_path" >&2
-        exit 1
-    fi
-done
-if ! grep -q "inir-mascot-.*\\.png" "$runtime_root/Makefile" \
-        || ! grep -q "inir-mascot-.*\\.gif" "$runtime_root/Makefile" \
-        || ! grep -q 'PROMPTS.md' "$runtime_root/Makefile" \
-        || ! grep -q 'assets/images/mascot/frames' "$runtime_root/Makefile"; then
-    printf 'FAIL: make install does not strip local mascot art/tooling\n' >&2
-    exit 1
-fi
-
 step "mascot pack install and repair"
 bash "$runtime_root/scripts/test-mascot-pack-flow.sh"
 
@@ -1258,96 +1234,7 @@ if [[ "$run_runtime" == true ]]; then
     bash "$launcher" ipc shellUpdate diagnose >/dev/null
 fi
 
-step "agent artifact leak guard"
-# The source tree legitimately has AGENTS.md/CLAUDE.md in payload dirs.
-# Distribution stripping removes them post-copy. Validate the stripping
-# contracts exist so no install path can miss them.
-leak_guard=0
-agent_files=(AGENTS.md CLAUDE.md CODEX.md PI.md codemap.md .mcp.json opencode.json skills-lock.json)
-agent_dirs=(.claude .factory .opencode .codex .agents .codebase-memory .impeccable .pi-subagents)
-
-# Makefile must strip agent files after cp -a
-for agent_file in "${agent_files[@]}"; do
-    if ! grep -q -- "-name $agent_file" "$runtime_root/Makefile" 2>/dev/null; then
-        printf 'LEAK GUARD: Makefile missing strip for %s\n' "$agent_file" >&2
-        leak_guard=1
-    fi
-done
-for agent_dir in "${agent_dirs[@]}"; do
-    if ! grep -q -- "-name $agent_dir" "$runtime_root/Makefile" 2>/dev/null; then
-        printf 'LEAK GUARD: Makefile missing strip for %s/\n' "$agent_dir" >&2
-        leak_guard=1
-    fi
-done
-if ! grep -q -- '-delete' "$runtime_root/Makefile" 2>/dev/null; then
-    printf 'LEAK GUARD: Makefile missing agent-file strip after payload copy\n' >&2
-    leak_guard=1
-fi
-# rsync-based install (sdata/lib/functions.sh) must exclude agent files
-if [[ -f "$runtime_root/sdata/lib/functions.sh" ]]; then
-    for agent_file in "${agent_files[@]}"; do
-        [[ "$agent_file" == .mcp.json || "$agent_file" == opencode.json ]] && continue
-        if ! grep -q -- "--exclude='$agent_file'" "$runtime_root/sdata/lib/functions.sh" 2>/dev/null; then
-            printf 'LEAK GUARD: sdata/lib/functions.sh missing %s rsync exclude\n' "$agent_file" >&2
-            leak_guard=1
-        fi
-    done
-    for agent_dir in "${agent_dirs[@]}"; do
-        if ! grep -q -- "--exclude='$agent_dir/'" "$runtime_root/sdata/lib/functions.sh" 2>/dev/null; then
-            printf 'LEAK GUARD: sdata/lib/functions.sh missing %s/ rsync exclude\n' "$agent_dir" >&2
-            leak_guard=1
-        fi
-    done
-fi
-# Agent-only directories must not appear in payload manifests
-for agent_dir in "${agent_dirs[@]}"; do
-    if grep -qx "$agent_dir" "$runtime_root/sdata/runtime-payload-dirs.txt" 2>/dev/null; then
-        printf 'LEAK: %s listed in runtime-payload-dirs.txt\n' "$agent_dir" >&2
-        leak_guard=1
-    fi
-done
-for agent_file in "${agent_files[@]}"; do
-    if grep -qx "$agent_file" "$runtime_root/sdata/runtime-root-files.txt" 2>/dev/null; then
-        printf 'LEAK: %s listed in runtime-root-files.txt\n' "$agent_file" >&2
-        leak_guard=1
-    fi
-done
-# Maintainer and development tooling must be stripped by both install paths.
-dev_tooling_files=(release.sh wiki-sync.sh verify-docs.sh qml-check.fish
-    test-local-distribution.sh test-mascot-pack-flow.sh)
-dev_tooling_dirs=(agents tools l10n)
-for tool in "${dev_tooling_files[@]}" "${dev_tooling_dirs[@]}"; do
-    pattern="--exclude='/$tool'"
-    [[ " ${dev_tooling_dirs[*]} " == *" $tool "* ]] && pattern="--exclude='/$tool/'"
-    if ! grep -q -- "$pattern" "$runtime_root/sdata/lib/functions.sh" 2>/dev/null; then
-        printf 'LEAK GUARD: sdata/lib/functions.sh missing %s rsync exclude\n' "$tool" >&2
-        leak_guard=1
-    fi
-    if ! grep -q -- "/$tool" "$runtime_root/Makefile" 2>/dev/null; then
-        printf 'LEAK GUARD: Makefile missing strip for %s\n' "$tool" >&2
-        leak_guard=1
-    fi
-done
-
-for pkgbuild in "$runtime_root/distro/arch/inir-shell/PKGBUILD" "$runtime_root/distro/arch/inir-shell-git/PKGBUILD"; do
-    [[ -f "$pkgbuild" ]] || continue
-    for agent_file in "${agent_files[@]}"; do
-        if ! grep -q -- "-name $agent_file" "$pkgbuild" 2>/dev/null; then
-            printf 'LEAK GUARD: %s missing strip for %s\n' "$(basename "$(dirname "$pkgbuild")")/PKGBUILD" "$agent_file" >&2
-            leak_guard=1
-        fi
-    done
-    for agent_dir in "${agent_dirs[@]}"; do
-        if ! grep -q -- "-name $agent_dir" "$pkgbuild" 2>/dev/null; then
-            printf 'LEAK GUARD: %s missing strip for %s/\n' "$(basename "$(dirname "$pkgbuild")")/PKGBUILD" "$agent_dir" >&2
-            leak_guard=1
-        fi
-    done
-done
-
-if [[ "$leak_guard" -eq 1 ]]; then
-    printf 'FAIL: agent artifact distribution guard failed\n' >&2
-    exit 1
-fi
+step "installed payload boundaries"
+python3 "$runtime_root/scripts/test-runtime-payload.py"
 
 printf '\nAll local distribution checks passed.\n'

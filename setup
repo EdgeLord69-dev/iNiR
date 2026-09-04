@@ -2605,27 +2605,8 @@ run_update() {
         echo ""
         tui_info "Syncing files..."
 
-        # Sync root QML files
-        for qml in "${II_SOURCE}"/*.qml; do
-            [[ -f "$qml" ]] && cp -f "$qml" "${II_TARGET}/$(basename "$qml")"
-        done
-
-        local runtime_root_manifest="${II_SOURCE}/sdata/runtime-root-files.txt"
-        local runtime_dirs_manifest="${II_SOURCE}/sdata/runtime-payload-dirs.txt"
-
-        if [[ -f "$runtime_root_manifest" ]]; then
-            while IFS= read -r runtime_file; do
-                [[ -n "$runtime_file" ]] || continue
-                [[ -f "${II_SOURCE}/${runtime_file}" ]] && cp -f "${II_SOURCE}/${runtime_file}" "${II_TARGET}/${runtime_file}"
-            done < "$runtime_root_manifest"
-        fi
-
-        if [[ -f "$runtime_dirs_manifest" ]]; then
-            while IFS= read -r dir; do
-                [[ -n "$dir" ]] || continue
-                [[ -d "${II_SOURCE}/${dir}" ]] && mkdir -p "${II_TARGET}/${dir}" && rsync -a --delete --exclude='AGENTS.md' "${II_SOURCE}/${dir}/" "${II_TARGET}/${dir}/"
-            done < "$runtime_dirs_manifest"
-        fi
+        python3 "${II_SOURCE}/sdata/lib/runtime-payload.py" copy \
+            --root "$II_SOURCE" --target "$II_TARGET" --delete || return 1
 
         # Cleanup deprecated files
         [[ -f "${II_TARGET}/requirements.txt" ]] && rm -f "${II_TARGET}/requirements.txt"
@@ -2639,10 +2620,10 @@ run_update() {
     fi
 
     # Generate manifest
-    generate_manifest "$II_SOURCE" "${II_TARGET}/.inir-manifest"
+    generate_manifest "$II_SOURCE" "${II_TARGET}/.inir-manifest" || return 1
 
     # Remove orphan files left from previous versions
-    cleanup_orphans "$II_TARGET" "${II_TARGET}/.inir-manifest"
+    cleanup_orphans "$II_TARGET" "${II_TARGET}/.inir-manifest" || return 1
 
     # Fix permissions
     find "$II_TARGET/scripts" \( -name "*.sh" -o -name "*.fish" -o -name "*.py" \) -exec chmod +x {} \; 2>/dev/null || true
