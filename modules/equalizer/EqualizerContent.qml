@@ -153,10 +153,7 @@ Item {
                     text: "graphic_eq"
                     iconSize: 24
                     fill: 1
-                    color: Appearance.regaliaEverywhere ? Appearance.regalia.primaryPlateInk
-                        : Appearance.zzzEverywhere ? Appearance.zzz.onSticker
-                        : Appearance.inirEverywhere ? Appearance.inir.colOnPrimaryContainer
-                        : Appearance.colors.colOnPrimaryContainer
+                    color: root.accentColor
                 }
             }
 

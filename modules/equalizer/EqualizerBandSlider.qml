@@ -20,7 +20,9 @@ Item {
     readonly property real zeroNormalized: (0 - root.minimumValue) / (root.maximumValue - root.minimumValue)
     readonly property real handleCenterY: trackWell.y + 8 + (1 - root.normalizedValue) * (trackWell.height - 16)
     readonly property real zeroY: trackWell.y + 8 + (1 - root.zeroNormalized) * (trackWell.height - 16)
-    readonly property color accentColor: Appearance.angelEverywhere ? Appearance.angel.colPrimary
+    readonly property color accentColor: Appearance.regaliaEverywhere ? Appearance.regalia.hardwarePrimary
+        : Appearance.zzzEverywhere ? Appearance.zzz.accent
+        : Appearance.angelEverywhere ? Appearance.angel.colPrimary
         : Appearance.inirEverywhere ? Appearance.inir.colPrimary
         : Appearance.colors.colPrimary
     readonly property color trackColor: Appearance.angelEverywhere ? Appearance.angel.colGlassElevated
@@ -79,26 +81,29 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 31
-        width: 26
+        width: 14
         height: 142
         radius: Appearance.rounding.full
-        color: Appearance.zzzEverywhere ? Appearance.zzz.metricTrack
-            : Appearance.angelEverywhere ? root.trackColor
-            : Appearance.inirEverywhere ? root.trackColor
-            : Appearance.auroraEverywhere ? Appearance.aurora.colElevatedSurface
-            : root.trackColor
-        border.width: dragArea.containsMouse ? 1 : 0
-        border.color: Appearance.zzzEverywhere ? Appearance.zzz.hairlineStrong
-            : Appearance.inirEverywhere ? Appearance.inir.colBorderSubtle
-            : Appearance.colors.colOutlineVariant
+        color: "transparent"
+
+        Rectangle {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 4
+            radius: 2
+            color: Appearance.zzzEverywhere ? Appearance.zzz.metricTrack
+                : Appearance.auroraEverywhere ? Appearance.aurora.colElevatedSurface
+                : root.trackColor
+        }
 
         Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             y: Math.min(root.handleCenterY - trackWell.y, root.zeroY - trackWell.y)
-            width: 10
-            height: Math.max(5, Math.abs(root.handleCenterY - root.zeroY))
+            width: 4
+            height: Math.max(3, Math.abs(root.handleCenterY - root.zeroY))
             radius: Appearance.rounding.full
-            color: Appearance.zzzEverywhere ? Appearance.zzz.metricFill : root.accentColor
+            color: root.accentColor
             opacity: Math.abs(root._localValue) < 0.05 ? 0 : 1
 
             Behavior on opacity { NumberAnimation { duration: Appearance.animation.elementMoveFast.duration } }
@@ -107,11 +112,11 @@ Item {
         Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             y: root.zeroY - trackWell.y - height / 2
-            width: 6
-            height: 6
-            radius: 3
+            width: 10
+            height: 2
+            radius: 1
             color: root.quietText
-            opacity: 0.45
+            opacity: 0.48
         }
     }
 
@@ -119,10 +124,10 @@ Item {
         id: handle
         anchors.horizontalCenter: trackWell.horizontalCenter
         y: root.handleCenterY - height / 2
-        width: dragArea.pressed ? 32 : (dragArea.containsMouse ? 30 : 27)
-        height: dragArea.pressed ? 13 : (dragArea.containsMouse ? 12 : 10)
+        width: dragArea.pressed ? 24 : (dragArea.containsMouse ? 22 : 20)
+        height: dragArea.pressed ? 8 : (dragArea.containsMouse ? 7 : 6)
         radius: height / 2
-        color: Appearance.zzzEverywhere ? Appearance.zzz.accent : root.accentColor
+        color: root.accentColor
         border.width: 0
         z: 3
 

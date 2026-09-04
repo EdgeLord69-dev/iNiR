@@ -370,9 +370,11 @@ Item {
                             text: "graphic_eq"
                             iconSize: 19
                             fill: 1
-                            color: Appearance.zzzEverywhere ? Appearance.zzz.inkMuted
-                                : Appearance.inirEverywhere ? root.inirTextSecondary
-                                : Appearance.colors.colSubtext
+                            color: Appearance.regaliaEverywhere ? Appearance.regalia.hardwarePrimary
+                                : Appearance.zzzEverywhere ? Appearance.zzz.accent
+                                : Appearance.angelEverywhere ? Appearance.angel.colPrimary
+                                : Appearance.inirEverywhere ? Appearance.inir.colPrimary
+                                : Appearance.colors.colPrimary
                         }
                         StyledToolTip { text: Translation.tr("Equalizer") }
                     }
