@@ -101,6 +101,7 @@ Singleton {
         const ignoredRegexStrings = Config.options?.dock?.ignoredAppRegexes ?? [];
         const systemIgnored = [
             "^$", "^portal$", "^x-run-dialog$", "^kdialog$",
+            "^xembedsniproxy$",
             "^org.freedesktop.impl.portal.*"
         ];
         const ignoredRegexes = ignoredRegexStrings.concat(systemIgnored)
