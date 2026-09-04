@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Media From bar** now opens from the actual M3 or Pill bar surface instead of falling back to the shared bottom overlay; Stock, Islands, Scenic, Frame and vertical bars keep their existing anchored path.
+
 ### Fixed
 
 - **Update recovery** now detects rewritten upstream history, preserves a recovery ref before realigning proven clean published checkouts, refuses local commits or dirty trees, and reports failures back to the in-shell updater immediately.

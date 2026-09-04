@@ -45,11 +45,22 @@ Item {
 
     readonly property bool hasMedia: PillPlayers.has
     readonly property string mediaAccess: (Config.options?.bar?.pill?.mediaAccess ?? "row") === "bud" ? "bud" : "row"
+    readonly property string mediaPopupMode: Config.options?.media?.popupMode ?? "dock"
     property real mediaVolumeFeedback: -1
     property real mediaVolumeFeedbackWidth: 0
 
     signal requestSurface(string name)
     signal requestClose()
+
+    function openPreferredMediaSurface(): void {
+        if (pill.mediaPopupMode === "bar") {
+            GlobalStates.mediaControlsOpen = false
+            pill.requestSurface("media")
+        } else {
+            pill.requestClose()
+            GlobalStates.mediaControlsOpen = !GlobalStates.mediaControlsOpen
+        }
+    }
 
     /** Forwarded up so the root Scope can host the tray menu's own window. */
     signal trayMenuRequested(var item, real anchorX, real anchorY)
@@ -404,7 +415,7 @@ Item {
             enabled: bud.shown
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
-            onClicked: pill.requestSurface("media")
+            onClicked: pill.openPreferredMediaSurface()
             onContainsMouseChanged: budBead.requestPaint()
         }
     }
@@ -1121,7 +1132,7 @@ Item {
                         hoverEnabled: true
                         enabled: hover.live
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: pill.requestSurface("media")
+                        onClicked: pill.openPreferredMediaSurface()
                         onWheel: (event) => {
                             if (!MprisController.canChangeVolume)
                                 return;

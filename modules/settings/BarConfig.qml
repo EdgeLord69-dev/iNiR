@@ -2569,8 +2569,8 @@ ContentPage {
             SettingsNote {
                 icon: "info"
                 text: Config.options?.media?.popupMode === "bar"
-                    ? Translation.tr("Classic style popup anchored to bar widget")
-                    : Translation.tr("Modern overlay at screen bottom")
+                    ? Translation.tr("Open the media player from the active bar surface. Stock, Islands, M3, vertical and Pill layouts keep the player attached to where you clicked.")
+                    : Translation.tr("Open the shared media player as the screen-bottom overlay from every bar layout.")
             }
         }
             }
