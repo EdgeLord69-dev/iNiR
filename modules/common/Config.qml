@@ -1977,6 +1977,10 @@ Singleton {
                         property int simpleStep: 5
                         property int spatialStep: 30
                     }
+                    property JsonObject web: JsonObject {
+                        property string source: ""
+                        property bool interactive: false
+                    }
                 }
                 property JsonObject transition: JsonObject {
                     property bool enable: true

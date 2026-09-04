@@ -13,7 +13,7 @@ Singleton {
     id: root
 
     readonly property string provider: "awww"
-    readonly property bool enabled: true
+    readonly property bool enabled: (Config.options?.background?.backend?.provider ?? "awww") === provider
     readonly property int transitionFps: Config.options?.background?.backend?.awww?.transitionFps ?? 60
     readonly property int simpleStep: Config.options?.background?.backend?.awww?.simpleStep ?? 5
     readonly property int spatialStep: Config.options?.background?.backend?.awww?.spatialStep ?? 30

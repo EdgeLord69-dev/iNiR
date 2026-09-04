@@ -413,6 +413,10 @@
                 "transitionFps": 60,
                 "simpleStep": 5,
                 "spatialStep": 30
+            },
+            "web": {
+                "source": "",
+                "interactive": false
             }
         },
         "transition": {

@@ -361,6 +361,7 @@ Scope {
         readonly property var backgroundOptions: Config.options?.background ?? {}
         readonly property var parallaxOptions: backgroundOptions.parallax ?? {}
         readonly property var effectsOptions: backgroundOptions.effects ?? {}
+        readonly property bool webWallpaperActive: WebWallpaper.active
         readonly property var workSafetyOptions: Config.options?.workSafety ?? {}
         readonly property var workSafetyEnableOptions: workSafetyOptions.enable ?? {}
         readonly property var workSafetyTriggerOptions: workSafetyOptions.triggerCondition ?? {}
@@ -629,6 +630,7 @@ Scope {
         readonly property bool pauseParallaxDuringTransitions: bgRoot.parallaxOptions.pauseDuringTransitions ?? true
         readonly property int parallaxTransitionSettleMs: ParallaxMath.resolveTransitionSettle(bgRoot.parallaxOptions, 220)
         readonly property bool externalMainWallpaperEligible: !wallpaperSafetyTriggered
+            && !bgRoot.webWallpaperActive
             && !((bgRoot.backgroundOptions.backdrop?.enable ?? false) && (bgRoot.backgroundOptions.backdrop?.hideWallpaper ?? false))
             && AwwwBackend.supportsVisibleMainWallpaper(
                 bgRoot.wallpaperPathRaw,
@@ -681,6 +683,7 @@ Scope {
         readonly property bool internalShaderTransitionRequested:
             (Config.options?.background?.transition?.enable ?? true)
             && Appearance.animationsEnabled
+            && !bgRoot.webWallpaperActive
             && AwwwBackend.isInternalShaderTransitionType(
                 Config.options?.background?.transition?.type ?? "crossfade")
             && !bgRoot.wallpaperIsGif
@@ -1328,7 +1331,7 @@ Scope {
                             || bgRoot.internalShaderPreviewActive
                             || AwwwBackend.shaderHandoffPending)
                     anchors.fill: parent
-                    visible: !blurLoader.active && !bgRoot.backdropActive && !bgRoot.wallpaperIsGif && !bgRoot.wallpaperIsVideo
+                    visible: !bgRoot.webWallpaperActive && !blurLoader.active && !bgRoot.backdropActive && !bgRoot.wallpaperIsGif && !bgRoot.wallpaperIsVideo
                     opacity: (wallpaperContainer.showInternalStaticWallpaper
                         || wallpaper.shaderOverlayHeld ? 1 : 0) * bgRoot._awwwRevealOpacity
                     // The backdrop replaces the desktop wallpaper outright: this
@@ -1340,7 +1343,7 @@ Scope {
                     layer.enabled: wallpaperContainer.needsStaticTexture
                         && !wallpaperContainer.showInternalStaticWallpaper
                         && !wallpaper.shaderOverlayHeld
-                    source: (bgRoot.wallpaperSafetyTriggered || !wallpaperContainer.needsStaticTexture)
+                    source: (bgRoot.webWallpaperActive || bgRoot.wallpaperSafetyTriggered || !wallpaperContainer.needsStaticTexture)
                         ? "" : bgRoot.wallpaperPath
                     // NEVER use crossfader transitions when awww is active — awww handles all transitions.
                     // When parallax is on, the crossfader fades out to reveal awww's native transition.
@@ -1381,7 +1384,7 @@ Scope {
                     cache: false
                     playing: visible && bgRoot.enableAnimation && !GlobalStates.screenLocked && !Appearance._gameModeActive && !Wallpapers.batteryPauseActive
                     asynchronous: true
-                    source: (bgRoot.wallpaperSafetyTriggered || !bgRoot.wallpaperIsGif || bgRoot.backdropActive) ? "" : bgRoot.wallpaperPathRaw
+                    source: (bgRoot.webWallpaperActive || bgRoot.wallpaperSafetyTriggered || !bgRoot.wallpaperIsGif || bgRoot.backdropActive) ? "" : bgRoot.wallpaperPathRaw
                     fillMode: Image.PreserveAspectCrop
                     // No sourceSize for GIFs - let Qt handle native size for performance
 
@@ -1417,7 +1420,7 @@ Scope {
                     // the source releases the decoder outright instead of only
                     // pausing it; the transition overlay covers the swap.
                     source: {
-                        if (bgRoot.wallpaperSafetyTriggered || !bgRoot.wallpaperIsVideo || bgRoot.backdropActive) return "";
+                        if (bgRoot.webWallpaperActive || bgRoot.wallpaperSafetyTriggered || !bgRoot.wallpaperIsVideo || bgRoot.backdropActive) return "";
                         if (!bgRoot._familyOwnsScreen) return "";
                         return bgRoot.wallpaperPathRaw;
                     }
@@ -1445,6 +1448,7 @@ Scope {
                 id: blurAlwaysLoader
                 z: 1
                 active: Appearance.effectsEnabled
+                        && !bgRoot.webWallpaperActive
                         && (bgRoot.blurProgress > 0)
                         && (bgRoot.effectsOptions.enableBlur ?? false)
                         && !Config.options?.performance?.lowPower
