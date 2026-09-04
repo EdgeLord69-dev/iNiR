@@ -664,7 +664,7 @@ Item {
      * input on a stray click.
      */
     TapHandler {
-        enabled: !pill.surfaceOpen && !pill.barMode
+        enabled: !pill.surfaceOpen && !pill.barMode && pill.mode !== "game"
         gesturePolicy: TapHandler.WithinBounds
         onTapped: pill.pinned = !pill.pinned
     }
@@ -745,6 +745,65 @@ Item {
             font.pixelSize: 16 * pill.s
             font.weight: Font.DemiBold
             font.features: ({ "tnum": 1 })
+        }
+
+        Rectangle {
+            anchors.right: parent.right
+            anchors.rightMargin: 14 * pill.s
+            anchors.verticalCenter: parent.verticalCenter
+            width: gameModeExitRow.implicitWidth + 16 * pill.s
+            height: 26 * pill.s
+            radius: height / 2
+            color: Qt.alpha(PillTheme.vermLit, gameModeExitHover.hovered ? 0.20 : 0.10)
+            border.width: 1
+            border.color: Qt.alpha(PillTheme.vermLit, gameModeExitHover.hovered ? 0.72 : 0.42)
+
+            Behavior on color {
+                ColorAnimation { duration: PillMotion.fast }
+            }
+
+            Row {
+                id: gameModeExitRow
+                anchors.centerIn: parent
+                spacing: 6 * pill.s
+
+                GlyphIcon {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 15 * pill.s
+                    height: 15 * pill.s
+                    name: "gamepad"
+                    color: PillTheme.vermLit
+                    stroke: 1.8
+                }
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: Translation.tr("Game mode")
+                    color: PillTheme.cream
+                    font.family: PillTheme.font
+                    font.pixelSize: 11.5 * pill.s
+                    font.weight: Font.Medium
+                }
+
+                GlyphIcon {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 13 * pill.s
+                    height: 13 * pill.s
+                    name: "close"
+                    color: PillTheme.subtle
+                    stroke: 1.8
+                }
+            }
+
+            HoverHandler {
+                id: gameModeExitHover
+                cursorShape: Qt.PointingHandCursor
+            }
+
+            TapHandler {
+                gesturePolicy: TapHandler.WithinBounds
+                onTapped: GameMode.deactivate()
+            }
         }
     }
 
