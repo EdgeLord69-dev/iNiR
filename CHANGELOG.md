@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Fresh-install presets** now combine curated desktop compositions, five coherent visual styles and three graphics budgets, including a low-end mode that keeps the shell styling while disabling live blur.
+- **Fresh-install presets** now combine curated desktop compositions, five coherent visual styles and three explicit graphics budgets. Low-end tiers preserve each style's default material policy instead of leaving glass-heavy themes stuck with blur disabled.
 
 ### Changed
 

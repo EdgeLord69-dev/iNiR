@@ -370,6 +370,23 @@ schema_checks = {
     "wizard graphics catalog": all(preset in wizard for preset in [
         'id: "minimum"', 'id: "efficient"', 'id: "balanced"'
     ]),
+    "wizard graphics labels distinguish hardware budget from composition profile": all(label in wizard for label in [
+        'id: "minimum", name: Translation.tr("Low-end")',
+        'id: "efficient", name: Translation.tr("Low-end styled")',
+        'id: "balanced", name: Translation.tr("Medium")'
+    ]),
+    "wizard graphics budgets preserve style-default blur policy": (
+        wizard.split("readonly property var performancePresets:", 1)[1]
+            .split("function presetById", 1)[0]
+            .count('"performance.blurBackend": "auto"') == 3
+        and '"performance.blurBackend": "off"' not in wizard.split(
+            "readonly property var performancePresets:", 1)[1].split("function presetById", 1)[0]
+    ),
+    "wizard low-end tiers keep distinct master/compositor policy": all(fragment in wizard for fragment in [
+        '"performance.lowPower": true',
+        '"performance.compositorBlur": false',
+        '"performance.compositorBlur": true'
+    ]),
     "wizard dock pinned": '"dock.pinnedOnStartup": true' in wizard,
     "wizard dock not hover-only": '"dock.hoverToReveal": false' in wizard,
     "wizard right sidebar full height": '"sidebar.collapseEmptyNotifications": false' in wizard,

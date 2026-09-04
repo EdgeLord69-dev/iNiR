@@ -96,7 +96,7 @@ Scope {
         {
             id: "aurora-islands", name: Translation.tr("Glass"), icon: "blur_on",
             globalStyle: "aurora",
-            description: Translation.tr("Aurora glass with separate bar, dock and sidebar islands. Best with the Balanced graphics budget."),
+            description: Translation.tr("Aurora glass with separate bar, dock and sidebar islands. Best with the Medium graphics budget."),
             values: {
                 "appearance.iiMotionProfile": "contextual",
                 "bar.appearanceStyle": "islands",
@@ -139,12 +139,12 @@ Scope {
 
     readonly property var performancePresets: [
         {
-            id: "minimum", name: Translation.tr("Minimum"), icon: "energy_savings_leaf",
-            description: Translation.tr("For genuinely weak GPUs or battery-first systems: effects off, blur off and reduced motion."),
+            id: "minimum", name: Translation.tr("Low-end"), icon: "energy_savings_leaf",
+            description: Translation.tr("Maximum savings for very weak GPUs or battery-first systems: effects and motion are disabled, while Style default stays remembered for when you turn them back on."),
             values: {
                 "performance.lowPower": true,
                 "performance.reduceAnimations": true,
-                "performance.blurBackend": "off",
+                "performance.blurBackend": "auto",
                 "performance.compositorBlur": false,
                 "performance.blurAreas.bar": "inherit",
                 "performance.blurAreas.dock": "inherit",
@@ -155,11 +155,11 @@ Scope {
         },
         {
             id: "efficient", name: Translation.tr("Low-end styled"), icon: "speed",
-            description: Translation.tr("Keeps shapes, shadows and full motion, but removes live blur. The low-end choice when you still want iNiR to look like iNiR."),
+            description: Translation.tr("Keeps full motion and each style's intended wallpaper glass, but avoids compositor blur. The low-end choice when you still want iNiR to look like iNiR."),
             values: {
                 "performance.lowPower": false,
                 "performance.reduceAnimations": false,
-                "performance.blurBackend": "off",
+                "performance.blurBackend": "auto",
                 "performance.compositorBlur": false,
                 "performance.blurAreas.bar": "inherit",
                 "performance.blurAreas.dock": "inherit",
@@ -169,7 +169,7 @@ Scope {
             }
         },
         {
-            id: "balanced", name: Translation.tr("Balanced"), icon: "tune",
+            id: "balanced", name: Translation.tr("Medium"), icon: "tune",
             description: Translation.tr("Medium hardware and up: each style gets its intended effects and blur policy, with game mode still able to cut them automatically."),
             values: {
                 "performance.lowPower": false,
