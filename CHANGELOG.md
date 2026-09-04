@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Embedded Settings search** now resolves the loaded page host through the overlay window instead of referencing a component-local QML id from the parent scope.
 - **Update recovery** now detects rewritten upstream history, preserves a recovery ref before realigning proven clean published checkouts, refuses local commits or dirty trees, and reports failures back to the in-shell updater immediately.
 - **Doctor allocator cleanup** now removes the retired Quickshell malloc policy from environment.d, the current maintenance process and the systemd user manager while preserving custom allocator values.
 

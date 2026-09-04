@@ -218,8 +218,9 @@ Scope {
     }
 
     function trySpotlight() {
-        const pageItem = overlayPagesHost.currentItem
-        if (pageItem && overlayPagesHost.currentIndex === pendingSpotlightPageIndex
+        const pageHost = panelLoader.item?.pageHostItem ?? null
+        const pageItem = pageHost?.currentItem ?? null
+        if (pageItem && pageHost.currentIndex === pendingSpotlightPageIndex
                 && pendingSpotlightSection.length > 0
                 && typeof pageItem.activateSettingsSearchSection === "function")
             pageItem.activateSettingsSearchSection(pendingSpotlightSection)
@@ -421,6 +422,7 @@ Scope {
 
         sourceComponent: PanelWindow {
             id: settingsPanel
+            readonly property var pageHostItem: overlayPagesHost
 
             // Stay visible during the close-animation window so the exit morph
             // renders; the Loader tears down after closeAnimTimer fires.
