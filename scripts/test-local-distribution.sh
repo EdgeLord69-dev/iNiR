@@ -225,6 +225,14 @@ if [[ "$allocator_before" != "$allocator_after" ]]; then
 fi
 rm -rf "$allocator_root"
 
+step "update status path ownership"
+if ! grep -Fq '_write_update_status() {' "$runtime_root/setup" \
+        || ! grep -Fq 'mkdir -p "$status_dir"' "$runtime_root/setup" \
+        || grep -Fq 'echo "success" > "$_update_status_file"' "$runtime_root/setup"; then
+    printf 'FAIL: setup update status writes can fail before the shell creates its state directory\n' >&2
+    exit 1
+fi
+
 step "rewritten remote recovery"
 rewrite_root="$(mktemp -d)"
 remote_repo="$rewrite_root/origin.git"
