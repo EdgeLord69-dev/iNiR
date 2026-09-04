@@ -40,29 +40,30 @@ ColumnLayout {
         right: ["rightSidebarButton", "tray", "timer", "shellUpdate", "spacer", "weather"],
     })
     readonly property var _knownIds: [
-        "leftSidebarButton", "activeWindow", "taskbar", "resources", "media", "workspaces",
+        "leftSidebarButton", "activeWindow", "resources", "media", "workspaces",
         "clock", "utilButtons", "battery", "rightSidebarButton", "tray", "timer", "shellUpdate", "spacer", "weather"
     ]
     readonly property var _zones: ["left", "centerLeft", "center", "centerRight", "right"]
     readonly property var _visKeys: ({
         leftSidebarButton: "leftSidebarButton", activeWindow: "activeWindow",
-        taskbar: "taskbar",
         resources: "resources", media: "media", workspaces: "workspaces", clock: "clock",
         utilButtons: "utilButtons", battery: "battery", rightSidebarButton: "rightSidebarButton",
         tray: "sysTray", weather: "weather",
     })
 
     function _metaIcon(id) {
+        if (id === "activeWindow" && (Config.options?.bar?.modules?.taskbar ?? false))
+            return "dock_to_bottom"
         return ({ leftSidebarButton: "side_navigation", activeWindow: "window",
-            taskbar: "dock_to_bottom",
             resources: "memory", media: "music_note", workspaces: "workspaces", clock: "schedule",
             utilButtons: "build", battery: "battery_full", rightSidebarButton: "call_to_action",
             tray: "shelf_auto_hide", timer: "timer", shellUpdate: "system_update", spacer: "space_bar",
             weather: "cloud" })[id] || "widgets"
     }
     function _metaLabel(id) {
+        if (id === "activeWindow" && (Config.options?.bar?.modules?.taskbar ?? false))
+            return Translation.tr("Taskbar")
         return ({ leftSidebarButton: Translation.tr("Left sidebar"), activeWindow: Translation.tr("Active window"),
-            taskbar: Translation.tr("Taskbar"),
             resources: Translation.tr("Resources"), media: Translation.tr("Media"),
             workspaces: Translation.tr("Workspaces"), clock: Translation.tr("Clock"), utilButtons: Translation.tr("Utility buttons"),
             battery: Translation.tr("Battery"), rightSidebarButton: Translation.tr("Right sidebar"), tray: Translation.tr("System tray"),
@@ -81,10 +82,17 @@ ColumnLayout {
 
     // ─── Reactive layout view ───────────────────────────────────────────
     readonly property bool migrated: Config.options?.bar?.layout?.migrated === true
+    readonly property bool _layoutContainsActiveWindow: root._zones.some(zoneName => {
+        const ids = Config.options?.bar?.layout?.[zoneName] ?? []
+        return ids.includes("activeWindow")
+    })
     function _getZone(name) {
         if (!root.migrated) return root._defaultLayout[name] ?? []
         const a = Config.options?.bar?.layout?.[name]
-        return (a && a.length >= 0) ? a : (root._defaultLayout[name] ?? [])
+        const ids = (a && a.length >= 0) ? Array.from(a) : Array.from(root._defaultLayout[name] ?? [])
+        return ids
+            .map(id => id === "taskbar" && !root._layoutContainsActiveWindow ? "activeWindow" : id)
+            .filter(id => id !== "taskbar")
     }
     function _placed() {
         let s = []

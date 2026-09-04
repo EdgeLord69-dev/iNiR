@@ -13,7 +13,7 @@ ContentPage {
     settingsPageName: Translation.tr("Bar")
 
     property bool isIiActive: Config.options?.panelFamily !== "waffle"
-    property string activeSection: "appearance"
+    property string activeSection: "modules"
     property int _taskLoadingCount: 0
 
     function activateSettingsSearchSection(section: string): bool {
@@ -243,6 +243,8 @@ ContentPage {
     // Corner style only shapes the classic bar surface; the other appearances draw
     // their own (islands capsules, scenic scrim, frame outline, pill).
     readonly property bool cornerStyleApplies: (Config.options?.bar?.appearanceStyle ?? "classic") === "classic"
+    readonly property bool stockHorizontalLayoutActive: !(Config.options?.bar?.vertical ?? false)
+        && !["m3", "pill"].includes(Config.options?.bar?.appearanceStyle ?? "classic")
 
     function detectM3LayoutPreset(): string {
         const left = JSON.stringify(Config.options?.bar?.m3?.layouts?.leftLayout ?? [])
@@ -2141,7 +2143,7 @@ ContentPage {
     // MODULES (what to show)
     // ═══════════════════════════════════════════════════════════════════
     LazySection {
-        requested: root.isIiActive && root.activeSection === "modules"
+        requested: false
         sourceComponent: Component {
             SettingsCardSection {
                 settingsTaskSection: "modules"
@@ -2340,12 +2342,22 @@ ContentPage {
         sourceComponent: Component {
             SettingsCardSection {
                 settingsTaskSection: "modules"
-                expanded: false
+                expanded: true
         icon: "reorder"
         title: Translation.tr("Bar module layout")
 
         SettingsGroup {
+            NoticeBox {
+                Layout.fillWidth: true
+                visible: !root.stockHorizontalLayoutActive
+                materialIcon: "info"
+                text: (Config.options?.bar?.vertical ?? false)
+                    ? Translation.tr("The vertical bar has its own fixed adaptive composition. Switch to a horizontal bar to reorder these modules.")
+                    : Translation.tr("This editor belongs to the horizontal Stock, Islands, Scenic and Frame bars. M3 and Pill use their own layout systems.")
+            }
+
             ConfigSpinBox {
+                visible: root.stockHorizontalLayoutActive
                 icon: "space_bar"
                 text: Translation.tr("Flexible spacer width")
                 value: Config.options?.bar?.layout?.spacerWidth ?? 0
@@ -2359,6 +2371,7 @@ ContentPage {
             }
 
             ConfigSelectionArray {
+                visible: root.stockHorizontalLayoutActive
                 currentValue: Config.options?.bar?.layout?.spacerMode ?? "auto"
                 onSelected: (newValue) => Config.setNestedValue("bar.layout.spacerMode", newValue)
                 options: [
@@ -2366,9 +2379,14 @@ ContentPage {
                     { displayName: Translation.tr("Always elastic"), icon: "width_full", value: "fill" },
                     { displayName: Translation.tr("Fixed width"), icon: "width_normal", value: "fixed" }
                 ]
+                StyledToolTip {
+                    text: Translation.tr("Elastic modes use available space in the left or right edge zones. Center zones stay content-sized, so spacers there use their configured width instead of stretching the bar.")
+                }
             }
 
-            BarModuleOrderEditor {}
+            BarModuleOrderEditor {
+                visible: root.stockHorizontalLayoutActive
+            }
         }
             }
         }
