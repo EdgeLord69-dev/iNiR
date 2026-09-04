@@ -536,6 +536,28 @@ Floating media controls panel.
 
 ---
 
+### equalizer
+
+Open the ii-family EasyEffects output equalizer. Enable **Settings → Modules → Optional → EasyEffects Equalizer** first; while the module is disabled this IPC target is not constructed. The panel controls an existing EasyEffects Equalizer through its local server and never replaces the user's effects chain.
+
+| Function | Description |
+|----------|-------------|
+| `toggle` | Open/close equalizer |
+| `open` | Show equalizer |
+| `close` | Hide equalizer |
+| `refresh` | Refresh EasyEffects equalizer state |
+| `ensure` | Restore the last EasyEffects output preset when its EQ instance is not loaded |
+| `status` | Return current equalizer state as JSON |
+| `setBand <index> <gain>` | Set one 0-based band gain in dB |
+| `preset <name>` | Apply one built-in EQ preset |
+| `configure` | Convert the active Equalizer to the iNiR 10-band layout |
+
+```kdl
+bind "Ctrl+Alt+E" { spawn "inir" "equalizer" "toggle"; }
+```
+
+---
+
 ### osk
 
 On-screen keyboard.

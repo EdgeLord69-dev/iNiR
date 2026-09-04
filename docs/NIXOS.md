@@ -86,6 +86,13 @@ Recorder runtime dependencies are provided by the iNiR package itself, including
 FFmpeg when available in nixpkgs. They do not need to be duplicated in
 `programs.inir.extraPackages`.
 
+EasyEffects remains an opt-in audio feature. To use the native iNiR equalizer on NixOS,
+make EasyEffects visible to the iNiR service, for example with
+`programs.inir.extraPackages = [ pkgs.easyeffects ];` in addition to your compositor package.
+The nixpkgs EasyEffects wrapper owns its plugin search path; iNiR only verifies that the LSP
+Equalizer is actually available at runtime. The equalizer controls the existing EasyEffects
+pipeline and does not add or replace effects on its own.
+
 For useful default shortcuts, merge iNiR actions into `programs.niri.settings.binds`:
 
 ```nix

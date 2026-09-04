@@ -122,6 +122,30 @@ check_dependencies() {
         fi
     done
 
+    # EasyEffects can expose Equalizer settings through its local server even
+    # when the actual LSP LV2 DSP backend is absent. Check the bundle itself so
+    # Doctor repairs the capability the native iNiR equalizer depends on.
+    local lsp_lv2_found=false lsp_dir
+    for lsp_dir in /usr/lib/lv2 /usr/lib64/lv2 /usr/local/lib/lv2 /usr/local/lib64/lv2; do
+        if compgen -G "$lsp_dir/lsp-plugins*.lv2" >/dev/null \
+                || compgen -G "$lsp_dir/lsp*.lv2" >/dev/null; then
+            lsp_lv2_found=true
+            break
+        fi
+    done
+    # The upstream EasyEffects Flatpak bundles its plugin set inside the sandbox,
+    # so a Flatpak-only install must not be diagnosed from the host LV2 paths.
+    if [[ "$lsp_lv2_found" != true ]] \
+            && ! command -v easyeffects >/dev/null 2>&1 \
+            && command -v flatpak >/dev/null 2>&1 \
+            && flatpak info com.github.wwmm.easyeffects >/dev/null 2>&1; then
+        lsp_lv2_found=true
+    fi
+    if [[ "$lsp_lv2_found" != true ]]; then
+        missing+=("Linux Studio Plugins LV2")
+        missing_cmds+=("lsp-plugins-lv2")
+    fi
+
     # Tesseract itself can be installed while the language data iNiR exposes in
     # Settings is absent. Treat those models as first-class dependencies so an
     # existing install can be repaired instead of failing every OCR attempt.

@@ -111,6 +111,7 @@ Audio stack and media controls.
 | `socat` | IPC fallback for YTMusic control |
 | `cava` | Audio visualizer |
 | `easyeffects` | Audio effects |
+| `lsp-plugins-lv2` | EasyEffects equalizer backend |
 
 `pipewire-jack` is an optional/recommended extra depending on your audio setup.
 
@@ -212,6 +213,7 @@ Not installed by default, but useful. The shell handles their absence gracefully
 | `whisper-cpp` | Local speech-to-text, no API key needed | Voice input and voice search |
 | `cava` | Audio visualizer | Bar widget (optional) |
 | `easyeffects` | Audio effects | Quick toggles panel |
+| `lsp-plugins-lv2` | EasyEffects equalizer backend | Media Controls equalizer |
 | `yt-dlp` | YouTube video/audio extraction | YTMusic sidebar |
 | `mpv` | Media player | YTMusic sidebar |
 | `deno` | JavaScript runtime for yt-dlp | YTMusic sidebar (YouTube challenge solving) |

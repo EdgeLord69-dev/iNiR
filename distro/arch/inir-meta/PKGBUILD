@@ -19,6 +19,7 @@ depends=(
   darkly-bin
   ddcutil
   easyeffects
+  lsp-plugins-lv2
   ffmpeg
   fprintd
   geoclue

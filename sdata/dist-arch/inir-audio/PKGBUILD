@@ -21,6 +21,7 @@ depends=(
 
   # Audio effects
   easyeffects
+  lsp-plugins-lv2
 
   # Media playback
   mpv

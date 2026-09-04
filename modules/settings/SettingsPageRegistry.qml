@@ -309,6 +309,13 @@ Singleton {
 
         _staticSearchIndex = [
         {
+            pageIndex: 10, pageName: root.pages[10].name,
+            section: Translation.tr("Modules"),
+            label: Translation.tr("EasyEffects Equalizer"),
+            description: Translation.tr("Load or unload the native 10-band EasyEffects equalizer integration"),
+            keywords: ["equalizer", "easyeffects", "eq", "audio", "10 band", "module", "optional"]
+        },
+        {
             pageIndex: 27, pageName: root.pages[27].name,
             section: Translation.tr("Activation"),
             label: Translation.tr("Orbit hot corner"),

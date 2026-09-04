@@ -444,6 +444,7 @@ FEDORA_AUDIO_PKGS=(
   pavucontrol
   cava
   easyeffects
+  lsp-plugins-lv2
   mpv
   yt-dlp
   socat
