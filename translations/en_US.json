@@ -6447,5 +6447,16 @@
   "When enabled, the web wallpaper moves to the desktop input layer so games and interactive pages can receive pointer and keyboard input": "When enabled, the web wallpaper moves to the desktop input layer so games and interactive pages can receive pointer and keyboard input",
   "Checking interactive web wallpaper support…": "Checking interactive web wallpaper support…",
   "Interactive web wallpapers need Qt 6 WebEngine, LayerShellQt and the Qt QML runner. The standard wallpaper stays available until the web renderer is ready.": "Interactive web wallpapers need Qt 6 WebEngine, LayerShellQt and the Qt QML runner. The standard wallpaper stays available until the web renderer is ready.",
-  "Profile picture": "Profile picture"
+  "Profile picture": "Profile picture",
+  "Add an Equalizer to EasyEffects output": "Add an Equalizer to EasyEffects output",
+  "Audio apps are detected live from PipeWire. Enable a filter to exclude that app from visualizers; with no filters enabled, iNiR follows the active player automatically.": "Audio apps are detected live from PipeWire. Enable a filter to exclude that app from visualizers; with no filters enabled, iNiR follows the active player automatically.",
+  "Blocked visualizer apps": "Blocked visualizer apps",
+  "Comma-separated playback apps to exclude from visualizers. Empty keeps automatic active-player selection.": "Comma-separated playback apps to exclude from visualizers. Empty keeps automatic active-player selection.",
+  "EasyEffects is connected, but its output pipeline has no Equalizer. In EasyEffects, open Output → Effects, add Equalizer, and leave this panel open. iNiR will detect the new Equalizer automatically without replacing the rest of your effects chain.": "EasyEffects is connected, but its output pipeline has no Equalizer. In EasyEffects, open Output → Effects, add Equalizer, and leave this panel open. iNiR will detect the new Equalizer automatically without replacing the rest of your effects chain.",
+  "EasyEffects is connected, but the Equalizer backend is not controllable. Make sure Linux Studio Plugins (LV2) is available to EasyEffects, then refresh this panel.": "EasyEffects is connected, but the Equalizer backend is not controllable. Make sure Linux Studio Plugins (LV2) is available to EasyEffects, then refresh this panel.",
+  "EasyEffects is running, but its local control socket is unavailable. Per-band control requires EasyEffects 8.2.8 or newer and the EasyEffects local server.": "EasyEffects is running, but its local control socket is unavailable. Per-band control requires EasyEffects 8.2.8 or newer and the EasyEffects local server.",
+  "EasyEffects local control is unavailable": "EasyEffects local control is unavailable",
+  "Filtered out": "Filtered out",
+  "Start EasyEffects. iNiR will reconnect automatically when its local server becomes available.": "Start EasyEffects. iNiR will reconnect automatically when its local server becomes available.",
+  "Use Organic visualizer": "Use Organic visualizer"
 }

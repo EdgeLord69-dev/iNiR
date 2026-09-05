@@ -6447,5 +6447,16 @@
   "Load a local HTML file or a web URL with JavaScript, WebGL and browser media support": "Загрузить локальный HTML-файл или веб-адрес с поддержкой JavaScript, WebGL и браузерного мультимедиа",
   "Checking interactive web wallpaper support…": "Проверка поддержки интерактивных веб-обоев…",
   "Interactive web wallpapers need Qt 6 WebEngine, LayerShellQt and the Qt QML runner. The standard wallpaper stays available until the web renderer is ready.": "Для интерактивных веб-обоев нужны Qt 6 WebEngine, LayerShellQt и QML-раннер Qt. Стандартные обои остаются доступными, пока веб-рендерер не будет готов.",
-  "Profile picture": "Изображение профиля"
+  "Profile picture": "Изображение профиля",
+  "EasyEffects is running, but its local control socket is unavailable. Per-band control requires EasyEffects 8.2.8 or newer and the EasyEffects local server.": "EasyEffects is running, but its local control socket is unavailable. Per-band control requires EasyEffects 8.2.8 or newer and the EasyEffects local server.",
+  "EasyEffects is connected, but its output pipeline has no Equalizer. In EasyEffects, open Output → Effects, add Equalizer, and leave this panel open. iNiR will detect the new Equalizer automatically without replacing the rest of your effects chain.": "EasyEffects is connected, but its output pipeline has no Equalizer. In EasyEffects, open Output → Effects, add Equalizer, and leave this panel open. iNiR will detect the new Equalizer automatically without replacing the rest of your effects chain.",
+  "EasyEffects is connected, but the Equalizer backend is not controllable. Make sure Linux Studio Plugins (LV2) is available to EasyEffects, then refresh this panel.": "EasyEffects is connected, but the Equalizer backend is not controllable. Make sure Linux Studio Plugins (LV2) is available to EasyEffects, then refresh this panel.",
+  "Audio apps are detected live from PipeWire. Enable a filter to exclude that app from visualizers; with no filters enabled, iNiR follows the active player automatically.": "Audio apps are detected live from PipeWire. Enable a filter to exclude that app from visualizers; with no filters enabled, iNiR follows the active player automatically.",
+  "Comma-separated playback apps to exclude from visualizers. Empty keeps automatic active-player selection.": "Comma-separated playback apps to exclude from visualizers. Empty keeps automatic active-player selection.",
+  "Filtered out": "Filtered out",
+  "EasyEffects local control is unavailable": "EasyEffects local control is unavailable",
+  "Add an Equalizer to EasyEffects output": "Add an Equalizer to EasyEffects output",
+  "Use Organic visualizer": "Use Organic visualizer",
+  "Start EasyEffects. iNiR will reconnect automatically when its local server becomes available.": "Start EasyEffects. iNiR will reconnect automatically when its local server becomes available.",
+  "Blocked visualizer apps": "Blocked visualizer apps"
 }
