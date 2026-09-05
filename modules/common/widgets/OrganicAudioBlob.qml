@@ -263,7 +263,7 @@ Item {
         property real baseRadius: Math.max(0.20, Math.min(0.78, root.baseRadius))
         property real hollowAmount: Math.max(0, Math.min(1, root.hollowAmount))
         property real presentationMode: root.presentationMode
-        property real aspectRatio: Math.max(0.25, Math.min(8.0, width / Math.max(1, height)))
+        property real aspectRatio: Math.max(0.25, Math.min(64.0, width / Math.max(1, height)))
         property real edgeBaseRadius: Math.max(0.0, Math.min(0.75, root.edgeBaseRadius))
         property vector2d edgeCardHalf: root.edgeCardHalf
         property vector2d edgeReachHalf: root.edgeReachHalf

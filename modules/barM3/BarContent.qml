@@ -180,7 +180,7 @@ Item {
     }
     readonly property bool spectrumSignalActive: barCava.audioSignalActive
 
-    component SurfaceSpectrum: CavaSpectrum {
+    component SurfaceSpectrum: AudioVisualizerLayer {
         threadedRendering: true
         points: active ? barCava.points : []
         normalizationCeiling: active ? barCava.normalizationCeiling : 100
@@ -198,6 +198,14 @@ Item {
         edgeSoftness: root.spectrumEdgeSoftness
         frequencyProfile: root.spectrumFrequencyProfile
         accentStrength: root.spectrumAccentStrength
+        organicSensitivity: 0.62
+        organicPulse: 0.72
+        organicMotionSpeed: 0.9
+        organicIdleMotion: 0.18
+        organicGlow: 0.38
+        organicOpacity: root.spectrumOpacity
+        organicEdgeAura: true
+        organicBaseRadius: 0.42
     }
 
     // Every widget is loaded through a URL, so its optional inputs are wired

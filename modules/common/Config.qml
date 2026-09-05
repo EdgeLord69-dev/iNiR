@@ -169,6 +169,7 @@ Singleton {
     function setNestedValue(nestedKey, value) {
         _applyNestedKey(nestedKey, value);
         _applyToMirror(nestedKey, value);
+        _recordPendingMutation(nestedKey, value);
         fileWriteTimer.restart();
         root._bumpRevision();
         root.configChanged();
@@ -183,6 +184,7 @@ Singleton {
         for (let i = 0; i < paths.length; ++i) {
             _applyNestedKey(paths[i], updates[paths[i]]);
             _applyToMirror(paths[i], updates[paths[i]]);
+            _recordPendingMutation(paths[i], updates[paths[i]]);
         }
         if (paths.length > 0) {
             fileWriteTimer.restart();
@@ -2266,7 +2268,7 @@ Singleton {
                 property JsonObject visualizer: JsonObject {
                     property bool enable: false
                     property string multiMonitorMode: "primary" // "primary" | "all"
-                    property string type: "bars" // "bars" | "wave"
+                    property string type: "bars" // "bars" | "wave" | "organic"
                     property real height: 0.6 // Share of the bar height the spectrum may fill (0.1–1)
                     property real opacity: 0.35 // Spectrum opacity over the bar surface (0–1)
                     property string barsOrigin: "bottom" // "bottom" | "top" | "center" | "mirror"

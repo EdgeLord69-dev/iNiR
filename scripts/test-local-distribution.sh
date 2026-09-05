@@ -1012,8 +1012,14 @@ for media_preset in Full Compact Minimal AlbumArt Visualizer Classic Lyrics Lyri
 done
 
 organic_shader="$runtime_root/modules/common/widgets/OrganicAudioBlob.frag"
+organic_blob="$runtime_root/modules/common/widgets/OrganicAudioBlob.qml"
 visualizer_widget="$runtime_root/modules/background/widgets/visualizer/VisualizerWidget.qml"
 visualizer_settings="$runtime_root/modules/settings/DesktopWidgetsConfig.qml"
+bar_content="$runtime_root/modules/bar/BarContent.qml"
+bar_group="$runtime_root/modules/bar/BarGroup.qml"
+m3_bar_content="$runtime_root/modules/barM3/BarContent.qml"
+pill_spectrum="$runtime_root/modules/pill/PillSpectrumWings.qml"
+vertical_bar_content="$runtime_root/modules/verticalBar/VerticalBarContent.qml"
 if ! grep -Fq 'bool edgeMode = ubuf.presentationMode > 1.5' "$organic_shader" \
         || ! grep -Fq 'edgeDirections' "$organic_shader" \
         || ! grep -Fq 'edgeReachHalf' "$organic_shader" \
@@ -1049,6 +1055,21 @@ if ! grep -Fq 'bool edgeMode = ubuf.presentationMode > 1.5' "$organic_shader" \
         || grep -Fq 'background.widgets.mediaControls.visualizerRange' "$media_edge" \
         || grep -Fq 'background.widgets.visualizer.' "$media_edge" \
         || grep -Fq 'background.widgets.visualizer.organic' "$media_widget" \
+        || ! grep -Fq 'property bool organicEdgeAura: false' "$audio_layer" \
+        || ! grep -Fq 'component EdgeOrganicField: Item' "$audio_layer" \
+        || ! grep -Fq 'presentationMode: 2.0' "$audio_layer" \
+        || ! grep -Fq 'root.clipSegments?.length' "$audio_layer" \
+        || ! grep -Fq 'Math.min(64.0, width / Math.max(1, height))' "$organic_blob" \
+        || ! grep -Fq 'organicEdgeAura: true' "$bar_content" \
+        || ! grep -Fq 'organicEdgeAura: true' "$bar_group" \
+        || ! grep -Fq 'organicEdgeAura: true' "$m3_bar_content" \
+        || ! grep -Fq 'id: organicPillAura' "$pill_spectrum" \
+        || ! grep -Fq 'organicEdgeAura: true' "$vertical_bar_content" \
+        || ! grep -Fq 'organicAuraAllowance' "$runtime_root/modules/bar/Bar.qml" \
+        || ! grep -Fq 'organicAuraAllowance' "$runtime_root/modules/barM3/M3Bar.qml" \
+        || ! grep -Fq 'organicAuraAllowance' "$runtime_root/modules/verticalBar/VerticalBar.qml" \
+        || grep -Fq 'bool lineMode' "$organic_shader" \
+        || grep -Fq 'float linearSpectrum(' "$organic_shader" \
         || ! grep -Fq 'background.widgets.mediaControls.organicSensitivity' "$visualizer_settings" \
         || ! grep -Fq 'background.widgets.mediaControls.organicPulse' "$visualizer_settings" \
         || ! grep -Fq 'background.widgets.mediaControls.organicGlow' "$visualizer_settings" \

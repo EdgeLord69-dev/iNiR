@@ -356,7 +356,7 @@ Item { // Bar content region
             return edgeIsland.mapToItem(root, 0, 0).x
         }
 
-        CavaSpectrum {
+        AudioVisualizerLayer {
             anchors.fill: parent
             active: root.barSpectrumVisible && root.isIslands && edgeIsland.visible
             threadedRendering: true
@@ -381,6 +381,14 @@ Item { // Bar content region
             edgeSoftness: root.barSpectrumEdgeSoftness
             frequencyProfile: root.barSpectrumFrequencyProfile
             accentStrength: root.barSpectrumAccentStrength
+            organicSensitivity: 0.62
+            organicPulse: 0.72
+            organicMotionSpeed: 0.9
+            organicIdleMotion: 0.18
+            organicGlow: 0.38
+            organicOpacity: root.barSpectrumOpacity
+            organicEdgeAura: true
+            organicBaseRadius: 0.42
             topLeftRadius: edgeIsland.radius
             topRightRadius: edgeIsland.radius
             bottomLeftRadius: edgeIsland.radius
@@ -1011,7 +1019,7 @@ Item { // Bar content region
             accentColor: Appearance.zzz.chromeStroke
         }
 
-        CavaSpectrum {
+        AudioVisualizerLayer {
             anchors.fill: parent
             active: root.barSpectrumVisible && !root.isIslands
             threadedRendering: true
@@ -1031,6 +1039,14 @@ Item { // Bar content region
             edgeSoftness: root.barSpectrumEdgeSoftness
             frequencyProfile: root.barSpectrumFrequencyProfile
             accentStrength: root.barSpectrumAccentStrength
+            organicSensitivity: 0.62
+            organicPulse: 0.72
+            organicMotionSpeed: 0.9
+            organicIdleMotion: 0.18
+            organicGlow: 0.38
+            organicOpacity: root.barSpectrumOpacity
+            organicEdgeAura: true
+            organicBaseRadius: 0.42
             topLeftRadius: barBackground.topLeftRadius
             topRightRadius: barBackground.topRightRadius
             bottomLeftRadius: barBackground.bottomLeftRadius
