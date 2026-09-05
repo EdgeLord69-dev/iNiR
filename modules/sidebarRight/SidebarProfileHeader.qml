@@ -370,6 +370,7 @@ Item {
 
             StyledToolTip {
                 text: Translation.tr("Manage my account")
+                extraVisibleCondition: avatarAccountHover.hovered
             }
         }
 

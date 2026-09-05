@@ -387,28 +387,23 @@ Item { // Bar content region
             bottomRightRadius: edgeIsland.radius
         }
     }
-    // Edge-zone layout cell: hosts the module Loader. Layout hints live HERE
-    // (the real layout child) — hints inside the loaded item are ignored.
-    component EdgeZoneCell: Item {
-        id: cell
+    // Edge-zone Loader used directly as the RowLayout child. Keeping an
+    // intermediate Item here creates a circular size dependency (wrapper
+    // implicit size <- Loader implicit size while the Loader fills the wrapper),
+    // which can leave the island background sized while its content remains at
+    // 0x0 on slower/cold starts.
+    component EdgeZoneLoader: Loader {
+        id: edgeLoader
         required property string modelData
         property string zone: "left"
         Layout.alignment: Qt.AlignVCenter
         Layout.fillWidth: root._fillWidth(modelData, zone)
         Layout.fillHeight: root._fillHeight(modelData)
-        implicitWidth: cellLoader.implicitWidth
-        implicitHeight: cellLoader.implicitHeight
-        // Same latch-free rule as the centre zones: never read item.visible
-        // from the host (effective visibility latches hidden) — mirror the
-        // module's show conditions from root state.
-        visible: root._moduleShown(cell.modelData, cell.zone)
-        Loader {
-            id: cellLoader
-            anchors.fill: parent
-            active: root._moduleShown(cell.modelData, cell.zone)
-            sourceComponent: root._allComponents[cell.modelData] ?? null
-            onLoaded: if (cell.modelData === "activeWindow" && item) item.fillSlot = Qt.binding(() => root._fillSlot(cell.zone) && !root.isIslands)
-        }
+        active: root._moduleShown(modelData, zone)
+        visible: active
+        sourceComponent: root._allComponents[modelData] ?? null
+        onLoaded: if (modelData === "activeWindow" && item)
+            item.fillSlot = Qt.binding(() => root._fillSlot(zone) && !root.isIslands)
     }
 
     component VerticalBarSeparator: Rectangle {
@@ -1057,6 +1052,8 @@ Item { // Bar content region
             ? root.compressedLeftEdgeWidth
             : Math.max(implicitWidth, middleSection.leftPillX)
         implicitWidth: leftSectionRowLayout.implicitWidth
+            + ((root.isIslands && !root.layoutCompressionActive)
+                ? leftSectionRowLayout.anchors.leftMargin : 0)
         implicitHeight: Appearance.sizes.baseBarHeight
         clip: root.layoutCompressionActive
 
@@ -1096,23 +1093,26 @@ Item { // Bar content region
 
         RowLayout {
             id: leftSectionRowLayout
-            // Islands: hug content (no right anchor → width = implicitWidth), so
-            // the island wraps the row exactly and nothing can stretch across
-            // the zone's slack. Classic keeps the full-zone fill.
+            // Islands: hug content explicitly. Leaving only one horizontal
+            // anchor without assigning width can produce a negative runtime
+            // width in QtQuick.Layouts even though implicitWidth is valid.
+            // Classic/compressed mode uses the host's available width.
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
-            anchors.right: root.isIslands && !root.layoutCompressionActive ? undefined : parent.right
             anchors.leftMargin: root.isIslands
                 ? root.islandOuterInset + root.islandPad
                 : Appearance.rounding.screenRounding
             anchors.rightMargin: Appearance.rounding.screenRounding
+            width: root.isIslands && !root.layoutCompressionActive
+                ? implicitWidth
+                : Math.max(0, parent.width - anchors.leftMargin - anchors.rightMargin)
             spacing: 10
             clip: root.layoutCompressionActive
 
             Repeater {
                 model: root._leftIds
-                delegate: EdgeZoneCell { zone: "left" }
+                delegate: EdgeZoneLoader { zone: "left" }
             }
         }
     }
@@ -1162,10 +1162,11 @@ Item { // Bar content region
             implicitWidth: empty ? 0 : (root.layoutCompressionActive
                 ? root.compressedCenterWidth : contentWidth)
             clipContent: root.layoutCompressionActive
-            // Collapse the pivot pill background when workspaces (its only
-            // default content) is hidden — leaves a tiny centred gap instead of
-            // a ghost pill. Width stays minimal so side pills still flank it.
-            visible: !empty
+            // Keep the host itself visible even at zero width. Hiding a parent
+            // because its Loader has not produced an implicit size yet makes
+            // every child effectively invisible, so Qt Layout can latch the
+            // group at width 0 forever on slower/cold starts. `implicitWidth`
+            // still collapses the group completely when it is genuinely empty.
 
             Repeater {
                 model: root._centerIds
@@ -1219,7 +1220,6 @@ Item { // Bar content region
             anchors.rightMargin: (root.isIslands ? 8 : 4) * root.hostScale
             // Collapse to nothing when this zone has no visible modules;
             // otherwise take the symmetric target width. Modules elide/clip.
-            visible: !empty
             // Islands: each capsule hugs its own content (no symmetric mirroring,
             // which would leave dead space in the lighter side). Classic keeps the
             // mirrored width so the two side pills stay visually balanced.
@@ -1257,7 +1257,6 @@ Item { // Bar content region
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: (Config.options?.bar.borderless ?? false) ? rightSeparator.right : middleCenterGroup.right
             anchors.leftMargin: (root.isIslands ? 8 : 4) * root.hostScale
-            visible: !rightCenterGroupPill.empty
             implicitWidth: rightCenterGroupPill.empty ? 0 : rightCenterGroupPill.width
             implicitHeight: rightCenterGroupPill.height
             readonly property real contentWidth: rightCenterGroupPill.contentWidth
@@ -1292,7 +1291,6 @@ Item { // Bar content region
                 spectrumAccentStrength: root.barSpectrumAccentStrength
                 spectrumDomain: root
                 anchors.verticalCenter: parent.verticalCenter
-                visible: !empty
                 // Islands: each capsule hugs its own content (no symmetric mirroring,
                 // which would leave dead space in the lighter side). Classic keeps the
                 // mirrored width so the two side pills stay visually balanced.
@@ -1378,6 +1376,8 @@ Item { // Bar content region
             ? root.compressedRightEdgeWidth
             : Math.max(implicitWidth, root.width - middleSection.rightPillEndX)
         implicitWidth: rightSectionRowLayout.implicitWidth
+            + ((root.isIslands && !root.layoutCompressionActive)
+                ? rightSectionRowLayout.anchors.rightMargin : 0)
         implicitHeight: Appearance.sizes.baseBarHeight
         clip: root.layoutCompressionActive
 
@@ -1420,23 +1420,26 @@ Item { // Bar content region
 
         RowLayout {
             id: rightSectionRowLayout
-            // Islands: hug content against the right margin (no left anchor →
-            // width = implicitWidth) so the island wraps the row exactly.
+            // Islands: hug content explicitly for the same reason as the left
+            // edge. The previous right-anchor-only geometry could resolve to a
+            // negative width while the island background still used implicitWidth.
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.right: parent.right
-            anchors.left: root.isIslands && !root.layoutCompressionActive ? undefined : parent.left
             anchors.leftMargin: Appearance.rounding.screenRounding
             anchors.rightMargin: root.isIslands
                 ? root.islandOuterInset + root.islandPad
                 : Appearance.rounding.screenRounding
+            width: root.isIslands && !root.layoutCompressionActive
+                ? implicitWidth
+                : Math.max(0, parent.width - anchors.leftMargin - anchors.rightMargin)
             spacing: 5
             layoutDirection: Qt.RightToLeft
             clip: root.layoutCompressionActive
 
             Repeater {
                 model: root._rightIds
-                delegate: EdgeZoneCell {
+                delegate: EdgeZoneLoader {
                     zone: "right"
                     Layout.leftMargin: modelData === "weather" ? 4 : 0
                 }

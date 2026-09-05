@@ -57,6 +57,11 @@ ContentPage {
         next = next.filter(value => root._normalizedAppKey(value) !== key)
         if (enabled) next.push(clean)
         Config.setNestedValue(path, next)
+        // App filters are low-frequency, user-curated policy. Settings runs in
+        // its own process, so do not leave these edits waiting on the normal
+        // deferred config timer where an immediate close/restart can discard
+        // the last toggle before it reaches disk.
+        Config.flushWrites()
     }
 
     function _notificationIcon(appName): string {

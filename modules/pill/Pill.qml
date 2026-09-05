@@ -191,7 +191,7 @@ Item {
     readonly property bool manualGameFace: GameMode.manuallyActivated
 
     /**
-     * A fullscreen window on this pill's active workspace hides the resting
+     * A covering fullscreen window on this pill's active workspace hides the resting
      * faces — classic-bar parity: top-layer bars get covered by the
      * compositor, but the pill's Overlay layer never is, so it opts out
      * itself. Hardware OSD feedback such as volume and brightness can still play
@@ -201,24 +201,7 @@ Item {
     readonly property bool fsCovered: {
         if (!CompositorService.isNiri)
             return GameMode.hasAnyFullscreenWindow;
-        const wins = NiriService.windows ?? [];
-        for (const w of wins) {
-            const ws = NiriService.workspaces?.[w.workspace_id];
-            if (!(ws?.is_active ?? false))
-                continue;
-            if (screenName.length > 0 && ws.output !== screenName)
-                continue;
-            // In niri a fullscreen window covers the monitor only while it
-            // is the focused tile. Scrolling to another window in the same
-            // workspace unfocuses the fullscreen window without changing its
-            // size, so without this focus check the pill stays hidden even
-            // though the game no longer covers the screen.
-            if (!w.is_focused)
-                continue;
-            if (GameMode.isWindowFullscreen(w))
-                return true;
-        }
-        return false;
+        return GameMode.hasFullscreenOnOutput(screenName);
     }
     readonly property bool fsHide: fsCovered
         && (mode === "rest" || mode === "hover" || mode === "game")
