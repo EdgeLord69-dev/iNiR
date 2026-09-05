@@ -158,16 +158,13 @@ case "${SKIP_QUICKSHELL}" in
     [[ -f "${II_TARGET}/setup" ]] && chmod +x "${II_TARGET}/setup"
 
     if [[ -f "${REPO_ROOT}/scripts/inir" ]]; then
-      if [[ "$(get_install_mode)" == "repo-link" ]]; then
-        rm -f "${INIR_LAUNCHER_PATH}"
-        ln -s "${REPO_ROOT}/scripts/inir" "${INIR_LAUNCHER_PATH}"
+      if sync_launcher_from_repo >/dev/null; then
+        log_success "Launcher installed"
+        log_success "Launcher path configured for login and interactive shells"
       else
-        install_file "${REPO_ROOT}/scripts/inir" "${INIR_LAUNCHER_PATH}"
+        log_error "Could not install the inir launcher"
+        return 1
       fi
-      chmod +x "${INIR_LAUNCHER_PATH}"
-      ensure_launcher_path_in_shells "${XDG_BIN_HOME}"
-      log_success "Launcher installed"
-      log_success "Launcher path configured for login and interactive shells"
     fi
 
     local _service_refresh_status=1
@@ -458,7 +455,45 @@ done
 
 # Darkly Qt style config
 if [[ -f "dots/.config/darklyrc" ]]; then
-  install_file "dots/.config/darklyrc" "${XDG_CONFIG_HOME}/darklyrc"
+  darkly_target="${XDG_CONFIG_HOME}/darklyrc"
+  if [[ ! -f "$darkly_target" ]]; then
+    install_file "dots/.config/darklyrc" "$darkly_target"
+  else
+    # Keep user Darkly preferences intact. Newer Dolphin versions ask the
+    # QStyle to draw FrameFocusRect for focused items, and current Darkly draws
+    # that as an extra underline. Disable only that one style feature.
+    python3 - "$darkly_target" <<'PY'
+from pathlib import Path
+import re
+import sys
+
+path = Path(sys.argv[1])
+text = path.read_text()
+section = re.search(r'(?ms)^\[Style\]\s*$.*?(?=^\[|\Z)', text)
+
+if section:
+    block = section.group(0)
+    if re.search(r'(?m)^ViewDrawFocusIndicator=', block):
+        updated = re.sub(
+            r'(?m)^ViewDrawFocusIndicator=.*$',
+            'ViewDrawFocusIndicator=false',
+            block,
+            count=1,
+        )
+    else:
+        trailing = re.search(r'(?:\n[ \t]*)*\Z', block).group(0)
+        body = block[:-len(trailing)] if trailing else block
+        updated = body + ('' if body.endswith('\n') else '\n') \
+            + 'ViewDrawFocusIndicator=false' + (trailing or '\n')
+    text = text[:section.start()] + updated + text[section.end():]
+else:
+    if text and not text.endswith('\n'):
+        text += '\n'
+    text += '\n[Style]\nViewDrawFocusIndicator=false\n'
+
+path.write_text(text)
+PY
+  fi
 fi
 
 # MPV config

@@ -92,15 +92,23 @@ Singleton {
             }
 
             # apply_shell_scale()/apply_qt_runtime_env() own these for iNiR's
-            # process only. Restore the user's session values for launched apps.
+            # process only. Never leak them into launched applications.
             for _var in \
                 QT_SCALE_FACTOR QT_SCALE_FACTOR_ROUNDING_POLICY \
                 QT_WAYLAND_FORCE_DPI QT_FONT_DPI QT_AUTO_SCREEN_SCALE_FACTOR \
                 QT_SCREEN_SCALE_FACTORS GDK_SCALE GDK_DPI_SCALE \
                 QSG_ATLAS_WIDTH QSG_ATLAS_HEIGHT QT_LOGGING_RULES \
-                QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE QS_DISABLE_CRASH_HANDLER \
-                ELECTRON_OZONE_PLATFORM_HINT; do
+                QS_DISABLE_CRASH_HANDLER; do
                 restore_from_manager "$_var"
+            done
+
+            # These are application/session policy, not Quickshell-private
+            # tuning. The iNiR launcher mirrors the effective Niri config into
+            # Quickshell before startup; only fill a missing value from the
+            # manager and never override Niri's authoritative app policy.
+            for _var in QT_QPA_PLATFORM QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE \
+                        ELECTRON_OZONE_PLATFORM_HINT; do
+                import_if_missing "$_var"
             done
 
             # The launcher marks exactly which GPU variables iNiR injected for

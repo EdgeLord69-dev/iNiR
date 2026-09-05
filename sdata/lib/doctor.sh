@@ -1584,6 +1584,11 @@ check_qt_theming() {
     else
         # Also check niri config isn't stuck on qt6ct when kde plugin is available
         local niri_cfg="${XDG_CONFIG_HOME}/niri/config.kdl"
+        local modular_env_cfg="${XDG_CONFIG_HOME}/niri/config.d/40-environment.kdl"
+        if [[ -f "$modular_env_cfg" ]] && { [[ ! -f "$niri_cfg" ]] \
+                || grep -Eq '^[[:space:]]*include[[:space:]]+"config\.d/40-environment\.kdl"[[:space:]]*$' "$niri_cfg"; }; then
+            niri_cfg="$modular_env_cfg"
+        fi
         if [[ -f "$niri_cfg" ]] && grep -q 'QT_QPA_PLATFORMTHEME "qt6ct"' "$niri_cfg"; then
             sed -i 's/QT_QPA_PLATFORMTHEME "qt6ct"/QT_QPA_PLATFORMTHEME "kde"/' "$niri_cfg"
             doctor_fix "Switched QT_QPA_PLATFORMTHEME from qt6ct to kde"

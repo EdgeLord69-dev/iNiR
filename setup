@@ -197,7 +197,7 @@ sync_launcher_from_repo() {
 
     mkdir -p "$XDG_BIN_HOME"
 
-    local source_real target_real install_mode
+    local source_real target_real install_mode launcher_tmp
     source_real="$(readlink -f "$launcher_source" 2>/dev/null || printf '%s' "$launcher_source")"
     target_real="$(readlink -f "$launcher_target" 2>/dev/null || true)"
     install_mode="$(get_installed_install_mode 2>/dev/null || true)"
@@ -210,14 +210,23 @@ sync_launcher_from_repo() {
             rm -f "$launcher_target"
             ln -s "$launcher_source" "$launcher_target"
         fi
-    elif [[ -z "$target_real" || "$source_real" != "$target_real" ]]; then
-        if [[ ! -f "$launcher_target" ]] || ! cmp -s "$launcher_source" "$launcher_target" 2>/dev/null; then
-            cp -f "$launcher_source" "$launcher_target"
-        fi
+    elif [[ -L "$launcher_target" ]] || [[ ! -f "$launcher_target" ]] \
+            || ! cmp -s "$launcher_source" "$launcher_target" 2>/dev/null; then
+        # repo-copy owns a real launcher file. `cp -f` follows an existing
+        # symlink, which can silently update an old target while leaving the
+        # launcher itself pointed at the wrong checkout/runtime. Replace the
+        # directory entry atomically so topology and contents are both correct.
+        launcher_tmp="${launcher_target}.tmp.$$"
+        rm -f "$launcher_tmp"
+        install -m755 "$launcher_source" "$launcher_tmp" || return 1
+        mv -f "$launcher_tmp" "$launcher_target" || {
+            rm -f "$launcher_tmp"
+            return 1
+        }
     fi
 
     chmod +x "$launcher_source"
-    [[ "$source_real" == "$target_real" ]] || chmod +x "$launcher_target"
+    [[ "$install_mode" == "repo-link" ]] || chmod +x "$launcher_target"
     ensure_launcher_path_in_shells "$XDG_BIN_HOME"
     printf '%s\n' "$launcher_target"
 }

@@ -769,11 +769,20 @@ setup-environment-config(){
 
   log_info "Setting up environment variables..."
 
-  # Detect Qt platform theme: use kde if Plasma is installed, qt6ct otherwise
+  # Detect the actual KDE Qt platform-theme provider. iNiR does not require a
+  # Plasma desktop session; plasma-integration is intentionally supported as a
+  # standalone dependency under Niri.
   local qt_theme="qt6ct"
-  if pacman -Q plasma-desktop &>/dev/null 2>&1 || pacman -Q plasma-workspace &>/dev/null 2>&1 || \
-     dpkg -l plasma-desktop 2>/dev/null | grep -q '^ii' || \
-     rpm -q plasma-desktop &>/dev/null 2>&1; then
+  local qt_plugin_dir=""
+  if command -v qtpaths6 >/dev/null 2>&1; then
+    qt_plugin_dir="$(qtpaths6 --plugin-dir 2>/dev/null || true)"
+  elif command -v qtpaths >/dev/null 2>&1; then
+    qt_plugin_dir="$(qtpaths --plugin-dir 2>/dev/null || true)"
+  fi
+  if [[ -n "$qt_plugin_dir" && -f "$qt_plugin_dir/platformthemes/KDEPlasmaPlatformTheme6.so" ]] || \
+     [[ -f /usr/lib/qt6/plugins/platformthemes/KDEPlasmaPlatformTheme6.so ]] || \
+     [[ -f /usr/lib64/qt6/plugins/platformthemes/KDEPlasmaPlatformTheme6.so ]] || \
+     [[ -f /usr/lib/x86_64-linux-gnu/qt6/plugins/platformthemes/KDEPlasmaPlatformTheme6.so ]]; then
     qt_theme="kde"
   fi
 

@@ -1555,9 +1555,9 @@ apply_hot_reload_policy_for_dir() {
     export INIR_DISABLE_HOT_RELOAD=1
 }
 
-# Cached systemd user environment — Niri publishes its session variables here
-# before niri.service reports READY.  Manual/recovery launches may still need to
-# copy missing values into the local iNiR process, but iNiR never invents them.
+# Cached systemd user environment. Niri publishes compositor-owned session
+# values such as WAYLAND_DISPLAY/NIRI_SOCKET here; app-facing policy can remain
+# only in Niri's KDL environment block and is mirrored separately below.
 _cached_systemd_env=""
 _cached_systemd_env_fetched=false
 
@@ -1570,6 +1570,39 @@ _get_systemd_user_env() {
     # Keep the lookup bounded for manual invocations outside the supervised path.
     _cached_systemd_env="$(timeout 3s systemctl --user show-environment 2>/dev/null)" || true
     printf '%s' "$_cached_systemd_env"
+}
+
+_niri_app_environment_file() {
+    local niri_dir="${XDG_CONFIG_HOME:-$HOME/.config}/niri"
+    local root_cfg="${niri_dir}/config.kdl"
+    local modular_cfg="${niri_dir}/config.d/40-environment.kdl"
+
+    if [[ -f "$modular_cfg" ]] && { [[ ! -f "$root_cfg" ]] \
+            || grep -Eq '^[[:space:]]*include[[:space:]]+"config\.d/40-environment\.kdl"[[:space:]]*$' "$root_cfg"; }; then
+        printf '%s' "$modular_cfg"
+    elif [[ -f "$root_cfg" ]]; then
+        printf '%s' "$root_cfg"
+    fi
+}
+
+_niri_app_environment_value() {
+    local name="$1"
+    local cfg="$2"
+    [[ -n "$name" && -f "$cfg" ]] || return 0
+    sed -nE "s/^[[:space:]]*${name}[[:space:]]+\"([^\"]*)\".*/\\1/p" "$cfg" | tail -1
+}
+
+apply_niri_app_environment() {
+    local cfg
+    cfg="$(_niri_app_environment_file)"
+    [[ -n "$cfg" ]] || return 0
+
+    local name value
+    for name in XDG_MENU_PREFIX QT_QPA_PLATFORM QT_QPA_PLATFORMTHEME \
+                QT_STYLE_OVERRIDE ELECTRON_OZONE_PLATFORM_HINT; do
+        value="$(_niri_app_environment_value "$name" "$cfg")"
+        [[ -n "$value" ]] && export "${name}=${value}"
+    done
 }
 
 apply_gpu_policy() {
@@ -1663,6 +1696,10 @@ apply_gpu_policy() {
 apply_qt_runtime_env() {
     # Must run before Qt reads env at QGuiApplication construction.
     apply_gpu_policy
+    # inir.service is started by systemd, not as a direct Niri child. Mirror
+    # Niri's app-facing policy so Quickshell and apps launched through it see
+    # the same Qt platform/style values as direct compositor spawns.
+    apply_niri_app_environment
 
     # Scene graph texture atlas.  Qt allocates one atlas per QQuickWindow, and
     # the shell runs ~9 of them (bar, background, backdrop, dock, strip, pill,
@@ -1681,7 +1718,10 @@ apply_qt_runtime_env() {
     elif [[ -z "${QT_QPA_PLATFORMTHEME:-}" ]]; then
         # Session doesn't provide a platform theme — detect a sane default.
         # Without this, Qt can't resolve icon themes and all icons show as missing.
-        if command -v kwriteconfig6 &>/dev/null || [[ -f /usr/lib/qt6/plugins/platformthemes/KDEPlasmaPlatformTheme.so ]] || [[ -f /usr/lib64/qt6/plugins/platformthemes/KDEPlasmaPlatformTheme.so ]]; then
+        if command -v kwriteconfig6 &>/dev/null \
+                || [[ -f /usr/lib/qt6/plugins/platformthemes/KDEPlasmaPlatformTheme6.so ]] \
+                || [[ -f /usr/lib64/qt6/plugins/platformthemes/KDEPlasmaPlatformTheme6.so ]] \
+                || [[ -f /usr/lib/x86_64-linux-gnu/qt6/plugins/platformthemes/KDEPlasmaPlatformTheme6.so ]]; then
             export QT_QPA_PLATFORMTHEME=kde
         elif command -v gsettings &>/dev/null && [[ -f /usr/lib/qt6/plugins/platformthemes/libqgtk3.so || -f /usr/lib64/qt6/plugins/platformthemes/libqgtk3.so ]]; then
             export QT_QPA_PLATFORMTHEME=gtk3

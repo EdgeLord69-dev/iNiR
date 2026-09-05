@@ -1092,6 +1092,43 @@ step "launcher resolution"
 bash "$launcher" path >/dev/null
 bash "$launcher" status >/dev/null
 
+# A repo-copy update must replace an inherited/stale symlink with a real file;
+# `cp -f source symlink` follows the link and only overwrites its old target.
+# Conversely repo-link must always converge back to the live repo symlink.
+launcher_sync_root="$(mktemp -d)"
+mkdir -p "$launcher_sync_root/home/.local/bin" "$launcher_sync_root/old"
+printf '#!/bin/sh\nprintf OLD\\n\n' > "$launcher_sync_root/old/inir"
+chmod +x "$launcher_sync_root/old/inir"
+ln -s "$launcher_sync_root/old/inir" "$launcher_sync_root/home/.local/bin/inir"
+launcher_sync_function="$(sed -n '/^sync_launcher_from_repo() {/,/^}/p' "$runtime_root/setup")"
+if ! TEST_HOME="$launcher_sync_root/home" TEST_REPO="$runtime_root" \
+        TEST_FUNCTION="$launcher_sync_function" bash -c '
+    set -e
+    export HOME="$TEST_HOME"
+    export XDG_BIN_HOME="$HOME/.local/bin"
+    export REPO_ROOT="$TEST_REPO"
+    get_installed_install_mode() { printf repo-copy; }
+    get_install_mode() { printf repo-copy; }
+    ensure_launcher_path_in_shells() { :; }
+    eval "$TEST_FUNCTION"
+    sync_launcher_from_repo >/dev/null
+    [[ ! -L "$XDG_BIN_HOME/inir" ]]
+    cmp -s "$REPO_ROOT/scripts/inir" "$XDG_BIN_HOME/inir"
+    grep -Fq OLD "$TEST_HOME/../old/inir"
+
+    printf stale-copy > "$XDG_BIN_HOME/inir"
+    get_installed_install_mode() { printf repo-link; }
+    get_install_mode() { printf repo-link; }
+    sync_launcher_from_repo >/dev/null
+    [[ -L "$XDG_BIN_HOME/inir" ]]
+    [[ "$(readlink -f "$XDG_BIN_HOME/inir")" == "$(readlink -f "$REPO_ROOT/scripts/inir")" ]]
+'; then
+    rm -rf "$launcher_sync_root"
+    printf 'FAIL: setup launcher sync does not converge repo-copy/repo-link topology\n' >&2
+    exit 1
+fi
+rm -rf "$launcher_sync_root"
+
 step "application launch environment"
 # Niri owns DISPLAY/WAYLAND_DISPLAY/NIRI_SOCKET. App launches may refresh from
 # the live user-manager snapshot, but must never infer compositor sockets.
@@ -1099,11 +1136,55 @@ shell_exec="$runtime_root/modules/common/functions/ShellExec.qml"
 inir_launcher="$runtime_root/scripts/inir"
 if ! grep -Fq 'systemctl --user show-environment' "$shell_exec" \
         || ! grep -Fq 'for _var in DISPLAY WAYLAND_DISPLAY NIRI_SOCKET' "$shell_exec" \
+        || ! grep -Fq 'QT_QPA_PLATFORM QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE' "$shell_exec" \
+        || ! grep -Fq 'apply_niri_app_environment' "$inir_launcher" \
+        || ! grep -Fq 'config.d/40-environment.kdl' "$inir_launcher" \
         || grep -Fq '/tmp/.X11-unix/X' "$shell_exec" \
         || grep -Fq 'valid_display()' "$shell_exec"; then
     printf 'FAIL: application launches do not preserve Niri-owned graphical session environment\n' >&2
     exit 1
 fi
+
+# The supervised shell starts from systemd rather than as a direct Niri child.
+# Exercise the launcher-side KDL mirror with no user-manager Qt variables so
+# app policy still comes from Niri's effective environment config.
+niri_env_root="$(mktemp -d)"
+mkdir -p "$niri_env_root/niri/config.d"
+cat > "$niri_env_root/niri/config.kdl" <<'EOF'
+include "config.d/40-environment.kdl"
+EOF
+cat > "$niri_env_root/niri/config.d/40-environment.kdl" <<'EOF'
+environment {
+    XDG_MENU_PREFIX "plasma-"
+    QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORMTHEME "kde"
+    QT_STYLE_OVERRIDE "Darkly"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+}
+EOF
+niri_env_functions="$({
+    sed -n '/^_niri_app_environment_file() {/,/^}/p' "$inir_launcher"
+    sed -n '/^_niri_app_environment_value() {/,/^}/p' "$inir_launcher"
+    sed -n '/^apply_niri_app_environment() {/,/^}/p' "$inir_launcher"
+})"
+if ! TEST_XDG_CONFIG_HOME="$niri_env_root" TEST_FUNCTIONS="$niri_env_functions" bash -c '
+    set -e
+    export XDG_CONFIG_HOME="$TEST_XDG_CONFIG_HOME"
+    unset QT_QPA_PLATFORM QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE ELECTRON_OZONE_PLATFORM_HINT XDG_MENU_PREFIX
+    eval "$TEST_FUNCTIONS"
+    apply_niri_app_environment
+    [[ "$QT_QPA_PLATFORM" == wayland ]]
+    [[ "$QT_QPA_PLATFORMTHEME" == kde ]]
+    [[ "$QT_STYLE_OVERRIDE" == Darkly ]]
+    [[ "$ELECTRON_OZONE_PLATFORM_HINT" == auto ]]
+    [[ "$XDG_MENU_PREFIX" == plasma- ]]
+'; then
+    rm -rf "$niri_env_root"
+    printf 'FAIL: supervised launcher does not mirror Niri app environment\n' >&2
+    exit 1
+fi
+rm -rf "$niri_env_root"
+
 if ! grep -Fq 'for _qs_var in WAYLAND_DISPLAY NIRI_SOCKET DISPLAY' "$inir_launcher" \
         || grep -Fq '/tmp/.X11-unix/X' "$inir_launcher" \
         || grep -Fq 'niri.wayland-*.sock' "$inir_launcher" \
@@ -1114,6 +1195,18 @@ fi
 if grep -Fq 'MALLOC_ARENA_MAX' "$shell_exec" \
         || grep -Fq 'MALLOC_MMAP_THRESHOLD_' "$shell_exec"; then
     printf 'FAIL: application launch policy still carries retired allocator handling\n' >&2
+    exit 1
+fi
+
+# Generic distro setup must key off the platform-theme plugin itself, not the
+# presence of a full Plasma desktop. Niri users commonly install
+# plasma-integration standalone.
+package_installers="$runtime_root/sdata/lib/package-installers.sh"
+doctor_lib="$runtime_root/sdata/lib/doctor.sh"
+if ! grep -Fq 'KDEPlasmaPlatformTheme6.so' "$package_installers" \
+        || ! grep -Fq 'config.d/40-environment.kdl' "$doctor_lib" \
+        || ! grep -Fq 'KDEPlasmaPlatformTheme6.so' "$inir_launcher"; then
+    printf 'FAIL: Qt theming setup/doctor does not support standalone plasma-integration with modular Niri config\n' >&2
     exit 1
 fi
 
