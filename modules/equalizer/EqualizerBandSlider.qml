@@ -69,7 +69,7 @@ Item {
             anchors.centerIn: parent
             text: root._localValue > 0 ? `+${root._localValue.toFixed(1)}` : root._localValue.toFixed(1)
             font.family: Appearance.font.family.numbers
-            font.pixelSize: Appearance.font.pixelSize.smallest
+            font.pixelSize: Appearance.font.pixelSize.smaller
             font.weight: Math.abs(root._localValue) > 0.05 ? Font.DemiBold : Font.Medium
             color: dragArea.pressed || dragArea.containsMouse || Math.abs(root._localValue) > 0.05
                 ? root.accentColor : root.quietText
@@ -90,7 +90,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: 4
+            width: 5
             radius: 2
             color: Appearance.zzzEverywhere ? Appearance.zzz.metricTrack
                 : Appearance.auroraEverywhere ? Appearance.aurora.colElevatedSurface
@@ -100,7 +100,7 @@ Item {
         Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             y: Math.min(root.handleCenterY - trackWell.y, root.zeroY - trackWell.y)
-            width: 4
+            width: 5
             height: Math.max(3, Math.abs(root.handleCenterY - root.zeroY))
             radius: Appearance.rounding.full
             color: root.accentColor
@@ -173,7 +173,7 @@ Item {
             return String(Math.round(frequency))
         }
         font.family: Appearance.font.family.numbers
-        font.pixelSize: Appearance.font.pixelSize.smallest
+        font.pixelSize: Appearance.font.pixelSize.smaller
         color: root.quietText
     }
 }

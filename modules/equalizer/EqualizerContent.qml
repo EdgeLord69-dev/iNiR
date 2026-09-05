@@ -133,27 +133,14 @@ Item {
                     : Appearance.inirEverywhere ? Appearance.inir.colPrimaryContainer
                     : Appearance.colors.colPrimaryContainer
 
-                Rectangle {
-                    anchors.fill: parent
-                    anchors.margins: 1
-                    radius: parent.radius
-                    color: "transparent"
-                    border.width: Appearance.zzzEverywhere ? 2 : 1
-                    border.color: Appearance.regaliaEverywhere ? Appearance.regalia.separatorStrong
-                        : Appearance.zzzEverywhere ? Appearance.zzz.hairlineStrong
-                        : Appearance.angelEverywhere ? Appearance.angel.colCardBorder
-                        : Appearance.inirEverywhere ? Appearance.inir.colBorderSubtle
-                        : Appearance.auroraEverywhere ? Appearance.aurora.colPopupBorder
-                        : Appearance.colors.colOutlineVariant
-                    opacity: Appearance.cookieEverywhere ? 0 : 0.72
-                }
-
                 MaterialSymbol {
                     anchors.centerIn: parent
                     text: "graphic_eq"
                     iconSize: 24
                     fill: 1
-                    color: root.accentColor
+                    color: Appearance.zzzEverywhere ? Appearance.zzz.onSticker
+                        : Appearance.regaliaEverywhere ? Appearance.regalia.primaryPlateInk
+                        : root.accentColor
                 }
             }
 
@@ -229,7 +216,7 @@ Item {
                     id: bandCardLayout
                     anchors.fill: parent
                     anchors.margins: 14
-                    spacing: 12
+                    spacing: 10
 
                     RowLayout {
                         Layout.fillWidth: true
