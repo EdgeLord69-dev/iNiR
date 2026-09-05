@@ -44,6 +44,17 @@ Item {
     }
 
     Timer {
+        interval: 1500
+        repeat: true
+        running: root.visible
+            && EasyEffects.available
+            && EasyEffects.active
+            && !EasyEffects.equalizerReady
+            && !EasyEffects.equalizerLoading
+        onTriggered: EasyEffects.ensureEqualizer()
+    }
+
+    Timer {
         id: activeRefreshTimer
         interval: 1100
         repeat: false
@@ -52,9 +63,11 @@ Item {
 
     function statusTitle(): string {
         if (!EasyEffects.available) return Services.Translation.tr("EasyEffects is not installed")
-        if (!EasyEffects.equalizerServerAvailable) return Services.Translation.tr("EasyEffects is not running")
+        if (!EasyEffects.active) return Services.Translation.tr("EasyEffects is not running")
+        if (!EasyEffects.equalizerServerAvailable) return Services.Translation.tr("EasyEffects local control is unavailable")
         if (!EasyEffects.equalizerSupported) return Services.Translation.tr("Equalizer control is unavailable")
         if (EasyEffects.equalizerError === "lsp_plugins_missing") return Services.Translation.tr("Linux Studio Plugins are missing")
+        if (EasyEffects.equalizerError === "plugin_not_found") return Services.Translation.tr("Add an Equalizer to EasyEffects output")
         if (!EasyEffects.equalizerPluginAvailable) return Services.Translation.tr("No controllable Equalizer is active")
         if (EasyEffects.equalizerBandCount !== 10) return Services.Translation.tr("Use the iNiR 10-band layout")
         return Services.Translation.tr("Equalizer unavailable")
@@ -63,14 +76,18 @@ Item {
     function statusBody(): string {
         if (!EasyEffects.available)
             return Services.Translation.tr("Install EasyEffects to control the output equalizer from iNiR.")
+        if (!EasyEffects.active)
+            return Services.Translation.tr("Start EasyEffects. iNiR will reconnect automatically when its local server becomes available.")
         if (!EasyEffects.equalizerServerAvailable)
-            return Services.Translation.tr("Start EasyEffects, then refresh this panel. Local control requires EasyEffects 8.2.8 or newer.")
+            return Services.Translation.tr("EasyEffects is running, but its local control socket is unavailable. Per-band control requires EasyEffects 8.2.8 or newer and the EasyEffects local server.")
         if (!EasyEffects.equalizerSupported)
             return Services.Translation.tr("This EasyEffects build does not expose per-band equalizer control through its local server.")
         if (EasyEffects.equalizerError === "lsp_plugins_missing")
             return Services.Translation.tr("Install the Linux Studio Plugins LV2 package for your distribution, then restart EasyEffects. iNiR will detect the Equalizer automatically.")
+        if (EasyEffects.equalizerError === "plugin_not_found")
+            return Services.Translation.tr("EasyEffects is connected, but its output pipeline has no Equalizer. In EasyEffects, open Output → Effects, add Equalizer, and leave this panel open. iNiR will detect the new Equalizer automatically without replacing the rest of your effects chain.")
         if (!EasyEffects.equalizerPluginAvailable)
-            return Services.Translation.tr("Open EasyEffects and make sure an Equalizer is present and available in the output pipeline. Linux Studio Plugins (LV2) provides the backend on standard EasyEffects installs. iNiR never replaces your existing effects chain.")
+            return Services.Translation.tr("EasyEffects is connected, but the Equalizer backend is not controllable. Make sure Linux Studio Plugins (LV2) is available to EasyEffects, then refresh this panel.")
         if (EasyEffects.equalizerBandCount !== 10)
             return Services.Translation.tr("Configure this Equalizer as 10 bands at 32 Hz through 16 kHz. This resets only the Equalizer bands, not the rest of your EasyEffects pipeline.")
         return ""

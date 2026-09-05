@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 0a2a8ceccf678722
+# IPC.md hash: b4a4806b9812ec75
 # Targets: 62
 
 declare -gA IPC_TARGET_DESC=(
@@ -23,7 +23,7 @@ declare -gA IPC_TARGET_DESC=(
   [customWidgets]="Custom widget management. Create, list, reload, and remove user-installed widgets from \`~/.config/inir/widgets/\`."
   [dashboard]="Centered welcome hub panel (ii family): greeting, clock, notifications, media, weather, calendar, todo, system usage and GitHub activity."
   [dev]="Development navigation for loading lazy surfaces and internal views without automating pointer or keyboard input. Destination identifiers are stable and returned as JSON by \`list\`."
-  [equalizer]="Open the ii-family EasyEffects output equalizer. Enable **Settings → Modules → Optional → EasyEffects Equalizer** first; while the module is disabled this IPC target is not constructed. The panel controls an existing EasyEffects Equalizer through its local server and never replaces the user's effects chain."
+  [equalizer]="Open the ii-family EasyEffects output equalizer. The integration is optional and disabled until you enable it. Run \`inir settings\`, then go to **Modules → Optional → EasyEffects Equalizer** and enable the switch. While it is disabled the IPC target is intentionally not constructed. On a fresh empty EasyEffects output pipeline, iNiR bootstraps a neutral 10-band \`iNiR Equalizer\` preset. Existing non-empty effect chains are never replaced automatically."
   [gamemode]="Performance mode for gaming. Auto-detects fullscreen apps and disables animations/effects. Can also be toggled manually for those stubborn games that don't go fullscreen properly."
   [globalActions]="Command palette / action registry. Search and execute shell actions from scripts or keybinds."
   [keyboard]="Keyboard layout switching (Niri only). Cycles through configured keyboard layouts and queries layout info."
@@ -278,7 +278,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["equalizer:close"]="Hide equalizer"
   ["equalizer:open"]="Show equalizer"
   ["equalizer:refresh"]="Refresh EasyEffects equalizer state"
-  ["equalizer:ensure"]="Restore the last EasyEffects output preset when its EQ instance is not loaded"
+  ["equalizer:ensure"]="Ensure Equalizer control is available; bootstraps a neutral Equalizer only when the output pipeline is empty"
   ["equalizer:status"]="Return current equalizer state as JSON"
   ["equalizer:setBand"]="Set one 0-based band gain in dB"
   ["equalizer:preset"]="Apply one built-in EQ preset"
@@ -542,7 +542,7 @@ bind "Alt+Shift+Tab" { spawn "inir" "altSwitcher" "previous"; }'
   [cheatsheet]='bind "Super+Slash" { spawn "inir" "cheatsheet" "toggle"; }'
   [clipboard]='bind "Super+V" repeat=false { spawn "inir" "clipboard" "toggle"; }'
   [closeConfirm]='bind "Mod+Q" repeat=false { spawn "inir" "close-window"; }'
-  [equalizer]='bind "Ctrl+Alt+E" { spawn "inir" "equalizer" "toggle"; }'
+  [equalizer]='bind "Ctrl+Alt+F" { spawn "inir" "equalizer" "toggle"; }'
   [gamemode]='bind "Super+F12" { spawn "inir" "gamemode" "toggle"; }'
   [globalActions]='bind "Super+Slash" { spawn "inir" "globalActions" "open"; }
 bind "Super+M" { spawn "inir" "globalActions" "run" "toggle-mute"; }'

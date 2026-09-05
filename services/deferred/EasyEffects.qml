@@ -22,6 +22,7 @@ Singleton {
     property bool equalizerPluginAvailable: false
     property bool equalizerSupported: true
     property int equalizerBandCount: 0
+    property int equalizerInstanceId: -1
     property bool equalizerSplitChannels: false
     property bool equalizerBypassed: false
     property var equalizerBands: []
@@ -77,6 +78,7 @@ Singleton {
             root.equalizerServerAvailable = state.serverAvailable === true
             root.equalizerPluginAvailable = state.pluginAvailable === true
             root.equalizerSupported = state.supported !== false
+            root.equalizerInstanceId = Number(state.instanceId ?? -1)
             root.equalizerBandCount = Number(state.numBands ?? 0)
             root.equalizerSplitChannels = state.splitChannels === true
             root.equalizerBypassed = state.bypassed === true

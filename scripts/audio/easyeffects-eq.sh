@@ -6,6 +6,7 @@ export LC_ALL=C
 runtime_dir="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 socket="${EASYEFFECTS_SERVER_SOCKET:-$runtime_dir/EasyEffectsServer}"
 target_frequencies=(32 64 125 250 500 1000 2000 4000 8000 16000)
+equalizer_instance=""
 
 json_unavailable() {
     local server_available="$1"
@@ -34,13 +35,148 @@ send_command() {
         | tail -n 1
 }
 
+easyeffects_process_is_flatpak() {
+    local pid
+    pid="$(pgrep -n -x easyeffects 2>/dev/null || true)"
+    [[ -n "$pid" ]] || return 1
+    tr '\0' '\n' < "/proc/$pid/environ" 2>/dev/null \
+        | grep -Fxq 'FLATPAK_ID=com.github.wwmm.easyeffects'
+}
+
+easyeffects_config_file() {
+    if easyeffects_process_is_flatpak; then
+        printf '%s\n' "$HOME/.var/app/com.github.wwmm.easyeffects/config/easyeffects/db/easyeffectsrc"
+        return
+    fi
+    printf '%s\n' "${XDG_CONFIG_HOME:-$HOME/.config}/easyeffects/db/easyeffectsrc"
+}
+
+easyeffects_preset_dir() {
+    if easyeffects_process_is_flatpak; then
+        printf '%s\n' "$HOME/.var/app/com.github.wwmm.easyeffects/data/easyeffects/output"
+        return
+    fi
+    printf '%s\n' "${XDG_DATA_HOME:-$HOME/.local/share}/easyeffects/output"
+}
+
+output_pipeline_plugins() {
+    local cfg
+    cfg="$(easyeffects_config_file)"
+    [[ -f "$cfg" ]] || return 1
+    awk '
+        /^\[StreamOutputs\]$/ { in_output=1; next }
+        /^\[/ { in_output=0 }
+        in_output && /^plugins=/ { sub(/^plugins=/, ""); print; found=1; exit }
+        END { if (!found) print "" }
+    ' "$cfg" 2>/dev/null
+}
+
+output_pipeline_is_empty() {
+    local plugins
+    plugins="$(output_pipeline_plugins)" || return 1
+    [[ -z "${plugins//[[:space:]]/}" ]]
+}
+
+write_inir_equalizer_preset() {
+    local preset_dir preset_path tmp_path
+    preset_dir="$(easyeffects_preset_dir)"
+    mkdir -p "$preset_dir"
+    preset_path="$preset_dir/iNiR Equalizer.json"
+    tmp_path="$(mktemp "$preset_dir/.inir-equalizer.XXXXXX")"
+    python3 - "$tmp_path" <<'PY_PRESET'
+import json, sys
+frequencies = [32, 64, 125, 250, 500, 1000, 2000, 4000, 8000, 16000]
+def side():
+    return {
+        f"band{i}": {
+            "frequency": float(freq), "gain": 0.0, "mode": "RLC (BT)",
+            "mute": False, "q": 4.36, "slope": "x1", "solo": False,
+            "type": "Bell", "width": 4.0
+        }
+        for i, freq in enumerate(frequencies)
+    }
+eq = {
+    "balance": 0.0, "bypass": False, "input-gain": 0.0,
+    "left": side(), "mode": "IIR", "num-bands": 10,
+    "output-gain": 0.0, "pitch-left": 0.0, "pitch-right": 0.0,
+    "right": side(), "split-channels": False
+}
+preset = {"output": {"blocklist": [], "plugins_order": ["equalizer#0"], "equalizer#0": eq}}
+with open(sys.argv[1], "w", encoding="utf-8") as fh:
+    json.dump(preset, fh, indent=2)
+    fh.write("\n")
+PY_PRESET
+    chmod 600 "$tmp_path"
+    mv -f "$tmp_path" "$preset_path"
+}
+
+config_equalizer_instances() {
+    local -a candidates=(
+        "${XDG_CONFIG_HOME:-$HOME/.config}/easyeffects/db/easyeffectsrc"
+        "$HOME/.var/app/com.github.wwmm.easyeffects/config/easyeffects/db/easyeffectsrc"
+    )
+    local cfg plugins token
+    for cfg in "${candidates[@]}"; do
+        [[ -f "$cfg" ]] || continue
+        plugins="$(awk '
+            /^\[StreamOutputs\]$/ { in_output=1; next }
+            /^\[/ { in_output=0 }
+            in_output && /^plugins=/ { sub(/^plugins=/, ""); print; exit }
+        ' "$cfg" 2>/dev/null || true)"
+        [[ -n "$plugins" ]] || continue
+        local IFS=,
+        read -r -a plugin_tokens <<< "$plugins"
+        for token in "${plugin_tokens[@]}"; do
+            token="${token//[[:space:]]/}"
+            if [[ "$token" =~ ^equalizer#([0-9]+)$ ]]; then
+                printf '%s\n' "${BASH_REMATCH[1]}"
+            fi
+        done
+    done
+}
+
+find_equalizer_instance() {
+    [[ -n "$equalizer_instance" ]] && return 0
+
+    local forced="${EASYEFFECTS_EQUALIZER_INSTANCE:-}"
+    local instance response
+    if [[ "$forced" =~ ^[0-9]+$ ]]; then
+        response="$(send_command "get_property:output:equalizer:${forced}:numBands" || true)"
+        if [[ "$response" =~ ^[0-9]+$ ]]; then
+            equalizer_instance="$forced"
+            return 0
+        fi
+    fi
+
+    while IFS= read -r instance; do
+        [[ "$instance" =~ ^[0-9]+$ ]] || continue
+        response="$(send_command "get_property:output:equalizer:${instance}:numBands" || true)"
+        if [[ "$response" =~ ^[0-9]+$ ]]; then
+            equalizer_instance="$instance"
+            return 0
+        fi
+    done < <(config_equalizer_instances | awk '!seen[$0]++')
+
+    # Fallback for custom config locations or builds where the KConfig file is
+    # not host-visible. EasyEffects instance ids are small monotonic integers.
+    for instance in $(seq 0 31); do
+        response="$(send_command "get_property:output:equalizer:${instance}:numBands" || true)"
+        if [[ "$response" =~ ^[0-9]+$ ]]; then
+            equalizer_instance="$instance"
+            return 0
+        fi
+    done
+    return 1
+}
+
 ensure_equalizer_active() {
     local response bypass
-    response="$(send_command 'set_property:output:equalizer:0:bypass:false' || true)"
+    find_equalizer_instance || return 1
+    response="$(send_command "set_property:output:equalizer:${equalizer_instance}:bypass:false" || true)"
     if is_error_response "$response"; then
         return 1
     fi
-    bypass="$(send_command 'get_property:output:equalizer:0:bypass' || true)"
+    bypass="$(send_command "get_property:output:equalizer:${equalizer_instance}:bypass" || true)"
     [[ "$bypass" == "false" || "$bypass" == "0" ]]
 }
 
@@ -102,21 +238,20 @@ read_state() {
         return 0
     fi
 
-    num_bands="$(send_command 'get_property:output:equalizer:0:numBands' || true)"
-
-    if [[ "$num_bands" == "error_plugin_not_found" ]]; then
+    if ! find_equalizer_instance; then
         json_unavailable true false true "plugin_not_found"
         return 0
     fi
+    num_bands="$(send_command "get_property:output:equalizer:${equalizer_instance}:numBands" || true)"
 
     if is_error_response "$num_bands" || [[ ! "$num_bands" =~ ^[0-9]+$ ]]; then
         json_unavailable true false false "server_api_unsupported"
         return 0
     fi
 
-    split_channels="$(send_command 'get_property:output:equalizer:0:splitChannels' || true)"
+    split_channels="$(send_command "get_property:output:equalizer:${equalizer_instance}:splitChannels" || true)"
     [[ "$split_channels" == "true" || "$split_channels" == "1" ]] && split_channels=true || split_channels=false
-    bypass="$(send_command 'get_property:output:equalizer:0:bypass' || true)"
+    bypass="$(send_command "get_property:output:equalizer:${equalizer_instance}:bypass" || true)"
     [[ "$bypass" == "true" || "$bypass" == "1" ]] && bypass=true || bypass=false
 
     local count="$num_bands"
@@ -124,8 +259,8 @@ read_state() {
     local i frequency gain
     local -a band_json=()
     for ((i = 0; i < count; i++)); do
-        frequency="$(send_command "get_property:output:equalizer:0:left:band${i}Frequency" || true)"
-        gain="$(send_command "get_property:output:equalizer:0:left:band${i}Gain" || true)"
+        frequency="$(send_command "get_property:output:equalizer:${equalizer_instance}:left:band${i}Frequency" || true)"
+        gain="$(send_command "get_property:output:equalizer:${equalizer_instance}:left:band${i}Gain" || true)"
 
         if is_error_response "$frequency" || is_error_response "$gain"; then
             json_unavailable true true false "band_api_unsupported"
@@ -137,39 +272,55 @@ read_state() {
         band_json+=("{\"index\":${i},\"frequency\":${frequency},\"gain\":${gain}}")
     done
 
-    printf '{"serverAvailable":true,"pluginAvailable":true,"supported":true,"numBands":%s,"splitChannels":%s,"bypassed":%s,"bands":[' \
-        "$num_bands" "$split_channels" "$bypass"
+    printf '{"serverAvailable":true,"pluginAvailable":true,"supported":true,"instanceId":%s,"numBands":%s,"splitChannels":%s,"bypassed":%s,"bands":[' \
+        "$equalizer_instance" "$num_bands" "$split_channels" "$bypass"
     local IFS=,
     printf '%s' "${band_json[*]}"
     printf '],"error":""}\n'
 }
 
 bootstrap_equalizer() {
-    local num_bands last_preset response
-    num_bands="$(send_command 'get_property:output:equalizer:0:numBands' || true)"
-    if [[ "$num_bands" != "error_plugin_not_found" ]]; then
+    local response attempt
+    if find_equalizer_instance; then
         read_state
         return 0
     fi
 
-    last_preset="$(send_command 'get_last_loaded_preset:output' || true)"
-    if [[ -z "$last_preset" ]] || is_error_response "$last_preset"; then
+    # Fresh EasyEffects installs have an empty output chain. In that one safe
+    # case, create a neutral iNiR-owned preset and ask EasyEffects itself to
+    # load it. Never replace a non-empty user pipeline just to add Equalizer.
+    if ! output_pipeline_is_empty; then
+        read_state
+        return 0
+    fi
+    if ! lsp_lv2_available || ! command -v python3 >/dev/null 2>&1; then
         read_state
         return 0
     fi
 
-    response="$(send_command "load_preset:output:${last_preset}" || true)"
+    write_inir_equalizer_preset || { read_state; return 0; }
+    response="$(send_command 'load_preset:output:iNiR Equalizer' || true)"
     if is_error_response "$response"; then
         read_state
         return 0
     fi
+
+    for attempt in $(seq 1 20); do
+        equalizer_instance=""
+        if find_equalizer_instance; then
+            read_state
+            return 0
+        fi
+        sleep 0.1
+    done
     read_state
 }
 
 require_ten_band_plugin() {
     local num_bands
     lsp_lv2_available || return 1
-    num_bands="$(send_command 'get_property:output:equalizer:0:numBands' || true)"
+    find_equalizer_instance || return 1
+    num_bands="$(send_command "get_property:output:equalizer:${equalizer_instance}:numBands" || true)"
     [[ "$num_bands" == "10" ]]
 }
 
@@ -183,13 +334,13 @@ set_band_unchecked() {
     ensure_equalizer_active || return 4
 
     local left_response right_response readback
-    left_response="$(send_command "set_property:output:equalizer:0:left:band${index}Gain:${gain}" || true)"
-    right_response="$(send_command "set_property:output:equalizer:0:right:band${index}Gain:${gain}" || true)"
+    left_response="$(send_command "set_property:output:equalizer:${equalizer_instance}:left:band${index}Gain:${gain}" || true)"
+    right_response="$(send_command "set_property:output:equalizer:${equalizer_instance}:right:band${index}Gain:${gain}" || true)"
     if is_error_response "$left_response" || is_error_response "$right_response"; then
         return 4
     fi
 
-    readback="$(send_command "get_property:output:equalizer:0:left:band${index}Gain" || true)"
+    readback="$(send_command "get_property:output:equalizer:${equalizer_instance}:left:band${index}Gain" || true)"
     is_number "$readback" || return 4
     awk -v actual="$readback" -v expected="$gain" 'BEGIN { d = actual - expected; if (d < 0) d = -d; exit !(d <= 0.051) }' || return 4
 }
@@ -202,21 +353,22 @@ set_band() {
 configure_ten_band() {
     local response
     ensure_equalizer_active || return 4
-    response="$(send_command 'set_property:output:equalizer:0:numBands:10' || true)"
+    find_equalizer_instance || return 3
+    response="$(send_command "set_property:output:equalizer:${equalizer_instance}:numBands:10" || true)"
     is_error_response "$response" && return 4
 
-    response="$(send_command 'set_property:output:equalizer:0:splitChannels:0' || true)"
+    response="$(send_command "set_property:output:equalizer:${equalizer_instance}:splitChannels:0" || true)"
     is_error_response "$response" && return 4
 
     local i frequency left_response right_response readback
     for ((i = 0; i < 10; i++)); do
         frequency="${target_frequencies[$i]}"
-        left_response="$(send_command "set_property:output:equalizer:0:left:band${i}Frequency:${frequency}" || true)"
-        right_response="$(send_command "set_property:output:equalizer:0:right:band${i}Frequency:${frequency}" || true)"
+        left_response="$(send_command "set_property:output:equalizer:${equalizer_instance}:left:band${i}Frequency:${frequency}" || true)"
+        right_response="$(send_command "set_property:output:equalizer:${equalizer_instance}:right:band${i}Frequency:${frequency}" || true)"
         if is_error_response "$left_response" || is_error_response "$right_response"; then
             return 4
         fi
-        readback="$(send_command "get_property:output:equalizer:0:left:band${i}Frequency" || true)"
+        readback="$(send_command "get_property:output:equalizer:${equalizer_instance}:left:band${i}Frequency" || true)"
         is_number "$readback" || return 4
         awk -v actual="$readback" -v expected="$frequency" 'BEGIN { d = actual - expected; if (d < 0) d = -d; exit !(d <= 0.51) }' || return 4
         set_band_unchecked "$i" 0 || return 4

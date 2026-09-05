@@ -538,7 +538,7 @@ Floating media controls panel.
 
 ### equalizer
 
-Open the ii-family EasyEffects output equalizer. Enable **Settings → Modules → Optional → EasyEffects Equalizer** first; while the module is disabled this IPC target is not constructed. The panel controls an existing EasyEffects Equalizer through its local server and never replaces the user's effects chain.
+Open the ii-family EasyEffects output equalizer. The integration is optional and disabled until you enable it. Run `inir settings`, then go to **Modules → Optional → EasyEffects Equalizer** and enable the switch. While it is disabled the IPC target is intentionally not constructed. On a fresh empty EasyEffects output pipeline, iNiR bootstraps a neutral 10-band `iNiR Equalizer` preset. Existing non-empty effect chains are never replaced automatically.
 
 | Function | Description |
 |----------|-------------|
@@ -546,14 +546,14 @@ Open the ii-family EasyEffects output equalizer. Enable **Settings → Modules �
 | `open` | Show equalizer |
 | `close` | Hide equalizer |
 | `refresh` | Refresh EasyEffects equalizer state |
-| `ensure` | Restore the last EasyEffects output preset when its EQ instance is not loaded |
+| `ensure` | Ensure Equalizer control is available; bootstraps a neutral Equalizer only when the output pipeline is empty |
 | `status` | Return current equalizer state as JSON |
 | `setBand <index> <gain>` | Set one 0-based band gain in dB |
 | `preset <name>` | Apply one built-in EQ preset |
 | `configure` | Convert the active Equalizer to the iNiR 10-band layout |
 
 ```kdl
-bind "Ctrl+Alt+E" { spawn "inir" "equalizer" "toggle"; }
+bind "Ctrl+Alt+F" { spawn "inir" "equalizer" "toggle"; }
 ```
 
 ---
