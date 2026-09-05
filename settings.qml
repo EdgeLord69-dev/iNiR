@@ -450,7 +450,7 @@ ApplicationWindow {
 
     visible: true
     onClosing: Qt.quit()
-    title: "illogical-impulse Settings"
+    title: "Settings — iNiR"
 
     Component.onCompleted: {
         Quickshell.watchFiles = false
