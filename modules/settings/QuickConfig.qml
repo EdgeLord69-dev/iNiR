@@ -94,7 +94,7 @@ ContentPage {
     }
 
     readonly property var visualizerFilterCandidates: {
-        const selected = Config.options?.appearance?.cava?.allowedApps ?? []
+        const blocked = Config.options?.appearance?.cava?.blockedApps ?? []
         const out = []
         const seen = ({})
         for (const node of MprisController.mixerAppNodes ?? []) {
@@ -106,12 +106,12 @@ ContentPage {
                 key: key,
                 label: MprisController.streamDisplayName(node) || key,
                 icon: MprisController.streamIconName(node),
-                selected: root._containsApp(selected, key),
+                selected: root._containsApp(blocked, key),
                 active: MprisController.streamIsActive(node),
                 detected: true
             })
         }
-        for (const value of selected) {
+        for (const value of blocked) {
             const normalized = root._normalizedAppKey(value)
             if (!normalized || seen[normalized]) continue
             seen[normalized] = true
@@ -2247,7 +2247,7 @@ ContentPage {
                         }
                         StyledText {
                             Layout.fillWidth: true
-                            text: Translation.tr("Audio apps are detected live from PipeWire. With no source selected, visualizers follow the active player; selecting apps limits capture to those sources only.")
+                            text: Translation.tr("Audio apps are detected live from PipeWire. Enable a filter to exclude that app from visualizers; with no filters enabled, iNiR follows the active player automatically.")
                             color: M3Palette.surfaceVariantForeground
                             font.pixelSize: Appearance.font.pixelSize.smaller
                             wrapMode: Text.WordWrap
@@ -2258,18 +2258,18 @@ ContentPage {
                 Flow {
                     Layout.fillWidth: true
                     spacing: 6
-                    visible: (Config.options?.appearance?.cava?.allowedApps ?? []).length > 0
+                    visible: (Config.options?.appearance?.cava?.blockedApps ?? []).length > 0
 
                     Repeater {
-                        model: Config.options?.appearance?.cava?.allowedApps ?? []
+                        model: Config.options?.appearance?.cava?.blockedApps ?? []
 
                         InputChip {
                             required property string modelData
                             text: modelData
                             chipIcon: "graphic_eq"
                             onRemoved: root._setAppMembership(
-                                "appearance.cava.allowedApps",
-                                Config.options?.appearance?.cava?.allowedApps ?? [],
+                                "appearance.cava.blockedApps",
+                                Config.options?.appearance?.cava?.blockedApps ?? [],
                                 modelData, false)
                         }
                     }
@@ -2382,23 +2382,23 @@ ContentPage {
                                         RowLayout {
                                             spacing: 4
                                             MaterialSymbol {
-                                                text: modelData.active ? "graphic_eq"
-                                                    : modelData.selected ? "filter_alt" : "radio_button_checked"
+                                                text: modelData.selected ? "filter_alt"
+                                                    : modelData.active ? "graphic_eq" : "radio_button_checked"
                                                 iconSize: 13
-                                                color: modelData.active ? M3Palette.primary
-                                                    : modelData.selected ? M3Palette.secondaryContainerForeground
+                                                color: modelData.selected ? M3Palette.secondaryContainerForeground
+                                                    : modelData.active ? M3Palette.primary
                                                     : M3Palette.surfaceVariantForeground
                                             }
                                             StyledText {
-                                                text: modelData.active
-                                                    ? Translation.tr("Playing now")
-                                                    : modelData.selected
-                                                        ? Translation.tr("Selected source")
+                                                text: modelData.selected
+                                                    ? Translation.tr("Filtered out")
+                                                    : modelData.active
+                                                        ? Translation.tr("Playing now")
                                                         : modelData.detected
                                                             ? Translation.tr("Detected")
                                                             : Translation.tr("Saved source")
-                                                color: modelData.active ? M3Palette.primary
-                                                    : modelData.selected ? M3Palette.secondaryContainerForeground
+                                                color: modelData.selected ? M3Palette.secondaryContainerForeground
+                                                    : modelData.active ? M3Palette.primary
                                                     : M3Palette.surfaceVariantForeground
                                                 font.pixelSize: Appearance.font.pixelSize.smaller
                                             }
@@ -2408,8 +2408,8 @@ ContentPage {
                                     StyledSwitch {
                                         checked: modelData.selected
                                         onToggled: root._setAppMembership(
-                                            "appearance.cava.allowedApps",
-                                            Config.options?.appearance?.cava?.allowedApps ?? [],
+                                            "appearance.cava.blockedApps",
+                                            Config.options?.appearance?.cava?.blockedApps ?? [],
                                             modelData.key, checked)
                                     }
                                 }
@@ -2441,8 +2441,8 @@ ContentPage {
                         mainText: Translation.tr("Add")
                         enabled: visualizerManualApp.text.trim().length > 0
                         onClicked: {
-                            root._setAppMembership("appearance.cava.allowedApps",
-                                Config.options?.appearance?.cava?.allowedApps ?? [],
+                            root._setAppMembership("appearance.cava.blockedApps",
+                                Config.options?.appearance?.cava?.blockedApps ?? [],
                                 visualizerManualApp.text, true)
                             visualizerManualApp.text = ""
                             root.showManualVisualizerFilter = false

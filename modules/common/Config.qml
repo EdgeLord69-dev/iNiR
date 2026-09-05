@@ -34,6 +34,10 @@ Singleton {
         fileReloadTimer.stop();
         root._prepareCustomInject();
         root._writeInFlight = true;
+        // These mutations are being committed right now. Leaving them in the
+        // pending journal makes a later external config change replay an old
+        // already-saved value (e.g. App Filters toggling itself back on).
+        root._pendingMutations = ({});
         root._writeRetries = 0;
         root._writeMirrorToDisk();
         writeFlightGuard.restart();
@@ -244,6 +248,38 @@ Singleton {
             root._mergeIntoMirror(obj[lastKey], value, schema[lastKey]);
         } else {
             obj[lastKey] = value;
+        }
+    }
+
+    // Settings runs as a separate Quickshell process. Keep only the paths this
+    // process has changed while its deferred write is pending so an external
+    // config update can be loaded first and these local mutations replayed on
+    // top. Without this, either process can flush a stale full-file mirror and
+    // silently undo the other process (most visible with App Filters).
+    property var _pendingMutations: ({})
+    property bool _rebasingExternalChange: false
+
+    function _recordPendingMutation(nestedKey, value): void {
+        const path = Array.isArray(nestedKey) ? nestedKey.join(".") : String(nestedKey ?? "")
+        if (!path) return
+        const next = Object.assign({}, root._pendingMutations ?? {})
+        next[path] = (value !== null && typeof value === "object")
+            ? root._cloneObject(value) : value
+        root._pendingMutations = next
+    }
+
+    function _reapplyPendingMutations(): void {
+        const pending = root._pendingMutations ?? {}
+        const paths = Object.keys(pending)
+        for (let i = 0; i < paths.length; ++i) {
+            const path = paths[i]
+            root._applyNestedKey(path, pending[path])
+            root._applyToMirror(path, pending[path])
+        }
+        if (paths.length > 0) {
+            root._bumpRevision()
+            root.configChanged()
+            fileWriteTimer.restart()
         }
     }
 
@@ -502,6 +538,7 @@ Singleton {
             root._prepareCustomInject();
             root._pendingWrite = false;
             root._writeInFlight = true;
+            root._pendingMutations = ({});
             root._writeRetries = 0;
             fileReloadTimer.stop();
             // Try writeAdapter first — it properly emits QObject property signals
@@ -553,6 +590,12 @@ Singleton {
                 root._pendingReload = true;
                 return;
             }
+            if (fileWriteTimer.running || Object.keys(root._pendingMutations ?? {}).length > 0) {
+                fileWriteTimer.stop();
+                root._rebasingExternalChange = true;
+                configFileView.reload();
+                return;
+            }
             fileReloadTimer.restart();
         }
         onSaved: root._endWriteFlight("")
@@ -569,6 +612,10 @@ Singleton {
             root._syncVarProperties();
             root._bumpRevision();
             root.ready = true;
+            if (root._rebasingExternalChange) {
+                root._rebasingExternalChange = false;
+                root._reapplyPendingMutations();
+            }
         }
         onLoadFailed: error => {
             if (error == FileViewError.FileNotFound) {
@@ -996,7 +1043,7 @@ Singleton {
                     property int waveOpacity: 30 // 5-100, fill alpha for WaveVisualizer (0.05–1.0)
                     // Optional allowlist for internal visualizers. Empty keeps automatic
                     // active-player/source selection.
-                    property list<string> allowedApps: []
+                    property list<string> blockedApps: []
                 }
                 property JsonObject palette: JsonObject {
                     property string type: "auto" // Allowed: auto, scheme-content, scheme-expressive, scheme-fidelity, scheme-fruit-salad, scheme-monochrome, scheme-neutral, scheme-rainbow, scheme-tonal-spot

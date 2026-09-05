@@ -2,8 +2,9 @@
 """Pick a cava [input] source that follows music, not VoIP/system mix.
 
 Prefers an uncorked PipeWire/Pulse stream belonging to the active MPRIS
-player, then other active music streams. Falls back to the default sink
-monitor when nothing better exists.
+player, then other active music streams. User-blocked applications are always
+excluded, including after MPRIS track changes. Falls back to the default sink
+monitor only when there are no live streams and no explicit blocklist.
 """
 from __future__ import annotations
 
@@ -237,22 +238,32 @@ def _normalize_identity(value: str) -> str:
     return re.sub(r"[^a-z0-9]", "", value.lower())
 
 
-def _allowed_hints(allowed_apps: list[str]) -> tuple[set[str], set[str]]:
+def _filter_hints(apps: list[str]) -> tuple[set[str], set[str]]:
     tokens: set[str] = set()
     aliases: set[str] = set()
-    for app in allowed_apps:
+    for app in apps:
         normalized = _normalize_identity(app)
         if normalized:
             tokens.add(normalized)
-        aliases.update(_hint_binaries(app))
+        # Only use aliases from an exact known desktop-entry key. The active
+        # player resolver intentionally expands browser families (Firefox ↔ Zen,
+        # Chromium ↔ Electron), but a user blocklist must stay app-specific.
+        entry = str(app).strip().lower()
+        if entry.endswith(".desktop"):
+            entry = entry[:-8]
+        if "." in entry:
+            for key, binaries in DESKTOP_ENTRY_BINARIES.items():
+                if key.lower() == entry:
+                    aliases.update(binaries)
+                    break
     return tokens, aliases
 
 
-def _matches_allowed(stream: SinkInput, allowed_apps: list[str]) -> bool:
-    if not allowed_apps:
-        return True
+def _matches_blocked(stream: SinkInput, blocked_apps: list[str]) -> bool:
+    if not blocked_apps:
+        return False
 
-    tokens, aliases = _allowed_hints(allowed_apps)
+    tokens, aliases = _filter_hints(blocked_apps)
     identity = " ".join((
         stream.node_name, stream.media_name, stream.app_name,
         stream.app_id, stream.binary,
@@ -260,7 +271,12 @@ def _matches_allowed(stream: SinkInput, allowed_apps: list[str]) -> bool:
     normalized_identity = _normalize_identity(identity)
     if any(token in normalized_identity for token in tokens):
         return True
-    return any(alias and alias in identity for alias in aliases)
+    normalized_fields = {
+        _normalize_identity(value) for value in (
+            stream.node_name, stream.app_name, stream.app_id, stream.binary,
+        ) if value
+    }
+    return any(_normalize_identity(alias) in normalized_fields for alias in aliases if alias)
 
 
 def _is_excluded(stream: SinkInput) -> bool:
@@ -275,12 +291,12 @@ def _is_excluded(stream: SinkInput) -> bool:
     return False
 
 
-def _score_stream(stream: SinkInput, hint_binaries: set[str], allowed_apps: list[str]) -> int:
+def _score_stream(stream: SinkInput, hint_binaries: set[str], blocked_apps: list[str]) -> int:
     if _is_excluded(stream):
         return -10_000
     if stream.corked:
         return -5_000
-    if not _matches_allowed(stream, allowed_apps):
+    if _matches_blocked(stream, blocked_apps):
         return -10_000
 
     score = 180
@@ -325,24 +341,19 @@ def _default_sink_monitor() -> str:
     return "auto"
 
 
-def resolve_source(desktop_entry: str = "", allowed_apps: list[str] | None = None) -> str:
-    allowed_apps = allowed_apps or []
+def resolve_source(desktop_entry: str = "", blocked_apps: list[str] | None = None) -> str:
+    blocked_apps = blocked_apps or []
     server_info = _run(["pactl", "info"])
     if not server_info:
-        return "" if allowed_apps else "auto"
+        return "" if blocked_apps else "auto"
     is_pipewire = "pipewire" in server_info.lower()
 
     clients = _parse_clients(_run(["pactl", "list", "clients"]))
     streams = _parse_sink_inputs(_run(["pactl", "list", "sink-inputs"]), clients)
-    # An explicit allowlist is the source authority. Without one, preserve the
-    # existing active-MPRIS-player preference.
-    if allowed_apps:
-        _, hint_binaries = _allowed_hints(allowed_apps)
-    else:
-        hint_binaries = _hint_binaries(desktop_entry)
+    hint_binaries = _hint_binaries(desktop_entry)
 
     ranked = sorted(
-        ((_score_stream(stream, hint_binaries, allowed_apps), stream) for stream in streams),
+        ((_score_stream(stream, hint_binaries, blocked_apps), stream) for stream in streams),
         key=lambda item: (item[0], item[1].index),
         reverse=True,
     )
@@ -353,8 +364,25 @@ def resolve_source(desktop_entry: str = "", allowed_apps: list[str] | None = Non
                 return stream.object_serial
             return stream.node_name
 
+    # If the active MPRIS player belongs to a blocked app, its identity hint
+    # must not prevent another eligible playback stream from driving the
+    # visualizer. Retry without the player hint, while keeping the user blocklist
+    # authoritative. This is what lets "block Firefox" survive YouTube track
+    # changes while another player can still feed Cava.
+    if blocked_apps and hint_binaries:
+        fallback_ranked = sorted(
+            ((_score_stream(stream, set(), blocked_apps), stream) for stream in streams),
+            key=lambda item: (item[0], item[1].index),
+            reverse=True,
+        )
+        for score, stream in fallback_ranked:
+            if score > 0 and stream.node_name:
+                if is_pipewire and stream.object_serial:
+                    return stream.object_serial
+                return stream.node_name
+
     # VoIP/system streams only — don't fall back to the full sink mix (Discord voices, etc.)
-    if streams or allowed_apps:
+    if streams or blocked_apps:
         return ""
 
     return _default_sink_monitor()
@@ -363,17 +391,17 @@ def resolve_source(desktop_entry: str = "", allowed_apps: list[str] | None = Non
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--desktop-entry", default="")
-    parser.add_argument("--allowed-apps-json", default="[]")
+    parser.add_argument("--blocked-apps-json", default="[]")
     args = parser.parse_args()
     try:
-        parsed = json.loads(args.allowed_apps_json)
-        allowed_apps = [str(value).strip() for value in parsed if str(value).strip()] \
+        parsed = json.loads(args.blocked_apps_json)
+        blocked_apps = [str(value).strip() for value in parsed if str(value).strip()] \
             if isinstance(parsed, list) else []
     except (json.JSONDecodeError, TypeError):
-        allowed_apps = []
+        blocked_apps = []
 
-    source = resolve_source(args.desktop_entry, allowed_apps)
-    if allowed_apps and not source:
+    source = resolve_source(args.desktop_entry, blocked_apps)
+    if blocked_apps and not source:
         raise SystemExit(3)
     print(source)
 

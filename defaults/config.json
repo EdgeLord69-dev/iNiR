@@ -137,7 +137,7 @@
             "barSpacing": 1,
             "stereo": true,
             "waveOpacity": 30,
-            "allowedApps": []
+            "blockedApps": []
         },
         "palette": {
             "type": "auto",

@@ -47,7 +47,7 @@ ContentPage {
             "appearance.cava.framerate": 60,
             "appearance.cava.stereo": true,
             "appearance.cava.waveOpacity": 30,
-            "appearance.cava.allowedApps": [],
+            "appearance.cava.blockedApps": [],
         })
         colorRegenTimer.restart()
     }

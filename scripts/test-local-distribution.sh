@@ -943,6 +943,24 @@ if [[ -d "$runtime_root/distro/arch" ]]; then
 fi
 
 step "release polish guards"
+config_qml="$runtime_root/modules/common/Config.qml"
+if ! grep -Fq 'property var _pendingMutations: ({})' "$config_qml" \
+        || ! grep -Fq 'property bool _rebasingExternalChange: false' "$config_qml" \
+        || ! grep -Fq 'root._reapplyPendingMutations();' "$config_qml" \
+        || ! sed -n '/function flushWrites()/,/^    }/p' "$config_qml" | grep -Fq 'root._pendingMutations = ({})' \
+        || ! grep -Fq 'fileWriteTimer.running || Object.keys(root._pendingMutations ?? {}).length > 0' "$config_qml"; then
+    printf 'FAIL: cross-process Config writes can regress to stale full-file mirror overwrites\n' >&2
+    exit 1
+fi
+if ! grep -Fq 'property list<string> blockedApps: []' "$config_qml" \
+        || grep -Fq 'property list<string> allowedApps:' "$config_qml" \
+        || ! grep -Fq 'cfgBlockedAppsJson' "$runtime_root/services/deferred/CavaService.qml" \
+        || ! grep -Fq -- '--blocked-apps-json' "$runtime_root/scripts/cava/resolve_audio_source.py" \
+        || grep -Fq -- '--allowed-apps-json' "$runtime_root/scripts/cava/resolve_audio_source.py" \
+        || [[ ! -x "$runtime_root/sdata/migrations/041-visualizer-app-filter-semantics.sh" ]]; then
+    printf 'FAIL: visualizer App Filters can regress from exclusion semantics back to an allowlist\n' >&2
+    exit 1
+fi
 if ! grep -Fq 'message="$(_tui_expand_newlines "${3:-}")"' "$runtime_root/sdata/lib/tui.sh"; then
     printf 'FAIL: TUI alerts can regress to rendering literal \n sequences\n' >&2
     exit 1
@@ -1087,6 +1105,35 @@ if [[ ! -s "$organic_qsb" ]] \
     printf 'FAIL: Organic visualizer pulse renderer/shader asset is missing\n' >&2
     exit 1
 fi
+
+step "visualizer app filter semantics"
+python3 - "$runtime_root/scripts/cava/resolve_audio_source.py" <<'PY'
+import importlib.util
+import pathlib
+import sys
+
+path = pathlib.Path(sys.argv[1])
+spec = importlib.util.spec_from_file_location("inir_resolve_audio_source_test", path)
+module = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = module
+spec.loader.exec_module(module)
+
+def node(name, app_name, app_id, binary):
+    return module.SinkInput(1, "", name, "1", "", "", app_name, app_id, binary, False)
+
+checks = [
+    ("firefox blocks firefox", node("Firefox", "Firefox", "org.mozilla.firefox", "firefox"), ["firefox"], True),
+    ("firefox does not block zen", node("zen", "Zen", "app.zen-browser.zen", "zen"), ["firefox"], False),
+    ("chromium does not block generic electron", node("SomeElectron", "Some App", "com.example.app", "electron"), ["chromium"], False),
+    ("desktop id blocks firefox", node("Firefox", "Firefox", "", "firefox"), ["org.mozilla.firefox"], True),
+    ("chrome desktop id blocks chrome", node("Google Chrome", "Google Chrome", "", "google-chrome-stable"), ["com.google.Chrome"], True),
+]
+
+failed = [name for name, stream, blocked, expected in checks
+          if module._matches_blocked(stream, blocked) is not expected]
+if failed:
+    raise SystemExit("visualizer blocklist matcher failed: " + ", ".join(failed))
+PY
 
 step "launcher resolution"
 bash "$launcher" path >/dev/null
