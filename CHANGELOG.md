@@ -5,6 +5,13 @@ All notable changes to iNiR will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`inir update` says which checkout it is updating.** It follows the path recorded at install time, which is not always the folder you are standing in, so it now prints the repo and warns when the two differ. When the pull fails you get git's actual error instead of a swallowed one, and the right way out of it — plain `git stash` never moves untracked files, so it could not fix the most common cause.
+- **Updates stop claiming you added files you never touched.** The check looked outside the installed payload, so shipped files under `docs/` and `distro/` were reported as your own modifications on every single update.
+
 ## [2.31.0] - 2026-09-19
 
 2.31.0 introduces **iRiS**, the third panel family, together with its Island,
