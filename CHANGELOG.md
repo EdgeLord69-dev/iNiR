@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **`inir update` says which checkout it is updating.** It follows the path recorded at install time, which is not always the folder you are standing in, so it now prints the repo and warns when the two differ. When the pull fails you get git's actual error instead of a swallowed one, and the right way out of it — plain `git stash` never moves untracked files, so it could not fix the most common cause.
-- **Updates stop claiming you added files you never touched.** The check looked outside the installed payload, so shipped files under `docs/` and `distro/` were reported as your own modifications on every single update.
+- **`inir update` now tells you which checkout it updates.** It uses the path saved at install time, which is not always the folder you are standing in. If the pull fails you get git's real error instead of a shrug, plus advice that works: `git stash` leaves untracked files right where they are, and those are usually the problem.
+- **Updates stopped blaming you for files you never touched.** The check was reading `docs/` and `distro/`, which never get installed, so it flagged our own files as your changes. Every single update.
 
 ## [2.31.0] - 2026-09-19
 
