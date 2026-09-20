@@ -56,6 +56,7 @@ if [[ ! -d "$REPO_ROOT" || ! -f "$REPO_ROOT/shell.qml" ]]; then
     exit 1
 fi
 
+INVOKED_FROM="$PWD"
 cd "$REPO_ROOT"
 
 # Handle Ctrl+C gracefully
@@ -2347,6 +2348,14 @@ run_update() {
         tui_info "Branch: $tracked_branch"
     fi
 
+    tui_info "Repo: $REPO_ROOT"
+    local invoked_from="${INIR_INVOKED_FROM:-${INVOKED_FROM:-$PWD}}"
+    if [[ "$invoked_from" != "$REPO_ROOT" && -d "${invoked_from}/.git" && -f "${invoked_from}/shell.qml" ]]; then
+        tui_warn "Updating that repo, not the one you are standing in:"
+        tui_dim "    you are in: $invoked_from"
+        tui_dim "    repo path comes from ~/.config/inir/version.json"
+    fi
+
     local installed_mode=$(get_installed_install_mode)
     local installed_strategy=$(get_installed_update_strategy)
     local package_name=$(get_installed_package_name)
@@ -2444,12 +2453,29 @@ run_update() {
 
             # Pull changes
             _step_phase_start 1 "Pulling changes"
-            if ! git -C "$REPO_ROOT" pull --ff-only origin "$tracked_branch" 2>/dev/null; then
+            local pull_log
+            pull_log="$(mktemp)"
+            if ! LC_ALL=C git -C "$REPO_ROOT" pull --ff-only origin "$tracked_branch" 2>"$pull_log"; then
                 _step_phase_fail "Git pull failed"
-                tui_error "Git pull from origin/${tracked_branch} failed. You may have local changes."
-                tui_info "Try: git stash && ./setup update"
+                tui_error "Git pull from origin/${tracked_branch} failed in ${REPO_ROOT}"
+                if [[ -s "$pull_log" ]]; then
+                    echo ""
+                    while IFS= read -r line; do
+                        tui_dim "    $line"
+                    done < "$pull_log"
+                    echo ""
+                fi
+                if grep -qi "untracked working tree files" "$pull_log"; then
+                    tui_info "Untracked files are in the way. Move or remove the files listed above,"
+                    tui_info "or stash them too: git -C \"$REPO_ROOT\" stash -u"
+                    tui_dim "    (plain 'git stash' never touches untracked files)"
+                else
+                    tui_info "Try: git -C \"$REPO_ROOT\" stash && ./setup update"
+                fi
+                rm -f "$pull_log"
                 return 1
             fi
+            rm -f "$pull_log"
             _step_phase_done "Pulled changes from origin/${tracked_branch}"
 
             # Re-exec to pick up updated library code from the pull.

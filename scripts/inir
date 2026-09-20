@@ -2345,6 +2345,7 @@ run_setup_command() {
         exit 1
     fi
 
+    export INIR_INVOKED_FROM="$PWD"
     cd "$dir"
     exec ./setup "$@"
 }
