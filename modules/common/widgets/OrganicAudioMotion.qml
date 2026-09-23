@@ -150,81 +150,89 @@ Item {
     onPointsChanged: root._updateTargets()
     onNormalizationCeilingChanged: root._updateTargets()
 
+    // Silent, the field only drifts: the shared 42 ms idle clock keeps it smooth without holding the window's
+    // render loop at the display rate the way a running FrameAnimation does.
+    readonly property bool _quiet: root._targetEnergy < 0.004 && root._energy < 0.01
+        && root._pulse < 0.01 && root._onset < 0.01
+    readonly property bool _moving: root.visible && root.active && root.animate
+
     FrameAnimation {
-        running: root.visible && root.active && root.animate
-        onTriggered: {
-            const dt = Math.min(frameTime, 0.05)
-            const smoothingFactor = Math.max(0, Math.min(8, root.smoothing))
-            const attackScale = Math.max(0.2, Math.min(2.5, root.attackScale))
-            const releaseScale = Math.max(0.2, Math.min(2.5, root.releaseScale))
-            const attackRate = 24 * attackScale / (1 + smoothingFactor * 0.22)
-            const releaseRate = 8 * releaseScale / (1 + smoothingFactor * 0.20)
-            const peakReleaseRate = 2.1 * releaseScale / (1 + smoothingFactor * 0.14)
-            const energyAttackRate = 12 * attackScale / (1 + smoothingFactor * 0.18)
-            const energyReleaseRate = 3.2 * releaseScale / (1 + smoothingFactor * 0.16)
-            function follow(current, target, attack, release) {
-                const rate = target > current ? attack : release
-                return current + (target - current) * (1 - Math.exp(-dt * rate))
-            }
-            root._bandsA = Qt.vector4d(
-                follow(root._bandsA.x, root._targetA.x, attackRate, releaseRate),
-                follow(root._bandsA.y, root._targetA.y, attackRate, releaseRate),
-                follow(root._bandsA.z, root._targetA.z, attackRate, releaseRate),
-                follow(root._bandsA.w, root._targetA.w, attackRate, releaseRate))
-            root._bandsB = Qt.vector4d(
-                follow(root._bandsB.x, root._targetB.x, attackRate, releaseRate),
-                follow(root._bandsB.y, root._targetB.y, attackRate, releaseRate),
-                follow(root._bandsB.z, root._targetB.z, attackRate, releaseRate),
-                follow(root._bandsB.w, root._targetB.w, attackRate, releaseRate))
-            root._bandsC = Qt.vector4d(
-                follow(root._bandsC.x, root._targetC.x, attackRate, releaseRate),
-                follow(root._bandsC.y, root._targetC.y, attackRate, releaseRate),
-                follow(root._bandsC.z, root._targetC.z, attackRate, releaseRate),
-                follow(root._bandsC.w, root._targetC.w, attackRate, releaseRate))
-            root._peakA = Qt.vector4d(
-                follow(root._peakA.x, root._bandsA.x, attackRate, peakReleaseRate),
-                follow(root._peakA.y, root._bandsA.y, attackRate, peakReleaseRate),
-                follow(root._peakA.z, root._bandsA.z, attackRate, peakReleaseRate),
-                follow(root._peakA.w, root._bandsA.w, attackRate, peakReleaseRate))
-            root._peakB = Qt.vector4d(
-                follow(root._peakB.x, root._bandsB.x, attackRate, peakReleaseRate),
-                follow(root._peakB.y, root._bandsB.y, attackRate, peakReleaseRate),
-                follow(root._peakB.z, root._bandsB.z, attackRate, peakReleaseRate),
-                follow(root._peakB.w, root._bandsB.w, attackRate, peakReleaseRate))
-            root._peakC = Qt.vector4d(
-                follow(root._peakC.x, root._bandsC.x, attackRate, peakReleaseRate),
-                follow(root._peakC.y, root._bandsC.y, attackRate, peakReleaseRate),
-                follow(root._peakC.z, root._bandsC.z, attackRate, peakReleaseRate),
-                follow(root._peakC.w, root._bandsC.w, attackRate, peakReleaseRate))
-            root._energy = follow(root._energy, root._targetEnergy,
-                energyAttackRate, energyReleaseRate)
-            const rise = Math.max(0, root._energy - root._previousEnergy)
-            root._onset = follow(root._onset, Math.min(1, rise * 7.5), 28, 4.8)
-            // Pulse follows both sustained low-frequency energy and transients.
-            // It is deliberately quicker than the contour envelope so Organic
-            // feels musical instead of merely wobbling around the cover art.
-            const bassPulse = Math.max(root._bandsA.x, root._bandsA.y)
-            const pulseTarget = Math.min(1, bassPulse * 0.72 + root._energy * 0.42 + root._onset * 0.88)
-            root._pulse = follow(root._pulse, pulseTarget, 18, 5.2)
-            root._previousEnergy = root._energy
-            const targetSpeed = Math.max(0, Math.min(2.5, root.motionSpeed))
-            const targetIdle = Math.max(0, Math.min(1, root.idleMotion))
-            if (!root._motionInitialized) {
-                root._effectiveMotionSpeed = targetSpeed
-                root._effectiveIdleMotion = targetIdle
-                root._motionInitialized = true
-            } else {
-                root._effectiveMotionSpeed = follow(root._effectiveMotionSpeed,
-                    targetSpeed, 7.5, 7.5)
-                root._effectiveIdleMotion = follow(root._effectiveIdleMotion,
-                    targetIdle, 6.0, 6.0)
-            }
-            const speed = root._effectiveMotionSpeed
-            const idle = root._effectiveIdleMotion
-            root._phase = (root._phase + dt * speed
-                * (0.055 + idle * 0.035 + root._energy * 0.075 + root._onset * 0.12)) % 1
-            root._spin = (root._spin + dt * speed * (0.020 + idle * 0.025 + root._energy * 0.018)) % 6.28318530718
+        running: root._moving && !root._quiet
+        onTriggered: root._step(frameTime)
+    }
+    readonly property bool _drifting: root._moving && root._quiet
+    property bool _onClock: false
+    function _syncClock(want: bool): void {
+        if (want === root._onClock) return
+        OrganicIdleClock.users += want ? 1 : -1
+        root._onClock = want
+    }
+    on_DriftingChanged: root._syncClock(root._drifting)
+    Component.onCompleted: root._syncClock(root._drifting)
+    Component.onDestruction: root._syncClock(false)
+    Connections {
+        target: root._drifting ? OrganicIdleClock : null
+        function onTick(dt: real): void { root._step(dt) }
+    }
+
+    function _step(frameTime: real): void {
+        const dt = Math.min(frameTime, 0.05)
+        const smoothingFactor = Math.max(0, Math.min(8, root.smoothing))
+        const attackScale = Math.max(0.2, Math.min(2.5, root.attackScale))
+        const releaseScale = Math.max(0.2, Math.min(2.5, root.releaseScale))
+        const attackRate = 24 * attackScale / (1 + smoothingFactor * 0.22)
+        const releaseRate = 8 * releaseScale / (1 + smoothingFactor * 0.20)
+        const peakReleaseRate = 2.1 * releaseScale / (1 + smoothingFactor * 0.14)
+        const energyAttackRate = 12 * attackScale / (1 + smoothingFactor * 0.18)
+        const energyReleaseRate = 3.2 * releaseScale / (1 + smoothingFactor * 0.16)
+        // One exponential per rate per frame, not one per band.
+        const step = rate => 1 - Math.exp(-dt * rate)
+        const kAttack = step(attackRate)
+        const kRelease = step(releaseRate)
+        const kPeakRelease = step(peakReleaseRate)
+        function follow(current, target, attack, release) {
+            return current + (target - current) * (target > current ? attack : release)
         }
+        const bands = (live, target) => Qt.vector4d(
+            follow(live.x, target.x, kAttack, kRelease), follow(live.y, target.y, kAttack, kRelease),
+            follow(live.z, target.z, kAttack, kRelease), follow(live.w, target.w, kAttack, kRelease))
+        const peaks = (peak, live) => Qt.vector4d(
+            follow(peak.x, live.x, kAttack, kPeakRelease), follow(peak.y, live.y, kAttack, kPeakRelease),
+            follow(peak.z, live.z, kAttack, kPeakRelease), follow(peak.w, live.w, kAttack, kPeakRelease))
+        root._bandsA = bands(root._bandsA, root._targetA)
+        root._bandsB = bands(root._bandsB, root._targetB)
+        root._bandsC = bands(root._bandsC, root._targetC)
+        root._peakA = peaks(root._peakA, root._bandsA)
+        root._peakB = peaks(root._peakB, root._bandsB)
+        root._peakC = peaks(root._peakC, root._bandsC)
+        root._energy = follow(root._energy, root._targetEnergy,
+            step(energyAttackRate), step(energyReleaseRate))
+        const rise = Math.max(0, root._energy - root._previousEnergy)
+        root._onset = follow(root._onset, Math.min(1, rise * 7.5), step(28), step(4.8))
+        // Pulse follows both sustained low-frequency energy and transients.
+        // It is deliberately quicker than the contour envelope so Organic
+        // feels musical instead of merely wobbling around the cover art.
+        const bassPulse = Math.max(root._bandsA.x, root._bandsA.y)
+        const pulseTarget = Math.min(1, bassPulse * 0.72 + root._energy * 0.42 + root._onset * 0.88)
+        root._pulse = follow(root._pulse, pulseTarget, step(18), step(5.2))
+        root._previousEnergy = root._energy
+        const targetSpeed = Math.max(0, Math.min(2.5, root.motionSpeed))
+        const targetIdle = Math.max(0, Math.min(1, root.idleMotion))
+        if (!root._motionInitialized) {
+            root._effectiveMotionSpeed = targetSpeed
+            root._effectiveIdleMotion = targetIdle
+            root._motionInitialized = true
+        } else {
+            root._effectiveMotionSpeed = follow(root._effectiveMotionSpeed,
+                targetSpeed, step(7.5), step(7.5))
+            root._effectiveIdleMotion = follow(root._effectiveIdleMotion,
+                targetIdle, step(6.0), step(6.0))
+        }
+        const speed = root._effectiveMotionSpeed
+        const idle = root._effectiveIdleMotion
+        root._phase = (root._phase + dt * speed
+            * (0.055 + idle * 0.035 + root._energy * 0.075 + root._onset * 0.12)) % 1
+        root._spin = (root._spin + dt * speed * (0.020 + idle * 0.025 + root._energy * 0.018)) % 6.28318530718
     }
 
 }

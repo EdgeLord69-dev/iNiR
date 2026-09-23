@@ -489,8 +489,9 @@ AbstractWidget {
     }
 
     visible: opacity > 0
+    // iRiS dims the face only, so its edit toolbar and sheet stay legible over a dimmed widget.
     opacity: ((GlobalStates.screenLocked && !visibleWhenLocked) ? 0 : 1)
-        * root.widgetOpacity * root.dimOpacity
+        * (root.irisFaced ? 1 : root.widgetOpacity * root.dimOpacity)
     enabled: !GlobalStates.screenLocked
     Behavior on opacity {
         animation: NumberAnimation { duration: Appearance.animation.elementMoveFast.duration; easing.type: Appearance.animation.elementMoveFast.type; easing.bezierCurve: Appearance.animation.elementMoveFast.bezierCurve }
@@ -506,6 +507,9 @@ AbstractWidget {
     // Manual GameMode remains intentionally global.
     readonly property bool powerActive: WidgetPowerManager.widgetsActiveForOutput(root.outputName)
     readonly property bool powerReduced: WidgetPowerManager.reducedModeForOutput(root.outputName)
+    // Continuous decoration holds its frame wherever the wallpaper does (background.videoPause):
+    // every frame it draws repaints the whole desktop window and makes Niri recompose the output.
+    readonly property bool motionActive: root.powerActive && Wallpapers.videoMotionAllowedOn(root.outputName)
 
     // Effective animation state: animations enabled AND power active
     readonly property bool animationsActive: (root.widgetIris ? IrisStyle.motionEnabled : Appearance.animationsEnabled) && root.powerActive
@@ -544,6 +548,7 @@ AbstractWidget {
     // In edit mode, allow dragging regardless of strategy (user can reposition freely)
     readonly property bool _isZonePlacement: root._snapZones.indexOf(root.placementStrategy) >= 0
     draggable: (placementStrategy === "free" || GlobalStates.widgetEditMode) && !GlobalStates.screenLocked && !root.locked
+    grabCursor: GlobalStates.widgetEditMode
     function syncFreePositionFromConfig(): void {
         if (!Config.ready || root.containsPress || root._isResizing) return;
         if (root.placementStrategy !== "free") return;
@@ -684,6 +689,17 @@ AbstractWidget {
     // Latched while the sheet is open: the edge it grew from, and the tallest
     // page it has shown, so switching pages resizes the sheet without moving it.
     property string _editPlacementSide: ""
+    // iRiS: the toolbar and the sheet step out while the widget is carried or resized and come back
+    // where it lands, instead of chasing every frame of the gesture.
+    readonly property bool _irisGesture: root.irisFaced
+        && ((root.containsPress && root.dragMoved) || root._isResizing || root._irisSizing)
+    on_IrisGestureChanged: {
+        if (root._irisGesture || !editPopoverPanel.open) return
+        root._editPlacementSide = ""
+        root._popoverReserve = 0
+        root._popoverReserveWidth = 0
+        root._latchEditPlacement()
+    }
     property real _popoverReserve: 0
     property real _popoverReserveWidth: 0
     function _latchEditPlacement(): void {
@@ -1044,8 +1060,8 @@ AbstractWidget {
         id: editToolbar
         z: 200
         visible: opacity > 0
-        opacity: GlobalStates.widgetEditMode && root._editControlsShown ? 1 : 0
-        enabled: GlobalStates.widgetEditMode && root._editControlsShown
+        opacity: GlobalStates.widgetEditMode && root._editControlsShown && !root._irisGesture ? 1 : 0
+        enabled: GlobalStates.widgetEditMode && root._editControlsShown && !root._irisGesture
 
         HoverHandler {
             id: toolbarEditHover
@@ -1057,7 +1073,7 @@ AbstractWidget {
         height: toolbarRow.implicitHeight + 16
 
         Behavior on x {
-            enabled: Appearance.animationsEnabled
+            enabled: Appearance.animationsEnabled && !root._irisGesture && editToolbar.opacity > 0
             NumberAnimation {
                 duration: Appearance.animation.elementMoveFast.duration
                 easing.type: Appearance.animation.elementMoveFast.type
@@ -1065,7 +1081,7 @@ AbstractWidget {
             }
         }
         Behavior on y {
-            enabled: Appearance.animationsEnabled
+            enabled: Appearance.animationsEnabled && !root._irisGesture && editToolbar.opacity > 0
             NumberAnimation {
                 duration: Appearance.animation.elementMoveFast.duration
                 easing.type: Appearance.animation.elementMoveFast.type
@@ -1186,8 +1202,8 @@ AbstractWidget {
             onTargetHeightChanged: if (open) root._latchEditPlacement()
             onWidthChanged: if (open) root._latchEditPlacement()
             visible: opacity > 0
-            enabled: open
-            opacity: open ? 1 : 0
+            enabled: open && !root._irisGesture
+            opacity: open && !root._irisGesture ? 1 : 0
             x: root._editControlsGeometry.popoverX - root._editControlsGeometry.toolbarX
             y: root._editControlsGeometry.popoverY - root._editControlsGeometry.toolbarY
             width: Math.min(root.quickControlsAvailableWidth,
@@ -1196,7 +1212,7 @@ AbstractWidget {
             Behavior on height {
                 enabled: root.animateGeometry && editPopoverPanel.open
                 NumberAnimation {
-                    duration: Appearance.animation.elementMove.duration
+                    duration: root.widgetIris ? IrisStyle.duration(180) : Appearance.animation.elementMove.duration
                     easing.type: Easing.OutCubic
                 }
             }
@@ -2164,6 +2180,7 @@ AbstractWidget {
         id: irisFaceLoader
         anchors.fill: parent
         active: root.irisFaced
+        opacity: root.widgetOpacity * root.dimOpacity
         sourceComponent: root.irisFace
     }
 

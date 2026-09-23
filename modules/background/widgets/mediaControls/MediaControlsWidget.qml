@@ -528,7 +528,8 @@ AbstractBackgroundWidget {
     irisSizes: ["small", "medium", "large"]
     irisDefaultSize: "medium"
     irisOptions: [
-        { key: "lyrics", label: Translation.tr("Synced lyrics"), icon: "lyrics", fallback: true }
+        { key: "lyrics", label: Translation.tr("Synced lyrics"), icon: "lyrics", fallback: true },
+        { key: "rest", label: Translation.tr("Rest when paused"), icon: "bedtime", fallback: true }
     ]
     readonly property real placeholderWidth: Math.round(
         96 * Appearance.fontSizeScale * scaleFactor)
@@ -663,6 +664,7 @@ AbstractBackgroundWidget {
                     // whenever a player exists; audio activity modulates it through
                     // visualizerPoints instead of deciding whether it exists at all.
                     active: root.hasPlayer && root.visible && root.powerActive
+                    animate: root.motionActive
                     playerColor: root.widgetAccentVisible
                     albumPalette: root.organicArtworkPalette
                     accentPalette: [root.widgetAccentVisible,

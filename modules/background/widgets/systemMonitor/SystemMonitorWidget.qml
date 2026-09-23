@@ -211,7 +211,9 @@ AbstractBackgroundWidget {
     function _tileRole(key: string): var {
         const role = key === "mem" ? root.widgetSecondaryRole
             : key === "gpu" ? root.widgetTertiaryRole
-            : key === "temp" || key === "gpuTemp" ? root.widgetSignalRole
+            // Heat is only a signal when it is one: a cool reading in the alarm colour reads as a fault.
+            : key === "temp" || key === "gpuTemp" ? (root._metricSeverity(key) >= 2 ? root.widgetSignalRole
+                : root._metricSeverity(key) === 1 ? "warning" : root.widgetSurfaceRole)
             : key === "disk" ? root.widgetSurfaceRole
             : root.widgetPrimaryRole;
         const set = root.widgetSemanticSet(role);
@@ -321,6 +323,8 @@ AbstractBackgroundWidget {
 
     // Animation duration for smooth value transitions
     readonly property int _animDuration: Appearance.animation.elementMove.duration
+    // Values tick every second: easing them behind windows repaints the desktop for nothing.
+    readonly property bool animatesValues: Appearance.animationsEnabled && root.motionActive
 
     property bool _holdingResourceUsage: false
     function _syncResourceUsage(): void {
@@ -526,7 +530,7 @@ AbstractBackgroundWidget {
                         opacity: root.fillOpacity
 
                         Behavior on width {
-                            enabled: Appearance.animationsEnabled
+                            enabled: root.animatesValues
                             NumberAnimation { duration: root._animDuration; easing.type: Easing.OutCubic }
                         }
                     }
@@ -693,7 +697,7 @@ AbstractBackgroundWidget {
                 // Smoothly interpolated value for display
                 property real _animatedValue: _liveValue
                 Behavior on _animatedValue {
-                    enabled: Appearance.animationsEnabled
+                    enabled: root.animatesValues
                     NumberAnimation { duration: root._animDuration; easing.type: Easing.OutCubic }
                 }
 

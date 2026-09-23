@@ -338,7 +338,7 @@ AbstractBackgroundWidget {
     }
 
     readonly property bool _active: root.visible
-        && root.powerActive && MprisController.isPlaying
+        && root.motionActive && MprisController.isPlaying
     readonly property MprisPlayer _activePlayer: MprisController.activePlayer
     readonly property bool _organicPresent: root.visible && root.powerActive
         && root.vizType === "organic" && root._activePlayer !== null
@@ -487,6 +487,7 @@ AbstractBackgroundWidget {
         active: root.vizType === "organic"
             ? root._organicPresent
             : root._active && cavaProcess.audioSignalActive
+        animate: root.motionActive
         visualizerType: root.vizType
         normalizationCeiling: cavaProcess.normalizationCeiling
         spectrumColors: root.spectrumPalette

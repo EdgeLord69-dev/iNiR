@@ -13,6 +13,16 @@ Item {
 
     property var points: []
     property bool active: false
+    // False holds the last frame: no new points, no motion clock, still drawn.
+    property bool animate: true
+    property var _shownPoints: []
+    Binding {
+        target: root
+        property: "_shownPoints"
+        value: root.points
+        when: root.animate
+        restoreMode: Binding.RestoreNone
+    }
     property string visualizerType: "wave" // wave | bars | organic
     property real normalizationCeiling: CavaService.normalizationCeiling
     property var spectrumColors: CavaTheme.visualizerColors
@@ -52,7 +62,7 @@ Item {
     property var clipSegments: []
 
     readonly property var organicPoints: {
-        const source = root.points ?? []
+        const source = root._shownPoints ?? []
         const start = Math.max(0, Math.min(1, root.sampleStartRatio))
         const end = Math.max(start, Math.min(1, root.sampleEndRatio))
         const samples = source.slice(Math.floor(start * source.length),
@@ -105,6 +115,7 @@ Item {
         OrganicAudioBlob {
             anchors.fill: parent
             active: root.effectiveActive && edgeField.visible
+            animate: root.animate
             points: root.organicPoints
             normalizationCeiling: root.normalizationCeiling
             primaryColor: root.spectrumColors?.length > 0
@@ -149,7 +160,7 @@ Item {
     CavaSpectrum {
         anchors.fill: parent
         visible: root.visualizerType !== "organic"
-        points: root.points
+        points: root._shownPoints
         sampleStartRatio: root.sampleStartRatio
         sampleEndRatio: root.sampleEndRatio
         reverseFrequency: root.reverseFrequency
@@ -192,6 +203,7 @@ Item {
         anchors.fill: parent
         visible: root.visualizerType === "organic" && !root.organicEdgeAura
         active: root.effectiveActive && visible
+        animate: root.animate
         points: root.organicPoints
         // Bar hosts constrain the halo to their surface; standalone Organic
         // widgets retain their intentional overscan.
