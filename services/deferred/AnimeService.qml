@@ -60,6 +60,13 @@ Singleton {
         fetchSeasonalAnime()
     }
     
+    function invalidateTopCache(): void {
+        const timestamps = _cacheTimestamps
+        delete timestamps["top_airing"]
+        _cacheTimestamps = timestamps
+        topAiring = []
+    }
+
     function invalidateSeasonalCache(): void {
         const timestamps = _cacheTimestamps
         delete timestamps["seasonal"]
@@ -120,6 +127,11 @@ Singleton {
         xhr.send(JSON.stringify({ query, variables }))
     }
     
+    function findCover(title: string, callback): void {
+        const query = "query ($search: String) { Media(search: $search, type: ANIME) { coverImage { large } } }"
+        root._graphql(query, { search: title }, (data, error) => callback(error ? "" : String(data?.Media?.coverImage?.large ?? "")))
+    }
+
     function _isCacheValid(key) {
         const timestamp = root._cacheTimestamps[key]
         return timestamp && (Date.now() - timestamp) < root.cacheValidityMs
@@ -339,6 +351,8 @@ Singleton {
             season: anime.season ?? "",
             year: anime.seasonYear ?? "",
             broadcast,
+            airingAt: Number(nextEp?.airingAt ?? 0),
+            nextEpisode: Number(nextEp?.episode ?? 0),
             url: anime.siteUrl ?? ("https://anilist.co/anime/" + anime.id)
         }
     }
