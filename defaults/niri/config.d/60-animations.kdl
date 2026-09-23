@@ -21,6 +21,8 @@
 //   duration-ms 250 curve "ease-out-expo"
 // ─────────────────────────────────────────────────────────────────────────────
 animations {
+    // off
+
     workspace-switch {
         spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
     }
