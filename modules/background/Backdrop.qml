@@ -275,14 +275,15 @@ Variants {
                 readonly property bool shouldPlay: backdropWindow.enableAnimation && !GlobalStates.screenLocked && !Appearance._gameModeActive && !Wallpapers.batteryPauseActive
                     && (!CompositorService.isNiri || NiriService.inOverview)
 
-                function pauseAndShowFirstFrame() {
+                // Leaving the Overview holds the frame; only a still backdrop shows the first one.
+                function pausePlayback() {
                     pause()
-                    seek(0) // Ensure first frame is displayed when paused
+                    if (!backdropWindow.enableAnimation) seek(0)
                 }
 
                 onPlaybackStateChanged: {
                     if (playbackState === MediaPlayer.PlayingState && !shouldPlay) {
-                        pauseAndShowFirstFrame()
+                        pausePlayback()
                     }
                     if (playbackState === MediaPlayer.StoppedState && visible && shouldPlay) {
                         play()
@@ -292,14 +293,14 @@ Variants {
                 onShouldPlayChanged: {
                     if (visible && backdropWindow.wallpaperIsVideo) {
                         if (shouldPlay) play()
-                        else pauseAndShowFirstFrame()
+                        else pausePlayback()
                     }
                 }
 
                 onVisibleChanged: {
                     if (visible && backdropWindow.wallpaperIsVideo) {
                         if (shouldPlay) play()
-                        else pauseAndShowFirstFrame()
+                        else pausePlayback()
                     } else {
                         pause()
                     }
@@ -431,14 +432,14 @@ Variants {
                 readonly property bool shouldPlay: backdropWindow.enableAnimation && !GlobalStates.screenLocked && !Appearance._gameModeActive && !Wallpapers.batteryPauseActive
                     && (!CompositorService.isNiri || NiriService.inOverview)
 
-                function pauseAndShowFirstFrame() {
+                function pausePlayback() {
                     pause()
-                    seek(0)
+                    if (!backdropWindow.enableAnimation) seek(0)
                 }
 
                 onPlaybackStateChanged: {
                     if (playbackState === MediaPlayer.PlayingState && !shouldPlay) {
-                        pauseAndShowFirstFrame()
+                        pausePlayback()
                     }
                     if (playbackState === MediaPlayer.StoppedState && visible && shouldPlay) {
                         play()
@@ -448,14 +449,14 @@ Variants {
                 onShouldPlayChanged: {
                     if (visible && backdropWindow.wallpaperIsVideo) {
                         if (shouldPlay) play()
-                        else pauseAndShowFirstFrame()
+                        else pausePlayback()
                     }
                 }
 
                 onVisibleChanged: {
                     if (visible && backdropWindow.wallpaperIsVideo) {
                         if (shouldPlay) play()
-                        else pauseAndShowFirstFrame()
+                        else pausePlayback()
                     } else {
                         pause()
                     }
