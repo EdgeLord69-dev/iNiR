@@ -555,9 +555,8 @@ schema_checks = {
         'Config.setNestedValue("iris.modules.desktopWidgets", value === "on")'
     ]),
     "iRiS lightweight background retains bare-desktop menu": all(fragment in iris_background for fragment in [
-        "IrisDesktopMenu {", "acceptedButtons: Qt.RightButton | Qt.LeftButton",
-        'Config.setNestedValue("iris.modules.desktopWidgets", true)'
-    ]) and 'component: IrisBackground {}' in (root / "modules/iris/critical/ShellIrisCriticalPanels.qml").read_text(encoding="utf-8")
+        "IrisDesktopMenu {", "acceptedButtons: Qt.RightButton | Qt.LeftButton", "IrisDesktopActions.menu("
+    ]) and 'Config.setNestedValue("iris.modules.desktopWidgets", true)' in (root / "modules/iris/background/IrisDesktopActions.qml").read_text(encoding="utf-8") and 'component: IrisBackground {}' in (root / "modules/iris/critical/ShellIrisCriticalPanels.qml").read_text(encoding="utf-8")
         and 'component: Background {}' in iris_panels,
     "wizard style catalog covers all ii global styles": all(preset in wizard for preset in [
         'id: "material"', 'id: "cards"', 'id: "aurora"', 'id: "inir"',
@@ -2049,8 +2048,14 @@ if command -v python3 &>/dev/null && [[ -f "$runtime_root/scripts/lib/generate-i
     step "iRiS defaults"
     python3 "$runtime_root/scripts/test-iris-defaults.py"
 
+    step "iRiS anime layer"
+    python3 "$runtime_root/scripts/test-iris-anime-layer.py"
+
     step "iRiS performance contract"
     python3 "$runtime_root/scripts/test-iris-performance-contract.py"
+
+    step "niri config rules and flags"
+    python3 "$runtime_root/scripts/test-niri-config-rules.py"
 
     step "niri animation presets"
     python3 "$runtime_root/scripts/test-niri-animation-presets.py"

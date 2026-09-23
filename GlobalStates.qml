@@ -68,6 +68,8 @@ Singleton {
     property bool osdMediaOpen: false
     property string osdMediaAction: "play" // "play", "pause", "next", "previous"
     signal osdMediaActionTriggered(string action)
+    readonly property bool userMediaFeedback: Config.options?.panelFamily === "iris"
+        || (Config.options?.osd?.mediaEnabled ?? true)
 
     function showMediaAction(action: string): void {
         const normalized = String(action ?? "")
@@ -217,17 +219,23 @@ Singleton {
     property bool wallpaperSelectorOpen: false
     property string wallpaperSelectorSource: ""
     property string wallpaperSelectorQuery: ""
+    property string wallpaperSelectorKind: ""
+    property var wallpaperSelectorSeries: null
+    property string wallpaperSelectorKindActive: "all"
     property bool wallpaperLauncherOpen: false
     property string wallpaperLauncherMode: "static"
     property bool widgetEditMode: false
     property string selectedDesktopWidget: ""
     property string selectedDesktopItem: ""
     property string desktopWidgetQuickControls: ""
+    property string desktopWidgetManagerOutput: ""
     property bool shellLayoutEditMode: false
 
     function setWidgetEditMode(enabled: bool): void {
-        if (enabled)
+        if (enabled) {
             shellLayoutEditMode = false
+            irisEdit = false
+        }
         else {
             selectedDesktopWidget = ""
             selectedDesktopItem = ""
@@ -356,20 +364,38 @@ Singleton {
     property var irisDockBody: ({})
     // iRiS is being edited in place: every piece is grabbable, the edit bar
     // holds the pieces, the look and the sizes, and Done ends it.
+    // Arranging the Control Center in place; closing the panel ends it.
+    property bool irisControlEdit: false
+    property string irisControlTab: "controls"
+    // The lock screen rehearsal: the same surface, editable, with no PAM behind it.
+    property bool irisLockEdit: false
+    property string irisLockSelection: ""
+    property string irisLockPage: "scene"
     property bool irisEdit: false
     // What the edit bar is inspecting: a piece slot ("extra:vitals", "left",
     // "app:kitty"), a surface ("island", "dock", "cards"…) or "" for the family.
     property string irisEditSelection: ""
     // A Studio target the edit bar should inspect ("" = keep what it shows).
     property string irisEditTarget: ""
-    property string irisEditTab: "pieces"
     property int irisChassisEpoch: 0
-    onIrisEditChanged: if (!irisEdit) { irisEditSelection = ""; irisEditTarget = "" }
+    onIrisEditChanged: {
+        if (!irisEdit) { irisEditSelection = ""; irisEditTarget = "" }
+        else if (widgetEditMode) setWidgetEditMode(false)
+    }
+    onIrisEditSelectionChanged: if (irisEditSelection.length > 0) irisEditTarget = ""
+    onIrisEditTargetChanged: if (irisEditTarget.length > 0) irisEditSelection = ""
+    onControlPanelOpenChanged: if (!controlPanelOpen) irisControlEdit = false
+    onIrisControlEditChanged: if (!irisControlEdit) irisControlTab = "controls"
     // iRiS Studio, the live appearance editor, is open.
+    // Asking for Studio opens Customize on the shell itself, on the target it named.
     property bool irisStudioOpen: false
-    // Where Studio is on screen while it is presented ({ screen, x, y, width,
-    // height }), so surfaces it edits can leave its area out of their input.
-    property var irisStudioRect: null
+    onIrisStudioOpenChanged: {
+        if (!irisStudioOpen) return
+        if (irisStudioTarget.length > 0) irisEditTarget = irisStudioTarget
+        irisStudioTarget = ""
+        irisEdit = true
+        irisStudioOpen = false
+    }
     // A target Studio should show when it opens or is already open ("" = keep).
     property string irisStudioTarget: ""
     // The `source` of the card on screen (kept while it collapses), "" when none.
@@ -400,6 +426,8 @@ Singleton {
     property string irisSpotlightQuery: ""
     // Desktop widget manager toggle routed to the output that should show it.
     signal desktopWidgetManagerToggleRequested(string outputName)
+    // The iRiS desktop menu opened at a point of an output (`inir iris desktopMenu`).
+    signal irisDesktopMenuRequested(string outputName, real x, real y)
     // Whether any output's Island is expanded, published for `inir iris status`.
     property bool irisIslandExpanded: false
     property string irisIslandPage: ""

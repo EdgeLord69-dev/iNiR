@@ -917,9 +917,14 @@ ShellRoot {
 
     function cyclePanelFamily() {
         const currentFamily = Config.options?.panelFamily ?? "ii"
+        const wanted = Array.from(Config.options?.familyCycle ?? families)
+        const order = wanted.filter((family, index) => families.includes(family) && wanted.indexOf(family) === index)
+        if (order.length === 0) return
+        const at = order.indexOf(currentFamily)
+        const nextFamily = order[(at + 1) % order.length]
+        if (nextFamily === currentFamily) return
         const currentIndex = families.indexOf(currentFamily)
-        const nextIndex = (currentIndex + 1) % families.length
-        const nextFamily = families[nextIndex]
+        const nextIndex = families.indexOf(nextFamily)
 
         // Determine direction: ii -> waffle = left, waffle -> ii = right
         const direction = nextIndex > currentIndex ? "left" : "right"

@@ -2243,7 +2243,7 @@ print("")
             if (!root.canGoNext)
                 return
             root.playNext()
-            if (Config.options?.osd?.mediaEnabled ?? true)
+            if (GlobalStates.userMediaFeedback)
                 GlobalStates.showMediaAction("next")
         }
         
@@ -2251,7 +2251,7 @@ print("")
             if (!root.currentVideoId)
                 return
             root.playPrevious()
-            if (Config.options?.osd?.mediaEnabled ?? true)
+            if (GlobalStates.userMediaFeedback)
                 GlobalStates.showMediaAction("previous")
         }
         
