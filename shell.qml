@@ -61,6 +61,7 @@ ShellRoot {
     // Tier 4: T+1500ms (background features - updates, sync, content services)
     property var _shellUpdatesService
     property var _autostartService
+    property var _niriAnimationPresetsService
     property var _calendarSyncService
     property var _todoService
     property var _notepadService
@@ -81,6 +82,7 @@ ShellRoot {
         const family = Config.options?.panelFamily ?? "ii"
         root._shellUpdatesService = ShellUpdates
         root._autostartService = Autostart
+        root._niriAnimationPresetsService = NiriAnimationPresets
         if (family !== "iris") {
             root._calendarSyncService = CalendarSync
             root._todoService = Todo

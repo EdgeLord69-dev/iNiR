@@ -1834,6 +1834,13 @@ Singleton {
         {
             pageIndex: 12, pageName: root.pages[12].name,
             section: Translation.tr("Animations"),
+            label: Translation.tr("Style"),
+            description: Translation.tr("Presets for how windows open, close and slide"),
+            keywords: ["animation", "preset", "style", "motion", "bounce", "bouncy", "snappy", "fast", "slow", "smooth", "material", "open", "close", "window", "niri"]
+        },
+        {
+            pageIndex: 12, pageName: root.pages[12].name,
+            section: Translation.tr("Animations"),
             label: Translation.tr("Per-animation toggles"),
             description: Translation.tr("Enable or disable individual compositor animations"),
             keywords: ["animation", "toggle", "enable", "disable", "compositor", "transition"]

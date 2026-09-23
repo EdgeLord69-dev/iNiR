@@ -2,8 +2,8 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: baed4681b1c96b4a
-# Targets: 63
+# IPC.md hash: 1ff744ac16925fc4
+# Targets: 64
 
 declare -gA IPC_TARGET_DESC=(
   [ai]="Shared multi-provider AI service. It supports Gemini, OpenAI-compatible chat and Responses APIs, Mistral and Anthropic; live provider catalogs are normalized into capability-aware model records. Catalog visibility is separate from execution readiness, so public model lists remain browseable without pretending an API key exists. OpenCode Zen and Go resolve their current model lists and per-model API routes dynamically. Normal shell tools use typed actions and approval cards, while arbitrary commands are isolated in Advanced mode."
@@ -35,6 +35,7 @@ declare -gA IPC_TARGET_DESC=(
   [memory]="Memory pressure monitoring for JSGCHeap accumulation (Qt V4 memfd leak). Notifies user when memory is high, lets them decide when to restart."
   [minimize]="Window minimization (Niri workaround - moves windows to hidden workspace)."
   [mpris]="Media player control. Automatically detects and uses YtMusic controls when active, otherwise uses the active MPRIS player."
+  [niriAnimations]="Presets for Niri's own window, workspace and overview animations. Applying one rewrites the animations in \`config.d/60-animations.kdl\` and keeps \`off\` and \`slowdown\` as they were. The same picker lives in Settings in every family. Your own presets go in \`~/.config/inir/niri-animation-presets.json\` as \`{\"presets\": [...]}\`, in the same shape as \`defaults/niri-animation-presets.json\`; one with a shipped id replaces it."
   [notifications]="Notification management."
   [orbit]="Niri-only Material session navigator for the ii family. Orbit presents nearby workspaces and readable window previews, with MRU Trail navigation and temporary Stash parking."
   [osd]="On-screen feedback for any family. The active family's OSD or Island decides where it is drawn."
@@ -101,6 +102,7 @@ declare -gA IPC_TARGET_FAMILY=(
   [memory]="shared"
   [minimize]="shared"
   [mpris]="shared"
+  [niriAnimations]="shared"
   [notifications]="shared"
   [orbit]="shared"
   [osd]="shared"
@@ -167,6 +169,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [memory]="collect stats restart dismiss reset"
   [minimize]="minimize minimizeId restore restoreOriginal"
   [mpris]="pauseAll playPause previous next"
+  [niriAnimations]="list active apply"
   [notifications]="test clearAll toggleSilent"
   [orbit]="toggle close open pocket studio find stage orbital next previous status toggleView"
   [osd]="volume brightness mic keyboard media hide"
@@ -375,6 +378,9 @@ declare -gA IPC_FUNCTION_DESC=(
   ["mpris:playPause"]="Toggle play/pause (uses YtMusic if active)"
   ["mpris:previous"]="Previous track (uses YtMusic if active)"
   ["mpris:next"]="Next track (uses YtMusic if active)"
+  ["niriAnimations:list"]="List the presets; \`*\` marks the one your config matches"
+  ["niriAnimations:active"]="Print the preset your config matches, or \`custom\` after hand edits"
+  ["niriAnimations:apply"]="Apply a preset: \`snappy\`, \`niri\`, \`material\`, \`bouncy\`, \`gentle\`, \`instant\` or one of yours"
   ["notifications:test"]="Send test notifications"
   ["notifications:clearAll"]="Dismiss all notifications"
   ["notifications:toggleSilent"]="Toggle Do Not Disturb mode"
@@ -608,6 +614,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["minimize:minimizeId"]="<windowId>"
   ["minimize:restore"]="<windowId>"
   ["minimize:restoreOriginal"]="<windowId>"
+  ["niriAnimations:apply"]="<id>"
   ["orbit:find"]="<query>"
   ["osd:media"]="<action>"
   ["overlay:tool"]="<identifier> <action>"
@@ -652,6 +659,7 @@ bind "Super+M" { spawn "inir" "globalActions" "run" "toggle-mute"; }'
   [mpris]='bind "Ctrl+Mod+Space" { spawn "inir" "mpris" "playPause"; }
 bind "Mod+Alt+N" { spawn "inir" "mpris" "next"; }
 bind "Mod+Alt+P" { spawn "inir" "mpris" "previous"; }'
+  [niriAnimations]='bind "Super+Alt+A" { spawn "inir" "niriAnimations" "apply" "snappy"; }'
   [osd]='bind "Mod+Shift+K" { spawn "inir" "osd" "keyboard"; }'
   [overlay]='bind "Super+G" { spawn "inir" "overlay" "toggle"; }'
   [overview]='bind "Mod+Space" { spawn "inir" "overview" "toggle"; }'
@@ -672,8 +680,8 @@ bind "Ctrl+Alt+A" { spawn "inir" "wallpaperSelector" "openLauncher" "animated"; 
   [ytmusic]='bind "Mod+M+Space" { spawn "inir" "ytmusic" "playPause"; }'
 )
 
-IPC_ALL_TARGETS=(ai altSwitcher appCatalog audio autostart background bar brightness cheatsheet clipboard cliphistService closeConfirm controlPanel coverflowSelector customWidgets dashboard dev equalizer gamemode globalActions iris keyboard lock mascot mascotMood mediaControls memory minimize mpris notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill recordingOsd region search session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch wactionCenter waffleAltSwitcher wallpaperLauncher wallpaperSelector wbar widgetpower wnotificationCenter workspaceStrip wwidgets ytmusic zoom)
-IPC_SHARED_TARGETS=(ai altSwitcher appCatalog audio background bar brightness cheatsheet clipboard cliphistService closeConfirm controlPanel coverflowSelector dashboard dev gamemode globalActions iris keyboard lock mascot mascotMood mediaControls memory minimize mpris notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill region session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch wallpaperLauncher wallpaperSelector workspaceStrip ytmusic zoom)
+IPC_ALL_TARGETS=(ai altSwitcher appCatalog audio autostart background bar brightness cheatsheet clipboard cliphistService closeConfirm controlPanel coverflowSelector customWidgets dashboard dev equalizer gamemode globalActions iris keyboard lock mascot mascotMood mediaControls memory minimize mpris niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill recordingOsd region search session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch wactionCenter waffleAltSwitcher wallpaperLauncher wallpaperSelector wbar widgetpower wnotificationCenter workspaceStrip wwidgets ytmusic zoom)
+IPC_SHARED_TARGETS=(ai altSwitcher appCatalog audio background bar brightness cheatsheet clipboard cliphistService closeConfirm controlPanel coverflowSelector dashboard dev gamemode globalActions iris keyboard lock mascot mascotMood mediaControls memory minimize mpris niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill region session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch wallpaperLauncher wallpaperSelector workspaceStrip ytmusic zoom)
 IPC_II_TARGETS=(equalizer)
 IPC_WAFFLE_TARGETS=(autostart customWidgets recordingOsd search wactionCenter waffleAltSwitcher wbar widgetpower wnotificationCenter wwidgets)
 
@@ -688,6 +696,7 @@ declare -gA IPC_KEBAB_ALIASES=(
   [global-actions]=globalActions
   [mascot-mood]=mascotMood
   [media-controls]=mediaControls
+  [niri-animations]=niriAnimations
   [osd-volume]=osdVolume
   [package-search]=packageSearch
   [panel-family]=panelFamily

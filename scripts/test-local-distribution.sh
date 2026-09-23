@@ -2051,6 +2051,9 @@ if command -v python3 &>/dev/null && [[ -f "$runtime_root/scripts/lib/generate-i
 
     step "iRiS performance contract"
     python3 "$runtime_root/scripts/test-iris-performance-contract.py"
+
+    step "niri animation presets"
+    python3 "$runtime_root/scripts/test-niri-animation-presets.py"
 fi
 
 if [[ "$run_runtime" == true ]]; then

@@ -15,6 +15,8 @@ Commands:
   get-hot-corners      Read effective Niri overview hot corners
   get-layout           Read current layout config from KDL
   get-animations       Read current animation config from KDL (with per-type springs)
+  get-animation-presets  List animation presets and which one the KDL matches
+  apply-animation-preset ID  Write a preset's animations, keeping `off` and `slowdown`
   get-window-rules     Read window-rule globals from KDL
   list-cursor-themes   List available cursor themes from icon dirs
   validate             Validate current Niri config via niri validate
@@ -1254,6 +1256,130 @@ def cmd_get_animations():
 
     print(json.dumps(result))
     return 0
+
+
+ANIMATION_PRESETS_FILE = Path(__file__).resolve().parent.parent / "defaults" / "niri-animation-presets.json"
+
+
+def _user_animation_presets_file():
+    xdg = Path(os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.config")))
+    legacy = xdg / "illogical-impulse"
+    return (legacy if legacy.exists() else xdg / "inir") / "niri-animation-presets.json"
+
+
+def _load_animation_presets():
+    """Shipped presets come from the running iNiR; the user's own file adds or overrides by id."""
+    try:
+        registry = json.loads(ANIMATION_PRESETS_FILE.read_text())
+    except (OSError, ValueError):
+        registry = {"default": "", "presets": []}
+    try:
+        user = json.loads(_user_animation_presets_file().read_text())
+    except (OSError, ValueError):
+        user = {}
+    presets = list(registry.get("presets", []))
+    for preset in user.get("presets", []) if isinstance(user, dict) else []:
+        if not isinstance(preset, dict) or not preset.get("id") or not isinstance(preset.get("types"), dict):
+            continue
+        preset = dict(preset, user=True)
+        index = next((i for i, p in enumerate(presets) if p.get("id") == preset["id"]), None)
+        if index is None:
+            presets.append(preset)
+        else:
+            presets[index] = preset
+    registry["presets"] = presets
+    return registry
+
+
+def _kdl_number(value):
+    return f"{float(value):.4f}".rstrip("0").rstrip(".") if float(value) != int(float(value)) else f"{float(value):.1f}"
+
+
+def _animation_type_lines(spec):
+    if "spring" in spec:
+        damping, stiffness, epsilon = spec["spring"]
+        return [f"spring damping-ratio={_kdl_number(damping)} stiffness={int(stiffness)} epsilon={_kdl_number(epsilon)}"]
+    lines = [f"duration-ms {int(spec['duration-ms'])}"]
+    curve = f'curve "{spec["curve"]}"'
+    if spec.get("curve-args"):
+        curve += " " + " ".join(_kdl_number(a) for a in spec["curve-args"])
+    lines.append(curve)
+    if spec.get("custom-shader"):
+        shader = "\n".join(("            " + l) if l else "" for l in spec["custom-shader"].splitlines())
+        lines.append('custom-shader r"\n' + shader + '\n        "')
+    return lines
+
+
+def _normalize_animation_block(text):
+    text = re.sub(r"-?\d+(?:\.\d+)?", lambda m: repr(float(m.group(0))), text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _active_animation_preset(anim_block, presets):
+    for preset in presets:
+        matches = True
+        for anim_type, spec in preset.get("types", {}).items():
+            current = _extract_block(anim_block, anim_type)
+            expected = "\n".join(_animation_type_lines(spec))
+            if current is None or _normalize_animation_block(current) != _normalize_animation_block(expected):
+                matches = False
+                break
+        if matches:
+            return preset["id"]
+    return ""
+
+
+def cmd_get_animation_presets():
+    registry = _load_animation_presets()
+    presets = registry.get("presets", [])
+    anim_file = resolve_niri_section_file("config.d/60-animations.kdl")
+    active = ""
+    if anim_file.exists():
+        anim_block = _extract_block(anim_file.read_text(), "animations", top_level=True)
+        if anim_block is not None:
+            active = _active_animation_preset(anim_block, presets)
+    print(json.dumps({"default": registry.get("default", ""), "active": active, "presets": presets}))
+    return 0
+
+
+def cmd_apply_animation_preset(args):
+    if not args:
+        print(json.dumps({"success": False, "error": "Usage: apply-animation-preset ID"}))
+        return 1
+    preset = next((p for p in _load_animation_presets().get("presets", []) if p.get("id") == args[0]), None)
+    if preset is None:
+        print(json.dumps({"success": False, "error": f"Unknown animation preset: {args[0]}"}))
+        return 1
+
+    anim_file = resolve_niri_section_file("config.d/60-animations.kdl")
+    content = anim_file.read_text() if anim_file.exists() else ""
+    bounds = _find_block_bounds(content, "animations", top_level=True)
+
+    kept = []
+    if bounds:
+        depth = 0
+        for raw_line in content[bounds[1]:bounds[2]].splitlines():
+            stripped = raw_line.strip()
+            if depth == 0 and (stripped == "off" or stripped.startswith("slowdown")):
+                kept.append("    " + stripped)
+            depth += raw_line.count("{") - raw_line.count("}")
+
+    body = ["animations {", *kept]
+    for anim_type, spec in preset["types"].items():
+        if len(body) > 1:
+            body.append("")
+        body.append(f"    {anim_type} {{")
+        body.extend("        " + line for line in _animation_type_lines(spec))
+        body.append("    }")
+    body.append("}")
+    block = "\n".join(body)
+
+    if bounds:
+        start = bounds[0] + (1 if content[bounds[0]] == "\n" else 0)
+        content = content[:start] + block + content[bounds[3]:]
+    else:
+        content = content.rstrip() + ("\n\n" if content.strip() else "") + block + "\n"
+    return _write_validated(anim_file, content)
 
 
 # ─── Window Rules ─────────────────────────────────────────────────────
@@ -3042,6 +3168,8 @@ def main():
         "get-hot-corners": lambda: cmd_get_hot_corners(),
         "get-layout": lambda: cmd_get_layout(),
         "get-animations": lambda: cmd_get_animations(),
+        "get-animation-presets": lambda: cmd_get_animation_presets(),
+        "apply-animation-preset": lambda: cmd_apply_animation_preset(args),
         "get-window-rules": lambda: cmd_get_window_rules(),
         "list-cursor-themes": lambda: cmd_list_cursor_themes(),
         "sync-cursor": lambda: cmd_sync_cursor(),

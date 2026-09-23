@@ -739,6 +739,22 @@ bind "Super+F12" { spawn "inir" "gamemode" "toggle"; }
 
 ---
 
+### niriAnimations
+
+Presets for Niri's own window, workspace and overview animations. Applying one rewrites the animations in `config.d/60-animations.kdl` and keeps `off` and `slowdown` as they were. The same picker lives in Settings in every family. Your own presets go in `~/.config/inir/niri-animation-presets.json` as `{"presets": [...]}`, in the same shape as `defaults/niri-animation-presets.json`; one with a shipped id replaces it.
+
+| Function | Description |
+|----------|-------------|
+| `list` | List the presets; `*` marks the one your config matches |
+| `active` | Print the preset your config matches, or `custom` after hand edits |
+| `apply <id>` | Apply a preset: `snappy`, `niri`, `material`, `bouncy`, `gentle`, `instant` or one of yours |
+
+```kdl
+bind "Super+Alt+A" { spawn "inir" "niriAnimations" "apply" "snappy"; }
+```
+
+---
+
 ### iris
 
 iRiS bar and Island design. Available while the iRiS bar is enabled.

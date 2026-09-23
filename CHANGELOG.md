@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Presets for Niri's window animations.** Snappy, Niri, Material, Bouncy, Gentle and Instant, in Settings wherever your family keeps its Niri options (iRiS: Windows, Movement). Each card plays its own preset when you hover it and says how long a window takes to open. Picking one rewrites the animations in `60-animations.kdl` and keeps your speed and the on/off switch; touch a slider afterwards and it just reads as custom. Also `inir niriAnimations apply <id>`. New presets arrive with iNiR updates, nothing gets copied into your config; your own go in `~/.config/inir/niri-animation-presets.json`. Material comes from @cnvuls's PR #205.
+
+### Changed
+
+- **Windows open without the wait on a fresh install.** The default Niri animations are now the Snappy preset: a window is 90 % there in about 80 ms instead of 164, and nothing is slowed down by 1.2× anymore. Existing configs keep what they have; pick Snappy in Settings to get it.
+
 ### Fixed
 
 - **`inir update` now tells you which checkout it updates.** It uses the path saved at install time, which is not always the folder you are standing in. If the pull fails you get git's real error instead of a shrug, plus advice that works: `git stash` leaves untracked files right where they are, and those are usually the problem.
