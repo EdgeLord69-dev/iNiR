@@ -1725,8 +1725,31 @@ run_logs() {
 }
 
 ###############################################################################
-# Install completion — useful next steps without making first-run feel like a log dump
+# Install completion: short, and it ends on the one thing nobody may skip
 ###############################################################################
+show_reboot_notice() {
+    local reasons=("${INIR_REBOOT_REASONS[@]}") reason
+    local bar="══════════════════════════════════════════════════════════════"
+    echo ""
+    echo -e "  ${STY_YELLOW}${STY_BOLD}╔${bar}╗${STY_RST}"
+    printf "  ${STY_YELLOW}${STY_BOLD}║%-62s║${STY_RST}\n" ""
+    printf "  ${STY_YELLOW}${STY_BOLD}║%-62s║${STY_RST}\n" "    RESTART YOUR COMPUTER BEFORE USING iNiR"
+    printf "  ${STY_YELLOW}${STY_BOLD}║%-62s║${STY_RST}\n" "    Not a suggestion. Half of it isn't live until you do."
+    printf "  ${STY_YELLOW}${STY_BOLD}║%-62s║${STY_RST}\n" ""
+    echo -e "  ${STY_YELLOW}${STY_BOLD}╚${bar}╝${STY_RST}"
+    if [[ ${#reasons[@]} -gt 0 ]]; then
+        echo ""
+        echo -e "    ${STY_BOLD}Why:${STY_RST}"
+        for reason in "${reasons[@]}"; do
+            echo "$reason" | fold -s -w 64 | sed '1s/^/    • /; 2,$s/^/      /'
+        done
+    fi
+    echo ""
+    echo -e "    Then pick ${STY_BOLD}Niri${STY_RST} at the login screen and you're in."
+    echo -e "    ${STY_FAINT}Reboot now:${STY_RST} ${STY_BOLD}systemctl reboot${STY_RST}"
+    echo ""
+}
+
 show_install_completion() {
     local version distro package_manager host gpu ram compositor
     version="$(get_repo_version)"
@@ -1738,10 +1761,7 @@ show_install_completion() {
     ram="${DETECTED_RAM_GIB:-?} GiB"
     compositor="${DETECTED_DE:-${XDG_CURRENT_DESKTOP:-not detected}}"
 
-    tui_alert "success" "iNiR is ready" \
-        "Version ${version} is installed. You can start the shell now or begin with a clean Niri login."
-
-    tui_summary_card "This install" \
+    tui_summary_card "iNiR ${version}" \
         "Distro:${distro}" \
         "Packages:${package_manager}" \
         "Host:${host}" \
@@ -1749,18 +1769,15 @@ show_install_completion() {
         "RAM:${ram}" \
         "Session:${compositor}"
 
-    tui_section_start "Good next moves"
-    if [[ -n "${NIRI_SOCKET:-}" ]]; then
-        tui_list_item "Start/reload now: inir restart"
-    else
-        tui_list_item "Log out, choose Niri in your login screen, then sign back in"
-    fi
-    tui_list_item "Open Settings: inir settings"
-    tui_list_item "Check health: inir doctor"
-    tui_list_item "See exactly what is installed: inir status"
+    tui_section_start "After that"
+    tui_list_item "Super+/ lists every shortcut, Super+, opens Settings"
+    tui_list_item "Something off? inir doctor, then inir logs"
+    tui_list_item "Regret it? ./setup rollback"
     tui_section_end
 
-    tui_dim "If an experiment goes sideways later: ./setup rollback"
+    if [[ "${IS_UPDATE}" != "true" || ${#INIR_REBOOT_REASONS[@]} -gt 0 ]]; then
+        show_reboot_notice
+    fi
 }
 
 show_update_completion() {
@@ -1780,6 +1797,8 @@ show_update_completion() {
 ###############################################################################
 run_install() {
     detect_distro
+    # Filled by the install steps with what only a fresh login or a reboot applies.
+    INIR_REBOOT_REASONS=()
 
     # Greeting & system info
     source ./sdata/subcmd-install/0.greeting.sh
