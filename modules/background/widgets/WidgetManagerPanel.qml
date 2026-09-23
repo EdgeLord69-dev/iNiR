@@ -744,7 +744,7 @@ Item {
             }
 
             Repeater {
-                model: root._mascotInstanceIds
+                model: ScriptModel { values: root._mascotInstanceIds }
                 WidgetCard {
                     required property string modelData
                     required property int index

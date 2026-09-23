@@ -89,6 +89,7 @@ AbstractBackgroundWidget {
         textEdit.cursorPosition = textEdit.positionAt(mapped.x, mapped.y)
     }
 
+    readonly property bool editing: textEdit.activeFocus && !GlobalStates.widgetEditMode
     function _finishEditing(): void {
         root._commitText()
         noteFocusSink.forceActiveFocus()
@@ -291,11 +292,28 @@ AbstractBackgroundWidget {
             font.weight: Font.DemiBold
         }
         Rectangle {
-            visible: !root.instrument
+            visible: !root.instrument && !root.editing
             Layout.preferredWidth: 24 * root.scaleFactor
             Layout.preferredHeight: 3 * root.scaleFactor
             radius: height / 2
             color: root.widgetAccentVisible
+        }
+        // Notes save as you type; "Done" only lets go of the keyboard, where the title already is.
+        StyledText {
+            visible: root.editing
+            text: Translation.tr("Done")
+            color: doneArea.containsMouse ? root.widgetInk : root.widgetAccentVisible
+            font.family: root.widgetTitleFamily
+            font.pixelSize: Appearance.font.pixelSize.smaller * root.scaleFactor
+            font.weight: Font.DemiBold
+            MouseArea {
+                id: doneArea
+                anchors.fill: parent
+                anchors.margins: -Math.round(6 * root.scaleFactor)
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                onClicked: root._finishEditing()
+            }
         }
     }
 
@@ -432,11 +450,11 @@ AbstractBackgroundWidget {
         z: 5
         width: Math.round(30 * root.scaleFactor)
         height: width
-        visible: textEdit.activeFocus && !GlobalStates.widgetEditMode
+        visible: root.editing && !noteHeading.visible
         buttonRadius: Appearance.rounding.full
-        colBackground: ColorUtils.applyAlpha(root.widgetAccent, 0.12)
-        colBackgroundHover: ColorUtils.applyAlpha(root.widgetAccent, 0.22)
-        colRipple: ColorUtils.applyAlpha(root.widgetAccent, 0.28)
+        colBackground: "transparent"
+        colBackgroundHover: ColorUtils.applyAlpha(root.widgetInk, 0.1)
+        colRipple: ColorUtils.applyAlpha(root.widgetInk, 0.16)
         downAction: root._finishEditing
 
         contentItem: MaterialSymbol {

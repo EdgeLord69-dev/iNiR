@@ -42,6 +42,7 @@ import qs.modules.background.desktopItems
 import qs.modules.iris.components
 import qs.modules.iris.style
 import qs.modules.iris.frame
+import qs.modules.iris.background
 import "root:modules/common/functions/parallax.js" as ParallaxMath
 import "widgets/OrganicEdgeConfig.js" as OrganicEdgeConfig
 
@@ -387,6 +388,7 @@ Scope {
         id: bgRoot
 
         required property var modelData
+        readonly property Item wallpaperLayer: wallpaperContainer
 
         // Hide when fullscreen
         property list<HyprlandWorkspace> workspacesForMonitor: CompositorService.isHyprland ? Hyprland.workspaces.values.filter(workspace => workspace.monitor && workspace.monitor.name == monitor.name) : []
@@ -417,7 +419,7 @@ Scope {
         readonly property var workSafetyOptions: Config.options?.workSafety ?? {}
         readonly property var workSafetyEnableOptions: workSafetyOptions.enable ?? {}
         readonly property var workSafetyTriggerOptions: workSafetyOptions.triggerCondition ?? {}
-        readonly property var lockBlurOptions: Config.options?.lock?.blur ?? {}
+        readonly property var lockBlurOptions: Config.options?.panelFamily === "iris" ? ({}) : (Config.options?.lock?.blur ?? {})
         readonly property var desktopFreeWorkArea: ShellLayoutController.desktopWorkArea(
             screen?.name ?? "", screen?.width ?? 0, screen?.height ?? 0)
         readonly property var desktopItemsWorkArea: ShellLayoutController.desktopZoneWorkArea(
@@ -1771,6 +1773,16 @@ Scope {
             // iRiS desktop menu: the Island's material, quick-action tiles and
             // keyboard, growing out of the pointer. Only the actions that drive
             // something under iRiS (shell layout editing is ii/Waffle-only).
+            Connections {
+                target: GlobalStates
+                function onIrisDesktopMenuRequested(outputName: string, x: real, y: real): void {
+                    if (outputName !== bgRoot.screenName || (Config.options?.panelFamily ?? "ii") !== "iris") return
+                    desktopMenuAnchor.x = x
+                    desktopMenuAnchor.y = y
+                    irisDesktopMenu.requestOpen()
+                }
+            }
+
             IrisDesktopMenu {
                 id: irisDesktopMenu
                 z: 27
@@ -1778,15 +1790,10 @@ Scope {
                 readonly property int gridSize: Config.getNestedValue("background.widgets.editGrid.size", 32)
                 readonly property bool gridSnap: Config.getNestedValue("background.widgets.editGrid.snap", true)
                 model: GlobalStates.widgetEditMode ? [
-                    { type: "quick", items: [
-                        { text: Translation.tr("Widgets"), iconName: "dashboard_customize",
-                            action: () => { widgetManagerPanel.shown = true } },
-                        { text: irisDesktopMenu.gridSnap ? Translation.tr("Snap on") : Translation.tr("Snap off"),
-                            iconName: irisDesktopMenu.gridSnap ? "grid_on" : "grid_off",
-                            action: () => Config.setNestedValue("background.widgets.editGrid.snap", !irisDesktopMenu.gridSnap) },
-                        { text: Translation.tr("Done"), iconName: "check", accent: true,
-                            action: () => { widgetManagerPanel.shown = false; GlobalStates.setWidgetEditMode(false) } }
-                    ] },
+                    { text: Translation.tr("Add widgets"), iconName: "dashboard_customize", tint: "teal",
+                        action: () => { widgetManagerPanel.shown = true } },
+                    { text: Translation.tr("Snap to grid"), iconName: "grid_on", checked: irisDesktopMenu.gridSnap, keepOpen: true,
+                        action: () => Config.setNestedValue("background.widgets.editGrid.snap", !irisDesktopMenu.gridSnap) },
                     { type: "separator" },
                     { text: Translation.tr("Grid size"), iconName: "grid_4x4", detail: irisDesktopMenu.gridSize + " px",
                         action: () => {
@@ -1795,33 +1802,11 @@ Scope {
                                 sizes[(sizes.indexOf(irisDesktopMenu.gridSize) + 1) % sizes.length])
                         } },
                     { text: Translation.tr("Widget settings"), iconName: "settings",
-                        action: () => GlobalStates.openSettingsPage(14) }
-                ] : [
-                    { type: "quick", items: [
-                        { text: Translation.tr("Wallpaper"), iconName: "wallpaper",
-                            image: bgRoot.wallpaperIsVideo || bgRoot.wallpaperIsGif ? bgRoot.wallpaperThumbnailPath : bgRoot.wallpaperPath,
-                            action: () => {
-                                GlobalStates.wallpaperSelectorTargetMonitor = bgRoot.screenName
-                                GlobalActions.runLauncher(["wallpaperSelector", "toggle"])
-                            } },
-                        { text: Translation.tr("Widgets"), iconName: "widgets",
-                            action: () => GlobalStates.setWidgetEditMode(true) },
-                        { text: Translation.tr("Studio"), iconName: "palette",
-                            action: () => { GlobalStates.irisStudioOpen = true } },
-                        { text: Translation.tr("Search"), iconName: "search",
-                            action: () => { GlobalStates.searchOpen = true } }
-                    ] },
+                        action: () => GlobalStates.openSettingsPage(14) },
                     { type: "separator" },
-                    { text: Translation.tr("Edit iRiS"), iconName: "edit",
-                        action: () => { GlobalStates.irisEdit = true } },
-                    { text: Translation.tr("Quick controls"), iconName: "tune",
-                        action: () => { GlobalStates.controlPanelOpen = true } },
-                    { text: Translation.tr("Settings"), iconName: "settings",
-                        action: () => { Quickshell.execDetached([Quickshell.shellPath("scripts/inir"), "iris", "settings", ""]) } },
-                    { type: "separator" },
-                    { text: Translation.tr("Reload shell"), iconName: "refresh",
-                        action: () => { Quickshell.execDetached(["/usr/bin/bash", Quickshell.shellPath("scripts/restart-shell.sh")]) } }
-                ]
+                    { text: Translation.tr("Done"), iconName: "check", tint: "green",
+                        action: () => { widgetManagerPanel.shown = false; GlobalStates.setWidgetEditMode(false) } }
+                ] : IrisDesktopActions.menu(bgRoot.screenName, bgRoot.wallpaperPath, bgRoot.wallpaperPath)
             }
 
             // Managed items use the same stable screen-level popup path as the
@@ -1853,10 +1838,17 @@ Scope {
                 visible: !GlobalStates.shellLayoutEditMode
                     && DesktopWidgetLayout.outputAllowed(modelData?.name ?? "")
                 enabled: visible && !GlobalStates.screenLocked  // Disable all widget input during lock
+                // Widgets arrive with the shell (boot, reload, family switch): a short settle inward.
+                property real arrival: GlobalStates.shellEntryReady ? 1 : 0
+                Behavior on arrival {
+                    enabled: Appearance.animationsEnabled
+                    NumberAnimation { duration: Appearance.animation.elementMoveEnter.duration * 1.4; easing.type: Appearance.animation.elementMoveEnter.type; easing.bezierCurve: Appearance.animation.elementMoveEnter.bezierCurve }
+                }
+                scale: arrival >= 1 ? 1 : 1.025 - 0.025 * arrival
                 opacity: {
                     const dynOp = Math.max(0, Math.min(100, Number(Config.options?.background?.widgets?.dynamicOpacity) || 0));
-                    if (dynOp <= 0 || !bgRoot.focusWindowsPresent) return 1;
-                    return 1 - (dynOp / 100) * bgRoot.focusPresenceProgress;
+                    const presence = dynOp <= 0 || !bgRoot.focusWindowsPresent ? 1 : 1 - (dynOp / 100) * bgRoot.focusPresenceProgress;
+                    return presence * widgetCanvas.arrival;
                 }
                 Behavior on opacity {
                     enabled: Appearance.animationsEnabled
@@ -1872,8 +1864,9 @@ Scope {
                 // Parallax widget depth: translate the canvas as a whole to create
                 // layered movement relative to the wallpaper.
                 transform: Translate {
-                    x: widgetCanvas._parallaxActive ? (bgRoot.parallaxTotalX * wallpaperContainer.activeValueX * (1 - bgRoot.parallaxWidgetDepth)) : 0
-                    y: widgetCanvas._parallaxActive ? (bgRoot.parallaxTotalY * wallpaperContainer.activeValueY * (1 - bgRoot.parallaxWidgetDepth)) : 0
+                    // Whole pixels: native text on a fractional offset is resampled and goes soft.
+                    x: widgetCanvas._parallaxActive ? Math.round(bgRoot.parallaxTotalX * wallpaperContainer.activeValueX * (1 - bgRoot.parallaxWidgetDepth)) : 0
+                    y: widgetCanvas._parallaxActive ? Math.round(bgRoot.parallaxTotalY * wallpaperContainer.activeValueY * (1 - bgRoot.parallaxWidgetDepth)) : 0
                     Behavior on x {
                         enabled: Appearance.animationsEnabled
                             && ((!bgRoot.parallaxTransitionActive && bgRoot.parallaxResumeProgress >= 1)
@@ -2477,6 +2470,9 @@ Scope {
 
                     DesktopEditToolbar {
                         id: editControlsBar
+                        // iRiS hosts the toolbar in its chassis (IrisWidgetBar) so it joins the frame.
+                        visible: !editControlsBar.iris
+                        enabled: !editControlsBar.iris
                         availableWidth: Math.max(0, editGridOverlay.safeWidth - 16)
                         availableHeight: editGridOverlay.safeHeight
                         outputName: bgRoot.screenName
@@ -2555,6 +2551,8 @@ Scope {
                         }
 
                         onShownChanged: {
+                            if (shown) GlobalStates.desktopWidgetManagerOutput = bgRoot.screenName
+                            else if (GlobalStates.desktopWidgetManagerOutput === bgRoot.screenName) GlobalStates.desktopWidgetManagerOutput = ""
                             if (!shown) {
                                 geometryReady = false
                                 return
@@ -2995,10 +2993,12 @@ Scope {
                 // Extra mascot instances (Settings › Widgets › Mascot › "+"),
                 // one MascotWidget per id under background.widgets.mascotInstances.
                 Repeater {
-                    model: {
-                        void Config.revision;
-                        const obj = Config.getNestedValue("background.widgets.mascotInstances", {});
-                        return Object.keys(obj ?? {}).sort();
+                    model: ScriptModel {
+                        values: {
+                            void Config.revision;
+                            const obj = Config.getNestedValue("background.widgets.mascotInstances", {});
+                            return Object.keys(obj ?? {}).sort();
+                        }
                     }
 
                     Loader {

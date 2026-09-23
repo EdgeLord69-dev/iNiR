@@ -20,6 +20,8 @@ Item {
     property bool hasSelection: false
     property bool gridExpanded: false
     property bool attachedTopEdge: false
+    // iRiS draws the body in the chassis field, joined to the frame; the toolbar keeps only its controls.
+    property bool bodyless: false
 
     signal libraryRequested()
     signal settingsRequested()
@@ -124,7 +126,7 @@ Item {
 
     IrisFieldModule.IrisField {
         id: irisNotchField
-        visible: root.iris
+        visible: root.iris && !root.bodyless
         readonly property real pad: IrisStyle.fuseEdge
         readonly property real deep: Math.max(8, IrisStyle.fuseEdge)
         readonly property real bodyTop: root.attachedTopEdge ? irisNotchField.deep - root.bodyRadius : 0

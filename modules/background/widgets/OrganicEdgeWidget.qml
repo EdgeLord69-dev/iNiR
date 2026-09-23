@@ -35,6 +35,8 @@ Item {
             && String(Config.options?.iris?.surround?.music ?? "widget") === "frame")
         && !GlobalStates.screenLocked && !GameMode.visualizersSuppressed
         && !Appearance.gameModeMinimal && WidgetPowerManager.widgetsActiveForOutput(root.screenName)
+    // Same rule as a live wallpaper: behind fullscreen or tiled windows spanning the output it holds still.
+    readonly property bool motionAllowed: Wallpapers.videoMotionAllowedOn(root.screenName)
     readonly property var insets: root.value("respectPanels")
         ? ShellLayoutController.desktopInsets(root.screenName) : ({left: 0, top: 0, right: 0, bottom: 0})
     readonly property real margin: root.number("inset", 0, 160)
@@ -214,7 +216,7 @@ Item {
     enabled: false
     CavaProcess {
         id: cava
-        active: root.renderAllowed && root.audioReactive
+        active: root.renderAllowed && root.audioReactive && root.motionAllowed
         sampleCount: 96
     }
     Loader {
@@ -230,7 +232,7 @@ Item {
         sourceComponent: OrganicScreenEdge {
             id: edgeField
             active: root.renderAllowed
-            animate: Appearance.animationsEnabled
+            animate: Appearance.animationsEnabled && root.motionAllowed
                 && (cava.audioSignalActive || edgeField.energy > 0.005
                     || (root.idleMode === "ambient" && root.number("idleMotion", 0, 100) > 0))
             points: root.audioReactive ? cava.points : []

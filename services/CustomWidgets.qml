@@ -237,7 +237,7 @@ Singleton {
     "main": "${_createProcess._pascalName}.qml",
     "iris": {
         "main": "IrisCompact.qml",
-        "slots": ["bar.left", "bar.center", "bar.right"]
+        "slots": ["island.desktop"]
     },
     "defaultConfig": {
         "placementStrategy": "free",
@@ -376,13 +376,13 @@ Item {
     RowLayout {
         id: compactRow
         anchors.centerIn: parent
-        spacing: Math.round(5 * IrisStyle.density)
+        spacing: IrisStyle.spaceSmall
 
         IrisMark { implicitSize: Math.round(14 * IrisStyle.density) }
         IrisText {
             text: DateTime.timeDisplay
+            role: IrisText.Meta
             font.family: IrisStyle.fontNumbers
-            font.pixelSize: Math.round(11 * IrisStyle.density)
             color: IrisStyle.text
         }
     }

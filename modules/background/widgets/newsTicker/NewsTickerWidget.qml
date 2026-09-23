@@ -22,9 +22,15 @@ AbstractBackgroundWidget {
         widgetScale: 100, widgetOpacity: 100, colorMode: "auto", dim: 0,
         showBackground: true, showBorder: true, backgroundOpacity: 0.16,
         borderWidth: 1, borderOpacity: 0.2, cornerRadius: -1, useBlur: false,
-        style: "card", showMeta: true,
+        style: "card", showMeta: true, rotateSeconds: 45,
         x: 100, y: 260
     })
+    readonly property var rotateChoices: [
+        { label: Translation.tr("15 s"), value: 15 },
+        { label: Translation.tr("45 s"), value: 45 },
+        { label: Translation.tr("2 min"), value: 120 },
+        { label: Translation.tr("5 min"), value: 300 }
+    ]
 
     implicitWidth: root.irisFaced ? root.irisFaceWidth : Math.round(Number(root._readConfigKey("contentWidth") ?? 320)
         * root.scaleFactor)
@@ -34,7 +40,9 @@ AbstractBackgroundWidget {
     irisSizes: ["small", "medium", "large"]
     irisDefaultSize: "medium"
     irisOptions: [
-        { key: "showMeta", raw: true, label: Translation.tr("Source and time"), icon: "info", fallback: true }
+        { key: "showMeta", raw: true, label: Translation.tr("Source and time"), icon: "info", fallback: true },
+        { key: "rotateSeconds", raw: true, label: Translation.tr("Change every"), fallback: 45,
+            choices: root.rotateChoices }
     ]
     resizableAxes: ({ width: "contentWidth", height: "contentHeight" })
     resizeMinWidth: 220
@@ -43,6 +51,10 @@ AbstractBackgroundWidget {
     readonly property string tickerStyle: root._readConfigKey("style") ?? "card"
     readonly property bool instrument: root.tickerStyle === "instrument"
     readonly property bool showMeta: root._readConfigKey("showMeta") ?? true
+    readonly property int rotateSeconds: {
+        const value = Number(root._readConfigKey("rotateSeconds") ?? 45)
+        return Number.isFinite(value) && value >= 5 ? Math.min(900, value) : 45
+    }
     widgetSurfaceEnabled: !root.instrument
 
     property int headlineIndex: 0
@@ -109,7 +121,7 @@ AbstractBackgroundWidget {
     }
 
     Timer {
-        interval: 12000
+        interval: root.rotateSeconds * 1000
         repeat: true
         running: root.visible && root.powerActive && !root.rotationPaused
             && root.articleCount > 1
@@ -227,6 +239,26 @@ AbstractBackgroundWidget {
                 buttonText: Translation.tr("Metadata")
                 toggled: root.showMeta
                 onClicked: root._setOutputValue("showMeta", !root.showMeta)
+            }
+
+            RowLayout {
+                spacing: 4
+                Layout.alignment: Qt.AlignHCenter
+                StyledText {
+                    text: Translation.tr("Change every")
+                    color: Appearance.colors.colSubtext
+                    font.pixelSize: Appearance.font.pixelSize.smaller
+                }
+                Repeater {
+                    model: root.rotateChoices
+                    WidgetChoiceButton {
+                        required property var modelData
+                        leftmost: true; rightmost: true
+                        buttonText: modelData.label
+                        toggled: root.rotateSeconds === modelData.value
+                        onClicked: root._setOutputValue("rotateSeconds", modelData.value)
+                    }
+                }
             }
         }
     }
