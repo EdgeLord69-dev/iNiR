@@ -199,8 +199,11 @@ Singleton {
         _updateDebounce.restart();
     }
 
+    signal networkChanged()
+
     // Actual update logic
     function _doUpdate() {
+        root.networkChanged();
         updateConnectionType.startCheck();
         wifiStatusProcess.running = true
         updateNetworkName.running = true;
@@ -304,11 +307,26 @@ Singleton {
 
     Process {
         id: updateNetworkName
-        command: ["sh", "-c", "nmcli -t -f NAME c show --active | head -1"]
+        command: ["nmcli", "-t", "-f", "NAME,TYPE", "c", "show", "--active"]
         running: false
-        stdout: SplitParser {
-            onRead: data => {
-                root.networkName = data;
+        stdout: StdioCollector {
+            onStreamFinished: {
+                // A VPN is an active connection too, and it often sorts first, which used
+                // to make the bar show the VPN profile's name instead of the network's.
+                const carriers = ["802-11-wireless", "802-3-ethernet"];
+                const skipped = ["vpn", "wireguard", "tun", "tap", "bridge", "loopback"];
+                let carrier = "";
+                let fallback = "";
+                for (const line of text.split("\n")) {
+                    if (line.trim().length === 0) continue;
+                    const parts = line.replace(/\\:/g, "\u0000").split(":").map(part => part.replace(/\u0000/g, ":"));
+                    if (parts.length < 2) continue;
+                    const name = parts[0];
+                    const type = parts[parts.length - 1];
+                    if (carriers.includes(type)) { carrier = name; break; }
+                    if (fallback.length === 0 && !skipped.includes(type)) fallback = name;
+                }
+                root.networkName = carrier || fallback;
             }
         }
     }
