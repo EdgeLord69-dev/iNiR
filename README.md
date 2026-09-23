@@ -153,6 +153,8 @@ I wanted my desktop to look and work a certain way and nothing else did exactly 
 - **Themes**: 14 curated redesigns (iRiS, Liquid Glass, Frost, Obsidian, Aurora, Terminal, Neo Tokyo, Monolith, Sakura, Meadow, Unit-01, Signal, iNiR Theme, Adaptive) plus your own as shareable JSON files (`inir iris theme`)
 - **Studio**: a live editor for material, colour, type, motion and every surface, with undo, search and previews that follow where your Island and Dock actually live (`inir iris studio`)
 - **Edit in place**: grab pieces straight off the screen and rearrange them (`inir iris edit`)
+- **Control Center you arrange**: every shared quick toggle, the player and each slider as cells you drag, resize from a corner and add from a library beside it, with five starting layouts (`inir iris control edit`)
+- **Lock screen you rehearse**: the real lock opens editable with nothing to unlock; drag the clock, player and sign-in field around, and set what plays behind them, video included (`inir iris lock edit`)
 
 ### Theming and appearance
 

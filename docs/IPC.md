@@ -37,6 +37,9 @@ returned as JSON by `list`.
 | `open` | Open a destination by semantic identifier |
 | `close` | Close development-opened surfaces and clear the request |
 | `current` | Return the current destination or `closed` |
+| `meter` | Measure frame gaps for the given milliseconds (250–20000, default 2500) |
+| `metered` | Return the last measurement as JSON: frames, mean, p95, worst, frames over 20 and 50 ms |
+| `dragSim` | Simulate carrying an iRiS bubble (slot id, default `extra-clock`) around the focused output for 2.5 s, publishing the given number of moves per frame (1–16); never writes the config |
 
 ```bash
 inir dev list | jq -r '.[].id'
@@ -45,6 +48,8 @@ inir dev close
 inir dev audit
 inir dev audit sidebar-left/ai settings/ai
 inir dev audit --all --all-families
+inir dev meter 2500; sleep 3; inir dev metered
+inir dev dragSim extra-clock 8; inir dev meter 2400; sleep 3; inir dev metered
 ```
 
 `inir dev audit` selects destinations related to changed area-specific files in
@@ -490,6 +495,9 @@ Wallpaper picker with grid, coverflow and compact launcher styles.
 | `toggleOnMonitor <name>` | Open wallpaper selector on a specific monitor |
 | `random` | Pick a random wallpaper from the current folder |
 | `set <path>` | Apply a wallpaper (picture, GIF or video) by path, the same way the picker does |
+| `preview <path>` | Show a wallpaper on the desktop without applying it: no config write, no recoloring |
+| `cancelPreview` | Drop the preview and go back to the applied wallpaper |
+| `kind <name>` | Show only one kind of wallpaper in the library: `all`, `still`, `live` (videos) or `gif`. iRiS only; the filter also sits beside the search field whenever the folder holds more than one kind |
 | `browse <source> <query>` | Open the picker on a source — `library`, `wallhaven` or `live` (anime live wallpapers) — with a search, a folder to open (`~/Videos`), or `-` for none. Sources are an iRiS feature; other families just open the picker |
 | `status` | Return picker style, open surface, target monitor and selection target as JSON |
 
@@ -766,7 +774,7 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `page` | Expand the island on a page: `media`, `activity`, `desktop`, `tray` or `tools`, or step through its navigation with `next` / `prev` (the same path as scrolling over the navigation row) |
 | `toggle` | Expand or collapse the island on the focused output |
 | `card` | `open`, `close` or `toggle` the media bubble's floating card, or `pin` to keep it open |
-| `settings` | Open iRiS Settings on a section: `bar`, `player`, `bubbles`, `dock`, `appearance`, `desktop`, `sidebars`, `surfaces` or `system`; add `/<group>` to open that group, e.g. `bubbles/behaviour` |
+| `settings` | Open iRiS Settings on a section: `general`, `appearance`, `motion`, `bar`, `bubbles`, `dock`, `desktop`, `windows`, `sidebars`, `controlCenter`, `spotlight`, `notifications`, `sound`, `capture`, `display`, `keyboard`, `battery`, `gaming`, `lock`, `player`, `anime`, `sources` or `system`; add `/<group>` to open that group, e.g. `bubbles/behaviour` or `lock/security`. It also takes `next`, `prev`, `back`, `forward` (the history), `search:<words>` and `open` (the first result) |
 | `bubble` | Place an Island bubble (`left`, `right`, `utility`) or an extra bubble (`weather`, `notifications`, `controls`, `sound`, `mic`, `tools`, `media`, `tray`): a zone (`top-left`, `top-right`, `left`, `right`, `bottom-left`, `bottom-right`), `edge:<top|bottom|left|right>` with an optional `:<fraction>` along that edge (e.g. `edge:top:0.3`), `x,y` fractions of the output, `island` (slots) or `off` (extras) |
 | `dock` | `reveal`, `hide` or `toggle` the iRiS Dock (revealed stays until hidden or an app is chosen) |
 | `dockApp` | Open a Dock app's `windows` or `menu` by app id (e.g. `kitty windows`), or `<any> close` |
@@ -776,12 +784,14 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `arrange` | Arrange the Island's desktop page in place — move, remove and add its blocks: `on`, `off` or `toggle` |
 | `activity` | Publish a live activity into the Island from any script: `<action> <id> <value>` — `start <id> <title>`, `title`, `progress` (`0.4`, `40`, `40%` or `-1` for indeterminate), `detail`, `glyph` (a Material Symbol), `tint` (`blue`, `sky`, `teal`, `green`, `yellow`, `orange`, `red`, `pink`, `indigo`, `purple`, `lavender`, `gray`), `end <id> <detail>` (shows a done event and retires), `dismiss <id> -`, `clear all -`. Values cannot contain commas |
 | `activities` | Return the live activities scripts have published, as JSON |
-| `edit` | Edit iRiS in place: every piece becomes grabbable and the edit bar holds the pieces, the look and the sizes — `on`, `off`, `toggle`, a tab of the edit bar (`tab:pieces`, `tab:look`, `tab:motion`, `tab:layout`), a target to inspect (`material`, `colour`, `type`, `motion`, `island`, `pieces`, `bodies`, `places`, `transients`, `dock`, `desktop`) or a piece (`vitals`, `left`, `app:kitty`) |
-| `studio` | Open iRiS Studio, the live editor for the whole family's appearance: `on`, `off`, `toggle`, or a target to open it on (`material`, `colour`, `type`, `motion`, `island`, `pieces`, `bodies`, `places`, `transients`, `dock`, `desktop`, `themes`) |
+| `edit` | Customize iRiS on the shell itself: the Island grows a capsule (Themes, Look, Pieces, undo, Done) and whatever you click (a piece, the Island, the Dock) grows its own options: `on`, `off`, `toggle`, a sheet (`themes`, `pieces`, or a Look tab: `material`, `colour`, `type`, `motion`, `bodies`, `places`, `transients`, `desktop`), `island`, `dock` or a piece to inspect (`vitals`, `left`, `app:kitty`) |
+| `control` | Arrange the Control Center in place (drag controls, resize them from a corner, add or take them out): `edit`, `done`, `toggle`, `undo`, `tab:<controls\|layouts\|panel>` to open the side library on that page, or a layout (`iris`, `discs`, `compact`, `glance`, `studio`, `everything`) |
+| `lock` | Rehearse the lock screen (the real surface, editable, with nothing to unlock): `edit`, `done`, `toggle`, `page:<name>` to open the inspector on a page (`layouts`, `scene`, `type`, `clock`, `widgets`…), `widget:<key>` to put a desktop widget on the lock or take it off (`clock`, `weather`, `monthCalendar`…), or a layout (`iris`, `centered`, `corner`, `minimal`) |
+| `studio` | Same as `edit`, kept for old keybinds: `on`, `off`, `toggle` or a sheet/target to open Customize on |
 | `barPiece` | Turn one of the Island's own pieces on or off: `weather`, `notifications`, `controls`, `sound`, `mic`, `tools`, `media` or `tray`, plus `on`, `off` or `toggle` |
 | `notch` | Melt the Island into its edge (or into the Surround band): `on`, `off` or `toggle` |
 | `surround` | Close the shell around the screen with a band on every edge: `on`, `off` or `toggle` |
-| `layout` | How the Island sits on its edge: `island`, `left`, `right` or `full` |
+| `layout` | How the Island sits on its edge: `island`, `left`, `right`, `full` or `menubar` (top or bottom) |
 | `edge` | Move the Island to a screen edge: `top`, `bottom`, `left` or `right` (on a side edge it rests as an upright capsule and its pages grow inward) |
 | `dockEdge` | Move the Dock: `auto` (opposite the Island), `top`, `bottom`, `left` or `right` |
 | `zone` | What a full-width Island carries in a zone: `start`, `center` or `end`, then kinds joined by `+` (`island`, `workspaces`, `window`, `time` or a piece kind), or `none` |
@@ -791,10 +801,20 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `set` | Set any iRiS option by path, e.g. `iris.appearance.theme.pieceShape squircle` or `iris.bubbles.scale 120` (values are JSON when they parse) |
 | `adaptive` | How much the wallpaper shapes iRiS, `0`-`100`; any other word prints what was read from the wallpaper |
 | `spotlight` | Open Spotlight with a query already typed, e.g. `firefox` or `12*7` (empty for suggestions) |
+| `spotlightClose` | Close Spotlight |
+| `gallerySource` | Show or hide an online source in the wallpaper gallery: `wallhaven`, `live`, `konachan` or `yandere`, then `on`, `off` or `toggle`; returns the sources shown, in order |
 | `bubbleCard` | Grow a bubble's own card: `weather`, `notifications`, `sound`, `mic`, `tools` or `tray` (from the bubble showing it, else the Island), or `close` |
 | `bubbleMenu` | Open a floating bubble's own menu — what it opens, where it rests and how to put it away — by kind (`weather`, `sound`, …) or piece id (`app:kitty`) |
+| `icon <piece> <glyph>` | Choose the glyph a piece wears: `controls`, `tools`, `focus`, `notifications`, `bluetooth`, `updates`, `anime` or `watching`, then a Material Symbol name (e.g. `inir iris icon controls settings`) or `reset` to go back to its own face |
 | `utility` | Set the utility satellite: `tray`, `tools`, `sound`, `mic` or `none` |
-| `status` | JSON with the Island, Dock, Control Center, Spotlight and side panel state |
+| `desktopMenu <x> <y>` | Open the desktop menu on the focused output at that point, in pixels; no point opens it in the middle |
+| `menuClose` | Close whichever iRiS or shell context menu is open |
+| `watch` | What the Continue bubble has in progress, or resume one of them: no argument lists them numbered with the episode and saved position, a number or part of a title resumes that show. Anything that matches nothing in progress starts a search instead. Only ani-cli can be pointed at one show; jerry and curd run their own picker |
+| `watchPick` | Answer whatever the Continue bubble is asking (which show, which episode, what next once one ends, which quality): no argument lists the options, a number or part of a label chooses one, `cancel` stops the run |
+| `watchSkip` | Close the episode that is playing and start the `next` (default) or `previous` one without searching again. Its place is saved first |
+| `watchSubs` | Subtitles of the episode that is playing: `size+`, `size-` (kept for every episode), `delay+`, `delay-`, `delay0` (this episode), `off`, `track:<id>`, `file:<path>` to load one. No argument lists the tracks |
+| `watchSeek` | Jump inside the episode that is playing by seconds: `85` skips an opening, `-10` goes back |
+| `status` | JSON with the Island, Dock, Control Center, Spotlight and side panel state, plus the player the Island follows (title, position, length) |
 
 ```bash
 inir iris open
@@ -815,7 +835,7 @@ Switch between the three shell families: Material ii (default), Waffle (Windows 
 
 | Function | Description |
 |----------|-------------|
-| `cycle` | Cycle to next panel family (ii → waffle → iris → ii) |
+| `cycle` | Switch to the next family in the switch list (`familyCycle`, in its order; all three by default, set in any family's Settings) |
 | `set` | Set specific family ("ii", "waffle", or "iris") |
 
 ```kdl
