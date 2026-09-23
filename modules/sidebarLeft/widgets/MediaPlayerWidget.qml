@@ -25,8 +25,8 @@ Item {
     readonly property string effectiveTitle: isYtMusicPlayer ? YtMusic.currentTitle : (player?.trackTitle ?? "")
     readonly property string effectiveArtist: isYtMusicPlayer ? YtMusic.currentArtist : (player?.trackArtist ?? "")
     readonly property string effectiveArtUrl: isYtMusicPlayer ? YtMusic.currentThumbnail : (player?.trackArtUrl ?? "")
-    readonly property real effectivePosition: isYtMusicPlayer ? YtMusic.currentPosition : (player?.position ?? 0)
-    readonly property real effectiveLength: isYtMusicPlayer ? YtMusic.currentDuration : (player?.length ?? 0)
+    readonly property real effectivePosition: isYtMusicPlayer ? YtMusic.currentPosition : MprisController.positionOf(player)
+    readonly property real effectiveLength: isYtMusicPlayer ? YtMusic.currentDuration : MprisController.lengthOf(player)
     readonly property bool effectiveIsPlaying: isYtMusicPlayer ? YtMusic.isPlaying : (player?.isPlaying ?? false)
     readonly property bool effectiveCanSeek: isYtMusicPlayer ? YtMusic.canSeek : (player?.canSeek ?? false)
     
@@ -54,7 +54,7 @@ Item {
         if (root.isYtMusicPlayer) {
             YtMusic.seek(bounded)
         } else if (root.player) {
-            root.player.position = bounded
+            MprisController.seek(root.player, bounded)
         }
     }
     

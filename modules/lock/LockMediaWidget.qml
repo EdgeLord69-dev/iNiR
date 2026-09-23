@@ -308,15 +308,15 @@ Item {
                 PlayerProgress {
                     Layout.fillWidth: true
                     implicitHeight: 16
-                    position: root.player?.position ?? 0
-                    length: root.player?.length ?? 0
+                    position: MprisController.positionOf(root.player)
+                    length: MprisController.lengthOf(root.player)
                     canSeek: root.player?.canSeek ?? false
                     isPlaying: root.player?.isPlaying ?? false
                     highlightColor: root.editorial ? Appearance.editorial.accent
                         : Appearance.inirEverywhere ? root.jiraColPrimary : (blendedColors?.colPrimary ?? Appearance.colors.colPrimary)
                     trackColor: root.editorial ? Appearance.editorial.field
                         : Appearance.inirEverywhere ? Appearance.inir.colLayer2 : Appearance.zzzEverywhere ? Appearance.colors.colLayer2 : (blendedColors?.colSecondaryContainer ?? Appearance.colors.colSecondaryContainer)
-                    onSeekRequested: seconds => { if (root.player) root.player.position = seconds }
+                    onSeekRequested: seconds => MprisController.seek(root.player, seconds)
                 }
 
                 // Time + controls row
@@ -325,7 +325,7 @@ Item {
                     spacing: 4
 
                     StyledText {
-                        text: StringUtils.friendlyTimeForSeconds(root.player?.position ?? 0)
+                        text: StringUtils.friendlyTimeForSeconds(MprisController.positionOf(root.player))
                         font.pixelSize: Appearance.font.pixelSize.smallest
                         font.family: Appearance.font.family.numbers
                         color: root.editorial ? Appearance.editorial.muted
@@ -446,7 +446,7 @@ Item {
                     Item { Layout.fillWidth: true }
 
                     StyledText {
-                        text: StringUtils.friendlyTimeForSeconds(root.player?.length ?? 0)
+                        text: StringUtils.friendlyTimeForSeconds(MprisController.lengthOf(root.player))
                         font.pixelSize: Appearance.font.pixelSize.smallest
                         font.family: Appearance.font.family.numbers
                         color: root.editorial ? Appearance.editorial.muted

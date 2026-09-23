@@ -407,8 +407,8 @@ Item {
                 PlayerProgress {
                     Layout.fillWidth: true
                     implicitHeight: 16
-                    position: root.player?.position ?? 0
-                    length: root.player?.length ?? 0
+                    position: MprisController.positionOf(root.player)
+                    length: MprisController.lengthOf(root.player)
                     canSeek: root.player?.canSeek ?? false
                     isPlaying: root.player?.isPlaying ?? false
                     highlightColor: Appearance.zzzEverywhere ? Appearance.zzz.metricFill
@@ -419,7 +419,7 @@ Item {
                         : Appearance.inirEverywhere ? root.inirLayer2
                         : Appearance.auroraEverywhere ? Appearance.aurora.colElevatedSurface
                         : (blendedColors?.colSecondaryContainer ?? Appearance.colors.colSecondaryContainer)
-                    onSeekRequested: seconds => { if (root.player) root.player.position = seconds }
+                    onSeekRequested: seconds => MprisController.seek(root.player, seconds)
                 }
 
                 // Time + controls
@@ -428,7 +428,7 @@ Item {
                     spacing: 4
 
                     StyledText {
-                        text: StringUtils.friendlyTimeForSeconds(root.player?.position ?? 0)
+                        text: StringUtils.friendlyTimeForSeconds(MprisController.positionOf(root.player))
                         font.pixelSize: Appearance.font.pixelSize.smallest
                         font.family: Appearance.font.family.numbers
                         color: Appearance.zzzEverywhere ? Appearance.zzz.ink
@@ -542,7 +542,7 @@ Item {
                     Item { Layout.fillWidth: true }
 
                     StyledText {
-                        text: StringUtils.friendlyTimeForSeconds(root.player?.length ?? 0)
+                        text: StringUtils.friendlyTimeForSeconds(MprisController.lengthOf(root.player))
                         font.pixelSize: Appearance.font.pixelSize.smallest
                         font.family: Appearance.font.family.numbers
                         color: Appearance.zzzEverywhere ? Appearance.zzz.ink

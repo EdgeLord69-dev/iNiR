@@ -204,7 +204,7 @@ Item {
         sourceComponent: ClippedFilledCircularProgress {
             implicitSize: 20
             lineWidth: Appearance.rounding.unsharpen
-            value: root.activePlayer?.position / root.activePlayer?.length
+            value: MprisController.lengthOf(root.activePlayer) > 0 ? MprisController.positionOf(root.activePlayer) / MprisController.lengthOf(root.activePlayer) : 0
             colPrimary: Appearance.colors.colOnLayer1
             enableAnimation: false
             Item {
@@ -253,7 +253,7 @@ Item {
                 Layout.leftMargin: 3
                 implicitSize: 20
                 lineWidth: Appearance.rounding.unsharpen
-                value: root.activePlayer?.position / root.activePlayer?.length
+                value: MprisController.lengthOf(root.activePlayer) > 0 ? MprisController.positionOf(root.activePlayer) / MprisController.lengthOf(root.activePlayer) : 0
                 colPrimary: Appearance.colors.colOnLayer1
                 enableAnimation: false
                 Item {

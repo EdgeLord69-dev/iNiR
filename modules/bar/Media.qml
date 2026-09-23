@@ -280,7 +280,7 @@ Item {
                 id: mediaCircProg
                 anchors.centerIn: parent
                 lineWidth: Appearance.zzzEverywhere ? 2 : Appearance.rounding.unsharpen
-                value: (activePlayer && activePlayer.length > 0) ? (activePlayer.position / activePlayer.length) : 0
+                value: MprisController.lengthOf(activePlayer) > 0 ? (MprisController.positionOf(activePlayer) / MprisController.lengthOf(activePlayer)) : 0
                 implicitSize: Appearance.zzzEverywhere && !root.showVerboseLabel ? 22 : 22
                 colPrimary: Appearance.zzzEverywhere ? Appearance.zzz.accent
                     : Appearance.inirEverywhere ? Appearance.inir.colPrimary
