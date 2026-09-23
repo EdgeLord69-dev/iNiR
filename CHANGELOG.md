@@ -9,16 +9,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Presets for Niri's window animations.** Snappy, Niri, Material, Bouncy, Gentle and Instant, in Settings wherever your family keeps its Niri options (iRiS: Windows, Movement). Each card plays its own preset when you hover it and says how long a window takes to open. Picking one rewrites the animations in `60-animations.kdl` and keeps your speed and the on/off switch; touch a slider afterwards and it just reads as custom. Also `inir niriAnimations apply <id>`. New presets arrive with iNiR updates, nothing gets copied into your config; your own go in `~/.config/inir/niri-animation-presets.json`. Material comes from @cnvuls's PR #205.
+- **Customize iRiS on the shell.** The Island grows Themes, Look, Pieces, undo and Done; tap the Island, the Dock or a bubble to edit it where it is. Studio is gone.
+- **Menu bar, a new Island layout.** A thin strip with your workspaces, window and pieces, the Island hanging from it as a notch.
+- **Arrange the Control Center.** Drag, resize and add controls from a library, with six starting layouts and all 20 quick toggles. `inir iris control edit`.
+- **Design the lock screen.** Move the clock, player and sign-in field on the real lock, pick what plays behind them, video included. `inir iris lock edit`.
+- **Anime pieces.** Airing counts down to the next episode from AniList; Continue searches, plays in mpv and remembers where you stopped.
+- **VPN, without the terminal.** A bubble and an optional Control Center button for NetworkManager and Tailscale connections.
+- **A bubble for new iNiR versions.** Shows what changed and updates from its card.
+- **Presets for Niri's window animations.** Snappy, Niri, Material, Bouncy, Gentle and Instant, in every family's Settings. Material comes from @cnvuls's PR #205.
+- **iRiS Settings covers the whole desktop.** Date and time, language, notifications, sounds, night light, battery, game mode, idle, wallpaper effects, screenshots, and a new Sources section for weather, calendars and updates.
+- **Per-surface glass and motion.** Each iRiS surface can be solid or glass and move in its own style.
+- **More ways to shape iRiS.** Four card designs, the Island can auto-hide, its pieces can sit before the clock, and six pieces let you choose their icon.
+- **The tray bubble can be the tray,** and every iRiS menu, tray menus included, grows out of what opened it.
+- **You decide what the iRiS OSD shows,** in fullscreen too, and the volume limit goes up to 153 %.
+- **The wallpaper library filters by kind:** stills, live wallpapers or GIFs.
+- **iRiS speaks Spanish.**
 
 ### Changed
 
-- **Windows open without the wait on a fresh install.** The default Niri animations are now the Snappy preset: a window is 90 % there in about 80 ms instead of 164, and nothing is slowed down by 1.2× anymore. Existing configs keep what they have; pick Snappy in Settings to get it.
+- **Live wallpapers use far less memory.** Videos play from a copy sized to your screen, and glass shares one decoder. 1.8 GB → under 700 MB with a 4K wallpaper.
+- **The desktop stops drawing when nobody can see it.** Music visuals, the system monitor and the Organic edge hold still behind windows. Idle GPU use went from 22 % to 9 %.
+- **Live wallpapers download in 4K.** MotionBgs' HD files are soft even at 1080p; the 4K one scaled to your screen is sharper. Light keeps HD.
+- **Snappy is the default Niri animation** on fresh installs: windows open in about half the time.
+- **iRiS has its own type:** Inter, Inter Display and Rubik ship with iNiR, with a weight setting.
+- **iRiS Settings reads like a settings app,** grouped, searchable and with back and forward.
+- **Blur follows iRiS's real shape,** and Niri's blur settings live in iRiS Settings.
+- **Themes dress the lock screen and the Control Center too.**
+- **A fresh iRiS install keeps the wallpaper clear** of Material's blur and dim.
+- **Cards leave a little air** between themselves and the bubble that opened them.
+- **The music widget rests** as a single tile when nothing plays.
 
 ### Fixed
 
-- **`inir update` now tells you which checkout it updates.** It uses the path saved at install time, which is not always the folder you are standing in. If the pull fails you get git's real error instead of a shrug, plus advice that works: `git stash` leaves untracked files right where they are, and those are usually the problem.
-- **Updates stopped blaming you for files you never touched.** The check was reading `docs/` and `distro/`, which never get installed, so it flagged our own files as your changes. Every single update.
+- **Live wallpapers no longer restart** when you uncover the desktop or leave the Overview.
+- **Island bubbles no longer contact AniList** unless you placed the Airing piece.
+- **Sharper iRiS text, covers and thumbnails,** and smooth card, panel and Dock edges.
+- **iRiS side panels join the frame** instead of showing a dark notch on glass.
+- **Locking and unlocking iRiS no longer flash,** and lock-screen widgets actually show up.
+- **The next song no longer pops up over your game.**
+- **Pieces carried off the Island open what they should,** and can go back onto it.
+- **The iRiS desktop menu closes when it should.**
+- **Setup leaves your font settings alone.**
+- **`inir update` names the checkout it updates** and stops flagging our own files as your changes.
+- **No Hyprland noise in the logs on Niri.**
 
 ## [2.31.0] - 2026-09-19
 
@@ -1790,3 +1823,6 @@ Shoutout to [@yukazakiri](https://github.com/yukazakiri) for basically adopting 
 - **Tiling Overlay**: Visual overlay for tiling operations
 - **Tools tab**: New tools section in settings
 - **GIF wallpaper support**: Native animated GIF wallpapers with performance optimizations
+- **iRiS Settings › General opens on your wallpaper.** A card with the current wallpaper; one tap changes it.
+- **About and Shortcuts are iRiS pages now.** They render with iRiS's own marks and rows instead of Material's.
+- **Settings group marks carry their own colour.** General's groups each show an identity tint instead of a wall of grey.
