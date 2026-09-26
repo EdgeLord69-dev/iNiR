@@ -1425,6 +1425,66 @@ def _set_global_rule_property(content, prop, value):
     return content.rstrip() + f"\n\nwindow-rule {{\n    {prop} {value}\n}}\n"
 
 
+def _global_rules(content):
+    return [(start, end, body) for start, end, body in _window_rule_blocks(content) if _is_global_rule(body)]
+
+
+def _set_global_opacity(content, value):
+    """One opacity for every window: set in the first global rule, dropped from any later global rule
+    (later rules win, so a second `opacity` in another global rule silently overrode the setting)."""
+    content = _set_global_rule_property(content, "opacity", value)
+    rules = _global_rules(content)
+    for start, end, body in reversed(rules[1:]):
+        cleaned = re.sub(r"(?m)^[ \t]*opacity[ \t]+[^\s]+[ \t]*\n?", "", content[start:end])
+        content = content[:start] + cleaned + content[end:]
+    return content
+
+
+def _set_global_effect(content, prop, value):
+    """Set (or with value None, remove) `prop` inside the first global rule's background-effect block."""
+    rules = _global_rules(content)
+    if not rules:
+        content = content.rstrip() + "\n\nwindow-rule {\n}\n"
+        rules = _global_rules(content)
+    start, end, body = rules[0]
+    block = re.search(r"background-effect\s*\{([^}]*)\}", body)
+    if block is None:
+        if value is None:
+            return content
+        insert = f"\n    background-effect {{\n        {prop} {value}\n    }}"
+        return content[:end].rstrip() + insert + "\n" + content[end:]
+    inner = block.group(1)
+    line = re.search(rf"(?m)^([ \t]*){re.escape(prop)}[ \t]+[^\s]+[ \t]*$", inner)
+    if value is None:
+        inner = re.sub(rf"(?m)^[ \t]*{re.escape(prop)}[ \t]+[^\s]+[ \t]*\n?", "", inner)
+    elif line:
+        inner = inner[:line.start()] + f"{line.group(1)}{prop} {value}" + inner[line.end():]
+    else:
+        inner = inner.rstrip() + f"\n        {prop} {value}\n    "
+    if not re.search(r"\S", inner):
+        a, b = start + block.start(), start + block.end()
+        return content[:a].rstrip() + content[b:]
+    a, b = start + block.start(1), start + block.end(1)
+    return content[:a] + inner + content[b:]
+
+
+def _protect_games_rule(content):
+    """Fullscreen games keep direct scanout: iNiR's games rule stays opaque and unblurred."""
+    for _ in range(3):
+        rule = next(((start, end, body) for start, end, body in _window_rule_blocks(content)
+                     if "steam_app_" in body and re.search(r"^\s*match\b", body, re.M)), None)
+        if rule is None:
+            return content
+        start, end, body = rule
+        if not re.search(r"(?m)^\s*opacity\b", body):
+            content = content[:end].rstrip() + "\n    opacity 1.0\n" + content[end:]
+        elif "background-effect" not in body:
+            content = content[:end].rstrip() + "\n    background-effect {\n        blur false\n    }\n" + content[end:]
+        else:
+            return content
+    return content
+
+
 def cmd_get_window_rules():
     rules_file = resolve_niri_section_file("config.d/30-window-rules.kdl")
 
@@ -1432,6 +1492,10 @@ def cmd_get_window_rules():
         "corner_radius": 16,
         "clip_to_geometry": True,
         "inactive_opacity": 0.9,
+        "active_opacity": 1.0,
+        "blur": False,
+        "xray": True,
+        "border_behind": False,
     }
 
     if not rules_file.exists():
@@ -1456,6 +1520,22 @@ def cmd_get_window_rules():
             if m:
                 result["clip_to_geometry"] = m.group(1) == "true"
                 global_seen = True
+        if _is_global_rule(block):
+            # Later global rules win in niri, so the last value read is the effective one.
+            m = re.search(r"(?m)^\s*opacity\s+([\d.]+)", block)
+            if m:
+                result["active_opacity"] = float(m.group(1))
+            effect = re.search(r"background-effect\s*\{([^}]*)\}", block)
+            if effect:
+                m = re.search(r"blur\s+(true|false)", effect.group(1))
+                if m:
+                    result["blur"] = m.group(1) == "true"
+                m = re.search(r"xray\s+(true|false)", effect.group(1))
+                if m:
+                    result["xray"] = m.group(1) == "true"
+            m = re.search(r"draw-border-with-background\s+(true|false)", block)
+            if m:
+                result["border_behind"] = m.group(1) == "false"
 
     print(json.dumps(result))
     return 0
@@ -2360,6 +2440,28 @@ def _set_window_rules(config_dir, key, value):
 
     elif key == "clip-to-geometry":
         content = _set_global_rule_property(content, "clip-to-geometry", "true" if str(value) == "true" else "false")
+
+    elif key == "active-opacity":
+        content = _protect_games_rule(_set_global_opacity(content, float(value)))
+
+    elif key == "blur":
+        on = str(value) in ("on", "true", "1")
+        content = _set_global_effect(content, "blur", "true" if on else None)
+        if on:
+            content = _protect_games_rule(content)
+
+    elif key == "xray":
+        # Niri turns xray on by itself once blur is on; only "off" needs writing.
+        content = _set_global_effect(content, "xray", None if str(value) in ("on", "true", "1") else "false")
+
+    elif key == "border-behind":
+        on = str(value) in ("on", "true", "1")
+        if on:
+            content = _set_global_rule_property(content, "draw-border-with-background", "false")
+        else:
+            for start, end, body in reversed(_global_rules(content)):
+                cleaned = re.sub(r"(?m)^[ \t]*draw-border-with-background[ \t]+[^\s]+[ \t]*\n?", "", content[start:end])
+                content = content[:start] + cleaned + content[end:]
 
     else:
         print(json.dumps({"error": f"Unknown window-rules key: {key}"}))
