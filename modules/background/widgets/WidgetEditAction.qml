@@ -80,7 +80,7 @@ IconToolbarButton {
             color: root.toggled ? root.tileTint : root.buttonHovered ? IrisStyle.fillHover : IrisStyle.fillQuiet
             gradient: root.toggled ? onGradient : null
             border.width: root.toggled ? 0 : 1
-            border.color: ColorUtils.applyAlpha(root.tileTint, root.buttonHovered ? 0.7 : 0.38)
+            border.color: ColorUtils.applyAlpha(root.tileTint, root.buttonHovered ? 0.6 : 0.24)
             Behavior on color { ColorAnimation { duration: IrisStyle.duration(140) } }
             Gradient {
                 id: onGradient

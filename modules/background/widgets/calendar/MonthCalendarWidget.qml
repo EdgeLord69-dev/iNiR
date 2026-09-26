@@ -118,58 +118,46 @@ AbstractBackgroundWidget {
 
     editPopoverContent: Component {
         ColumnLayout {
-            spacing: 6
-            RowLayout {
-                Layout.alignment: Qt.AlignHCenter
-                spacing: 4
-                Repeater {
+            spacing: 14
+            WidgetQuickSection {
+                title: Translation.tr("Style")
+                WidgetQuickChoices {
+                    current: root.instrument ? "instrument" : "card"
                     model: [
                         { label: Translation.tr("Card"), icon: "crop_landscape", value: "card" },
                         { label: Translation.tr("Instrument"), icon: "avg_pace", value: "instrument" }
                     ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        leftmost: true; rightmost: true
-                        buttonIcon: modelData.icon
-                        buttonText: modelData.label
-                        toggled: root.instrument === (modelData.value === "instrument")
-                        onClicked: root._setOutputValue("style", modelData.value)
-                    }
+                    onPicked: value => root._setOutputValue("style", value)
                 }
             }
-            RowLayout {
-                Layout.alignment: Qt.AlignHCenter
-                spacing: 4
-                Repeater {
+            WidgetQuickSection {
+                title: Translation.tr("Week starts on")
+                WidgetQuickChoices {
+                    current: root.weekStart
                     model: [
-                        { label: "Monday", value: 1 },
-                        { label: "Sunday", value: 0 }
+                        { label: Translation.tr("Monday"), value: 1 },
+                        { label: Translation.tr("Sunday"), value: 0 }
                     ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        leftmost: true; rightmost: true
-                        buttonText: Translation.tr(modelData.label)
-                        toggled: root.weekStart === modelData.value
-                        onClicked: root._setOutputValue("weekStart", modelData.value)
-                    }
+                    onPicked: value => root._setOutputValue("weekStart", value)
                 }
             }
-            WidgetChoiceButton {
-                Layout.alignment: Qt.AlignHCenter
-                leftmost: true; rightmost: true
-                buttonIcon: "date_range"
-                buttonText: Translation.tr("Adjacent days")
-                toggled: root.showAdjacentDays
-                onClicked: root._setOutputValue("showAdjacentDays", !root.showAdjacentDays)
-            }
-            WidgetChoiceButton {
-                Layout.alignment: Qt.AlignHCenter
-                visible: root.instrument
-                leftmost: true; rightmost: true
-                buttonIcon: "horizontal_rule"
-                buttonText: Translation.tr("Header rule")
-                toggled: root.instrumentRule
-                onClicked: root._setOutputValue("instrumentRule", !root.instrumentRule)
+            WidgetQuickSection {
+                title: Translation.tr("Show")
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "date_range"
+                    label: Translation.tr("Adjacent days")
+                    checked: root.showAdjacentDays
+                    onToggled: root._setOutputValue("showAdjacentDays", !root.showAdjacentDays)
+                }
+                WidgetQuickToggle {
+                    visible: root.instrument
+                    Layout.fillWidth: true
+                    iconName: "horizontal_rule"
+                    label: Translation.tr("Header rule")
+                    checked: root.instrumentRule
+                    onToggled: root._setOutputValue("instrumentRule", !root.instrumentRule)
+                }
             }
         }
     }

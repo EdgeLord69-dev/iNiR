@@ -1284,7 +1284,7 @@ Singleton {
                     // Opt-in local wallpaper sampling. Off keeps semantic widget
                     // colors stable when widgets move; on lets eligible widgets
                     // choose readable ink/semantic foregrounds from their region.
-                    property bool adaptColorsToWallpaperPosition: false
+                    property bool adaptColorsToWallpaperPosition: true
                     property JsonObject powerSaving: JsonObject {
                         property bool enable: true
                         property bool pauseOnGameMode: true

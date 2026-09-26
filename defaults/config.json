@@ -462,6 +462,7 @@
         "widgets": {
             "screenList": [],
             "layerOrder": [],
+            "adaptColorsToWallpaperPosition": true,
             "powerSaving": {
                 "enable": true,
                 "pauseOnGameMode": true,

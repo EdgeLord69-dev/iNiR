@@ -228,46 +228,33 @@ AbstractBackgroundWidget {
 
     editPopoverContent: Component {
         ColumnLayout {
-            spacing: 6
-
-            RowLayout {
-                spacing: 4
-                Layout.alignment: Qt.AlignHCenter
-
-                Repeater {
+            spacing: 14
+            WidgetQuickSection {
+                title: Translation.tr("Style")
+                WidgetQuickChoices {
+                    current: root.uptimeStyle
                     model: [
                         { label: Translation.tr("Row"), icon: "table_rows", value: "row" },
                         { label: Translation.tr("Instrument"), icon: "avg_pace", value: "instrument" }
                     ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        leftmost: true; rightmost: true
-                        buttonIcon: modelData.icon
-                        buttonText: modelData.label
-                        toggled: root.uptimeStyle === modelData.value
-                        onClicked: root._setOutputValue("style", modelData.value)
-                    }
+                    onPicked: value => root._setOutputValue("style", value)
                 }
             }
-
-            RowLayout {
-                spacing: 4
-                Layout.alignment: Qt.AlignHCenter
+            WidgetQuickSection {
                 visible: root.instrument
-
+                title: Translation.tr("Show")
                 Repeater {
                     model: [
                         { label: Translation.tr("Since"), icon: "schedule", key: "showSince", fallback: true },
                         { label: Translation.tr("Breakdown"), icon: "view_agenda", key: "showBreakdown", fallback: true }
                     ]
-                    WidgetChoiceButton {
+                    WidgetQuickToggle {
                         required property var modelData
-                        leftmost: true; rightmost: true
-                        buttonIcon: modelData.icon
-                        buttonText: modelData.label
-                        toggled: Boolean(root._readConfigKey(modelData.key) ?? modelData.fallback)
-                        onClicked: root._setOutputValue(modelData.key,
-                            !Boolean(root._readConfigKey(modelData.key) ?? modelData.fallback))
+                        Layout.fillWidth: true
+                        iconName: modelData.icon
+                        label: modelData.label
+                        checked: Boolean(root._readConfigKey(modelData.key) ?? modelData.fallback)
+                        onToggled: root._setOutputValue(modelData.key, !checked)
                     }
                 }
             }

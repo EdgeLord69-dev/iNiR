@@ -69,13 +69,12 @@ AbstractBackgroundWidget {
     // ── Popover: mode + resource toggles ──
     editPopoverContent: Component {
         ColumnLayout {
-            spacing: 6
-            GridLayout {
-                columns: 2
-                columnSpacing: 4
-                rowSpacing: 4
-                Layout.alignment: Qt.AlignHCenter
-                Repeater {
+            spacing: 14
+
+            WidgetQuickSection {
+                title: Translation.tr("Style")
+                WidgetQuickChoices {
+                    current: root.displayMode
                     model: [
                         { label: Translation.tr("Bars"), icon: "bar_chart", value: "bars" },
                         { label: Translation.tr("Graph"), icon: "show_chart", value: "graph" },
@@ -84,50 +83,47 @@ AbstractBackgroundWidget {
                         { label: Translation.tr("Tiles"), icon: "grid_view", value: "tiles" },
                         { label: Translation.tr("Instrument"), icon: "equalizer", value: "instrument" }
                     ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        Layout.fillWidth: true
-                        leftmost: true; rightmost: true
-                        buttonIcon: modelData.icon
-                        buttonText: modelData.label
-                        toggled: root.displayMode === modelData.value
-                        onClicked: root._setOutputValue("displayMode", modelData.value)
-                    }
+                    onPicked: value => root._setOutputValue("displayMode", value)
                 }
             }
-            GridLayout {
-                columns: 3
-                columnSpacing: 4
-                rowSpacing: 4
-                Layout.alignment: Qt.AlignHCenter
-                Repeater {
-                    model: [
-                        { label: Translation.tr("CPU"), icon: "memory", key: "showCpu", fallback: true },
-                        { label: Translation.tr("RAM"), icon: "storage", key: "showMemory", fallback: true },
-                        { label: Translation.tr("GPU"), icon: "developer_board", key: "showGpu", fallback: true },
-                        { label: Translation.tr("CPU temp"), icon: "thermostat", key: "showTemp", fallback: false },
-                        { label: Translation.tr("GPU temp"), icon: "device_thermostat", key: "showGpuTemp", fallback: false },
-                        { label: Translation.tr("Disk"), icon: "hard_drive", key: "showDisk", fallback: false }
-                    ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        Layout.fillWidth: true
-                        leftmost: true; rightmost: true
-                        buttonIcon: modelData.icon
-                        buttonText: modelData.label
-                        toggled: Boolean(root._readConfigKey(modelData.key) ?? modelData.fallback)
-                        enabled: !toggled || root._resourceModel.length > 1
-                        onClicked: root._setOutputValue(modelData.key, !toggled)
+
+            WidgetQuickSection {
+                title: Translation.tr("Metrics")
+                GridLayout {
+                    Layout.fillWidth: true
+                    columns: 2
+                    columnSpacing: 4
+                    rowSpacing: 4
+                    Repeater {
+                        model: [
+                            { label: Translation.tr("CPU"), icon: "memory", key: "showCpu", fallback: true },
+                            { label: Translation.tr("RAM"), icon: "storage", key: "showMemory", fallback: true },
+                            { label: Translation.tr("GPU"), icon: "developer_board", key: "showGpu", fallback: true },
+                            { label: Translation.tr("Disk"), icon: "hard_drive", key: "showDisk", fallback: false },
+                            { label: Translation.tr("CPU temp"), icon: "thermostat", key: "showTemp", fallback: false },
+                            { label: Translation.tr("GPU temp"), icon: "device_thermostat", key: "showGpuTemp", fallback: false }
+                        ]
+                        WidgetQuickToggle {
+                            required property var modelData
+                            Layout.fillWidth: true
+                            Layout.preferredWidth: 1
+                            Layout.maximumWidth: Number.POSITIVE_INFINITY
+                            implicitWidth: 150
+                            iconName: modelData.icon
+                            label: modelData.label
+                            checked: Boolean(root._readConfigKey(modelData.key) ?? modelData.fallback)
+                            enabled: !checked || root._resourceModel.length > 1
+                            onToggled: root._setOutputValue(modelData.key, !checked)
+                        }
                     }
                 }
-            }
-            WidgetChoiceButton {
-                Layout.alignment: Qt.AlignHCenter
-                leftmost: true; rightmost: true
-                buttonIcon: "label"
-                buttonText: Translation.tr("Labels")
-                toggled: root.showLabels
-                onClicked: root._setOutputValue("showLabels", !root.showLabels)
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "label"
+                    label: Translation.tr("Labels")
+                    checked: root.showLabels
+                    onToggled: root._setOutputValue("showLabels", !root.showLabels)
+                }
             }
         }
     }

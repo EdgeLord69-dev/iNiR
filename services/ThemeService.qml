@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import qs.modules.common
 import qs.services
 
@@ -132,6 +133,21 @@ Singleton {
             "sidebar.cardStyle": cards,
             "bar.cornerStyle": cornerStyle
         })
+    }
+
+    readonly property var globalStyles: ["material", "cards", "aurora", "inir", "angel", "regalia", "zzz", "cookie", "editorial"]
+
+    IpcHandler {
+        target: "globalStyle"
+        function set(style: string): string {
+            const id = String(style ?? "").trim().toLowerCase()
+            if (!root.globalStyles.includes(id))
+                return "Unknown style: " + root.globalStyles.join(", ")
+            root.setGlobalStyle(id)
+            return id
+        }
+        function get(): string { return Config.options?.appearance?.globalStyle ?? "material" }
+        function list(): string { return root.globalStyles.join(", ") }
     }
 
     function _triggerVesktopThemeGeneration(): void {

@@ -145,42 +145,35 @@ AbstractBackgroundWidget {
 
     editPopoverContent: Component {
         ColumnLayout {
-            spacing: 6
-            RowLayout {
-                spacing: 4
-                Layout.alignment: Qt.AlignHCenter
-
-                Repeater {
+            spacing: 14
+            WidgetQuickSection {
+                title: Translation.tr("Style")
+                WidgetQuickChoices {
+                    current: root.instrument ? "instrument" : "card"
                     model: [
                         { label: Translation.tr("Card"), icon: "crop_landscape", value: "card" },
                         { label: Translation.tr("Instrument"), icon: "avg_pace", value: "instrument" }
                     ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        leftmost: true; rightmost: true
-                        buttonIcon: modelData.icon
-                        buttonText: modelData.label
-                        toggled: root.instrument === (modelData.value === "instrument")
-                        onClicked: root._setOutputValue("style", modelData.value)
-                    }
+                    onPicked: value => root._setOutputValue("style", value)
                 }
             }
-            WidgetChoiceButton {
-                Layout.alignment: Qt.AlignHCenter
-                visible: root.instrument
-                leftmost: true; rightmost: true
-                buttonIcon: "horizontal_rule"
-                buttonText: Translation.tr("Row rules")
-                toggled: root.instrumentRules
-                onClicked: root._setOutputValue("instrumentRules", !root.instrumentRules)
-            }
-            WidgetChoiceButton {
-                Layout.alignment: Qt.AlignHCenter
-                leftmost: true; rightmost: true
-                buttonIcon: "done_all"
-                buttonText: Translation.tr("Show done")
-                toggled: root.showCompleted
-                onClicked: root._setOutputValue("showCompleted", !root.showCompleted)
+            WidgetQuickSection {
+                title: Translation.tr("Show")
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "done_all"
+                    label: Translation.tr("Finished tasks")
+                    checked: root.showCompleted
+                    onToggled: root._setOutputValue("showCompleted", !root.showCompleted)
+                }
+                WidgetQuickToggle {
+                    visible: root.instrument
+                    Layout.fillWidth: true
+                    iconName: "horizontal_rule"
+                    label: Translation.tr("Row rules")
+                    checked: root.instrumentRules
+                    onToggled: root._setOutputValue("instrumentRules", !root.instrumentRules)
+                }
             }
         }
     }

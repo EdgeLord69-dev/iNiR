@@ -114,225 +114,115 @@ AbstractBackgroundWidget {
     editPopoverContent: Component {
         ColumnLayout {
             id: visualizerQuickRoot
-            implicitWidth: 360
-            readonly property bool narrow: width < 300
-            spacing: 10
+            readonly property string path: "background.widgets.visualizer."
+            spacing: 14
 
-            StyledText {
-                Layout.alignment: Qt.AlignHCenter
-                text: Translation.tr("Visualizer")
-                color: Appearance.colors.colOnLayer2
-                font.pixelSize: Appearance.font.pixelSize.smaller
-                font.weight: Font.DemiBold
+            component VizSlider: WidgetQuickSlider {
+                id: vizSlider
+                required property string key
+                required property int minimum
+                required property int maximum
+                property int step: 5
+                property real fallback: minimum
+                property string suffix: "%"
+                Layout.fillWidth: true
+                Layout.preferredWidth: 1
+                Layout.maximumWidth: Number.POSITIVE_INFINITY
+                from: vizSlider.minimum
+                to: vizSlider.maximum
+                stepSize: vizSlider.step
+                unit: vizSlider.suffix
+                value: {
+                    const stored = Number(Config.getNestedValue("background.widgets.visualizer." + vizSlider.key, vizSlider.fallback))
+                    return stored >= vizSlider.minimum ? stored : vizSlider.fallback
+                }
+                onCommitted: v => Config.setNestedValue("background.widgets.visualizer." + vizSlider.key, Math.round(v))
             }
 
-            GridLayout {
-                Layout.fillWidth: true
-                columns: 3
-                columnSpacing: 4
-                Repeater {
+            WidgetQuickSection {
+                title: Translation.tr("Style")
+                WidgetQuickChoices {
+                    current: root.vizType
                     model: [
                         { label: Translation.tr("Bars"), icon: "equalizer", value: "bars" },
                         { label: Translation.tr("Wave"), icon: "graphic_eq", value: "wave" },
                         { label: Translation.tr("Organic"), icon: "bubble_chart", value: "organic" }
                     ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        required property int index
-                        Layout.fillWidth: true
-                        leftmost: index === 0
-                        rightmost: index === 2
-                        buttonIcon: modelData.icon
-                        buttonText: modelData.label
-                        toggled: root.vizType === modelData.value
-                        onClicked: Config.setNestedValue("background.widgets.visualizer.vizType", modelData.value)
-                    }
+                    onPicked: value => Config.setNestedValue(visualizerQuickRoot.path + "vizType", value)
                 }
             }
 
-            Rectangle {
-                Layout.fillWidth: true
-                implicitHeight: visualizerTuning.implicitHeight + 20
-                radius: Appearance.rounding.small
-                color: Appearance.colors.colLayer2
-                border.width: 1
-                border.color: Appearance.colors.colOutlineVariant
-
-                ColumnLayout {
-                    id: visualizerTuning
-                    anchors.fill: parent
-                    anchors.margins: 10
-                    spacing: 8
-
-                    GridLayout {
-                        Layout.fillWidth: true
-                        columns: visualizerQuickRoot.narrow ? 2 : 4
-                        columnSpacing: 6
-                        rowSpacing: 6
-                        Repeater {
-                            model: [
-                                { label: Translation.tr("Cava"), icon: "palette", value: "cava" },
-                                { label: Translation.tr("Accent"), icon: "colors", value: "accent" },
-                                { label: Translation.tr("Primary"), icon: "format_color_fill", value: "primary" },
-                                { label: Translation.tr("Album"), icon: "album", value: "album" }
-                            ]
-                            WidgetChoiceButton {
-                                required property var modelData
-                                required property int index
-                                Layout.fillWidth: true
-                                leftmost: true
-                                rightmost: true
-                                horizontalPadding: 6
-                                buttonIcon: modelData.icon
-                                buttonText: modelData.label
-                                toggled: root.paletteMode === modelData.value
-                                onClicked: Config.setNestedValue(
-                                    "background.widgets.visualizer.paletteMode", modelData.value)
-                            }
-                        }
-                    }
-
-                    component VisualizerMetric: ColumnLayout {
-                        id: metric
-                        required property string labelText
-                        required property string configKey
-                        required property int minimum
-                        required property int maximum
-                        property int step: 5
-                        property real fallback: minimum
-                        property string suffix: "%"
-                        readonly property real currentValue: {
-                            const stored = Number(Config.getNestedValue(
-                                metric.configKey, metric.fallback))
-                            return stored >= metric.minimum ? stored : metric.fallback
-                        }
-                        Layout.fillWidth: true
-                        Layout.minimumWidth: 0
-                        spacing: 2
-
-                        RowLayout {
-                            Layout.fillWidth: true
-                            spacing: 6
-                            StyledText {
-                                Layout.fillWidth: true
-                                text: metric.labelText
-                                color: Appearance.colors.colSubtext
-                                font.pixelSize: Appearance.font.pixelSize.smaller
-                                elide: Text.ElideRight
-                            }
-                            StyledText {
-                                text: Math.round(metric.currentValue) + metric.suffix
-                                color: Appearance.colors.colOnLayer2
-                                font.pixelSize: Appearance.font.pixelSize.smaller
-                                font.family: root.widgetNumbersFamily
-                                font.weight: Font.DemiBold
-                            }
-                        }
-
-                        StyledSlider {
-                            Layout.fillWidth: true
-                            from: metric.minimum
-                            to: metric.maximum
-                            stepSize: metric.step
-                            configuration: StyledSlider.Configuration.XS
-                            stopIndicatorValues: []
-                            value: metric.currentValue
-                            tooltipContent: Math.round(value) + metric.suffix
-                            onMoved: Config.setNestedValue(metric.configKey, Math.round(value))
-                        }
-                    }
-
-                    GridLayout {
-                        visible: root.vizType !== "organic"
-                        Layout.fillWidth: true
-                        columns: root.vizType === "bars" && !visualizerQuickRoot.narrow ? 4 : 3
-                        columnSpacing: 4
-                        rowSpacing: 4
-                        Repeater {
-                            model: root.vizType === "bars" ? [
-                                { label: Translation.tr("Bottom"), icon: "vertical_align_bottom", value: "bottom" },
-                                { label: Translation.tr("Top"), icon: "vertical_align_top", value: "top" },
-                                { label: Translation.tr("Center"), icon: "center_focus_strong", value: "center" },
-                                { label: Translation.tr("Mirror"), icon: "unfold_more", value: "mirror" }
-                            ] : [
-                                { label: Translation.tr("Fill"), icon: "waves", value: "fill" },
-                                { label: Translation.tr("Line"), icon: "line_weight", value: "line" },
-                                { label: Translation.tr("Ribbon"), icon: "unfold_more", value: "ribbon" }
-                            ]
-                            WidgetChoiceButton {
-                                required property var modelData
-                                required property int index
-                                readonly property int groupColumns: root.vizType === "bars"
-                                    && !visualizerQuickRoot.narrow ? 4 : 3
-                                readonly property int optionCount: root.vizType === "bars" ? 4 : 3
-                                Layout.fillWidth: true
-                                leftmost: index % groupColumns === 0
-                                rightmost: index % groupColumns === groupColumns - 1
-                                    || index === optionCount - 1
-                                horizontalPadding: 6
-                                buttonIcon: modelData.icon
-                                buttonText: modelData.label
-                                toggled: root.vizType === "bars"
-                                    ? Config.getNestedValue("background.widgets.visualizer.barsOrigin", "bottom") === modelData.value
-                                    : Config.getNestedValue("background.widgets.visualizer.waveMode", "fill") === modelData.value
-                                onClicked: Config.setNestedValue(root.vizType === "bars"
-                                    ? "background.widgets.visualizer.barsOrigin"
-                                    : "background.widgets.visualizer.waveMode", modelData.value)
-                            }
-                        }
-                    }
-
-                    GridLayout {
-                        visible: root.vizType !== "organic"
-                        Layout.fillWidth: true
-                        columns: root.quickControlsWide ? 4
-                            : visualizerQuickRoot.narrow ? 1 : 2
-                        columnSpacing: 16
-                        rowSpacing: 4
-
-                        VisualizerMetric {
-                            labelText: root.vizType === "bars"
-                                ? Translation.tr("Bar count") : Translation.tr("Wave opacity")
-                            configKey: root.vizType === "bars"
-                                ? "background.widgets.visualizer.barCount"
-                                : "background.widgets.visualizer.waveOpacity"
-                            minimum: root.vizType === "bars" ? 8 : 5
-                            maximum: root.vizType === "bars" ? 128 : 100
-                            step: root.vizType === "bars" ? 4 : 5
-                            fallback: root.vizType === "bars" ? 48
-                                : (Config.options?.appearance?.cava?.waveOpacity ?? 30)
-                            suffix: root.vizType === "bars" ? "" : "%"
-                        }
-                        VisualizerMetric {
-                            labelText: Translation.tr("Smoothing")
-                            configKey: "background.widgets.visualizer.smoothing"
-                            minimum: 0; maximum: 8; step: 1
-                            fallback: 2
-                            suffix: ""
-                        }
-                    }
-
-                    GridLayout {
-                        visible: root.vizType === "organic"
-                        Layout.fillWidth: true
-                        columns: root.quickControlsWide ? 4
-                            : visualizerQuickRoot.narrow ? 1 : 2
-                        columnSpacing: 16
-                        rowSpacing: 4
-
-                        VisualizerMetric { labelText: Translation.tr("Sensitivity"); configKey: "background.widgets.visualizer.organicSensitivity"; minimum: 25; maximum: 200 }
-                        VisualizerMetric { labelText: Translation.tr("Pulse"); configKey: "background.widgets.visualizer.organicPulse"; minimum: 0; maximum: 150 }
-                        VisualizerMetric { labelText: Translation.tr("Compression"); configKey: "background.widgets.visualizer.organicCompression"; minimum: 0; maximum: 100 }
-                        VisualizerMetric { labelText: Translation.tr("Motion"); configKey: "background.widgets.visualizer.organicMotionSpeed"; minimum: 20; maximum: 250 }
-                        VisualizerMetric { labelText: Translation.tr("Cover"); configKey: "background.widgets.visualizer.organicCoverSize"; minimum: 30; maximum: 90; step: 1 }
-                        VisualizerMetric { labelText: Translation.tr("Glow"); configKey: "background.widgets.visualizer.organicGlow"; minimum: 0; maximum: 100 }
-                        VisualizerMetric { labelText: Translation.tr("Presence"); configKey: "background.widgets.visualizer.organicOpacity"; minimum: 10; maximum: 100 }
-                        VisualizerMetric { labelText: Translation.tr("Idle"); configKey: "background.widgets.visualizer.organicIdleMotion"; minimum: 0; maximum: 100 }
-                        VisualizerMetric { labelText: Translation.tr("Range"); configKey: "background.widgets.visualizer.organicRange"; minimum: 20; maximum: 100 }
-                    }
-
-
+            WidgetQuickSection {
+                title: Translation.tr("Colour")
+                WidgetQuickChoices {
+                    maxColumns: 4
+                    current: root.paletteMode
+                    model: [
+                        { label: Translation.tr("Cava"), icon: "palette", value: "cava" },
+                        { label: Translation.tr("Accent"), icon: "colors", value: "accent" },
+                        { label: Translation.tr("Primary"), icon: "format_color_fill", value: "primary" },
+                        { label: Translation.tr("Album"), icon: "album", value: "album" }
+                    ]
+                    onPicked: value => Config.setNestedValue(visualizerQuickRoot.path + "paletteMode", value)
                 }
+            }
+
+            WidgetQuickSection {
+                visible: root.vizType !== "organic"
+                title: root.vizType === "bars" ? Translation.tr("Bars grow from") : Translation.tr("Wave")
+                WidgetQuickChoices {
+                    maxColumns: 4
+                    current: root.vizType === "bars"
+                        ? Config.getNestedValue(visualizerQuickRoot.path + "barsOrigin", "bottom")
+                        : Config.getNestedValue(visualizerQuickRoot.path + "waveMode", "fill")
+                    model: root.vizType === "bars" ? [
+                        { label: Translation.tr("Bottom"), icon: "vertical_align_bottom", value: "bottom" },
+                        { label: Translation.tr("Top"), icon: "vertical_align_top", value: "top" },
+                        { label: Translation.tr("Center"), icon: "center_focus_strong", value: "center" },
+                        { label: Translation.tr("Mirror"), icon: "unfold_more", value: "mirror" }
+                    ] : [
+                        { label: Translation.tr("Fill"), icon: "waves", value: "fill" },
+                        { label: Translation.tr("Line"), icon: "line_weight", value: "line" },
+                        { label: Translation.tr("Ribbon"), icon: "unfold_more", value: "ribbon" }
+                    ]
+                    onPicked: value => Config.setNestedValue(visualizerQuickRoot.path
+                        + (root.vizType === "bars" ? "barsOrigin" : "waveMode"), value)
+                }
+            }
+
+            GridLayout {
+                visible: root.vizType !== "organic"
+                Layout.fillWidth: true
+                columns: 2
+                columnSpacing: 16
+                rowSpacing: 10
+                VizSlider {
+                    title: root.vizType === "bars" ? Translation.tr("Bar count") : Translation.tr("Wave opacity")
+                    key: root.vizType === "bars" ? "barCount" : "waveOpacity"
+                    minimum: root.vizType === "bars" ? 8 : 5
+                    maximum: root.vizType === "bars" ? 128 : 100
+                    step: root.vizType === "bars" ? 4 : 5
+                    fallback: root.vizType === "bars" ? 48 : (Config.options?.appearance?.cava?.waveOpacity ?? 30)
+                    suffix: root.vizType === "bars" ? "" : "%"
+                }
+                VizSlider { title: Translation.tr("Smoothing"); key: "smoothing"; minimum: 0; maximum: 8; step: 1; fallback: 2; suffix: "" }
+            }
+
+            GridLayout {
+                visible: root.vizType === "organic"
+                Layout.fillWidth: true
+                columns: 2
+                columnSpacing: 16
+                rowSpacing: 10
+                VizSlider { title: Translation.tr("Sensitivity"); key: "organicSensitivity"; minimum: 25; maximum: 200 }
+                VizSlider { title: Translation.tr("Pulse"); key: "organicPulse"; minimum: 0; maximum: 150 }
+                VizSlider { title: Translation.tr("Compression"); key: "organicCompression"; minimum: 0; maximum: 100 }
+                VizSlider { title: Translation.tr("Motion"); key: "organicMotionSpeed"; minimum: 20; maximum: 250 }
+                VizSlider { title: Translation.tr("Cover"); key: "organicCoverSize"; minimum: 30; maximum: 90; step: 1 }
+                VizSlider { title: Translation.tr("Glow"); key: "organicGlow"; minimum: 0; maximum: 100 }
+                VizSlider { title: Translation.tr("Presence"); key: "organicOpacity"; minimum: 10; maximum: 100 }
+                VizSlider { title: Translation.tr("Idle"); key: "organicIdleMotion"; minimum: 0; maximum: 100 }
+                VizSlider { title: Translation.tr("Range"); key: "organicRange"; minimum: 20; maximum: 100 }
             }
         }
     }

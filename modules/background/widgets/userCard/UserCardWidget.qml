@@ -103,41 +103,40 @@ AbstractBackgroundWidget {
 
     editPopoverContent: Component {
         ColumnLayout {
-            spacing: 7
-            RowLayout {
-                spacing: 4
-                Layout.alignment: Qt.AlignHCenter
-                Repeater {
+            spacing: 14
+            WidgetQuickSection {
+                title: Translation.tr("Style")
+                WidgetQuickChoices {
+                    current: root.cardStyle
                     model: [
-                        { label: Translation.tr("Card"), value: "card" },
-                        { label: Translation.tr("Instrument"), value: "instrument" }
+                        { label: Translation.tr("Card"), icon: "badge", value: "card" },
+                        { label: Translation.tr("Instrument"), icon: "avg_pace", value: "instrument" }
                     ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        leftmost: true; rightmost: true
-                        buttonText: modelData.label
-                        toggled: root.cardStyle === modelData.value
-                        onClicked: root._setOutputValue("style", modelData.value)
-                    }
+                    onPicked: value => root._setOutputValue("style", value)
                 }
             }
-            RowLayout {
-                spacing: 4
-                Layout.alignment: Qt.AlignHCenter
-                Repeater {
-                    model: [
-                        { label: Translation.tr("Avatar"), icon: "person", key: "showAvatar", value: root.showAvatar },
-                        { label: Translation.tr("Weather"), icon: "cloud", key: "showWeather", value: root.showWeather },
-                        { label: Translation.tr("Host"), icon: "computer", key: "showHostname", value: root.showHostname }
-                    ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        leftmost: true; rightmost: true
-                        buttonIcon: modelData.icon
-                        buttonText: modelData.label
-                        toggled: modelData.value
-                        onClicked: root._setOutputValue(modelData.key, !modelData.value)
-                    }
+            WidgetQuickSection {
+                title: Translation.tr("Show")
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "person"
+                    label: Translation.tr("Avatar")
+                    checked: root.showAvatar
+                    onToggled: root._setOutputValue("showAvatar", !root.showAvatar)
+                }
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "cloud"
+                    label: Translation.tr("Weather")
+                    checked: root.showWeather
+                    onToggled: root._setOutputValue("showWeather", !root.showWeather)
+                }
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "computer"
+                    label: Translation.tr("Host name")
+                    checked: root.showHostname
+                    onToggled: root._setOutputValue("showHostname", !root.showHostname)
                 }
             }
         }

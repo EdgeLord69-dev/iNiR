@@ -126,79 +126,61 @@ AbstractBackgroundWidget {
     // ── Edit popover: max events + toggles ────────────────────
     editPopoverContent: Component {
         ColumnLayout {
-            spacing: 6
-
-            RowLayout {
-                spacing: 4
-                Layout.alignment: Qt.AlignHCenter
-                Repeater {
+            spacing: 14
+            WidgetQuickSection {
+                title: Translation.tr("Style")
+                WidgetQuickChoices {
+                    current: root.eventStyle
                     model: [
-                        { label: Translation.tr("Card"), value: "card" },
-                        { label: Translation.tr("Instrument"), value: "instrument" }
+                        { label: Translation.tr("Card"), icon: "crop_landscape", value: "card" },
+                        { label: Translation.tr("Instrument"), icon: "avg_pace", value: "instrument" }
                     ]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        leftmost: true; rightmost: true
-                        buttonText: modelData.label
-                        toggled: root.eventStyle === modelData.value
-                        onClicked: root._setOutputValue("style", modelData.value)
-                    }
+                    onPicked: value => root._setOutputValue("style", value)
                 }
             }
-
-            // Max events spinner
-            Row {
-                spacing: 6
-                Layout.alignment: Qt.AlignHCenter
-                StyledText {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: Translation.tr("Show:")
-                    color: Appearance.colors.colOnLayer2
-                    font.pixelSize: Appearance.font.pixelSize.small
-                }
-                Repeater {
-                    model: [3, 5, 8, 12]
-                    WidgetChoiceButton {
-                        required property var modelData
-                        leftmost: true; rightmost: true
-                        buttonText: String(modelData)
-                        toggled: root.maxEvents === modelData
-                        onClicked: root._setOutputValue("maxEvents", modelData)
-                    }
+            WidgetQuickSection {
+                title: Translation.tr("Events shown")
+                WidgetQuickChoices {
+                    maxColumns: 4
+                    current: root.maxEvents
+                    model: [
+                        { label: "3", value: 3 },
+                        { label: "5", value: 5 },
+                        { label: "8", value: 8 },
+                        { label: "12", value: 12 }
+                    ]
+                    onPicked: value => root._setOutputValue("maxEvents", value)
                 }
             }
-
-            // Toggles
-            Row {
-                spacing: 4
-                Layout.alignment: Qt.AlignHCenter
-                WidgetChoiceButton {
-                    leftmost: true; rightmost: true
-                    buttonIcon: "schedule"
-                    buttonText: Translation.tr("Time")
-                    toggled: root.showTime
-                    onClicked: root._setOutputValue("showTime", !root.showTime)
+            WidgetQuickSection {
+                title: Translation.tr("Show")
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "schedule"
+                    label: Translation.tr("Time")
+                    checked: root.showTime
+                    onToggled: root._setOutputValue("showTime", !root.showTime)
                 }
-                WidgetChoiceButton {
-                    leftmost: true; rightmost: true
-                    buttonIcon: "today"
-                    buttonText: Translation.tr("Date")
-                    toggled: root.showDate
-                    onClicked: root._setOutputValue("showDate", !root.showDate)
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "today"
+                    label: Translation.tr("Date")
+                    checked: root.showDate
+                    onToggled: root._setOutputValue("showDate", !root.showDate)
                 }
-                WidgetChoiceButton {
-                    leftmost: true; rightmost: true
-                    buttonIcon: "place"
-                    buttonText: Translation.tr("Location")
-                    toggled: root.showLocation
-                    onClicked: root._setOutputValue("showLocation", !root.showLocation)
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "place"
+                    label: Translation.tr("Location")
+                    checked: root.showLocation
+                    onToggled: root._setOutputValue("showLocation", !root.showLocation)
                 }
-                WidgetChoiceButton {
-                    leftmost: true; rightmost: true
-                    buttonIcon: "view_day"
-                    buttonText: Translation.tr("Group")
-                    toggled: root.groupByDay
-                    onClicked: root._setOutputValue("groupByDay", !root.groupByDay)
+                WidgetQuickToggle {
+                    Layout.fillWidth: true
+                    iconName: "view_day"
+                    label: Translation.tr("Group by day")
+                    checked: root.groupByDay
+                    onToggled: root._setOutputValue("groupByDay", !root.groupByDay)
                 }
             }
         }

@@ -13,6 +13,7 @@ import qs.modules.common.widgets
 import qs.modules.common.widgets.widgetCanvas
 import qs.modules.iris.style
 import qs.modules.iris.widgets
+import qs.modules.iris.components
 
 AbstractWidget {
     id: root
@@ -563,10 +564,6 @@ AbstractWidget {
         if (!Config.ready || root.containsPress || root._isResizing) return;
         if (root._isZonePlacement) {
             root.snapToZone(root.placementStrategy);
-            // Local wallpaper sampling is explicitly opt-in. Zone placement
-            // itself remains independent from color adaptation.
-            if (root._regionSampling)
-                _placementDebounce.restart();
         } else {
             syncFreePositionFromConfig();
             refreshPlacementIfNeeded();
@@ -579,10 +576,12 @@ AbstractWidget {
     readonly property int _editScreenMargin: 8
     readonly property int _editToolbarGap: 12
     readonly property int _editPopoverGap: 6
+    // Edit chrome keeps clear of the bar and the edit toolbar (the zone work area), even where a free
+    // widget itself sits under them.
     readonly property real quickControlsAvailableWidth: Math.max(0,
-        root._safeRight - root._safeLeft - 2 * root._editScreenMargin)
+        root._zoneSafeRight - root._zoneSafeLeft - 2 * root._editScreenMargin)
     readonly property real quickControlsAvailableHeight: Math.max(0,
-        root._safeBottom - root._safeTop - editToolbar.height
+        root._zoneSafeBottom - root._zoneSafeTop - editToolbar.height
             - root._editPopoverGap)
     readonly property bool quickControlsDense:
         root.quickControlsAvailableHeight < 760
@@ -593,10 +592,10 @@ AbstractWidget {
     // toolbar and the sheet chase every content change and flip edges mid-frame.
     function _resolveEditControlsGeometry(widgetX: real, widgetY: real, popoverVisible: bool,
             latchedSide: string, reservedHeight: real, reservedWidth: real): var {
-        const leftBound = root._safeLeft + root._editScreenMargin
-        const topBound = root._safeTop + root._editScreenMargin
-        const rightBound = root._safeRight - root._editScreenMargin
-        const bottomBound = root._safeBottom - root._editScreenMargin
+        const leftBound = root._zoneSafeLeft + root._editScreenMargin
+        const topBound = root._zoneSafeTop + root._editScreenMargin
+        const rightBound = root._zoneSafeRight - root._editScreenMargin
+        const bottomBound = root._zoneSafeBottom - root._editScreenMargin
         const safeX = root._clampX(widgetX)
         const safeY = root._clampY(widgetY)
         const popoverHeight = popoverVisible
@@ -721,48 +720,13 @@ AbstractWidget {
             && point.x < x + width && point.y < y + height
         if (inRect(-12, -12, root.width + 24, root.height + 24))
             return true
-        if (!root._editControlsShown)
+        if (!root._editControlsShown || editToolbar.hosted)
             return false
         // Hit testing follows the rendered rectangles, not the animation's
         // destination. Controls remain clickable while the widget reflows.
         return inRect(editToolbar.x, editToolbar.y, editToolbar.width, editToolbar.height)
             || (editPopoverPanel.open && inRect(editToolbar.x + editPopoverPanel.x,
                 editToolbar.y + editPopoverPanel.y, editPopoverPanel.width, editPopoverPanel.height))
-    }
-
-    readonly property real editInputX: {
-        if (!GlobalStates.widgetEditMode || !root._editControlsShown)
-            return -8
-        const toolbarX = editToolbar.x
-        const popoverX = editToolbar.x + editPopoverPanel.x
-        return Math.min(-8, toolbarX - 8,
-            editPopoverPanel.open ? popoverX - 8 : 0)
-    }
-    readonly property real editInputY: {
-        if (!GlobalStates.widgetEditMode || !root._editControlsShown)
-            return -8
-        const toolbarY = editToolbar.y
-        const popoverY = editToolbar.y + editPopoverPanel.y
-        return Math.min(-8, toolbarY - 8,
-            editPopoverPanel.open ? popoverY - 8 : 0)
-    }
-    readonly property real editInputWidth: {
-        if (!GlobalStates.widgetEditMode || !root._editControlsShown)
-            return root.width + 16
-        const toolbarRight = editToolbar.x + editToolbar.width + 8
-        const popoverRight = editToolbar.x + editPopoverPanel.x
-            + editPopoverPanel.width + 8
-        return Math.max(root.width + 8, toolbarRight,
-            editPopoverPanel.open ? popoverRight : 0) - root.editInputX
-    }
-    readonly property real editInputHeight: {
-        if (!GlobalStates.widgetEditMode || !root._editControlsShown)
-            return root.height + 16
-        const toolbarBottom = editToolbar.y + editToolbar.height + 8
-        const popoverBottom = editToolbar.y + editPopoverPanel.y
-            + editPopoverPanel.height + 8
-        return Math.max(root.height + 8, toolbarBottom,
-            editPopoverPanel.open ? popoverBottom : 0) - root.editInputY
     }
 
     readonly property int overlappingLayerCount: {
@@ -815,7 +779,8 @@ AbstractWidget {
         if (Quickshell.env("INIR_REGION_DEBUG") === "1")
             editPopoverPanel.open = root.debugQuickControlsOpen;
     }
-    onLockedChanged: if (root.locked) editPopoverPanel.open = false
+    // Locking keeps the sheet on the page that can unlock it.
+    onLockedChanged: if (root.locked && editPopoverPanel.open) root._quickTab = root._arrangeTab
     onEditSelectedChanged: {
         _editDisengageTimer.stop()
         if (root.editSelected) {
@@ -837,10 +802,11 @@ AbstractWidget {
             _geometryPlacementDebounce.restart()
         }
         function onDesktopWidgetQuickControlsChanged(): void {
-            if (GlobalStates.desktopWidgetQuickControls !== root.editInstanceKey
-                    || (root.locked && !root.irisFaced) || root._effectivePopover === null)
+            if (GlobalStates.desktopWidgetQuickControls !== root.editInstanceKey || root._effectivePopover === null)
                 return
             _editDisengageTimer.stop()
+            if (root.locked)
+                root._quickTab = root._arrangeTab
             root._editControlsShown = true
             editPopoverPanel.open = true
         }
@@ -919,7 +885,7 @@ AbstractWidget {
         radius: Appearance.rounding.small
         color: "transparent"
         border.width: 1.5
-        border.color: ColorUtils.applyAlpha(Appearance.colors.colPrimary, 0.35)
+        border.color: ColorUtils.applyAlpha(root.widgetIrisFamily ? IrisStyle.accent : Appearance.colors.colPrimary, 0.35)
         opacity: 0.7
     }
 
@@ -993,72 +959,18 @@ AbstractWidget {
         acceptedButtons: Qt.RightButton
         onTapped: {
             GlobalStates.selectDesktopWidget(root.editInstanceKey)
-            if (root.irisFaced)
-                root.openQuickControls("arrange")
-            else
-                widgetEditContextMenu.requestOpen()
+            root.openQuickControls(root._arrangeTab)
         }
-    }
-
-    Item {
-        id: widgetEditContextAnchor
-        width: 1
-        height: 1
-        x: Math.max(0, Math.min(root.width,
-            root.width - root._editScreenMargin))
-        y: Math.max(0, Math.min(root.height,
-            root.height / 2))
-    }
-
-    ContextMenu {
-        id: widgetEditContextMenu
-        anchorItem: widgetEditContextAnchor
-        popupAbove: root.y > root.scaledScreenHeight / 2
-        // The desktop editor runs on Niri layer surfaces. A focus-loss backdrop
-        // can sit above the popup and consume its own clicks, so use the same
-        // hover-close contract as the desktop context menu.
-        closeOnFocusLost: false
-        closeOnHoverLost: true
-        closeOnHoverLostAfterEntered: true
-        closeOnHoverLostDelay: 700
-        model: [
-            {
-                text: root.locked ? Translation.tr("Unlock position")
-                    : Translation.tr("Lock position"),
-                iconName: root.locked ? "lock_open" : "lock",
-                monochromeIcon: true,
-                action: () => root._setOutputValue("locked", !root.locked)
-            },
-            {
-                text: Translation.tr("Bring to front"),
-                iconName: "layers",
-                monochromeIcon: true,
-                action: () => root._bringToFront()
-            },
-            ...((root._effectivePopover !== null && !root.locked) ? [{
-                text: Translation.tr("Quick controls"),
-                iconName: "tune",
-                monochromeIcon: true,
-                action: () => GlobalStates.requestDesktopWidgetQuickControls(
-                    root.editInstanceKey)
-            }] : []),
-            ...(!root.locked ? [
-                { type: "separator" },
-                {
-                    text: Translation.tr("Reset to defaults"),
-                    iconName: "restart_alt",
-                    monochromeIcon: true,
-                    action: () => root.resetToDefaults()
-                }
-            ] : [])
-        ]
     }
 
     // ── Edit mode toolbar (proper Material action bar) ─────────
     // Toolbar is in screen-pixel space (no Item.scale on widget)
+    readonly property Item _chromeHost: root.parent?.parent?.editChromeLayer ?? null
     Item {
         id: editToolbar
-        z: 200
+        parent: root._chromeHost ?? root
+        readonly property bool hosted: editToolbar.parent !== root
+        z: root.editSelected ? 2 : 1
         visible: opacity > 0
         opacity: GlobalStates.widgetEditMode && root._editControlsShown && !root._irisGesture ? 1 : 0
         enabled: GlobalStates.widgetEditMode && root._editControlsShown && !root._irisGesture
@@ -1067,8 +979,8 @@ AbstractWidget {
             id: toolbarEditHover
             enabled: GlobalStates.widgetEditMode
         }
-        x: root._editControlsGeometry.toolbarX - root.x
-        y: root._editControlsGeometry.toolbarY - root.y
+        x: root._editControlsGeometry.toolbarX - (editToolbar.hosted ? 0 : root.x)
+        y: root._editControlsGeometry.toolbarY - (editToolbar.hosted ? 0 : root.y)
         width: Math.min(root.quickControlsAvailableWidth, toolbarRow.naturalWidth + 16)
         height: toolbarRow.implicitHeight + 16
 
@@ -1110,13 +1022,13 @@ AbstractWidget {
             anchors.fill: parent
             padding: 0
             spacing: 0
-            transparent: root.widgetIris
-            screenX: root.x + editToolbar.x
-            screenY: root.y + editToolbar.y
+            transparent: root.widgetIrisFamily
+            screenX: (editToolbar.hosted ? 0 : root.x) + editToolbar.x
+            screenY: (editToolbar.hosted ? 0 : root.y) + editToolbar.y
         }
         Rectangle {
             anchors.fill: parent
-            visible: root.widgetIris
+            visible: root.widgetIrisFamily
             radius: height / 2
             color: IrisStyle.surface
             border.width: 1
@@ -1127,7 +1039,7 @@ AbstractWidget {
             id: toolbarRow
             anchors.centerIn: parent
             readonly property real naturalWidth: lockAction.implicitWidth + moreAction.implicitWidth + 4
-                + (root.locked ? 0 : (layoutAction.visible ? layoutAction.implicitWidth + 4 : 0) + styleAction.implicitWidth + 4)
+                + (root.locked ? 0 : styleAction.implicitWidth + 4)
             width: Math.min(root.quickControlsAvailableWidth - 16, naturalWidth)
             spacing: 4
 
@@ -1140,30 +1052,17 @@ AbstractWidget {
                 onClicked: root._setOutputValue("locked", !root.locked)
             }
             WidgetEditAction {
-                id: layoutAction
-                visible: !root.locked && !root.irisFaced
-                iconName: "open_with"
-                label: Translation.tr("Layout")
-                compact: root.quickControlsAvailableWidth < 380
-                toggled: editPopoverPanel.open && root._quickTab === "layout"
-                onClicked: {
-                    const closing = toggled
-                    root._quickTab = "layout"
-                    editPopoverPanel.open = !closing
-                }
-            }
-            WidgetEditAction {
                 id: styleAction
                 visible: !root.locked
                 iconName: "tune"
-                label: root.irisFaced ? Translation.tr("Edit") : Translation.tr("Style")
+                label: Translation.tr("Edit")
                 compact: root.quickControlsAvailableWidth < 380
-                toggled: editPopoverPanel.open && root._quickTab !== "layout" && root._quickTab !== "arrange"
+                toggled: editPopoverPanel.open && root._quickTab !== root._arrangeTab
                 onClicked: {
                     if (toggled)
                         root.closeQuickControls()
                     else
-                        root.openQuickControls(root.irisFaced ? "widget" : root._widgetSpecificPopover !== null ? "widget" : "colors")
+                        root.openQuickControls("widget")
                 }
             }
             WidgetEditAction {
@@ -1171,14 +1070,12 @@ AbstractWidget {
                 iconName: "more_horiz"
                 label: Translation.tr("More actions")
                 compact: true
-                toggled: root.irisFaced && editPopoverPanel.open && root._quickTab === "arrange"
+                toggled: editPopoverPanel.open && root._quickTab === root._arrangeTab
                 onClicked: {
-                    if (!root.irisFaced)
-                        widgetEditContextMenu.requestOpen()
-                    else if (toggled)
+                    if (toggled)
                         root.closeQuickControls()
                     else
-                        root.openQuickControls("arrange")
+                        root.openQuickControls(root._arrangeTab)
                 }
             }
         }
@@ -1250,7 +1147,7 @@ AbstractWidget {
 
             Rectangle {
                 anchors.fill: parent
-                visible: root.widgetIris
+                visible: root.widgetIrisFamily
                 radius: Math.round(18 * IrisStyle.density)
                 color: IrisStyle.surface
                 border.width: 1
@@ -1259,7 +1156,7 @@ AbstractWidget {
             PanelSurface {
                 id: editPopoverSurface
                 anchors.fill: parent
-                visible: !root.widgetIris
+                visible: !root.widgetIrisFamily
                 elevation: 2
                 // Floats straight on the wallpaper like the widget manager panel:
                 // without a backdrop the aurora/angel fill is a hole, not glass.
@@ -1296,12 +1193,21 @@ AbstractWidget {
     }
 
     // ── Edit mode widget name label ─────────────────────────
+    // The name sits on the side the toolbar leaves free; where that side runs into a screen edge or
+    // the bar, it takes the other one unless the toolbar is there, and otherwise stays hidden.
     Row {
+        id: editNameLabel
+        readonly property bool toolbarAbove: root._editControlsShown && !root._editControlsBelow
+        readonly property bool toolbarBelow: root._editControlsShown && root._editControlsBelow
+        readonly property bool roomBelow: root.y + root.height + 6 + height <= root._zoneSafeBottom
+        readonly property bool roomAbove: root.y - 6 - height >= root._zoneSafeTop
+        readonly property string side: !editNameLabel.toolbarBelow && editNameLabel.roomBelow ? "below"
+            : !editNameLabel.toolbarAbove && editNameLabel.roomAbove ? "above" : ""
         z: 200
-        visible: GlobalStates.widgetEditMode && (root.editSelected || widgetEditHover.hovered)
+        visible: GlobalStates.widgetEditMode && (root.editSelected || widgetEditHover.hovered) && side.length > 0
         opacity: root.editSelected ? 1 : 0.78
         x: Math.round((root.width - width) / 2)
-        y: root._editControlsBelow ? -height - 6 : root.height + 6
+        y: editNameLabel.side === "above" ? -height - 6 : root.height + 6
         spacing: 4
 
         Behavior on opacity {
@@ -1344,15 +1250,15 @@ AbstractWidget {
 
         StyledText {
             anchors.verticalCenter: parent.verticalCenter
-            readonly property string name: root.configEntryName.split(".").pop().replace(/([A-Z])/g, " $1")
-            text: root.widgetIris ? root.widgetCase(name.toLowerCase()) : name
-            font.family: root.widgetBodyFamily
+            readonly property string name: root.configEntryName.split(".").pop().replace(/([A-Z])/g, " $1").toLowerCase().trim()
+            text: root.widgetIrisFamily ? name.charAt(0).toUpperCase() + name.slice(1) : name
+            font.family: root.widgetIrisFamily ? IrisStyle.fontMain : Appearance.font.family.main
             font.pixelSize: Appearance.font.pixelSize.smaller
-            font.weight: root.widgetIris ? Font.DemiBold : Font.Normal
-            font.capitalization: root.widgetIris ? Font.MixedCase : Font.Capitalize
-            color: root.widgetIris ? IrisStyle.text : Appearance.colors.colOnLayer0
-            style: root.widgetIris ? Text.Raised : Text.Normal
-            styleColor: root.widgetIris ? IrisStyle.plateShadow : "transparent"
+            font.weight: root.widgetIrisFamily ? Font.DemiBold : Font.Normal
+            font.capitalization: root.widgetIrisFamily ? Font.MixedCase : Font.Capitalize
+            color: root.widgetIrisFamily ? IrisStyle.text : Appearance.colors.colOnLayer0
+            style: root.widgetIrisFamily ? Text.Raised : Text.Normal
+            styleColor: root.widgetIrisFamily ? IrisStyle.plateShadow : "transparent"
         }
     }
 
@@ -1367,8 +1273,8 @@ AbstractWidget {
         border {
             width: root.editSelected || root.locked ? 2 : 1
             color: ColorUtils.applyAlpha(root.locked
-                    ? (root.widgetIris ? IrisStyle.danger : Appearance.colors.colError)
-                    : (root.widgetIris ? IrisStyle.accent : Appearance.colors.colPrimary),
+                    ? (root.widgetIrisFamily ? IrisStyle.danger : Appearance.colors.colError)
+                    : (root.widgetIrisFamily ? IrisStyle.accent : Appearance.colors.colPrimary),
                 root.locked ? (root.editSelected ? 0.86 : 0.42)
                     : root.editSelected ? 0.88 : widgetEditHover.hovered ? 0.62 : 0.26)
         }
@@ -1406,9 +1312,9 @@ AbstractWidget {
         z: 201
         visible: root._resizeVisible && rh._axisSupported
         width: 12; height: 12
-        radius: 4
-        color: Appearance.colors.colPrimary
-        border { width: 1; color: ColorUtils.applyAlpha(Appearance.colors.colOnPrimary, 0.3) }
+        radius: root.widgetIrisFamily ? 6 : 4
+        color: root.widgetIrisFamily ? IrisStyle.accent : Appearance.colors.colPrimary
+        border { width: 1; color: root.widgetIrisFamily ? IrisStyle.surface : ColorUtils.applyAlpha(Appearance.colors.colOnPrimary, 0.3) }
         opacity: rhArea.containsMouse || rhArea.pressed ? 1.0 : 0.7
 
         // Track drag start state in canvas-space to avoid feedback loops
@@ -1553,14 +1459,10 @@ AbstractWidget {
                     root._setOutputValues(updates)
                 root._resizePreviewValues = ({})
                 root._isResizing = false
-                if (root._isZonePlacement) {
+                if (root._isZonePlacement)
                     root.snapToZone(root.placementStrategy)
-                    if (root.needsColText) _placementDebounce.restart()
-                } else if (root._isAutoPlacement) {
+                else if (root._isAutoPlacement)
                     root.refreshPlacementIfNeeded()
-                } else if (root.needsColText) {
-                    _placementDebounce.restart()
-                }
             }
 
             onCanceled: {
@@ -1630,8 +1532,6 @@ AbstractWidget {
             else if (root.placementStrategy === "free"
                     && (Math.round(root._clampX(root.x)) !== Math.round(root.x) || Math.round(root._clampY(root.y)) !== Math.round(root.y)))
                 root._setOutputValues({ x: Math.round(root._clampX(root.x)), y: Math.round(root._clampY(root.y)) })
-            if (root.irisReadsRegion)
-                _placementDebounce.restart()
         }
     }
 
@@ -1640,10 +1540,10 @@ AbstractWidget {
         anchors.centerIn: parent
         active: root._isResizing
         valueText: Math.round(root.width) + " × " + Math.round(root.height) + " px"
-        accentColor: Appearance.colors.colPrimary
-        surfaceColor: Appearance.colors.colLayer2
-        textColor: Appearance.colors.colOnLayer2
-        fontFamily: Appearance.font.family.main
+        accentColor: root.widgetIrisFamily ? IrisStyle.accent : Appearance.colors.colPrimary
+        surfaceColor: root.widgetIrisFamily ? IrisStyle.surface : Appearance.colors.colLayer2
+        textColor: root.widgetIrisFamily ? IrisStyle.text : Appearance.colors.colOnLayer2
+        fontFamily: root.widgetIrisFamily ? IrisStyle.fontNumbers : Appearance.font.family.main
         fontPixelSize: Appearance.font.pixelSize.smaller
     }
 
@@ -1664,7 +1564,6 @@ AbstractWidget {
         if (root.placementStrategy !== "free")
             updates.placementStrategy = "free"
         root._setOutputValues(updates)
-        if (root.needsColText || root.irisReadsRegion) _placementDebounce.restart();
     }
 
     // ── Inline popover for quick controls ─────────────────────
@@ -1683,16 +1582,28 @@ AbstractWidget {
     readonly property Component _widgetSpecificPopover: root.editPopoverContent
         ?? (root._manifestKeyList.length > 0 ? root._autoPopoverComponent : null)
     property string _quickTab: "widget"
+    readonly property string identityGlyph: DesktopWidgetIdentity.glyph(root.configEntryName)
+    readonly property color identityTint: DesktopWidgetIdentity.tint(root.configEntryName)
+    // The page that holds position, lock and removal: "arrange" in an iRiS face's sheet, "layout" otherwise.
+    readonly property string _arrangeTab: root.irisFaced ? "arrange" : "layout"
     readonly property Component _effectivePopover: root.irisFaced ? _irisPopoverRef : root._semanticPalettePopover
 
     function openQuickControls(tab: string): void {
         root._quickTab = tab
+        _closeQuickControlsLater.stop()
         _editDisengageTimer.stop()
         root._editControlsShown = true
         editPopoverPanel.open = true
     }
+    // Closed a tick later: the close button lives in the sheet, and unloading the sheet inside that
+    // button's own click (no fade without animations) loses the next click.
     function closeQuickControls(): void {
-        editPopoverPanel.open = false
+        _closeQuickControlsLater.restart()
+    }
+    Timer {
+        id: _closeQuickControlsLater
+        interval: 0
+        onTriggered: editPopoverPanel.open = false
     }
 
     Component {
@@ -1714,187 +1625,127 @@ AbstractWidget {
             id: semanticQuickRoot
             availableWidth: root.quickControlsAvailableWidth - 24
             availableHeight: root.quickControlsAvailableHeight - 24
-            title: root.configEntryName.split(".").pop().replace(/([A-Z])/g, " $1")
-            regularWidth: Math.max(360,
+            title: {
+                const words = root.configEntryName.split(".").pop().replace(/([A-Z])/g, " $1").toLowerCase().trim()
+                return Translation.tr(words.charAt(0).toUpperCase() + words.slice(1))
+            }
+            glyph: root.identityGlyph
+            tint: root.identityTint
+            regularWidth: Math.max(Math.round(340 * semanticQuickRoot.d),
                 specificQuickLoader.item?.implicitWidth ?? 0)
+            onCloseRequested: root.closeQuickControls()
 
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: 6
-                Repeater {
-                    model: [
-                        {key: "widget", icon: "widgets", label: Translation.tr("Widget"), available: root._widgetSpecificPopover !== null},
-                        {key: "layout", icon: "open_with", label: Translation.tr("Layout"), available: true},
-                        {key: "colors", icon: "palette", label: Translation.tr("Colors"), available: root.semanticPaletteQuickControls}
-                    ]
-                    WidgetEditAction {
-                        required property var modelData
-                        visible: modelData.available
-                        Layout.fillWidth: true
-                        compact: semanticQuickRoot.resolvedWidth < 300
-                        iconName: modelData.icon
-                        label: modelData.label
-                        toggled: root._quickTab === modelData.key
-                        onClicked: root._quickTab = modelData.key
-                    }
-                }
+            readonly property var pages: [
+                { value: "widget", label: Translation.tr("Widget"), visible: root._widgetSpecificPopover !== null && !root.locked },
+                { value: "colors", label: Translation.tr("Look"), visible: (root.semanticPaletteQuickControls
+                    || (root.widgetIrisFamily && root.irisFace !== null)) && !root.locked },
+                { value: "layout", label: Translation.tr("Arrange") }
+            ]
+            readonly property string page: {
+                const open = semanticQuickRoot.pages.filter(entry => entry.visible !== false).map(entry => entry.value)
+                return open.includes(root._quickTab) ? root._quickTab : open[0]
             }
 
-            RowLayout {
-                visible: root.widgetIrisFamily && root.irisFace !== null
-                Layout.fillWidth: true
-                spacing: 6
-
-                StyledText {
-                    text: Translation.tr("Design")
-                    color: Appearance.colors.colSubtext
-                    font.pixelSize: Appearance.font.pixelSize.smaller
-                }
-                Repeater {
-                    model: [
-                        {key: "iris", icon: "auto_awesome", label: Translation.tr("iRiS")},
-                        {key: "material", icon: "widgets", label: Translation.tr("Material")}
-                    ]
-                    WidgetEditAction {
-                        required property var modelData
-                        Layout.fillWidth: true
-                        compact: semanticQuickRoot.resolvedWidth < 300
-                        iconName: modelData.icon
-                        label: modelData.label
-                        toggled: root.irisDesign === modelData.key
-                        onClicked: root._setOutputValue("iris.design", modelData.key)
-                    }
-                }
+            WidgetQuickChoices {
+                visible: !root.widgetIrisFamily && semanticQuickRoot.pages.filter(entry => entry.visible !== false).length > 1
+                maxColumns: 3
+                current: semanticQuickRoot.page
+                model: semanticQuickRoot.pages
+                onPicked: value => root._quickTab = value
             }
-
-            WidgetPlacementControls {
+            IrisSegmented {
+                visible: root.widgetIrisFamily && semanticQuickRoot.pages.filter(entry => entry.visible !== false).length > 1
                 Layout.fillWidth: true
-                visible: root._quickTab === "layout" || (root._quickTab === "widget" && root._widgetSpecificPopover === null)
-                widget: root
-                wide: semanticQuickRoot.wideDense
+                options: semanticQuickRoot.pages.filter(entry => entry.visible !== false)
+                current: semanticQuickRoot.page
+                accessibleName: Translation.tr("Quick controls")
+                onPicked: value => root._quickTab = value
             }
 
             Loader {
                 id: specificQuickLoader
-                active: root._widgetSpecificPopover !== null && root._quickTab === "widget"
+                active: root._widgetSpecificPopover !== null && semanticQuickRoot.page === "widget"
                 visible: active
                 sourceComponent: root._widgetSpecificPopover
                 Layout.fillWidth: true
                 Layout.preferredHeight: item?.implicitHeight ?? 0
             }
 
-            Rectangle {
-                visible: false
-                Layout.fillWidth: true
-                implicitHeight: visible ? 1 : 0
-                color: ColorUtils.applyAlpha(Appearance.colors.colOnLayer2, 0.10)
-            }
-
             ColumnLayout {
-                id: paletteQuickSection
-                visible: root.semanticPaletteQuickControls && root._quickTab === "colors"
+                visible: semanticQuickRoot.page === "colors"
                 Layout.fillWidth: true
-                spacing: 6
+                spacing: Math.round(14 * semanticQuickRoot.d)
 
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 5
-
-                    MaterialSymbol {
-                        text: "palette"
-                        iconSize: 14
-                        color: Appearance.colors.colSubtext
-                    }
-                    StyledText {
-                        text: Translation.tr("Colors")
-                        color: Appearance.colors.colOnLayer2
-                        font.pixelSize: Appearance.font.pixelSize.smaller
-                        font.weight: root.widgetLabelWeight
-                    }
-                    Item { Layout.fillWidth: true }
-                    StyledText {
-                        text: root.widgetPalettePresetLabel
-                        color: Appearance.colors.colSubtext
-                        font.pixelSize: Appearance.font.pixelSize.smallest
-                        elide: Text.ElideRight
+                WidgetQuickSection {
+                    visible: root.widgetIrisFamily && root.irisFace !== null
+                    title: Translation.tr("Design")
+                    WidgetQuickChoices {
+                        current: root.irisDesign
+                        model: [
+                            { value: "iris", icon: "auto_awesome", label: Translation.tr("iRiS") },
+                            { value: "material", icon: "widgets", label: Translation.tr("Material") }
+                        ]
+                        onPicked: value => root._setOutputValue("iris.design", value)
                     }
                 }
 
-                GridLayout {
-                    Layout.fillWidth: true
-                    columns: semanticQuickRoot.metricColumns
-                    columnSpacing: 5
-                    rowSpacing: 5
+                WidgetQuickSection {
+                    visible: root.semanticPaletteQuickControls
+                    title: Translation.tr("Colors")
+                    detail: root.widgetPalettePresetLabel
 
-                    Repeater {
-                        model: root.widgetPalettePresets
+                    GridLayout {
+                        Layout.fillWidth: true
+                        columns: 2
+                        columnSpacing: 4
+                        rowSpacing: 4
 
-                        delegate: RippleButton {
-                            id: palettePresetButton
-                            required property var modelData
-                            readonly property color presetAccent: root.widgetSemanticColor(modelData.roles[0])
-                            Layout.fillWidth: true
-                            Layout.minimumWidth: 112
-                            Layout.preferredHeight: 34
-                            buttonRadius: Appearance.rounding.small
-                            toggled: root.widgetPalettePreset === modelData.value
-                            colBackground: ColorUtils.applyAlpha(Appearance.colors.colOnLayer2, 0.045)
-                            colBackgroundHover: ColorUtils.applyAlpha(Appearance.colors.colOnLayer2, 0.085)
-                            colBackgroundToggled: ColorUtils.applyAlpha(palettePresetButton.presetAccent, 0.10)
-                            colBackgroundToggledHover: ColorUtils.applyAlpha(palettePresetButton.presetAccent, 0.15)
-                            colRipple: ColorUtils.applyAlpha(palettePresetButton.presetAccent, 0.10)
-                            colRippleToggled: ColorUtils.applyAlpha(palettePresetButton.presetAccent, 0.14)
-                            downAction: () => root.applyWidgetPalettePreset(modelData.value)
+                        Repeater {
+                            model: root.widgetPalettePresets
 
-                            contentItem: Item {
-                                Rectangle {
-                                    anchors.fill: parent
-                                    radius: palettePresetButton.buttonRadius
-                                    color: "transparent"
-                                    border.width: palettePresetButton.toggled ? 1.5 : 0
-                                    border.color: palettePresetButton.presetAccent
-                                }
+                            delegate: WidgetQuickChoice {
+                                id: palettePresetButton
+                                required property var modelData
+                                Layout.fillWidth: true
+                                Layout.preferredWidth: 1
+                                Layout.maximumWidth: Number.POSITIVE_INFINITY
+                                label: modelData.label
+                                selected: root.widgetPalettePreset === modelData.value
+                                sidePadding: Math.round(12 * semanticQuickRoot.d) + swatches.width + 6
+                                onClicked: root.applyWidgetPalettePreset(modelData.value)
 
-                                RowLayout {
-                                    anchors.fill: parent
-                                    anchors.leftMargin: 7
-                                    anchors.rightMargin: 7
-                                    spacing: 6
-
-                                    Row {
-                                        spacing: -3
-                                        Repeater {
-                                            model: palettePresetButton.modelData.roles
-                                            Rectangle {
-                                                required property var modelData
-                                                required property int index
-                                                width: 12
-                                                height: 12
-                                                radius: 6
-                                                color: root.widgetSemanticColor(modelData)
-                                                border.width: 1
-                                                border.color: Qt.rgba(0, 0, 0, 0.25)
-                                                z: 3 - index
-                                            }
+                                Row {
+                                    id: swatches
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: Math.round(10 * semanticQuickRoot.d)
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    spacing: -3
+                                    Repeater {
+                                        model: palettePresetButton.modelData.roles
+                                        Rectangle {
+                                            required property var modelData
+                                            required property int index
+                                            width: 12
+                                            height: 12
+                                            radius: 6
+                                            color: root.widgetSemanticColor(modelData)
+                                            border.width: 1
+                                            border.color: Qt.rgba(0, 0, 0, 0.25)
+                                            z: 3 - index
                                         }
-                                    }
-
-                                    StyledText {
-                                        Layout.fillWidth: true
-                                        text: palettePresetButton.modelData.label
-                                        color: palettePresetButton.toggled
-                                            ? palettePresetButton.presetAccent
-                                            : Appearance.colors.colOnLayer2
-                                        font.pixelSize: Appearance.font.pixelSize.smallest
-                                        font.weight: palettePresetButton.toggled
-                                            ? Font.DemiBold : Font.Normal
-                                        elide: Text.ElideRight
                                     }
                                 }
                             }
                         }
                     }
                 }
+            }
+
+            WidgetPlacementControls {
+                visible: semanticQuickRoot.page === "layout"
+                Layout.fillWidth: true
+                widget: root
+                wide: semanticQuickRoot.wideDense
             }
         }
     }
@@ -1935,6 +1786,7 @@ AbstractWidget {
     }
     Component.onCompleted: {
         Qt.callLater(() => root._geometryReady = true)
+        root._applyBackdropSample()
         _seedDefaultsIfNeeded();
         root._syncPlacementStrategy();
         Qt.callLater(root.applyPlacementFromConfig);
@@ -1966,62 +1818,94 @@ AbstractWidget {
     property bool needsColText: false
     readonly property bool _regionSampling: (root.positionColorAdaptationEnabled && root.needsColText) || root.irisReadsRegion
     readonly property bool positionColorAdaptationEnabled: Boolean(
-        Config.getNestedValue("background.widgets.adaptColorsToWallpaperPosition", false))
-    // Opt-in for widgets whose bare content changes ink with the wallpaper under
-    // them. Sampling is throttled while dragging; the shared process remains
-    // serialized so pointer movement can never spawn an unbounded process fanout.
-    property bool liveColorTracking: false
-    property int liveColorTrackingInterval: 220
+        Config.getNestedValue("background.widgets.adaptColorsToWallpaperPosition", true))
     property color dominantColor: Appearance.colors.colPrimary
-    // Wallpaper region brightness (0-1, from image analysis). -1 = not yet analyzed.
+    // Wallpaper region brightness (0-1, gamma-encoded luma). -1 = not yet analyzed.
     property real regionBrightness: -1
     readonly property bool _hasBrightness: regionBrightness >= 0
-    // How "busy"/high-contrast the region is (0-1, = brightness std-dev / 255).
-    // 0 = flat region (the mean is trustworthy). Higher = textured region where the
-    // mean lies, so legibility must target worst-case sub-areas, not the average.
+    // How uneven the region is (luma std-dev, 0-1): textured regions need legibility for their
+    // brightest parts, not their mean.
     property real regionBrightnessSpread: 0
-    // Representative color of the wallpaper region behind the widget.
-    // dominantColor carries the hue/saturation; regionBrightness is the reliable
-    // luminance anchor (the dominant color alone can lie about overall lightness).
-    readonly property color _regionBg: {
-        const dom = Qt.color(root.dominantColor);
-        if (!root._hasBrightness) return dom;
-        return Qt.hsla(dom.hslHue, dom.hslSaturation, root.regionBrightness, 1.0);
+    // Relative luminance of the region's mean colour, -1 until analyzed.
+    property real regionLuminance: -1
+
+    // The reading comes from WallpaperLuma's grid of the wallpaper this output shows, summed under
+    // the widget's own rect: instant, so it follows the widget live while it is dragged.
+    readonly property string _wallpaperOutput: root.outputName.replace(/^lock:/, "")
+    readonly property string _lumaPath: Lume.wallpaperOf(root._wallpaperOutput)
+    readonly property var _backdropSample: {
+        void Lume.revision
+        if (!root._regionSampling || root._lumaPath.length === 0)
+            return null
+        return Lume.read(root._wallpaperOutput, root.x, root.y, root.width, root.height)
     }
-    // Body-text tones that carry wallpaper CHARACTER while staying legible — the exact
-    // move the shell's ZZZ style makes for its on-surface ink (Appearance.zzz.onColor):
-    // keep a confident near-white / near-black LIGHTNESS so text always reads, but inject
-    // the wallpaper HUE at LOW saturation so the widget belongs to the wallpaper instead
-    // of being flat grey. Earlier extremes were wrong in both directions: a 10% mix toward
-    // colPrimary dragged the lightness and turned text muddy/yellow on yellow walls, while
-    // pure neutral lost all colour generation. A low-sat hue tint at a fixed light/dark
-    // lightness is the legible middle the shell already uses.
-    // Use the shell's own Material on-surface tokens so widget text matches the rest of
-    // the UI's colour generation: colOnLayer0 is the generated on-surface ink (light in
-    // dark mode), m3inverseOnSurface is its generated opposite (dark in dark mode). We
-    // pick whichever opposes the wallpaper region's luminance, so text is light on dark
-    // regions and dark on bright ones — same tokens, region-aware selection.
+    on_BackdropSampleChanged: root._applyBackdropSample()
+
+    // Ink polarity: dark ink once the region is clearly light, light ink once it is clearly dark.
+    // The gap between each pair of thresholds keeps a widget dragged along a boundary from flickering.
+    // Bare ink turns over at a mid tone; glass carries a veil that keeps light ink legible further up,
+    // so it turns only where that veil would have to hide the glass.
+    readonly property real _lightEnter: 0.30
+    readonly property real _lightLeave: 0.21
+    readonly property real _brightEnter: 0.46
+    readonly property real _brightLeave: 0.36
+    property bool backdropIsLight: false
+    property bool backdropIsBright: false
+    function _applyBackdropSample(): void {
+        const sample = root._backdropSample
+        if (!sample) {
+            if (!root._regionSampling) {
+                root.regionBrightness = -1
+                root.regionBrightnessSpread = 0
+                root.regionLuminance = -1
+                root.backdropIsLight = false
+                root.backdropIsBright = false
+            }
+            return
+        }
+        root.regionBrightness = sample.level
+        root.regionBrightnessSpread = sample.spread
+        const lum = sample.luminance
+        const light = Lume.lightAfter(lum, root.backdropIsLight, root._lightEnter, root._lightLeave)
+        // The colour other choices are measured against moves only on a visible change, so the
+        // accent picked from it does not hop while the widget slides over similar pixels.
+        if (root.regionLuminance < 0 || light !== root.backdropIsLight
+                || Math.abs(lum - root.regionLuminance) > 0.05)
+            root.dominantColor = sample.color
+        root.regionLuminance = lum
+        root.backdropIsLight = light
+        root.backdropIsBright = Lume.lightAfter(lum, root.backdropIsBright, root._brightEnter, root._brightLeave)
+    }
+
+    readonly property color _regionBg: root._hasBrightness ? root.dominantColor : Appearance.colors.colLayer0
+    // Generated on-surface ink for dark backdrops; for light ones the generated inverse tone taken
+    // down to a near-black that keeps its hue, so text reads as ink rather than grey.
     readonly property color _inkLight: Appearance.m3colors.darkmode
         ? Appearance.colors.colOnLayer0 : Appearance.m3colors.m3inverseOnSurface
     readonly property color _inkDark: Appearance.m3colors.darkmode
-        ? Appearance.m3colors.m3inverseOnSurface : Appearance.colors.colOnLayer0
+        ? ColorUtils.mix(Appearance.m3colors.m3inverseOnSurface, Qt.rgba(0, 0, 0, 1), 0.55)
+        : Appearance.colors.colOnLayer0
     readonly property bool forceLightInk: root.colorMode === "light"
     readonly property bool forceDarkInk: root.colorMode === "dark"
+    // Dark ink on this widget's own backdrop: the wallpaper under it reads light.
+    readonly property bool inkOnLight: root.forceDarkInk ? true : root.forceLightInk ? false
+        : root._onBlurredLock ? false
+        : root.positionColorAdaptationEnabled && root._hasBrightness && root.backdropIsLight
+    // The same for content on glass (iRiS faces).
+    readonly property bool glassInkOnLight: root.forceDarkInk ? true : root.forceLightInk ? false
+        : root._onBlurredLock ? false
+        : root.positionColorAdaptationEnabled && root._hasBrightness && root.backdropIsBright
+    readonly property bool _onBlurredLock: GlobalStates.screenLocked && (Config.options?.lock?.blur?.enable ?? false)
     property color colText: {
-        if (root.colorMode === "light") return root._inkLight;
-        if (root.colorMode === "dark") return root._inkDark;
-        const onBlurredLock = (GlobalStates.screenLocked && (Config.options?.lock?.blur?.enable ?? false))
-        if (onBlurredLock) return Appearance.colors.colOnLayer0;
-        if (!root.positionColorAdaptationEnabled)
-            return Appearance.colors.colOnLayer0;
-
-        // Auto: pick the neutral whose luminance opposes the region's MEAN brightness, so
-        // text is DARK on bright wallpapers and LIGHT on dark ones — clean and legible,
-        // never the muddy tinted tone that disappeared on same-hue wallpapers. The halo
-        // (colHalo, scaled by region busyness) carries legibility over textured pixels.
-        const bg = root._regionBg;
-        const wantLight = ColorUtils.contrastRatio(Qt.rgba(1, 1, 1, 1), bg) >= ColorUtils.contrastRatio(Qt.rgba(0, 0, 0, 1), bg);
-        return wantLight ? root._inkLight : root._inkDark;
+        if (root.forceLightInk) return root._inkLight
+        if (root.forceDarkInk) return root._inkDark
+        if (root._onBlurredLock || !root.positionColorAdaptationEnabled)
+            return Appearance.colors.colOnLayer0
+        return root.inkOnLight ? root._inkDark : root._inkLight
+    }
+    Behavior on colText {
+        enabled: root.animationsActive
+        ColorAnimation { duration: root.widgetIris ? IrisStyle.revealDuration : Appearance.animation.elementMoveFast.duration }
     }
 
     // ── Centralized desktop-widget semantic palette ──────────────────────────
@@ -2130,8 +2014,6 @@ AbstractWidget {
         return root.irisMaterials.includes(own) ? own : root.irisMaterials.includes(shared) ? shared : "glass"
     }
     readonly property bool irisReadsRegion: root.irisFaced && (root.irisMaterial === "glass" || root.irisMaterial === "clear")
-    onIrisReadsRegionChanged: if (root.irisReadsRegion) _placementDebounce.restart()
-    onIrisSizeChanged: if (root.irisReadsRegion && !root._irisSizing) _placementDebounce.restart()
     readonly property string irisSize: {
         const chosen = String(root._readConfigKey("iris.size") ?? "")
         return root.irisSizes.includes(chosen) ? chosen : root.irisDefaultSize
@@ -2176,6 +2058,7 @@ AbstractWidget {
         root.commitIrisSize(root.irisSize)
     }
 
+    readonly property Item irisFaceView: irisFaceLoader.item
     Loader {
         id: irisFaceLoader
         anchors.fill: parent
@@ -2186,30 +2069,39 @@ AbstractWidget {
 
     function widgetSemanticSet(role: string): var {
         if (root.widgetIris) {
-            const foreground = role === "surface" ? IrisStyle.text
+            const lifted = role === "surface" ? IrisStyle.text
                 : role === "signal" ? IrisStyle.danger
                 : role === "success" ? IrisStyle.success
                 : role === "warning" ? IrisStyle.secondaryAccent
                 : role === "tertiary" ? root.irisAccent3
                 : role === "secondary" ? root.irisAccent2 : root.irisAccent;
+            const onLight = root.inkOnLight && !root.widgetHasSurface
+            const sample = root.widgetHasSurface || root.regionBrightness < 0 ? null
+                : { level: root.regionBrightness, spread: root.regionBrightnessSpread }
+            const foreground = role === "surface" ? (onLight ? IrisStyle.inkOnLight : lifted)
+                : sample ? IrisStyle.markOn(lifted, sample, onLight, 3)
+                : onLight ? IrisStyle.deepAccent(lifted, IrisStyle.inkOnLight) : lifted;
             return { color: foreground, onColor: IrisStyle.surface,
                 container: role === "surface" ? root.irisPlate : ColorUtils.mix(root.irisPlate, IrisStyle.text, 0.9),
                 onContainer: IrisStyle.text };
         }
         const c = Appearance.colors;
+        // Bare on a light region in a dark theme, an accent takes its container tone: the same
+        // generated hue, deep enough to read on the wallpaper instead of the pastel meant for dark.
+        const deep = root._accentsOnLight
         switch (role) {
         case "secondary":
-            return { color: c.colSecondary, onColor: c.colOnSecondary,
+            return { color: deep ? c.colSecondaryContainer : c.colSecondary, onColor: c.colOnSecondary,
                 container: c.colSecondaryContainer, onContainer: c.colOnSecondaryContainer };
         case "tertiary":
-            return { color: c.colTertiary, onColor: c.colOnTertiary,
+            return { color: deep ? c.colTertiaryContainer : c.colTertiary, onColor: c.colOnTertiary,
                 container: c.colTertiaryContainer, onContainer: c.colOnTertiaryContainer };
         case "warning":
-            return { color: c.colWarning, onColor: c.colOnTertiary,
+            return { color: deep ? c.colWarningContainer : c.colWarning, onColor: c.colOnTertiary,
                 container: c.colWarningContainer, onContainer: c.colOnWarningContainer };
         case "signal":
             return {
-                color: Appearance.zzzEverywhere ? Appearance.zzz.signal
+                color: deep ? c.colErrorContainer : Appearance.zzzEverywhere ? Appearance.zzz.signal
                     : Appearance.inirEverywhere ? Appearance.inir.colError : c.colError,
                 onColor: Appearance.zzzEverywhere ? Appearance.zzz.onSignal : c.colOnError,
                 container: c.colErrorContainer,
@@ -2230,10 +2122,12 @@ AbstractWidget {
                     : c.colOnLayer1
             };
         default:
-            return { color: c.colPrimary, onColor: c.colOnPrimary,
+            return { color: deep ? c.colPrimaryContainer : c.colPrimary, onColor: c.colOnPrimary,
                 container: c.colPrimaryContainer, onContainer: c.colOnPrimaryContainer };
         }
     }
+    readonly property bool _accentsOnLight: root.inkOnLight && !root.widgetHasSurface
+        && Appearance.m3colors.darkmode
 
     function widgetSemanticColor(role: string): color {
         return root.widgetSemanticSet(role).color;
@@ -2258,7 +2152,7 @@ AbstractWidget {
     readonly property bool widgetHasSurface: root.widgetSurfaceEnabled
         && (root.backgroundOpacity > 0 || root.effectiveBlur)
     readonly property bool regionIsBright: root.positionColorAdaptationEnabled && root._hasBrightness
-        ? root.regionBrightness > 0.55 : !Appearance.m3colors.darkmode
+        ? root.backdropIsLight : !Appearance.m3colors.darkmode
 
     // Surfaces use semantic containers directly. This removes the old HSL
     // wallpaper-region re-toning that could turn generated warm palettes muddy.
@@ -2347,15 +2241,14 @@ AbstractWidget {
     readonly property color widgetAccent2Visible: root.widgetSemanticForeground(root.widgetSecondaryRole)
     readonly property color widgetAccent3Visible: root.widgetSemanticForeground(root.widgetTertiaryRole)
 
-    // Legibility shadow placed BEHIND text and plate-less elements so they
-    // detach from any wallpaper without a visible card. Always dark (a true
-    // shadow) — a white halo behind dark text on bright wallpapers read as a
-    // glow, not a shadow. colHalo is consumed only by the clock.
-    // Alpha scales with region busyness: near-invisible on flat regions, strong
-    // on textured ones — a legibility shadow only where it's actually needed.
-    readonly property real _haloAlpha: root.positionColorAdaptationEnabled
-        ? 0.35 + 0.45 * Math.min(1, root.regionBrightnessSpread / 0.28) : 0.35
-    readonly property color colHalo: ColorUtils.applyAlpha(Qt.rgba(0, 0, 0, 1), root._haloAlpha)
+    // Legibility shadow behind plate-less text, scaled by how busy the region is. Light ink gets a
+    // dark shadow; dark ink on a light region gets only a faint light lift over its darker patches,
+    // since a dark shadow under dark text reads as a smear and a strong light one as a glow.
+    readonly property real _haloBusy: root.positionColorAdaptationEnabled
+        ? Math.min(1, root.regionBrightnessSpread / 0.28) : 0
+    readonly property color colHalo: root.inkOnLight && !root.forceDarkInk
+        ? Qt.rgba(1, 1, 1, 0.12 + 0.3 * root._haloBusy)
+        : Qt.rgba(0, 0, 0, 0.35 + 0.45 * root._haloBusy)
 
     // Compatibility helper: accent identity is owned by MaterialThemeLoader, not by
     // the later wallpaper-region analysis.
@@ -2363,48 +2256,15 @@ AbstractWidget {
         return c;
     }
 
-    property bool wallpaperIsVideo: {
-        const p = (Config.options?.background?.wallpaperPath ?? "").toLowerCase();
-        return p.endsWith(".mp4") || p.endsWith(".webm") || p.endsWith(".mkv") || p.endsWith(".avi") || p.endsWith(".mov");
-    }
-    property string wallpaperPath: wallpaperIsVideo ? (Config.options?.background?.thumbnailPath ?? "") : (Config.options?.background?.wallpaperPath ?? "")
-    
-    onWallpaperPathChanged: {
-        root.regionBrightness = -1
-        root.regionBrightnessSpread = 0
-        if (root.wallpaperPath.length > 0
-                && (root._isAutoPlacement || root._regionSampling))
-            _placementDebounce.restart()
-    }
-    onPositionColorAdaptationEnabledChanged: {
-        root.regionBrightness = -1
-        root.regionBrightnessSpread = 0
-        root.dominantColor = Appearance.colors.colPrimary
-        root._colorRerunQueued = false
-        _liveColorAnalysisTimer.stop()
-        if (colorOnlyProc.running)
-            colorOnlyProc.running = false
-        if (root._regionSampling && root.wallpaperPath.length > 0)
-            _placementDebounce.restart()
-    }
-    // Widgets may gate needsColText on runtime state (e.g. mascot only when its
-    // card is on) — kick the analysis when it turns on after load.
-    onNeedsColTextChanged: if (needsColText && positionColorAdaptationEnabled)
+    // Auto placement (quietest or busiest spot) still searches the whole wallpaper in a process.
+    readonly property string wallpaperPath: root._lumaPath
+    onWallpaperPathChanged: if (root.wallpaperPath.length > 0 && root._isAutoPlacement)
         _placementDebounce.restart()
-    onXChanged: root._queueLiveColorAnalysis()
-    onYChanged: root._queueLiveColorAnalysis()
     onIsDraggingChanged: {
         // A sheet that chases the widget across the screen re-decides its edge
         // on every frame of the drag. Moving the widget puts it away instead.
         if (root.isDragging && editPopoverPanel.open)
             root.closeQuickControls()
-        if (!root.positionColorAdaptationEnabled
-                || !root.liveColorTracking || !root.needsColText)
-            return;
-        if (root.isDragging)
-            root._queueLiveColorAnalysis();
-        else
-            _placementDebounce.restart();
     }
     onPlacementStrategyChanged: Qt.callLater(root.applyPlacementFromConfig)
     // Re-snap zone positions when screen size changes
@@ -2469,115 +2329,34 @@ AbstractWidget {
         repeat: false
         onTriggered: root.refreshPlacementIfNeeded()
     }
-    Timer {
-        id: _liveColorAnalysisTimer
-        interval: root.liveColorTrackingInterval
-        repeat: false
-        onTriggered: {
-            if (root.positionColorAdaptationEnabled && root.liveColorTracking
-                    && root.needsColText && root.isDragging
-                    && !GlobalStates.widgetEditMode)
-                root._runColorAnalysis();
-        }
-    }
-    function _queueLiveColorAnalysis(): void {
-        // Edit mode prioritizes stable feedback: pointer movement can cross very
-        // different wallpaper regions in a few frames, and applying intermediate
-        // color samples makes a widget visibly flash between palettes. Freeze the
-        // sampled palette during the gesture and analyze the final geometry once
-        // on release. Outside edit mode, opt-in live tracking keeps its old role.
-        if (GlobalStates.widgetEditMode || !root.positionColorAdaptationEnabled
-                || !root.liveColorTracking || !root.needsColText || !root.isDragging)
-            return;
-        if (!_liveColorAnalysisTimer.running)
-            _liveColorAnalysisTimer.start();
-    }
     function refreshPlacementIfNeeded() {
-        if (Quickshell.env("INIR_REGION_DEBUG") === "1")
-            console.log("[Region]", root.configEntryName, "refresh @", Math.round(root.x), Math.round(root.y),
-                "strategy", root.placementStrategy, "needsColText", root.needsColText);
-        if (!Config.ready) return;
+        if (!Config.ready || !root._isAutoPlacement) return;
         if (!root.wallpaperPath || root.wallpaperPath.length === 0) return;
-        // For auto-placement (leastBusy/mostBusy): full analysis (position + color)
-        if (root._isAutoPlacement) {
-            leastBusyRegionProc.wallpaperPath = root.wallpaperPath;
-            leastBusyRegionProc.running = false;
-            leastBusyRegionProc.running = true;
-            return;
-        }
-        if (root._regionSampling)
-            root._runColorAnalysis();
+        leastBusyRegionProc.running = false;
+        leastBusyRegionProc.running = true;
     }
 
-    // The colour analysis is a subprocess and the widget can move while it runs.
-    // Restarting it with `running = false; running = true` did NOT discard the run
-    // in flight: its result still landed, carrying the colour of the position the
-    // widget had LEFT, and whichever of the two finished last won. That is the
-    // double colour change on every drag — one correct answer and one stale answer
-    // fighting, applied in completion order.
-    //
-    // So: never overlap runs, pin the position the run was launched for instead of
-    // letting it track root.x/y, and throw away any answer computed for somewhere
-    // the widget no longer is.
-    property bool _colorRerunQueued: false
-
-    function _colorTargetX(): int { return Math.max(0, Math.round(root.x / Math.max(root.wallpaperScale, 0.001))); }
-    function _colorTargetY(): int { return Math.max(0, Math.round(root.y / Math.max(root.wallpaperScale, 0.001))); }
-    function _colorTargetWidth(): int { return Math.max(1, Math.round(root.width / Math.max(root.wallpaperScale, 0.001))); }
-    function _colorTargetHeight(): int { return Math.max(1, Math.round(root.height / Math.max(root.wallpaperScale, 0.001))); }
-
-    function _runColorAnalysis(): void {
-        if (!root._regionSampling)
-            return;
-        if (colorOnlyProc.running) {
-            root._colorRerunQueued = true;
-            return;
-        }
-        root._colorRerunQueued = false;
-        colorOnlyProc.posX = root._colorTargetX();
-        colorOnlyProc.posY = root._colorTargetY();
-        colorOnlyProc.sampleWidth = root._colorTargetWidth();
-        colorOnlyProc.sampleHeight = root._colorTargetHeight();
-        colorOnlyProc.sampleScreenWidth = Math.round(root.scaledScreenWidth)
-        colorOnlyProc.sampleScreenHeight = Math.round(root.scaledScreenHeight)
-        colorOnlyProc.sampleWallpaperPath = root.wallpaperPath
-        colorOnlyProc.running = true;
-    }
     Process {
         id: leastBusyRegionProc
-        property string wallpaperPath: root.wallpaperPath
         property int contentWidth: Math.max(1, Math.round(root.width / Math.max(root.wallpaperScale, 0.001)))
         property int contentHeight: Math.max(1, Math.round(root.height / Math.max(root.wallpaperScale, 0.001)))
-        property int horizontalPadding: root._analysisPadding
-        property int verticalPadding: root._analysisPadding
-        command: [Quickshell.shellPath("scripts/images/least-busy-region-venv.sh") // Comments to force the formatter to break lines
-            , "--screen-width", Math.round(root.scaledScreenWidth) //
-            , "--screen-height", Math.round(root.scaledScreenHeight) //
-            , "--width", contentWidth //
-            , "--height", contentHeight //
-            , "--horizontal-padding", horizontalPadding //
-            , "--vertical-padding", verticalPadding //
-            , wallpaperPath //
+        command: [Quickshell.shellPath("scripts/images/least-busy-region-venv.sh")
+            , "--screen-width", Math.round(root.scaledScreenWidth)
+            , "--screen-height", Math.round(root.scaledScreenHeight)
+            , "--width", contentWidth
+            , "--height", contentHeight
+            , "--horizontal-padding", root._analysisPadding
+            , "--vertical-padding", root._analysisPadding
+            , root.wallpaperPath
             , ...(root.placementStrategy === "mostBusy" ? ["--busiest"] : [])
         ]
         stdout: StdioCollector {
             id: leastBusyRegionOutputCollector
             onStreamFinished: {
                 const output = leastBusyRegionOutputCollector.text;
-                if (output.length === 0) return;
+                if (output.length === 0 || !root._isAutoPlacement) return;
                 try {
                     const parsedContent = JSON.parse(output);
-                    if (Quickshell.env("INIR_REGION_DEBUG") === "1")
-                        console.log("[Region]", root.configEntryName, "LEAST-BUSY landed",
-                            "dom", parsedContent.dominant_color, "bright", parsedContent.brightness);
-                    if (root.positionColorAdaptationEnabled || root.irisReadsRegion) {
-                        root.dominantColor = parsedContent.dominant_color || Appearance.colors.colPrimary;
-                        if (parsedContent.brightness !== undefined)
-                            root.regionBrightness = parsedContent.brightness / 255.0;
-                        if (parsedContent.brightness_std !== undefined)
-                            root.regionBrightnessSpread = parsedContent.brightness_std / 255.0;
-                    }
-                    if (!root._isAutoPlacement) return;
                     root._autoPlaceX = root._clampX(parsedContent.center_x * root.wallpaperScale - root.width / 2);
                     root._autoPlaceY = root._clampY(parsedContent.center_y * root.wallpaperScale - root.height / 2);
                 } catch (e) {
@@ -2585,77 +2364,5 @@ AbstractWidget {
                 }
             }
         }
-    }
-    // Color-only analysis for free/zone widgets at their actual position
-    Process {
-        id: colorOnlyProc
-        // Pinned at launch, NOT bound to root.x/y: the command must describe the
-        // position this run was actually started for, and the result has to be
-        // checked against it when it lands.
-        property int posX: 0
-        property int posY: 0
-        property int sampleWidth: 1
-        property int sampleHeight: 1
-        property int sampleScreenWidth: 1
-        property int sampleScreenHeight: 1
-        property string sampleWallpaperPath: ""
-        command: [Quickshell.shellPath("scripts/images/least-busy-region-venv.sh")
-            , "--color-only"
-            , "--position-x", posX
-            , "--position-y", posY
-            , "--screen-width", sampleScreenWidth
-            , "--screen-height", sampleScreenHeight
-            , "--width", sampleWidth
-            , "--height", sampleHeight
-            , sampleWallpaperPath
-        ]
-        stdout: StdioCollector {
-            id: colorOnlyOutputCollector
-            onStreamFinished: {
-                if (!root._regionSampling) return;
-                const output = colorOnlyOutputCollector.text;
-                if (output.length === 0) return;
-                try {
-                    const parsedContent = JSON.parse(output);
-                    const geometryChanged = colorOnlyProc.posX !== root._colorTargetX()
-                        || colorOnlyProc.posY !== root._colorTargetY()
-                        || colorOnlyProc.sampleWidth !== root._colorTargetWidth()
-                        || colorOnlyProc.sampleHeight !== root._colorTargetHeight()
-                        || colorOnlyProc.sampleScreenWidth !== Math.round(root.scaledScreenWidth)
-                        || colorOnlyProc.sampleScreenHeight !== Math.round(root.scaledScreenHeight)
-                        || colorOnlyProc.sampleWallpaperPath !== root.wallpaperPath
-                    // Opt-in live tracking may consume a recent position sample
-                    // during ordinary dragging, but edit mode never does: editor
-                    // feedback stays chromatically stable until the final drop.
-                    const acceptsLiveSample = root.liveColorTracking && root.isDragging
-                        && !GlobalStates.widgetEditMode
-                    const stale = geometryChanged && !acceptsLiveSample;
-                    if (Quickshell.env("INIR_REGION_DEBUG") === "1")
-                        console.log("[Region]", root.configEntryName, "COLOR-ONLY for", colorOnlyProc.posX, colorOnlyProc.posY,
-                            "now at", root._colorTargetX(), root._colorTargetY(),
-                            "bright", parsedContent.brightness,
-                            stale ? "-> STALE, discarded" : acceptsLiveSample && geometryChanged ? "-> LIVE sample" : "-> applied");
-                    // The widget moved while this was being computed: this colour is
-                    // for a place it is not any more. Applying it is the second,
-                    // wrong colour change. Drop it and analyse where it actually is.
-                    if (stale) {
-                        root._colorRerunQueued = true;
-                        return;
-                    }
-                    root.dominantColor = parsedContent.dominant_color || Appearance.colors.colPrimary;
-                    if (parsedContent.brightness !== undefined)
-                        root.regionBrightness = parsedContent.brightness / 255.0;
-                    if (parsedContent.brightness_std !== undefined)
-                        root.regionBrightnessSpread = parsedContent.brightness_std / 255.0;
-                } catch (e) {
-                    console.warn("[Widgets] Failed to parse color-only output:", e);
-                }
-            }
-        }
-        // Runs are serialised, so a request that arrived while this one was busy —
-        // or a result thrown away as stale — is picked up here, once, at the
-        // position the widget actually ended up at.
-        onExited: if (root._regionSampling && root._colorRerunQueued)
-            Qt.callLater(root._runColorAnalysis)
     }
 }

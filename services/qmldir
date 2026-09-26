@@ -68,6 +68,8 @@ singleton Vpn 1.0 Vpn.qml
 singleton VoiceSearch 1.0 VoiceSearch.qml
 singleton Wallhaven 1.0 Wallhaven.qml
 singleton WallpaperListener 1.0 WallpaperListener.qml
+singleton WallpaperLuma 1.0 WallpaperLuma.qml
+singleton Lume 1.0 Lume.qml
 singleton Wallpapers 1.0 Wallpapers.qml
 singleton Weather 1.0 Weather.qml
 singleton WebWallpaper 1.0 WebWallpaper.qml

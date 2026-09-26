@@ -1677,14 +1677,14 @@ ContentPage {
             SettingsSwitch {
                 Layout.fillWidth: true
                 buttonIcon: "wallpaper"
-                text: Translation.tr("Adapt colors to widget position")
+                text: Translation.tr("Ink follows the wallpaper")
                 autoToggle: false
                 checked: Config.getNestedValue(
-                    "background.widgets.adaptColorsToWallpaperPosition", false)
+                    "background.widgets.adaptColorsToWallpaperPosition", true)
                 onToggledByUser: checked => Config.setNestedValue(
                     "background.widgets.adaptColorsToWallpaperPosition", checked)
                 StyledToolTip {
-                    text: Translation.tr("Sample the wallpaper behind each widget to adjust readable ink and semantic foreground choices. Off keeps colors stable when widgets move.")
+                    text: Translation.tr("Each widget reads the wallpaper under it: dark ink and deeper accents where it is light, light ink where it is dark. Off keeps the theme's ink everywhere.")
                 }
             }
 
@@ -1982,14 +1982,14 @@ ContentPage {
                         text: Translation.tr("Adapt digital clock locally")
                         autoToggle: false
                         enabled: Config.getNestedValue(
-                            "background.widgets.adaptColorsToWallpaperPosition", false)
+                            "background.widgets.adaptColorsToWallpaperPosition", true)
                         opacity: enabled ? 1 : 0.45
                         checked: Config.getNestedValue("background.widgets.clock.digital.adaptToWallpaper", true)
                         onToggledByUser: checked => Config.setNestedValue("background.widgets.clock.digital.adaptToWallpaper", checked)
                         StyledToolTip {
                             text: enabled
                                 ? Translation.tr("Let the digital clock use the wallpaper sample behind it.")
-                                : Translation.tr("Enable Adapt colors to widget position in Widget Colors first.")
+                                : Translation.tr("Turn on Ink follows the wallpaper in Widget Colors first.")
                         }
                     }
                 }

@@ -32,8 +32,8 @@ Item {
     readonly property bool snap: Config.getNestedValue("background.widgets.editGrid.snap", true)
     readonly property bool compact: availableWidth < 760
     readonly property int railItemStride: 34
-    readonly property int railSlots: Math.max(3, Math.min(12,
-        Math.floor(Math.max(railStride * 3, availableWidth - 390) / railStride)))
+    readonly property int railSlots: Math.max(4, Math.min(14,
+        Math.floor(Math.max(railStride * 4, availableWidth - (root.compact ? 330 : 470)) / railStride)))
     readonly property real railWidth: railSlots * railStride - (root.iris ? root.irisRailSpacing : 0)
     readonly property int irisRailSpacing: 4
     readonly property var builtinWidgets: [
@@ -65,24 +65,15 @@ Item {
     ]
 
     readonly property bool iris: (Config.options?.panelFamily ?? "ii") === "iris"
-    // iRiS category tints (the fixed palette notification tiles use).
-    readonly property var irisTints: ({
-        weather: "#0a84ff", clock: "#ff9f0a", worldClock: "#ff9f0a", dayProgress: "#ff9f0a", uptime: "#5e5ce6",
-        mediaControls: "#ff375f", visualizer: "#bf5af2", systemMonitor: "#34c759", battery: "#34c759",
-        notes: "#ffcc00", calendarUpcoming: "#ff3b30", monthCalendar: "#ff3b30", dateBadge: "#ff3b30",
-        todo: "#ff9f0a", timers: "#ff9f0a", newsTicker: "#30b0c7", userCard: "#0a84ff",
-        customImage: "#30b0c7", imageConverter: "#30b0c7", japaneseTypography: "#bf5af2",
-        editorial: "#8e8e93", shape: "#bf5af2", mascot: "#ff375f", controls: "#0a84ff", screenTime: "#5e5ce6"
-    })
     readonly property real railStride: root.iris ? 36 + root.irisRailSpacing : root.railItemStride
     readonly property var irisEntries: {
         const out = root.builtinWidgets.map(widget => ({ key: widget.key, icon: widget.icon, label: widget.label,
-            tint: root.irisTints[widget.key] ?? "#8e8e93",
+            tint: DesktopWidgetIdentity.tint(widget.key),
             on: DesktopWidgetLayout.enabled(root.outputName, widget.key,
                 Config.getNestedValue("background.widgets." + widget.key + ".enable", widget.defaultOn)) }))
         for (const custom of (CustomWidgets.ready ? CustomWidgets.widgets : [])) {
             const key = "custom." + custom.id
-            out.push({ key: key, icon: custom.icon || "widgets", label: custom.name, tint: "#5e5ce6",
+            out.push({ key: key, icon: custom.icon || "widgets", label: custom.name, tint: DesktopWidgetIdentity.customTint,
                 on: DesktopWidgetLayout.enabled(root.outputName, key,
                     Config.getNestedValue("background.widgets.custom." + custom.id + ".enable", false)) })
         }
@@ -145,6 +136,51 @@ Item {
         ]
     }
 
+    // Grid is one control: off, then each lattice size, then off again.
+    readonly property var gridSteps: [0, 16, 32, 48, 64]
+    function cycleGrid(): void {
+        const current = root.snap ? root.gridSize : 0
+        const next = root.gridSteps[(Math.max(0, root.gridSteps.indexOf(current)) + 1) % root.gridSteps.length]
+        if (next === 0)
+            Config.setNestedValue("background.widgets.editGrid.snap", false)
+        else
+            Config.setNestedValues({ "background.widgets.editGrid.snap": true, "background.widgets.editGrid.size": next })
+    }
+
+    // A small round arrow at an end of the rail that scrolls on.
+    component RailArrow: Rectangle {
+        id: arrow
+        property bool leading: true
+        property bool shown: false
+        property bool usable: true
+        signal activated()
+        enabled: arrow.usable
+        width: 26
+        height: 26
+        radius: 13
+        anchors.verticalCenter: parent ? parent.verticalCenter : undefined
+        color: arrowHover.hovered ? (root.iris ? IrisStyle.fillActive : Appearance.colors.colLayer2Hover)
+            : (root.iris ? IrisStyle.fillHover : Appearance.colors.colLayer2)
+        opacity: !arrow.shown ? 0 : arrow.usable ? 1 : 0.35
+        visible: opacity > 0
+        scale: arrowTap.pressed ? 0.92 : 1
+        Behavior on opacity { NumberAnimation { duration: 140 } }
+        Behavior on scale { NumberAnimation { duration: 110 } }
+        MaterialSymbol {
+            anchors.centerIn: parent
+            text: arrow.leading ? "chevron_left" : "chevron_right"
+            iconSize: 17
+            color: root.iris ? IrisStyle.text : Appearance.colors.colOnLayer2
+        }
+        HoverHandler { id: arrowHover; cursorShape: Qt.PointingHandCursor }
+        TapHandler { id: arrowTap; gesturePolicy: TapHandler.WithinBounds; onTapped: arrow.activated() }
+        StyledToolTip {
+            text: arrow.leading ? Translation.tr("Previous widgets") : Translation.tr("More widgets")
+            extraVisibleCondition: arrowHover.hovered
+            position: root.iris ? root.inwardTooltipPosition : "bottom"
+        }
+    }
+
     MouseArea {
         anchors.fill: bodyFrame
         z: -1
@@ -157,70 +193,50 @@ Item {
         anchors.margins: root.iris ? 8 : 6
         anchors.leftMargin: root.iris ? 10 : 6
         anchors.rightMargin: root.iris ? 8 : 6
-        spacing: root.iris ? 6 : 4
+        spacing: root.iris ? 8 : 4
 
         WidgetEditAction {
-            id: snapAction
-            compact: true
-            iconName: "grid_on"
-            label: Translation.tr("Snap to grid")
-            toggled: root.snap
-            tooltip: root.snap ? Translation.tr("Disable grid snap") : Translation.tr("Enable grid snap")
+            id: libraryAction
+            iconName: "add"
+            label: Translation.tr("Add widgets")
+            compact: root.compact
+            toggled: root.libraryOpen
+            tooltip: Translation.tr("Browse every widget")
             tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"
-            onClicked: Config.setNestedValue("background.widgets.editGrid.snap", !root.snap)
-        }
-
-        WidgetEditAction {
-            id: gridSizeAction
-            iconName: "grid_4x4"
-            label: root.gridSize + " px"
-            compact: root.availableWidth < 560
-            tooltip: Translation.tr("Grid size: %1px — click to cycle").arg(root.gridSize)
-            tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"
-            onClicked: {
-                const sizes = [16, 32, 48, 64]
-                const index = sizes.indexOf(root.gridSize)
-                Config.setNestedValue("background.widgets.editGrid.size",
-                    sizes[(index + 1) % sizes.length])
-            }
+            onClicked: root.libraryRequested()
         }
 
         Rectangle {
-            visible: !root.iris
-            Layout.preferredWidth: 1
-            Layout.preferredHeight: 22
-            color: root.iris ? IrisStyle.hairlineStrong : Appearance.colors.colOutlineVariant
-            opacity: root.iris ? 1 : 0.42
-        }
-
-        WidgetEditAction {
-            compact: true
-            iconName: "chevron_left"
-            label: Translation.tr("Previous widgets")
-            enabled: widgetRail.contentX > 1
-            opacity: enabled ? 1 : 0.28
-            tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"
-            onClicked: widgetRail.scrollPage(-1)
-        }
-
-        Rectangle {
+            id: railBox
+            Layout.fillWidth: true
+            Layout.minimumWidth: root.railStride * 3
             Layout.preferredWidth: root.railWidth + (root.iris ? 8 : 0)
-            Layout.minimumWidth: Layout.preferredWidth
-            Layout.maximumWidth: Layout.preferredWidth
-            Layout.preferredHeight: root.iris ? 42 : 32
+            Layout.maximumWidth: root.railWidth + (root.iris ? 8 : 0)
+            Layout.preferredHeight: root.iris ? 44 : 34
             radius: height / 2
-            color: root.iris ? ColorUtils.applyAlpha(IrisStyle.text, 0.055) : "transparent"
+            color: root.iris ? IrisStyle.fillQuiet : "transparent"
+            // Measured against the box, not the rail, so reserving the arrow slots cannot feed back.
+            readonly property bool overflows: widgetRow.implicitWidth > railBox.width - (root.iris ? 8 : 0)
 
             Flickable {
                 id: widgetRail
-                anchors.fill: parent
-                anchors.margins: root.iris ? 4 : 0
+                // Arrows take their own slot at an end that scrolls, so they never sit on a tile, and the
+                // view is a whole number of slots so no tile is cut at its edge.
+                readonly property real room: railBox.width - 2 * (root.iris ? 4 : 0) - (railBox.overflows ? 60 : 0)
+                width: railBox.overflows
+                    ? Math.max(root.railStride, Math.floor((widgetRail.room + (root.iris ? root.irisRailSpacing : 0)) / root.railStride) * root.railStride
+                        - (root.iris ? root.irisRailSpacing : 0))
+                    : widgetRail.room
+                height: railBox.height
+                x: Math.round((railBox.width - widgetRail.width) / 2)
                 contentWidth: widgetRow.implicitWidth
                 contentHeight: height
                 clip: true
                 interactive: contentWidth > width
                 boundsBehavior: Flickable.StopAtBounds
                 flickableDirection: Flickable.HorizontalFlick
+                readonly property bool canBack: widgetRail.contentX > 1
+                readonly property bool canForward: widgetRail.contentX < Math.max(0, widgetRail.contentWidth - widgetRail.width) - 1
 
                 function snapContentX(value: real): real {
                     const maxX = Math.max(0, contentWidth - width)
@@ -229,11 +245,14 @@ Item {
                 }
 
                 function scrollPage(direction: int): void {
-                    const page = Math.max(root.railStride,
-                        (root.railSlots - 1) * root.railStride)
+                    const page = Math.max(root.railStride, Math.floor(width / root.railStride - 1) * root.railStride)
                     contentX = snapContentX(contentX + direction * page)
                 }
 
+                Behavior on contentX {
+                    enabled: !widgetRail.moving
+                    NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+                }
                 onMovementEnded: contentX = snapContentX(contentX)
                 onWidthChanged: railSnapSettle.restart()
                 onContentWidthChanged: railSnapSettle.restart()
@@ -264,6 +283,7 @@ Item {
 
                 Row {
                     id: widgetRow
+                    anchors.verticalCenter: parent.verticalCenter
                     spacing: root.iris ? root.irisRailSpacing : 2
 
                     Repeater {
@@ -278,7 +298,7 @@ Item {
                                 visible: !irisSlot.entry
                                 anchors.centerIn: parent
                                 width: 1
-                                height: 24
+                                height: 22
                                 color: IrisStyle.hairlineStrong
                             }
                             WidgetEditAction {
@@ -304,11 +324,10 @@ Item {
                                 root.outputName, modelData.key,
                                 Config.getNestedValue("background.widgets." + modelData.key + ".enable", modelData.defaultOn))
                             compact: true
-                            tileTint: root.iris ? (root.irisTints[modelData.key] ?? "#8e8e93") : "transparent"
                             iconName: modelData.icon
                             label: Translation.tr(modelData.label)
                             tooltip: Translation.tr(modelData.label)
-                            tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"
+                            tooltipPosition: "bottom"
                             toggled: widgetEnabled
                             onClicked: DesktopWidgetLayout.setGloballyEnabled(modelData.key, !widgetEnabled)
                         }
@@ -323,53 +342,54 @@ Item {
                                 root.outputName, layoutKey,
                                 Config.getNestedValue("background.widgets.custom." + modelData.id + ".enable", false))
                             compact: true
-                            tileTint: root.iris ? "#5e5ce6" : "transparent"
                             iconName: modelData.icon || "widgets"
                             label: modelData.name
                             tooltip: modelData.name
-                            tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"
+                            tooltipPosition: "bottom"
                             toggled: widgetEnabled
                             onClicked: DesktopWidgetLayout.setGloballyEnabled(layoutKey, !widgetEnabled)
                         }
                     }
                 }
             }
+
+            RailArrow {
+                id: backArrow
+                anchors.left: parent.left
+                anchors.leftMargin: 6
+                leading: true
+                shown: railBox.overflows
+                usable: widgetRail.canBack
+                onActivated: widgetRail.scrollPage(-1)
+            }
+            RailArrow {
+                id: forwardArrow
+                anchors.right: parent.right
+                anchors.rightMargin: 6
+                leading: false
+                shown: railBox.overflows
+                usable: widgetRail.canForward
+                onActivated: widgetRail.scrollPage(1)
+            }
         }
 
         WidgetEditAction {
-            compact: true
-            iconName: "chevron_right"
-            label: Translation.tr("More widgets")
-            enabled: widgetRail.contentX < Math.max(0, widgetRail.contentWidth - widgetRail.width) - 1
-            opacity: enabled ? 1 : 0.28
+            id: gridAction
+            iconName: "grid_on"
+            label: root.snap ? Translation.tr("Grid %1").arg(root.gridSize) : Translation.tr("No grid")
+            compact: root.compact
+            toggled: root.snap
+            tooltip: root.snap ? Translation.tr("Widgets snap to a %1 px grid · click for the next size").arg(root.gridSize)
+                : Translation.tr("Widgets move freely · click to snap them to a grid")
             tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"
-            onClicked: widgetRail.scrollPage(1)
-        }
-
-        Rectangle {
-            visible: !root.iris
-            Layout.preferredWidth: 1
-            Layout.preferredHeight: 22
-            color: root.iris ? IrisStyle.hairlineStrong : Appearance.colors.colOutlineVariant
-            opacity: root.iris ? 1 : 0.42
-        }
-
-        WidgetEditAction {
-            id: libraryAction
-            iconName: "dashboard_customize"
-            label: Translation.tr("Manage widgets")
-            compact: root.availableWidth < 980
-            toggled: root.libraryOpen
-            tooltip: Translation.tr("Browse, add and manage widgets")
-            tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"
-            onClicked: root.libraryRequested()
+            onClicked: root.cycleGrid()
         }
 
         WidgetEditAction {
             compact: true
             iconName: "border_outer"
             label: Translation.tr("Screen edges")
-            tooltip: Translation.tr("Configure Organic edge")
+            tooltip: Translation.tr("Organic edge settings")
             tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"
             onClicked: root.edgeSettingsRequested()
         }
@@ -378,24 +398,16 @@ Item {
             compact: true
             iconName: "settings"
             label: Translation.tr("Widget settings")
-            tooltip: Translation.tr("Open full widget settings")
+            tooltip: Translation.tr("Every widget option in Settings")
             tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"
             onClicked: root.settingsRequested()
-        }
-
-        Rectangle {
-            visible: !root.iris
-            Layout.preferredWidth: 1
-            Layout.preferredHeight: 22
-            color: root.iris ? IrisStyle.hairlineStrong : Appearance.colors.colOutlineVariant
-            opacity: root.iris ? 1 : 0.42
         }
 
         WidgetEditAction {
             id: doneAction
             iconName: "check"
             label: Translation.tr("Done")
-            compact: root.availableWidth < 720
+            compact: root.availableWidth < 560
             primary: true
             tooltip: Translation.tr("Done editing")
             tooltipPosition: root.iris ? root.inwardTooltipPosition : "bottom"

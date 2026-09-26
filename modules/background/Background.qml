@@ -49,6 +49,7 @@ import "widgets/OrganicEdgeConfig.js" as OrganicEdgeConfig
 Scope {
     id: backgroundScope
     property var organicEdgeHosts: ({})
+    property var widgetCanvases: ({})
 
     // Bounded diagnostics for the desktop clock. They are inert unless the
     // supervised shell is loaded with INIR_REGION_DEBUG=1.
@@ -158,6 +159,58 @@ Scope {
         function setOrganicEdgeEnabled(enabled: bool): string {
             Config.setNestedValue("background.edgeWidgets.organic.enable", enabled)
             return enabled ? "Organic edge enabled" : "Organic edge disabled"
+        }
+
+        function quickControlsPage(page: string): string {
+            const key = GlobalStates.selectedDesktopWidget
+            const [output, name] = key.split("::")
+            const widget = (backgroundScope.widgetCanvases[output]?._loadedDesktopWidgets() ?? [])
+                .find(item => item.configEntryName === name) ?? null
+            if (!widget)
+                return "select a widget first: focusWidget <name> true"
+            const pages = widget.irisFaced ? ["widget", "look", "arrange"] : ["widget", "colors", "layout"]
+            const aliases = ({ look: widget.irisFaced ? "look" : "colors", colors: widget.irisFaced ? "look" : "colors",
+                arrange: widget._arrangeTab, layout: widget._arrangeTab, widget: "widget" })
+            const target = aliases[String(page ?? "").trim()] ?? ""
+            if (!pages.includes(target))
+                return "pages: widget, look, arrange"
+            widget.openQuickControls(target)
+            return JSON.stringify({ widget: key, page: target })
+        }
+
+        function quickControlsGeometry(): string {
+            const [output, name] = GlobalStates.selectedDesktopWidget.split("::")
+            const widget = (backgroundScope.widgetCanvases[output]?._loadedDesktopWidgets() ?? [])
+                .find(item => item.configEntryName === name) ?? null
+            return widget ? widget.editControlsGeometryReport : "{}"
+        }
+
+        function legibilityState(): string {
+            const out = []
+            for (const output of Object.keys(backgroundScope.widgetCanvases)) {
+                const canvas = backgroundScope.widgetCanvases[output]
+                if (!canvas || typeof canvas._loadedDesktopWidgets !== "function")
+                    continue
+                for (const widget of canvas._loadedDesktopWidgets())
+                    out.push({
+                        output: output,
+                        widget: widget.configEntryName,
+                        adaptive: widget.positionColorAdaptationEnabled,
+                        sampled: widget._hasBrightness,
+                        level: Math.round(widget.regionBrightness * 1000) / 1000,
+                        spread: Math.round(widget.regionBrightnessSpread * 1000) / 1000,
+                        luminance: Math.round(widget.regionLuminance * 1000) / 1000,
+                        lightBackdrop: widget.backdropIsLight,
+                        darkInk: widget.inkOnLight,
+                        plate: widget.widgetHasSurface,
+                        face: widget.irisFaced ? { lightBackdrop: widget.irisFaceView?.lightBackdrop ?? null,
+                            veil: Math.round((widget.irisFaceView?.veil ?? -1) * 100) / 100,
+                            material: widget.irisFaceView?.material ?? "" } : false,
+                        ink: String(widget.widgetInk),
+                        accent: String(widget.widgetAccent)
+                    })
+            }
+            return JSON.stringify(out)
         }
 
         function desktopItemsState(): string {
@@ -1835,6 +1888,10 @@ Scope {
             WidgetCanvas {
                 id: widgetCanvas
                 z: 20
+                // Each widget's edit toolbar and quick-controls sheet live here, above every widget and
+                // outside the widget's own opacity and dim, so they stay opaque and on top.
+                readonly property Item editChromeLayer: widgetChromeLayer
+                Component.onDestruction: delete backgroundScope.widgetCanvases[bgRoot.screenName]
                 visible: !GlobalStates.shellLayoutEditMode
                     && DesktopWidgetLayout.outputAllowed(modelData?.name ?? "")
                 enabled: visible && !GlobalStates.screenLocked  // Disable all widget input during lock
@@ -2126,7 +2183,10 @@ Scope {
                     onTriggered: widgetCanvas.initializeOutputWidgetLayout()
                 }
 
-                Component.onCompleted: outputLayoutTimer.restart()
+                Component.onCompleted: {
+                    backgroundScope.widgetCanvases[bgRoot.screenName] = widgetCanvas
+                    outputLayoutTimer.restart()
+                }
 
                 Connections {
                     target: Config
@@ -2258,68 +2318,52 @@ Scope {
                     // dock changes both the visible guide and the committed
                     // position instead of leaving two competing coordinate systems.
                     readonly property bool gridNonDefault: gridSize !== 32
-                    Canvas {
+                    // One tiled texture, not a Canvas: painting every dot of a 4K lattice in software
+                    // stalled the main thread ~60 ms as editing began, the toolbar's entrance with it.
+                    Item {
                         id: editGridCanvas
                         x: editGridOverlay.zoneLeft
                         y: editGridOverlay.zoneTop
                         width: editGridOverlay.zoneWidth
                         height: editGridOverlay.zoneHeight
                         visible: editGridOverlay.gridVisible
-                        onPaint: {
-                            const ctx = getContext("2d");
-                            ctx.clearRect(0, 0, width, height);
-                            if (width <= 0 || height <= 0) return;
-                            const gs = editGridOverlay.gridSize;
-                            const dotColor = editGridOverlay.gridColor;
-                            const custom = editGridOverlay.gridNonDefault;
-                            const alpha = custom ? 0.18 : 0.10;
-                            const dotR = custom ? 1.8 : 1.4;
-                            ctx.fillStyle = Qt.rgba(dotColor.r, dotColor.g, dotColor.b, alpha);
-                            const cols = Math.floor(width / gs) + 1;
-                            const rows = Math.floor(height / gs) + 1;
-                            for (let r = 0; r < rows; ++r) {
-                                for (let c = 0; c < cols; ++c) {
-                                    ctx.beginPath();
-                                    ctx.arc(c * gs, r * gs, dotR, 0, 2 * Math.PI);
-                                    ctx.fill();
-                                }
-                            }
-                            // Subtle grid lines for non-default sizes
-                            if (custom) {
-                                ctx.strokeStyle = Qt.rgba(dotColor.r, dotColor.g, dotColor.b, 0.05);
-                                ctx.lineWidth = 0.5;
-                                for (let c = 0; c < cols; ++c) {
-                                    ctx.beginPath();
-                                    ctx.moveTo(c * gs, 0);
-                                    ctx.lineTo(c * gs, height);
-                                    ctx.stroke();
-                                }
-                                for (let r = 0; r < rows; ++r) {
-                                    ctx.beginPath();
-                                    ctx.moveTo(0, r * gs);
-                                    ctx.lineTo(width, r * gs);
-                                    ctx.stroke();
-                                }
-                            }
+                        clip: true
+                        readonly property int gs: Math.max(4, editGridOverlay.gridSize)
+                        readonly property bool custom: editGridOverlay.gridNonDefault
+                        // SVG Tiny paint: a hex colour and its opacity apart (QtSvg reads no rgba()).
+                        function paint(c: color, a: real, kind: string): string {
+                            const hex = n => ("0" + Math.round(n * 255).toString(16)).slice(-2)
+                            return kind + "='#" + hex(c.r) + hex(c.g) + hex(c.b) + "' " + kind + "-opacity='" + a + "'"
                         }
-                        onVisibleChanged: if (visible && available) requestPaint()
-                        onWidthChanged: if (available) requestPaint()
-                        onHeightChanged: if (available) requestPaint()
-                        Component.onCompleted: requestPaint()
-                        Connections {
-                            target: editGridOverlay
-                            function onGridSizeChanged() { editGridCanvas.requestPaint() }
-                            function onGridNonDefaultChanged() { editGridCanvas.requestPaint() }
-                            function onGridColorChanged() { editGridCanvas.requestPaint() }
-                            function onWidthChanged() { editGridCanvas.requestPaint() }
-                            function onHeightChanged() { editGridCanvas.requestPaint() }
-                        }
-                        Connections {
-                            target: GlobalStates
-                            function onWidgetEditModeChanged() {
-                                if (GlobalStates.widgetEditMode && editGridCanvas.available)
-                                    editGridCanvas.requestPaint();
+                        readonly property string tile: {
+                            const g = editGridCanvas.gs, h = g / 2
+                            const dot = editGridCanvas.paint(editGridOverlay.gridColor, editGridCanvas.custom ? 0.18 : 0.10, "fill")
+                            const line = editGridCanvas.paint(editGridOverlay.gridColor, 0.05, "stroke")
+                            const lines = editGridCanvas.custom
+                                ? "<path d='M" + h + " 0V" + g + "M0 " + h + "H" + g + "' fill='none' " + line + " stroke-width='0.5'/>" : ""
+                            const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='" + g + "' height='" + g + "'>" + lines
+                                + "<circle cx='" + h + "' cy='" + h + "' r='" + (editGridCanvas.custom ? 1.8 : 1.4) + "' " + dot + "/></svg>"
+                            // Base64: Qt hands a percent-encoded data URL to the SVG reader undecoded.
+                            const table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                            let out = ""
+                            for (let i = 0; i < svg.length; i += 3) {
+                                const a = svg.charCodeAt(i), b = svg.charCodeAt(i + 1), c = svg.charCodeAt(i + 2)
+                                const n = (a << 16) | ((b || 0) << 8) | (c || 0)
+                                out += table[(n >> 18) & 63] + table[(n >> 12) & 63]
+                                    + (i + 1 < svg.length ? table[(n >> 6) & 63] : "=") + (i + 2 < svg.length ? table[n & 63] : "=")
                             }
+                            return "data:image/svg+xml;base64," + out
+                        }
+                        Image {
+                            x: -editGridCanvas.gs / 2
+                            y: -editGridCanvas.gs / 2
+                            width: parent.width + editGridCanvas.gs
+                            height: parent.height + editGridCanvas.gs
+                            fillMode: Image.Tile
+                            source: editGridCanvas.tile
+                            sourceSize: Qt.size(editGridCanvas.gs, editGridCanvas.gs)
+                            cache: false
+                            smooth: false
                         }
                     }
 
@@ -2456,6 +2500,12 @@ Scope {
                 }
 
                 Item {
+                    id: widgetChromeLayer
+                    anchors.fill: parent
+                    z: 15000
+                }
+
+                Item {
                     id: editControlsOverlay
                     anchors.fill: parent
                     visible: opacity > 0
@@ -2550,6 +2600,7 @@ Scope {
                             })
                         }
 
+                        Timer { id: managerCloseLater; interval: 0; onTriggered: widgetManagerPanel.shown = false }
                         onShownChanged: {
                             if (shown) GlobalStates.desktopWidgetManagerOutput = bgRoot.screenName
                             else if (GlobalStates.desktopWidgetManagerOutput === bgRoot.screenName) GlobalStates.desktopWidgetManagerOutput = ""
@@ -2568,7 +2619,9 @@ Scope {
                             canvasHeight: widgetManagerPanel.parent?.height ?? 600
                             screenWidth: bgRoot.screen.width
                             screenHeight: bgRoot.screen.height
-                            onCloseRequested: widgetManagerPanel.shown = false
+                            // Closed after its own click returns: unloading the panel inside the
+                            // click that asked for it lost the next click.
+                            onCloseRequested: managerCloseLater.restart()
                             onFocusWidgetRequested: layoutKey => {
                                 GlobalStates.selectDesktopWidget(
                                     bgRoot.screenName + "::" + layoutKey)

@@ -1440,13 +1440,13 @@ if ! grep -Fq 'bool cardEdgeMode = ubuf.presentationMode > 1.5 && ubuf.presentat
         || ! grep -Fq 'background.widgets.mediaControls.organicPulse' "$visualizer_settings" \
         || ! grep -Fq 'background.widgets.mediaControls.organicGlow' "$visualizer_settings" \
         || ! grep -Fq 'background.widgets.mediaControls.organicRange' "$visualizer_settings" \
-        || ! grep -Fq 'component MediaVizMetric: ColumnLayout' "$media_widget" \
-        || ! grep -Fq 'background.widgets.mediaControls.visualizerOpacity' "$media_widget" \
-        || ! grep -Fq 'background.widgets.mediaControls.visualizerRange' "$media_widget" \
-        || ! grep -Fq 'background.widgets.mediaControls.visualizerSmoothing' "$media_widget" \
-        || ! grep -Fq 'background.widgets.mediaControls.visualizerBarCount' "$media_widget" \
-        || ! grep -Fq 'background.widgets.mediaControls.visualizerFrequencyProfile' "$media_widget" \
-        || ! grep -Fq 'background.widgets.mediaControls.visualizerAccentStrength' "$media_widget" \
+        || ! grep -Fq 'component VizSlider: WidgetQuickSlider' "$media_widget" \
+        || ! grep -Fq 'key: "visualizerOpacity"' "$media_widget" \
+        || ! grep -Fq 'key: "visualizerRange"' "$media_widget" \
+        || ! grep -Fq 'key: "visualizerSmoothing"' "$media_widget" \
+        || ! grep -Fq 'key: "visualizerBarCount"' "$media_widget" \
+        || ! grep -Fq 'vizPath + "visualizerFrequencyProfile"' "$media_widget" \
+        || ! grep -Fq 'key: "visualizerAccentStrength"' "$media_widget" \
         || ! grep -Fq 'organicCoverUnderlap' "$visualizer_widget" \
         || grep -Fq 'organicInnerGap' "$visualizer_widget" \
         || ! grep -Fq 'background.widgets.visualizer.organicCoverSize' "$visualizer_widget" \
@@ -1460,7 +1460,7 @@ if ! grep -Fq 'bool cardEdgeMode = ubuf.presentationMode > 1.5 && ubuf.presentat
         || ! grep -Fq 'root.paletteMode === "album"' "$visualizer_widget" \
         || ! grep -Fq 'id: albumArtworkQuantizer' "$visualizer_widget" \
         || ! grep -Fq 'organicSensitivitySetting <= 0.4' "$visualizer_widget" \
-        || ! grep -Fq 'labelText: Translation.tr("Smoothing")' "$visualizer_widget" \
+        || ! grep -Fq 'title: Translation.tr("Smoothing"); key: "smoothing"' "$visualizer_widget" \
         || ! grep -Fq 'background.widgets.visualizer.smoothing' "$visualizer_widget" \
         || grep -Fq 'background.widgets.mediaControls.' "$visualizer_widget" \
         || ! grep -Fq 'Idle motion' "$visualizer_settings"; then
