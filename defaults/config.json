@@ -2381,6 +2381,7 @@
             }
         },
         "widgets": { "radius": 22, "opacity": 100, "tint": "wallpaper", "design": "iris", "material": "glass", "weight": "regular", "rim": false },
+        "desktopMenu": { "wallpaper": true, "items": ["widgets", "customize", "screenshot", "terminal", "settings", "restart"] },
         "dock": {
             "enable": true,
             "autoHide": true,

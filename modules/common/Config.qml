@@ -3913,6 +3913,10 @@ Singleton {
                     property string weight: "regular" // "light", "regular" or "bold"
                     property bool rim: false // Hairline around Transparent widgets
                 }
+                property JsonObject desktopMenu: JsonObject {
+                    property bool wallpaper: true // The wallpaper at the head of the right-click menu
+                    property list<string> items: ["widgets", "customize", "screenshot", "terminal", "settings", "restart"]
+                }
                 property JsonObject dock: JsonObject {
                     property bool enable: true
                     property bool autoHide: true
