@@ -3908,8 +3908,9 @@ Singleton {
                 property JsonObject widgets: JsonObject {
                     property int radius: 22
                     property int opacity: 100
-                    property string tint: "wallpaper" // "wallpaper" or "system"
-                    property string design: "iris" // "iris" faces or the "material" family designs
+                    property string tint: "wallpaper" // accents: "wallpaper", "system" (iRiS), "spectrum" or "mono"
+                    property int vibrance: 85 // how strong widget accents are (0-100)
+                    property string design: "iris" // "iris" faces, "material" (each widget's own style), "instrument" or "readout"
                     property string material: "glass" // "glass", "clear", "solid" or "tinted"
                     property string weight: "regular" // "light", "regular" or "bold"
                     property bool rim: false // Hairline around Transparent widgets

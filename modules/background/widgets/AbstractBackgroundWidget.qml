@@ -2014,13 +2014,16 @@ AbstractWidget {
         const value = own >= 20 ? own : Number(root.irisWidgetOptions.opacity ?? 100)
         return Math.max(0, Math.min(100, Number.isFinite(value) ? value : 100)) / 100
     }
-    readonly property bool irisWallpaperTint: String(root.irisWidgetOptions.tint ?? "wallpaper") === "wallpaper"
-    readonly property color irisAccent: root.irisWallpaperTint
-        ? IrisStyle.legibleAccent(Appearance.colors.colPrimary, IrisStyle.accent) : IrisStyle.accent
-    readonly property color irisAccent2: root.irisWallpaperTint
-        ? IrisStyle.legibleAccent(Appearance.colors.colSecondary, IrisStyle.success) : IrisStyle.success
-    readonly property color irisAccent3: root.irisWallpaperTint
-        ? IrisStyle.legibleAccent(Appearance.colors.colTertiary, IrisStyle.secondaryAccent) : IrisStyle.secondaryAccent
+    readonly property string irisPaletteName: {
+        const name = String(root.irisWidgetOptions.tint ?? "wallpaper")
+        return IrisStyle.widgetPaletteNames.includes(name) ? name : "wallpaper"
+    }
+    readonly property bool irisWallpaperTint: root.irisPaletteName === "wallpaper"
+    readonly property real irisVibrance: Math.max(0, Math.min(100, Number(root.irisWidgetOptions.vibrance ?? 85))) / 100
+    readonly property var irisPalette: IrisStyle.widgetPalette(root.irisPaletteName, root.irisVibrance)
+    readonly property color irisAccent: root.irisPalette[0]
+    readonly property color irisAccent2: root.irisPalette[1]
+    readonly property color irisAccent3: root.irisPalette[2]
     readonly property color irisTintedPlate: ColorUtils.mix(IrisStyle.surface, root.irisAccent, 0.82)
     readonly property color irisPlate: root.irisMaterial === "tinted" ? root.irisTintedPlate : IrisStyle.surface
 
@@ -2128,6 +2131,16 @@ AbstractWidget {
             return { color: foreground, onColor: IrisStyle.surface,
                 container: role === "surface" ? root.irisPlate : ColorUtils.mix(root.irisPlate, IrisStyle.text, 0.9),
                 onContainer: IrisStyle.text };
+        }
+        // Bare Material widgets under iRiS (iNstrument, Readout) draw with the same three accents as the faces.
+        if (root.widgetIrisFamily && !root.widgetHasSurface && !["surface", "signal", "warning", "success"].includes(role)) {
+            const seed = role === "tertiary" ? root.irisAccent3 : role === "secondary" ? root.irisAccent2 : root.irisAccent
+            const sample = root.regionBrightness < 0 ? null : { level: root.regionBrightness, spread: root.regionBrightnessSpread }
+            const onLight = root.inkOnLight
+            const shown = sample ? IrisStyle.markOn(seed, sample, onLight, 3)
+                : onLight ? IrisStyle.deepAccent(seed, IrisStyle.inkOnLight) : seed
+            return { color: shown, onColor: IrisStyle.onTintFor(seed),
+                container: ColorUtils.mix(IrisStyle.surface, seed, 0.78), onContainer: IrisStyle.text };
         }
         const c = Appearance.colors;
         // Bare on a light region in a dark theme, an accent takes its container tone: the same
