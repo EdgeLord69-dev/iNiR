@@ -111,6 +111,14 @@ iRiS reuses the shared desktop-widget canvas and persistence. It adds family-spe
 
 The iRiS widget gallery covers the everyday desktop set, including clock, weather, calendar/agenda, media, notes, todo, timers, battery, vitals, profile, world clock, uptime, Controls and Screen Time. Widgets can use iRiS glass/transparent/solid/tinted presentation and keep their placement across family changes.
 
+One design covers every widget: iRiS faces, Material, iNstrument (gauges, scales and monospace captions drawn straight on the wallpaper) or Readout. Pick it in Settings › Desktop › Widgets or in a widget's Look controls; *Use on every widget* and *Match* put widgets that kept a look of their own back in line, and *Undo* returns the mix you had before. The Lume theme puts every widget in iNstrument.
+
+```bash
+inir background widgetDesign instrument
+inir background widgetDesign undo
+inir background widgetDesign status
+```
+
 ## Wallpaper gallery
 
 The iRiS wallpaper picker can browse the local library, Wallhaven and live anime scenery. It supports showcase, strip and wall layouts, pinned folders and one-at-a-time muted live previews.
