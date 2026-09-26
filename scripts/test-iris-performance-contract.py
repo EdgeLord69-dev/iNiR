@@ -113,7 +113,7 @@ def main() -> int:
         "SatelliteShown" not in taken and "auxiliaryShown" not in taken,
         "pieceTaken reads a shown state that flips on expand, so every open rebuilds the bar pieces", failures)
     require(
-        'joins: extension.anchoredShape ? "island" : ""' in ISLAND,
+        'joins: !extension.anchoredShape || floating ? ""' in ISLAND,
         "the inline page fuses into the chassis rectangle it equals, swelling the silhouette", failures)
     require(
         "rawConfigReader.text() === configFileView.text()" in CONFIG,

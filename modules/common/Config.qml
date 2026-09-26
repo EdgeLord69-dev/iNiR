@@ -4037,6 +4037,7 @@ Singleton {
                     // content in the middle, "left"/"right" hug an end, "full"
                     // spans the whole edge as a bar.
                     property string layout: "island"
+                    property string strip: "clear" // menu bar: "clear" (items on the wallpaper) or "band"
                     // A full-width Island is a bar: what rests at its start, centre and end, in order.
                     // "island" (the live Island), "workspaces", "window", "time" and piece kinds.
                     property list<string> fullStart: ["workspaces", "window"]

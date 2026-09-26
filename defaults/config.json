@@ -2543,6 +2543,7 @@
             "padding": 100,
             "satelliteScale": 100,
             "layout": "island",
+            "strip": "clear",
             "fullStart": ["workspaces", "window"],
             "fullCenter": ["island"],
             "fullEnd": ["tray", "notifications", "sound", "controls"],

@@ -431,6 +431,8 @@ Singleton {
     signal irisDesktopMenuRequested(string outputName, real x, real y)
     // Whether any output's Island is expanded, published for `inir iris status`.
     property bool irisIslandExpanded: false
+    property string irisIslandShape: ""
+    property string irisControlPickerRequest: ""
     property string irisIslandPage: ""
     property bool dashboardOpen: false
     property bool workspaceShowNumbers: false
