@@ -1142,7 +1142,7 @@ Item { // Bar content region
         onMovedAway: root.closeOSD(root.leftAction)
         onPressed: event => {
             if (event.button === Qt.LeftButton)
-                ShellLayoutController.toggleSidebarAtSlot("left");
+                ShellLayoutController.toggleSidebarAtSlot("left", root.screen?.name ?? "");
             else if (event.button === Qt.RightButton)
                 root.openBarContextMenu(event.x, event.y, barLeftSideMouseArea)
         }
@@ -1424,7 +1424,7 @@ Item { // Bar content region
                     if (event.button === Qt.RightButton) {
                         GlobalStates.controlPanelOpen = !GlobalStates.controlPanelOpen;
                     } else {
-                        ShellLayoutController.toggleSidebarAtSlot("right");
+                        ShellLayoutController.toggleSidebarAtSlot("right", root.screen?.name ?? "");
                         rightCenterGroup._tapSeq++; _tapSeqTimer.restart()
                         if (rightCenterGroup._tapSeq >= 3) { rightCenterGroup._confirmFx = true; rightCenterGroup._tapSeq = 0; _fxResetTimer.restart() }
                     }
@@ -1487,7 +1487,7 @@ Item { // Bar content region
         onMovedAway: root.closeOSD(root.rightAction)
         onPressed: event => {
             if (event.button === Qt.LeftButton) {
-                ShellLayoutController.toggleSidebarAtSlot("right");
+                ShellLayoutController.toggleSidebarAtSlot("right", root.screen?.name ?? "");
             } else if (event.button === Qt.RightButton) {
                 root.openBarContextMenu(event.x, event.y, barRightSideMouseArea)
             }
@@ -1659,7 +1659,7 @@ Item { // Bar content region
             }
 
             onPressed: {
-                ShellLayoutController.toggleSidebarAtSlot("right");
+                ShellLayoutController.toggleSidebarAtSlot("right", root.screen?.name ?? "");
             }
 
             RowLayout {
