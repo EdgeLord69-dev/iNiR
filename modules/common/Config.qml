@@ -4001,6 +4001,12 @@ Singleton {
                         property string mode: "off" // "off", "wallpaper" (the output's wallpaper, blurred) or "compositor" (Niri blurs what is below)
                         property int tint: 58       // how much of the material stays over the glass, 0-100
                         property int blur: 100      // wallpaper glass blur, % of the maximum
+                        // The cut edge of Blur glass: light where it faces up, a line elsewhere (%), its width (px)
+                        // and colour ("scene" = the wallpaper's light, "white", "accent", "highlight").
+                        property int edgeLight: 34
+                        property int edgeLine: 10
+                        property real edgeWidth: 1.5
+                        property string edgeColour: "scene"
                     }
                     // Per surface: its own corners (0 = the family's) and its light
                     // ("inherit" = its identity, "wallpaper", or "off").
