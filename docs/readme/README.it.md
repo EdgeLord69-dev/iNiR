@@ -219,7 +219,7 @@ inir doctor                     # auto-diagnosi e riparazione
 inir update                     # pull + migrazioni + riavvio
 ```
 
-**Distro supportate:** Arch (installer automatizzato). Altre distro possono installare manualmente — vedi [PACKAGES.md](../PACKAGES.md).
+**Distro:** Arch è l'obiettivo principale. Anche Fedora e Debian/Ubuntu hanno percorsi automatici per le dipendenze che usano prima i repository della distro; le altre distribuzioni seguono la guida generale nella [lista dei pacchetti](https://github.com/snowarch/inir/wiki/PACKAGES). iNiR richiede Qt 6.9 o successivo: Ubuntu 25.10, Fedora 43 e Debian testing o successive.
 
 | Metodo | Comando |
 |--------|---------|

@@ -219,7 +219,7 @@ inir doctor                     # 自動診断と修復
 inir update                     # pull + マイグレーション + 再起動
 ```
 
-**対応ディストリビューション：** Arch（自動インストーラー）。他のディストリビューションは手動インストール可能 — [PACKAGES.md](../PACKAGES.md) を参照。
+**ディストリビューション：** 主な対象は Arch です。Fedora と Debian/Ubuntu にも、ディストリビューションのリポジトリを優先する自動の依存関係インストールがあります。その他のディストリビューションは[パッケージ一覧](https://github.com/snowarch/inir/wiki/PACKAGES)の一般的な手順に従ってください。iNiR には Qt 6.9 以降が必要です：Ubuntu 25.10、Fedora 43、Debian testing 以降。
 
 | 方法 | コマンド |
 |--------|---------|

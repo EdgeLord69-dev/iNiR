@@ -219,7 +219,7 @@ inir doctor                     # 자동 진단 및 수정
 inir update                     # pull + 마이그레이션 + 재시작
 ```
 
-**지원 배포판:** Arch (자동 설치 프로그램). 다른 배포판은 수동 설치 가능 — [PACKAGES.md](../PACKAGES.md) 참조.
+**배포판:** 주 대상은 Arch입니다. Fedora와 Debian/Ubuntu도 배포판 저장소를 먼저 사용하는 자동 의존성 설치 경로가 있습니다. 다른 배포판은 [패키지 목록](https://github.com/snowarch/inir/wiki/PACKAGES)의 일반 안내를 따르세요. iNiR에는 Qt 6.9 이상이 필요합니다: Ubuntu 25.10, Fedora 43, Debian testing 이후.
 
 | 방법 | 명령 |
 |--------|---------|

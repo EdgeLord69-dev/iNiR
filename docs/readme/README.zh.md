@@ -219,7 +219,7 @@ inir doctor                     # 自动诊断和修复
 inir update                     # 拉取 + 迁移 + 重启
 ```
 
-**支持的发行版：** Arch（自动化安装器）。其他发行版可手动安装——参见 [PACKAGES.md](../PACKAGES.md)。
+**发行版：** Arch 是主要目标。Fedora 和 Debian/Ubuntu 也有自动安装依赖的流程，优先使用发行版仓库；其他发行版请参照[软件包列表](https://github.com/snowarch/inir/wiki/PACKAGES)中的通用说明。iNiR 需要 Qt 6.9 或更新版本：Ubuntu 25.10、Fedora 43 和 Debian testing 或更新版本。
 
 | 方式 | 命令 |
 |--------|---------|

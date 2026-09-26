@@ -252,7 +252,7 @@ sudo make install       # system-wide instead of your home
 ./setup rollback        # undo the last update
 ```
 
-**Distros:** Arch is the primary target. Fedora and Debian/Ubuntu also have automated dependency paths with distro-repository-first fallbacks; other distributions use the generic guidance in the [package list](https://github.com/snowarch/inir/wiki/PACKAGES).
+**Distros:** Arch is the primary target. Fedora and Debian/Ubuntu also have automated dependency paths with distro-repository-first fallbacks; other distributions use the generic guidance in the [package list](https://github.com/snowarch/inir/wiki/PACKAGES). iNiR needs Qt 6.9 or newer: Ubuntu 25.10, Fedora 43 and Debian testing or later.
 
 ---
 
