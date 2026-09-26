@@ -1120,7 +1120,7 @@ Desktop background and widget controls.
 
 | Function | Description |
 |----------|-------------|
-| `widgetDesign name` | Choose `iris`, `material`, `individual`, `instrument` or `readout` for desktop widgets; `status` reports the selection. Saved widget settings and per-widget exceptions are kept. |
+| `widgetDesign name` | Put every desktop widget on `iris`, `material`, `individual`, `instrument` or `readout`; `undo` brings back the design and each widget's own look from before; `status` reports the design, how many widgets keep their own look and whether an undo is available. |
 | `toggleEditMode` | Toggle widget edit mode (drag, resize, configure desktop widgets) |
 | `toggleWidgetManager` | Enter edit mode if needed and toggle the widget manager on the focused output |
 | `setEditMode enabled` | Set widget edit mode explicitly |

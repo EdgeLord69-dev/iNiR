@@ -1281,6 +1281,7 @@ Singleton {
                     // "panel" (stock per-style plate) | "island" (Ricelin card)
                     property string style: "panel"
                     property string design: "individual" // individual, instrument, readout
+                    property list<var> designUndo: [] // widget looks a design change cleared, for undo
                     property int dynamicOpacity: 0 // 0-100: reduce widget opacity when windows are on current workspace
                     // Opt-in local wallpaper sampling. Off keeps semantic widget
                     // colors stable when widgets move; on lets eligible widgets

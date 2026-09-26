@@ -32,9 +32,10 @@ AbstractWidget {
     function _setOutputValues(values): void {
         if (!values || typeof values !== "object")
             return
+        // A style picked on one widget while a design covers it makes that widget an exception.
         if (root.widgetSharedDesign !== "individual"
                 && (values.style !== undefined || values.displayMode !== undefined))
-            values = Object.assign({}, values, { design: "individual" })
+            values = Object.assign({}, values, root.widgetIrisFamily ? { "iris.design": "material" } : { design: "individual" })
         if (root.outputName.length > 0) {
             DesktopWidgetLayout.setValues(root.outputName, root.configEntryName, values)
             return
@@ -1681,20 +1682,25 @@ AbstractWidget {
                 spacing: Math.round(14 * semanticQuickRoot.d)
 
                 WidgetQuickSection {
-                    visible: root.widgetIrisFamily && root.irisFace !== null
+                    visible: root.widgetIrisFamily && (root.irisFace !== null || DesktopWidgetDesign.supports(root.configEntryName))
                     title: Translation.tr("Design")
+                    detail: root.widgetDesignShared ? Translation.tr("Same as every widget") : Translation.tr("This widget only")
                     WidgetQuickChoices {
-                        current: root.irisDesign
-                        model: [
-                            { value: "iris", icon: "auto_awesome", label: Translation.tr("iRiS") },
-                            { value: "material", icon: "widgets", label: Translation.tr("Material") }
-                        ]
-                        onPicked: value => root._setOutputValue("iris.design", value)
+                        current: root.widgetDesign
+                        model: root.designChoices
+                        onPicked: value => root.pickDesign(value)
+                    }
+                    WidgetEditAction {
+                        visible: root.widgetDesignMatchable
+                        Layout.fillWidth: true
+                        iconName: "select_all"
+                        label: Translation.tr("Use on every widget")
+                        onClicked: root.useDesignEverywhere()
                     }
                 }
 
                 WidgetQuickSection {
-                    visible: DesktopWidgetDesign.supports(root.configEntryName) && !root.irisFaced
+                    visible: !root.widgetIrisFamily && DesktopWidgetDesign.supports(root.configEntryName)
                         && DesktopWidgetDesign.shared !== "individual"
                     title: Translation.tr("Design")
                     WidgetQuickToggle {
@@ -1778,11 +1784,10 @@ AbstractWidget {
     property int resizeMaxHeight: 800
 
     // Read a possibly-nested key from configEntry (e.g. "cookie.size" → configEntry.cookie.size)
-    readonly property string widgetSharedDesign: {
-        if (!["ii", "iris"].includes(Config.options?.panelFamily ?? "ii")) return "individual"
-        const own = String(root._storedConfigKey("design") ?? "auto")
-        return own === "auto" ? DesktopWidgetDesign.shared : own
-    }
+    readonly property var _designResolved: DesktopWidgetDesign.resolve(root.configEntryName,
+        String(root._storedConfigKey("iris.design") ?? "auto"), String(root._storedConfigKey("design") ?? "auto"),
+        root.irisFace !== null)
+    readonly property string widgetSharedDesign: root._designResolved.design
     readonly property var widgetDesignValues: DesktopWidgetDesign.values(root.configEntryName, root.widgetSharedDesign)
     function _readConfigKey(key: string): var {
         if (Object.prototype.hasOwnProperty.call(root.widgetDesignValues, key))
@@ -2021,15 +2026,26 @@ AbstractWidget {
 
     property Component irisFace: null
     property bool irisOnly: false
-    readonly property var irisDesigns: ["iris", "material"]
-    readonly property string irisDesign: {
-        if (root.irisOnly)
-            return "iris"
-        const own = String(root._readConfigKey("iris.design") ?? "auto")
-        if (root.irisDesigns.includes(own))
-            return own
-        const shared = String(root.irisWidgetOptions.design ?? "iris")
-        return root.irisDesigns.includes(shared) ? shared : "iris"
+    readonly property var designChoices: {
+        const list = []
+        if (root.irisFace !== null) list.push({ value: "iris", icon: "auto_awesome", label: Translation.tr("iRiS") })
+        if (!root.irisOnly) list.push({ value: "material", icon: "widgets", label: Translation.tr("Material") })
+        if (DesktopWidgetDesign.supports(root.configEntryName)) {
+            list.push({ value: "instrument", icon: "avg_pace", label: Translation.tr("iNstrument") })
+            list.push({ value: "readout", icon: "view_agenda", label: Translation.tr("Readout") })
+        }
+        return list
+    }
+    readonly property string irisDesign: root._designResolved.face
+        || (root.irisOnly && root.widgetSharedDesign === "individual") ? "iris" : "material"
+    // The design this widget shows, as the global picker names it.
+    readonly property string widgetDesign: root.irisDesign === "iris" ? "iris"
+        : root.widgetSharedDesign === "individual" ? "material" : root.widgetSharedDesign
+    readonly property bool widgetDesignShared: root.widgetDesign === DesktopWidgetDesign.current
+    readonly property bool widgetDesignMatchable: !root.widgetDesignShared || DesktopWidgetDesign.exceptionCount > 0
+    function useDesignEverywhere(): void { DesktopWidgetDesign.apply(root.widgetDesign) }
+    function pickDesign(value: string): void {
+        root._setOutputValue("iris.design", value === DesktopWidgetDesign.current ? "auto" : value)
     }
     property var irisSizes: ["small"]
     property string irisDefaultSize: root.irisSizes[0]

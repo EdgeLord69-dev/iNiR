@@ -10,6 +10,7 @@ import qs.modules.common.functions
 import qs.modules.common.widgets
 import qs.modules.common.widgets.widgetCanvas
 import qs.modules.background.widgets
+import qs.modules.background.widgets.instrument
 import qs.modules.iris.widgets
 
 AbstractBackgroundWidget {
@@ -196,8 +197,16 @@ AbstractBackgroundWidget {
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 0
+                InstrumentLabel {
+                    visible: root.instrument
+                    text: Translation.tr("Calendar / %1").arg(root.viewingDate.getFullYear())
+                    color: root.widgetAccentVisible
+                    scaleFactor: root.scaleFactor
+                    strong: true
+                }
                 StyledText {
                     text: root.viewingDate.toLocaleDateString(Qt.locale(), "MMMM")
+                    font.capitalization: Font.Capitalize
                     color: root.ink
                     font.family: root.widgetTitleFamily
                     font.pixelSize: Math.round(Appearance.font.pixelSize.larger
@@ -206,6 +215,7 @@ AbstractBackgroundWidget {
                     font.letterSpacing: root.widgetTitleTracking
                 }
                 StyledText {
+                    visible: !root.instrument
                     text: String(root.viewingDate.getFullYear())
                     color: root.inkMuted
                     font.pixelSize: Math.round(Appearance.font.pixelSize.smaller * root.scaleFactor)

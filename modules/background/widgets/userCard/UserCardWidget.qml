@@ -10,6 +10,7 @@ import qs.modules.common
 import qs.modules.common.functions
 import qs.modules.common.widgets
 import qs.modules.background.widgets
+import qs.modules.background.widgets.instrument
 import qs.modules.iris.widgets
 
 AbstractBackgroundWidget {
@@ -430,10 +431,7 @@ AbstractBackgroundWidget {
                 layer.enabled: status === Image.Ready
                 layer.effect: GE.OpacityMask { maskSource: instrumentAvatarMask }
             }
-            Rectangle { width: Math.round(13 * root.scaleFactor); height: 2; color: root.widgetAccentVisible; anchors { left: parent.left; top: parent.top } }
-            Rectangle { width: 2; height: Math.round(13 * root.scaleFactor); color: root.widgetAccentVisible; anchors { left: parent.left; top: parent.top } }
-            Rectangle { width: Math.round(13 * root.scaleFactor); height: 2; color: root.widgetAccentVisible; anchors { right: parent.right; bottom: parent.bottom } }
-            Rectangle { width: 2; height: Math.round(13 * root.scaleFactor); color: root.widgetAccentVisible; anchors { right: parent.right; bottom: parent.bottom } }
+            InstrumentBrackets { anchors.fill: parent; color: root.widgetAccentVisible; length: Math.round(13 * root.scaleFactor) }
         }
 
         ColumnLayout {
@@ -441,13 +439,11 @@ AbstractBackgroundWidget {
             Layout.fillHeight: true
             spacing: Math.round(3 * root.scaleFactor)
 
-            StyledText {
-                text: "IDENTITY / SESSION"
+            InstrumentLabel {
+                text: Translation.tr("Identity / Session")
                 color: root.widgetAccentVisible
-                font.family: Appearance.font.family.monospace
-                font.pixelSize: Math.max(8, Math.round(9 * root.scaleFactor))
-                font.weight: Font.DemiBold
-                font.letterSpacing: Math.round(1 * root.scaleFactor)
+                scaleFactor: root.scaleFactor
+                strong: true
             }
             StyledText {
                 Layout.fillWidth: true
@@ -472,17 +468,26 @@ AbstractBackgroundWidget {
             RowLayout {
                 Layout.fillWidth: true
                 spacing: Math.round(10 * root.scaleFactor)
-                ColumnLayout {
-                    spacing: 0
-                    StyledText { text: "SESSION"; color: root.widgetInkMuted; font.family: Appearance.font.family.monospace; font.pixelSize: Math.max(7, Math.round(8 * root.scaleFactor)) }
-                    StyledText { text: DateTime.uptime || "--"; color: root.widgetInk; font.family: root.widgetNumbersFamily; font.pixelSize: Math.max(13, Math.round(15 * root.scaleFactor)); font.weight: Font.DemiBold }
+                InstrumentField {
+                    Layout.alignment: Qt.AlignTop
+                    scaleFactor: root.scaleFactor
+                    label: Translation.tr("Session")
+                    value: DateTime.uptime
+                    ink: root.widgetInk
+                    muted: root.widgetInkMuted
+                    family: root.widgetNumbersFamily
                 }
-                ColumnLayout {
+                InstrumentField {
                     visible: root.showWeather && root.weatherLine.text !== ""
                     Layout.fillWidth: true
-                    spacing: 0
-                    StyledText { text: "CONDITION"; color: root.widgetInkMuted; font.family: Appearance.font.family.monospace; font.pixelSize: Math.max(7, Math.round(8 * root.scaleFactor)) }
-                    StyledText { Layout.fillWidth: true; text: root.weatherLine.text; color: root.widgetInk; elide: Text.ElideRight; font.pixelSize: Math.max(11, Math.round(12 * root.scaleFactor)); font.weight: Font.Medium }
+                    Layout.alignment: Qt.AlignTop
+                    scaleFactor: root.scaleFactor
+                    label: Translation.tr("Condition")
+                    value: root.weatherLine.text
+                    ink: root.widgetInk
+                    muted: root.widgetInkMuted
+                    family: root.widgetBodyFamily
+                    valueSize: 12
                 }
             }
         }

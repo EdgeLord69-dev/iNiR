@@ -191,7 +191,18 @@ AbstractBackgroundWidget {
                     color: timerCard.signal
                 }
 
+                InstrumentLabel {
+                    visible: timerCard.instrumentMode
+                    Layout.fillWidth: true
+                    text: timerCard.label
+                    color: timerCard.mutedInk
+                    scaleFactor: root.scaleFactor
+                    size: 10
+                    strong: true
+                }
+
                 StyledText {
+                    visible: !timerCard.instrumentMode
                     Layout.fillWidth: true
                     text: timerCard.label
                     color: timerCard.mutedInk
@@ -205,15 +216,13 @@ AbstractBackgroundWidget {
                     elide: Text.ElideRight
                 }
 
-                StyledText {
+                InstrumentLabel {
                     visible: timerCard.instrumentMode && root.showState && timerCard.paused
                     text: Translation.tr("Paused")
                     color: timerCard.signal
-                    font.family: root.widgetBodyFamily
-                    font.pixelSize: Math.max(7, Math.round(8 * root.scaleFactor))
-                    font.weight: Font.DemiBold
-                    font.letterSpacing: root.widgetMetadataTracking
-                    font.capitalization: root.widgetIris ? Font.MixedCase : Font.AllUppercase
+                    scaleFactor: root.scaleFactor
+                    size: 8
+                    strong: true
                 }
 
                 RippleButton {
@@ -255,7 +264,7 @@ AbstractBackgroundWidget {
                     : Font.Bold
                 font.family: root.widgetNumbersFamily
                 font.features: ({ "tnum": 1 })
-                font.letterSpacing: timerCard.instrumentMode ? -0.45 : 0
+                font.letterSpacing: timerCard.instrumentMode ? -1 : 0
             }
 
             Item {

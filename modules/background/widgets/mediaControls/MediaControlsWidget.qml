@@ -6,6 +6,7 @@ import qs.services
 import qs
 import qs.modules.common.functions
 import qs.modules.background.widgets
+import qs.modules.background.widgets.instrument
 import qs.modules.mediaControls.presets
 import qs.modules.mediaControls.components
 import qs.modules.iris.components
@@ -46,10 +47,12 @@ AbstractBackgroundWidget {
         "albumart": { w: 300, h: 330 },
         "lyrics": { w: 340, h: 400, hBare: 190 },
         "lyricsSplit": { w: 470, h: 268, hBare: 156 },
-        "expandingLyrics": { w: 400, h: 128 }
+        "expandingLyrics": { w: 400, h: 128 },
+        "instrument": { w: 380, h: 116 }
     })
-    readonly property var sizedGeometry: root.presetGeometry[root.effectiveSizedPreset]
-        ?? root.presetGeometry["full"]
+    readonly property bool instrument: !root.irisFaced && root._readConfigKey("style") === "instrument"
+    readonly property var sizedGeometry: root.instrument ? root.presetGeometry["instrument"]
+        : root.presetGeometry[root.effectiveSizedPreset] ?? root.presetGeometry["full"]
 
     readonly property real widgetWidth: Math.round(
         root.sizedGeometry.w * Appearance.fontSizeScale * scaleFactor)
@@ -342,8 +345,9 @@ AbstractBackgroundWidget {
         { key: "rest", label: Translation.tr("Rest when paused"), icon: "bedtime", fallback: true }
     ]
     readonly property real placeholderWidth: Math.round(
-        96 * Appearance.fontSizeScale * scaleFactor)
-    readonly property real placeholderHeight: root.placeholderWidth
+        (root.instrument ? 220 : 96) * Appearance.fontSizeScale * scaleFactor)
+    readonly property real placeholderHeight: Math.round(
+        (root.instrument ? 56 : 96) * Appearance.fontSizeScale * scaleFactor)
 
     property int _idleShapeIndex: 0
     readonly property var _idleShapes: [
@@ -354,7 +358,7 @@ AbstractBackgroundWidget {
     ]
 
     Timer {
-        running: !root.widgetIris && !root.hasPlayer && root.visible && root.powerActive
+        running: !root.widgetIris && !root.instrument && !root.hasPlayer && root.visible && root.powerActive
             && Appearance.animationsEnabled
         interval: 9000
         repeat: true
@@ -365,7 +369,7 @@ AbstractBackgroundWidget {
     // true. Rechecking the global base would incorrectly disable Cava for a
     // widget enabled only on this monitor.
     // Frozen (covered, paused for power) the field shows its last frame: nothing reads the audio then.
-    readonly property bool visualizerActive: !root.irisFaced && root.vizPosition !== "none"
+    readonly property bool visualizerActive: !root.irisFaced && !root.instrument && root.vizPosition !== "none"
         && root.visible && root.motionActive && MprisController.isPlaying
 
     CavaProcess {
@@ -399,6 +403,11 @@ AbstractBackgroundWidget {
             active: root.visible && root.powerActive
             showBackground: false
         }
+    }
+
+    Component {
+        id: instrumentPlayerComponent
+        InstrumentPlayer { widget: root }
     }
 
     Component {
@@ -468,7 +477,7 @@ AbstractBackgroundWidget {
                     // player occludes its interior while the field remains visible
                     // beyond the rounded perimeter.
                     z: -1
-                    visible: root.vizType === "organic" && root.vizPosition !== "none"
+                    visible: !root.instrument && root.vizType === "organic" && root.vizPosition !== "none"
                     visualizerPoints: root.visualizerPoints
                     audioActive: root.visualizerActive
                     // Organic has its own idle motion. Keep the edge field alive
@@ -487,7 +496,7 @@ AbstractBackgroundWidget {
                     z: -2
                     target: playerLoader
                     radius: root.popupRounding
-                    visible: !root.widgetIris && (root.vizType !== "organic" || root.vizPosition === "none")
+                    visible: !root.widgetIris && !root.instrument && (root.vizType !== "organic" || root.vizPosition === "none")
                 }
 
                 Loader {
@@ -495,10 +504,13 @@ AbstractBackgroundWidget {
                     z: 0
                     anchors.fill: parent
                     active: root.presetLoaderActive
-                    sourceComponent: root.nativeIrisPlayer ? irisPlayerComponent : root.presetComponent
+                    sourceComponent: root.instrument ? instrumentPlayerComponent
+                        : root.nativeIrisPlayer ? irisPlayerComponent : root.presetComponent
 
                     onLoaded: {
                         item.player = delegateRoot.modelData
+                        if (root.instrument)
+                            return
                         if (!root.nativeIrisPlayer) {
                             item.blendedColors = root._desktopInkOverride
                             item.themeSourceColor = Qt.binding(() => root.widgetAccentVisible)
@@ -525,6 +537,30 @@ AbstractBackgroundWidget {
             Layout.fillHeight: true
             visible: !root.hasPlayer
 
+            RowLayout {
+                visible: root.instrument
+                anchors.fill: parent
+                anchors.margins: Math.round(8 * root.scaleFactor)
+                spacing: Math.round(10 * root.scaleFactor)
+                InstrumentBrackets {
+                    Layout.preferredWidth: Math.round(34 * root.scaleFactor)
+                    Layout.preferredHeight: Layout.preferredWidth
+                    color: root.widgetAccentVisible
+                    length: Math.round(9 * root.scaleFactor)
+                    MaterialSymbol {
+                        anchors.centerIn: parent
+                        text: "music_note"
+                        iconSize: Math.round(18 * root.scaleFactor)
+                        color: root.widgetInkMuted
+                    }
+                }
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 0
+                    InstrumentLabel { Layout.fillWidth: true; text: Translation.tr("Transport / Idle"); color: root.widgetAccentVisible; scaleFactor: root.scaleFactor; strong: true }
+                    StyledText { Layout.fillWidth: true; text: Translation.tr("Nothing playing"); color: root.widgetInk; elide: Text.ElideRight; font.family: root.widgetTitleFamily; font.pixelSize: Math.round(15 * root.scaleFactor); font.weight: Font.DemiBold }
+                }
+            }
             IrisArtwork {
                 anchors.centerIn: parent
                 visible: root.widgetIris
@@ -533,7 +569,7 @@ AbstractBackgroundWidget {
             }
             MaterialShape {
                 id: idleOrnament
-                visible: !root.widgetIris
+                visible: !root.widgetIris && !root.instrument
                 anchors.centerIn: parent
                 implicitSize: Math.max(24, Math.min(parent.width, parent.height)
                     - Appearance.sizes.elevationMargin)

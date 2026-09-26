@@ -461,6 +461,7 @@
         },
         "widgets": {
             "design": "individual",
+            "designUndo": [],
             "screenList": [],
             "layerOrder": [],
             "adaptColorsToWallpaperPosition": true,

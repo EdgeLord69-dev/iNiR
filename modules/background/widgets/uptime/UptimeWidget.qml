@@ -7,6 +7,7 @@ import qs.modules.common
 import qs.modules.common.functions
 import qs.modules.common.widgets
 import qs.modules.background.widgets
+import qs.modules.background.widgets.instrument
 import qs.modules.iris.widgets
 
 AbstractBackgroundWidget {
@@ -155,15 +156,12 @@ AbstractBackgroundWidget {
                     Layout.fillWidth: true
                     spacing: Math.round(6 * root.scaleFactor)
 
-                    StyledText {
+                    InstrumentLabel {
                         Layout.fillWidth: true
-                        text: Translation.tr("System uptime")
-                        color: root.widgetInkMuted
-                        font.family: root.widgetBodyFamily
-                        font.pixelSize: Math.max(9, Math.round(10 * root.scaleFactor))
-                        font.weight: root.widgetLabelWeight
-                        font.letterSpacing: root.widgetMetadataTracking
-                        font.capitalization: root.widgetIris ? Font.MixedCase : Font.AllUppercase
+                        text: Translation.tr("System / Uptime")
+                        color: root.widgetAccentVisible
+                        scaleFactor: root.scaleFactor
+                        strong: true
                     }
                 }
 
@@ -179,7 +177,7 @@ AbstractBackgroundWidget {
                     font.pixelSize: Math.round(42 * root.scaleFactor)
                     font.weight: root.widgetEditorial ? Appearance.editorial.titleWeight : Font.Bold
                     font.features: ({ "tnum": 1 })
-                    font.letterSpacing: -0.7
+                    font.letterSpacing: -1
                 }
             }
 
@@ -209,16 +207,12 @@ AbstractBackgroundWidget {
                     font.features: ({ "tnum": 1 })
                 }
 
-                StyledText {
+                InstrumentLabel {
                     visible: root.showSince
+                    Layout.fillWidth: true
                     text: Translation.tr("Since") + " " + root.bootLabel
                     color: root.widgetInkMuted
-                    elide: Text.ElideRight
-                    font.family: root.widgetBodyFamily
-                    font.pixelSize: Math.max(10, Math.round(11 * root.scaleFactor))
-                    font.weight: Font.Medium
-                    font.letterSpacing: root.widgetMetadataTracking
-                    font.capitalization: Font.MixedCase
+                    scaleFactor: root.scaleFactor
                 }
 
                 Item { Layout.fillHeight: true }

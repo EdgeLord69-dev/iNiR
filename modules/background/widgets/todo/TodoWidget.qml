@@ -10,6 +10,7 @@ import qs.modules.common.functions
 import qs.modules.common.widgets
 import qs.modules.common.widgets.widgetCanvas
 import qs.modules.background.widgets
+import qs.modules.background.widgets.instrument
 import qs.modules.iris.widgets
 
 AbstractBackgroundWidget {
@@ -233,7 +234,24 @@ AbstractBackgroundWidget {
                     Layout.fillWidth: true
                     spacing: 0
 
+                    InstrumentLabel {
+                        visible: root.instrument
+                        text: Translation.tr("Tasks / Ledger")
+                        color: root.widgetAccentVisible
+                        scaleFactor: root.scaleFactor
+                        strong: true
+                    }
                     StyledText {
+                        visible: root.instrument
+                        text: root.pendingCount === 0 ? Translation.tr("All clear") : Translation.tr("%1 open").arg(root.pendingCount)
+                        color: root.ink
+                        font.family: root.widgetNumbersFamily
+                        font.pixelSize: Math.round(22 * root.scaleFactor)
+                        font.weight: Font.Bold
+                        font.features: ({ "tnum": 1 })
+                    }
+                    StyledText {
+                        visible: !root.instrument
                         text: Translation.tr("Todo")
                         color: root.ink
                         font.family: root.widgetTitleFamily
@@ -243,6 +261,7 @@ AbstractBackgroundWidget {
                         font.letterSpacing: root.widgetTitleTracking
                     }
                     StyledText {
+                        visible: !root.instrument
                         text: root.pendingCount === 0 && root.completedCount > 0
                             ? Translation.tr("All done · %1 completed").arg(root.completedCount)
                             : root.pendingCount === 1
@@ -347,11 +366,18 @@ AbstractBackgroundWidget {
                             anchors.rightMargin: Math.round(12 * root.scaleFactor)
                             spacing: Math.round(9 * root.scaleFactor)
 
+                            InstrumentLabel {
+                                visible: root.instrument
+                                Layout.alignment: Qt.AlignVCenter
+                                text: String(taskRow.index + 1).padStart(2, "0")
+                                color: root.inkMuted
+                                scaleFactor: root.scaleFactor
+                            }
                             RippleButton {
                                 Layout.preferredWidth: Math.round(26 * root.scaleFactor)
                                 Layout.preferredHeight: Math.round(26 * root.scaleFactor)
                                 Layout.alignment: Qt.AlignVCenter
-                                buttonRadius: Appearance.rounding.full
+                                buttonRadius: root.instrument ? Math.round(4 * root.scaleFactor) : Appearance.rounding.full
                                 colBackground: taskRow.modelData.done
                                     ? ColorUtils.applyAlpha(root.instrument
                                         ? root.signal : rowInk, 0.16)
@@ -370,9 +396,9 @@ AbstractBackgroundWidget {
                                     anchors.fill: parent
                                     Rectangle {
                                         anchors.centerIn: parent
-                                        width: Math.round(20 * root.scaleFactor)
+                                        width: Math.round((root.instrument ? 16 : 20) * root.scaleFactor)
                                         height: width
-                                        radius: Appearance.rounding.full
+                                        radius: root.instrument ? Math.round(3 * root.scaleFactor) : Appearance.rounding.full
                                         // Instrument check: a hairline circle that
                                         // signals completion in accent ink.
                                         color: root.instrument && taskRow.modelData.done

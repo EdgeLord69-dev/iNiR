@@ -97,7 +97,10 @@ Scope {
     IpcHandler {
         target: "background"
         function widgetDesign(name: string): string {
-            if (name === "status") return DesktopWidgetDesign.current
+            if (name === "status")
+                return DesktopWidgetDesign.current + " · " + DesktopWidgetDesign.exceptionCount + " own looks"
+                    + (DesktopWidgetDesign.canUndo ? " · undo available" : "")
+            if (name === "undo") return DesktopWidgetDesign.undo()
             return DesktopWidgetDesign.apply(name)
         }
 

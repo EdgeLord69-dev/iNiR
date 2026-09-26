@@ -10,6 +10,7 @@ import qs.modules.common.functions
 import qs.modules.common.widgets
 import qs.modules.common.widgets.widgetCanvas
 import qs.modules.background.widgets
+import qs.modules.background.widgets.instrument
 import qs.modules.iris.widgets
 
 AbstractBackgroundWidget {
@@ -217,12 +218,20 @@ AbstractBackgroundWidget {
 
         // Header
         RowLayout {
-            visible: root.upcomingEvents.length > 0
+            visible: root.upcomingEvents.length > 0 || root.instrument
             Layout.fillWidth: true
             spacing: 6
 
+            InstrumentLabel {
+                visible: root.instrument
+                text: Translation.tr("Agenda / Upcoming")
+                color: root.widgetAccentVisible
+                scaleFactor: root.scaleFactor
+                strong: true
+            }
             StyledText {
-                text: root.instrument ? Translation.tr("AGENDA") : Translation.tr("Upcoming")
+                visible: !root.instrument
+                text: Translation.tr("Upcoming")
                 color: root.instrument ? root.widgetInk : (root.widgetEditorial ? root.widgetInk : root.widgetInkMuted)
                 font.family: root.instrument ? Appearance.font.family.monospace : root.widgetTitleFamily
                 font.pixelSize: Math.round((root.instrument ? Appearance.font.pixelSize.normal
@@ -331,8 +340,10 @@ AbstractBackgroundWidget {
             Layout.fillHeight: true
 
             Column {
-                anchors.centerIn: parent
-                width: Math.min(parent.width,
+                anchors.centerIn: root.instrument ? undefined : parent
+                anchors.left: root.instrument ? parent.left : undefined
+                anchors.verticalCenter: parent.verticalCenter
+                width: root.instrument ? parent.width : Math.min(parent.width,
                     Math.round(190 * root.scaleFactor))
                 spacing: Math.round(7 * root.scaleFactor)
 
@@ -353,31 +364,23 @@ AbstractBackgroundWidget {
 
                 StyledText {
                     width: parent.width
-                    horizontalAlignment: Text.AlignHCenter
+                    horizontalAlignment: root.instrument ? Text.AlignLeft : Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    text: root.instrument ? Translation.tr("CLEAR")
+                    text: root.instrument ? Translation.tr("All clear")
                         : Translation.tr("No upcoming events")
                     color: root.instrument ? root.widgetInk : root.widgetInkMuted
-                    font.family: root.instrument ? Appearance.font.family.monospace
-                        : root.widgetBodyFamily
-                    font.pixelSize: Math.round((root.instrument
-                        ? Appearance.font.pixelSize.large
-                        : Appearance.font.pixelSize.small) * root.scaleFactor)
+                    font.family: root.instrument ? root.widgetTitleFamily : root.widgetBodyFamily
+                    font.pixelSize: Math.round((root.instrument ? 22 : Appearance.font.pixelSize.small) * root.scaleFactor)
                     font.weight: root.instrument ? Font.Bold : Font.Normal
-                    font.letterSpacing: root.instrument ? Math.round(2 * root.scaleFactor) : 0
                     wrapMode: Text.WordWrap
                 }
 
-                StyledText {
+                InstrumentLabel {
                     visible: root.instrument
                     width: parent.width
-                    horizontalAlignment: Text.AlignHCenter
-                    text: Translation.tr("NO UPCOMING EVENTS")
-                    color: root.widgetAccentVisible
-                    font.family: Appearance.font.family.monospace
-                    font.pixelSize: Math.max(8, Math.round(9 * root.scaleFactor))
-                    font.weight: Font.DemiBold
-                    font.letterSpacing: Math.round(1 * root.scaleFactor)
+                    text: Translation.tr("No events ahead")
+                    color: root.widgetInkMuted
+                    scaleFactor: root.scaleFactor
                 }
             }
         }

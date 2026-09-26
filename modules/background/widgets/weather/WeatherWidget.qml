@@ -8,6 +8,7 @@ import qs.modules.common.functions
 import qs.modules.common.widgets
 import qs.modules.common.widgets.widgetCanvas
 import qs.modules.background.widgets
+import qs.modules.background.widgets.instrument
 import qs.modules.iris.widgets
 
 AbstractBackgroundWidget {
@@ -523,19 +524,13 @@ AbstractBackgroundWidget {
                 Layout.fillHeight: true
                 spacing: Math.round(3 * root.scaleFactor)
 
-                StyledText {
+                InstrumentLabel {
                     Layout.fillWidth: true
-                    visible: root.showLocation && Weather.showVisibleCity
-                    text: root.widgetCase(String(Weather.visibleCity || ""))
-                    elide: Text.ElideRight
-                    color: root.widgetInkMuted
-                    font {
-                        family: root.widgetBodyFamily
-                        pixelSize: Math.max(9, Math.round(10 * root.scaleFactor))
-                        weight: Font.DemiBold
-                        letterSpacing: root.widgetIris ? 0 : Math.round(1.4 * root.scaleFactor)
-                        capitalization: root.widgetIris ? Font.MixedCase : Font.AllUppercase
-                    }
+                    text: root.showLocation && Weather.showVisibleCity && String(Weather.visibleCity || "").length > 0
+                        ? Translation.tr("Atmosphere / %1").arg(Weather.visibleCity) : Translation.tr("Atmosphere / Local")
+                    color: root.widgetAccentVisible
+                    scaleFactor: root.scaleFactor
+                    strong: true
                 }
 
                 RowLayout {
@@ -566,17 +561,38 @@ AbstractBackgroundWidget {
                     }
                 }
 
-                StyledText {
+                InstrumentLabel {
                     Layout.fillWidth: true
-                    visible: root.showCondition
+                    visible: root.showCondition && text.length > 0
                     text: Weather.data?.description ?? ""
-                    elide: Text.ElideRight
                     color: root.widgetInkMuted
-                    font.family: root.widgetBodyFamily
-                    font.pixelSize: Math.max(10, Math.round(instrumentArea.side * 0.055))
-                    font.weight: Font.DemiBold
-                    font.capitalization: root.widgetIris ? Font.MixedCase : Font.AllUppercase
-                    font.letterSpacing: root.widgetIris ? 0 : Math.round(1.1 * root.scaleFactor)
+                    scaleFactor: root.scaleFactor
+                    size: 10
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.topMargin: Math.round(4 * root.scaleFactor)
+                    visible: instrumentArea.side >= Math.round(140 * root.scaleFactor)
+                    spacing: Math.round(12 * root.scaleFactor)
+                    Repeater {
+                        model: [
+                            { label: Translation.tr("Feels"), value: String(Weather.data?.tempFeelsLike ?? "").replace(/[CF]$/, "") },
+                            { label: Translation.tr("Humidity"), value: String(Weather.data?.humidity ?? "") },
+                            { label: Translation.tr("Wind"), value: String(Weather.data?.wind ?? "").split(" ")[0] + " " + String(Weather.data?.windDir ?? "") }
+                        ]
+                        InstrumentField {
+                            required property var modelData
+                            Layout.alignment: Qt.AlignTop
+                            scaleFactor: root.scaleFactor
+                            label: modelData.label
+                            value: modelData.value
+                            ink: root.widgetInk
+                            muted: root.widgetInkMuted
+                            family: root.widgetNumbersFamily
+                            valueSize: 12
+                        }
+                    }
                 }
             }
 

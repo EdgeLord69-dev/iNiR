@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 20ad072e9e68e745
+# IPC.md hash: 434dcff18d58a914
 # Targets: 68
 
 declare -gA IPC_TARGET_DESC=(
@@ -245,7 +245,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["autostart:addApp"]="Append a managed \`gtk-launch <desktopId>\` entry"
   ["autostart:removeLast"]="Remove the last managed entry"
   ["autostart:reload"]="Force re-read the startup file"
-  ["background:widgetDesign"]="Choose \`iris\`, \`material\`, \`individual\`, \`instrument\` or \`readout\` for desktop widgets; \`status\` reports the selection. Saved widget settings and per-widget exceptions are kept."
+  ["background:widgetDesign"]="Put every desktop widget on \`iris\`, \`material\`, \`individual\`, \`instrument\` or \`readout\`; \`undo\` brings back the design and each widget's own look from before; \`status\` reports the design, how many widgets keep their own look and whether an undo is available."
   ["background:toggleEditMode"]="Toggle widget edit mode (drag, resize, configure desktop widgets)"
   ["background:toggleWidgetManager"]="Enter edit mode if needed and toggle the widget manager on the focused output"
   ["background:setEditMode"]="Set widget edit mode explicitly"

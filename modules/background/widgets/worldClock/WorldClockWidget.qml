@@ -7,6 +7,7 @@ import qs.modules.common
 import qs.modules.common.functions
 import qs.modules.common.widgets
 import qs.modules.background.widgets
+import qs.modules.background.widgets.instrument
 import qs.modules.iris.widgets
 
 AbstractBackgroundWidget {
@@ -241,24 +242,13 @@ AbstractBackgroundWidget {
             Layout.preferredHeight: Math.max(20, Math.round(24 * root.scaleFactor))
             spacing: Math.round(7 * root.scaleFactor)
 
-            StyledText {
+            InstrumentLabel {
                 Layout.fillWidth: true
-                text: Translation.tr("World time")
-                color: root.widgetInk
-                font.family: root.widgetTitleFamily
-                font.pixelSize: Math.max(15, Math.round(17 * root.widgetTitleScale * root.scaleFactor))
-                font.weight: root.widgetTitleWeight
-                font.letterSpacing: root.widgetTitleTracking
-            }
-            StyledText {
-                visible: root.cities.length > 1
-                text: Translation.tr("%1 zones").arg(root.cities.length)
-                color: root.widgetInkMuted
-                font.family: root.widgetBodyFamily
-                font.pixelSize: Math.max(10, Math.round(10 * root.scaleFactor))
-                font.weight: Font.Medium
-                font.letterSpacing: root.widgetMetadataTracking
-                font.capitalization: root.widgetIris ? Font.MixedCase : Font.AllUppercase
+                text: root.cities.length > 1 ? Translation.tr("Chronometer / %1 zones").arg(root.cities.length)
+                    : Translation.tr("Chronometer / Zone")
+                color: root.widgetAccentVisible
+                scaleFactor: root.scaleFactor
+                strong: true
             }
         }
 
@@ -296,17 +286,13 @@ AbstractBackgroundWidget {
                             radius: height / 2
                             color: referenceZone.accent
                         }
-                        StyledText {
+                        InstrumentLabel {
                             Layout.fillWidth: true
                             visible: referenceZone.modelData
-                            text: referenceZone.modelData ? root.widgetCase(String(referenceZone.modelData.name)) : ""
+                            text: referenceZone.modelData ? String(referenceZone.modelData.name) : ""
                             color: root.widgetInkMuted
-                            elide: Text.ElideRight
-                            font.family: root.widgetBodyFamily
-                            font.pixelSize: Math.max(9, Math.round(10 * root.scaleFactor))
-                            font.weight: root.widgetLabelWeight
-                            font.letterSpacing: root.widgetMetadataTracking
-                            font.capitalization: root.widgetIris ? Font.MixedCase : Font.AllUppercase
+                            scaleFactor: root.scaleFactor
+                            size: 10
                         }
                         StyledText {
                             visible: root.showOffsets && referenceZone.modelData
@@ -353,16 +339,12 @@ AbstractBackgroundWidget {
                             font.pixelSize: Math.max(8, Math.round(9 * root.scaleFactor))
                             font.weight: Font.Bold
                         }
-                        StyledText {
+                        InstrumentLabel {
                             Layout.fillWidth: true
                             visible: root.showDate
                             text: root.cityDateText(0)
                             color: root.widgetInkMuted
-                            font.family: root.widgetBodyFamily
-                            font.pixelSize: Math.max(8, Math.round(9 * root.scaleFactor))
-                            font.weight: Font.Medium
-                            font.letterSpacing: root.widgetMetadataTracking
-                            font.capitalization: root.widgetIris ? Font.MixedCase : Font.AllUppercase
+                            scaleFactor: root.scaleFactor
                         }
                     }
                 }
@@ -459,7 +441,7 @@ AbstractBackgroundWidget {
                                 font.pixelSize: Math.max(20, Math.round(24 * root.scaleFactor))
                                 font.weight: root.widgetEditorial ? Appearance.editorial.titleWeight : Font.DemiBold
                                 font.features: ({ "tnum": 1 })
-                                font.letterSpacing: -0.6
+                                font.letterSpacing: -1
                             }
                         }
                     }

@@ -1680,10 +1680,30 @@ ContentPage {
             }
             StyledText {
                 Layout.fillWidth: true
-                text: Translation.tr("One look across your widgets. Individual brings back each widget's saved design.")
+                text: Translation.tr("One look on every widget. Individual keeps each widget's own style.")
                 color: Appearance.colors.colSubtext
                 font.pixelSize: Appearance.font.pixelSize.smaller
                 wrapMode: Text.WordWrap
+            }
+            RowLayout {
+                visible: DesktopWidgetDesign.exceptionCount > 0 || DesktopWidgetDesign.canUndo
+                spacing: 6
+                SelectionGroupButton {
+                    visible: DesktopWidgetDesign.exceptionCount > 0
+                    Layout.fillWidth: false
+                    leftmost: true; rightmost: true
+                    buttonIcon: "select_all"
+                    buttonText: Translation.tr("Match every widget")
+                    onClicked: DesktopWidgetDesign.apply(DesktopWidgetDesign.shared)
+                }
+                SelectionGroupButton {
+                    visible: DesktopWidgetDesign.canUndo
+                    Layout.fillWidth: false
+                    leftmost: true; rightmost: true
+                    buttonIcon: "undo"
+                    buttonText: Translation.tr("Undo design change")
+                    onClicked: DesktopWidgetDesign.undo()
+                }
             }
             StyledText {
                 Layout.fillWidth: true
