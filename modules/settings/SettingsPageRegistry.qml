@@ -1332,6 +1332,13 @@ Singleton {
             keywords: ["osd", "media", "music", "player", "shortcuts", "pill", "track", "fullscreen", "game", "automatic", "skip"]
         },
         {
+            pageIndex: 6, pageName: root.pages[6].name,
+            section: Translation.tr("On-screen display"),
+            label: Translation.tr("Connection notices"),
+            description: Translation.tr("A short notice when something is plugged in, connected, unplugged or lost"),
+            keywords: ["connection", "connected", "disconnected", "plug", "unplug", "device", "toast", "popup", "notice", "cable", "wifi", "ethernet", "internet", "offline", "bluetooth", "headphones", "charger", "charging", "battery", "sound output", "speaker", "monitor", "display", "usb", "drive", "pendrive", "mouse", "keyboard", "controller", "gamepad", "webcam", "camera", "phone", "sd", "memory card"]
+        },
+        {
             pageIndex: 5, pageName: root.pages[5].name,
             section: Translation.tr("Overview"),
             label: Translation.tr("Overview"),

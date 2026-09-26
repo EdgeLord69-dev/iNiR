@@ -7,6 +7,7 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 import qs.modules.common.functions
+import qs.services
 import qs.services.network
 
 /**
@@ -28,6 +29,17 @@ Singleton {
 
     property string networkName: ""
     property int networkStrength
+
+    // NetworkManager's own check: full | limited | portal | none | unknown. Unknown (no check
+    // configured, NM absent, not read yet) counts as online so nothing is hidden on a guess.
+    property string connectivity: "unknown"
+    property string simulatedConnectivity: ""
+    readonly property string effectiveConnectivity: simulatedConnectivity || connectivity
+    readonly property bool online: effectiveConnectivity === "full" || effectiveConnectivity === "unknown"
+    readonly property string offlineReason: online ? ""
+        : effectiveConnectivity === "portal" ? Translation.tr("Sign in to the network to go online")
+        : effectiveConnectivity === "limited" ? Translation.tr("Connected, but no internet")
+        : Translation.tr("No internet connection")
     // Gated on being *connected*, not on the radio being powered. wifiStatus is
     // only ever "connecting"/"disconnected" while the radio is on — i.e. while
     // wifiEnabled is true — so keying the strength icons off wifiEnabled both
@@ -266,12 +278,12 @@ Singleton {
         }
         onExited: (exitCode, exitStatus) => {
             const lines = updateConnectionType.buffer.trim().split('\n');
-            const connectivity = lines.pop() // none, limited, full
+            const connectivity = (lines.pop() ?? "").trim()
             let hasEthernet = false;
             let hasWifi = false;
             let wifiStatus = "disconnected";
             lines.forEach(line => {
-                if (line.includes("ethernet") && line.includes("connected"))
+                if (line.startsWith("ethernet:") && line.slice(9) === "connected")
                     hasEthernet = true;
                 else if (line.includes("wifi:")) {
                     if (line.includes("disconnected")) {
@@ -294,6 +306,7 @@ Singleton {
                     }
                 }
             });
+            root.connectivity = ["full", "limited", "portal", "none"].includes(connectivity) ? connectivity : "unknown";
             root.wifiStatus = wifiStatus;
             root.ethernet = hasEthernet;
             root.wifi = hasWifi;
@@ -423,6 +436,35 @@ Singleton {
                     }
                 }
             }
+        }
+    }
+
+    Process {
+        id: connectivityCheck
+        command: ["nmcli", "networking", "connectivity", "check"]
+        onExited: root.update()
+    }
+
+    IpcHandler {
+        target: "network"
+
+        function status(): string {
+            return JSON.stringify({
+                online: root.online,
+                connectivity: root.effectiveConnectivity,
+                simulated: root.simulatedConnectivity !== "",
+                ethernet: root.ethernet,
+                wifi: root.wifiStatus,
+                name: root.networkName
+            });
+        }
+        function check(): void {
+            connectivityCheck.running = true;
+        }
+        function simulate(state: string): string {
+            const s = (state ?? "").trim();
+            root.simulatedConnectivity = ["full", "limited", "portal", "none"].includes(s) ? s : "";
+            return root.effectiveConnectivity;
         }
     }
 

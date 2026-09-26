@@ -128,6 +128,12 @@ Singleton {
             root._publishFailure(requestId, "no_info");
             return;
         }
+        if (!Network.online) {
+            root._pendingRequest = null;
+            root._latestTrackKey = "";
+            root._publishFailure(requestId, "offline");
+            return;
+        }
 
         root._pendingRequest = {
             requestId: requestId,
@@ -193,6 +199,13 @@ Singleton {
             root._publishedTrackKey = root._latestTrackKey;
             root.status = "ok";
         });
+    }
+
+    Connections {
+        target: Network
+        function onOnlineChanged() {
+            if (Network.online && root.status === "offline") root.scheduleRefresh()
+        }
     }
 
     onActiveChanged: root.scheduleRefresh()

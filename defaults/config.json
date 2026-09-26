@@ -1637,7 +1637,18 @@
     "osd": {
         "mediaEnabled": true,
         "screenList": [],
-        "timeout": 1000
+        "timeout": 1000,
+        "connections": {
+            "enable": true,
+            "network": true,
+            "internet": true,
+            "bluetooth": true,
+            "usb": true,
+            "power": true,
+            "audio": true,
+            "displays": true,
+            "drives": true
+        }
     },
     "osk": {
         "layout": "qwerty_full",

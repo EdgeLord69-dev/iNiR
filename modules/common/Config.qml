@@ -3023,6 +3023,17 @@ Singleton {
                 property int timeout: 1000
                 property bool mediaEnabled: true
                 property list<string> screenList: []
+                property JsonObject connections: JsonObject {
+                    property bool enable: true
+                    property bool network: true
+                    property bool internet: true
+                    property bool bluetooth: true
+                    property bool usb: true
+                    property bool power: true
+                    property bool audio: true
+                    property bool displays: true
+                    property bool drives: true
+                }
             }
 
             property JsonObject osk: JsonObject {

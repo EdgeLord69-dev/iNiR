@@ -762,6 +762,18 @@ QtObject {
         const since = new Date(Date.now() - days * 86400000)
         return out.concat(["date:>=" + since.toISOString().slice(0, 10)])
     }
+    function providerName(providerId): string {
+        return ({ wallhaven: "Wallhaven", commons: "Wikimedia Commons", motionbgs: "MotionBGs" })[providerId]
+            ?? Booru.providers[providerId]?.name ?? String(providerId)
+    }
+
+    // No answer at all: the connection, or the source is down. Never "check your tags".
+    function unreachableMessage(providerId): string {
+        return Network.online
+            ? Translation.tr("%1 didn't answer. It may be down; try again in a while.").arg(root.providerName(providerId))
+            : Network.offlineReason
+    }
+
     function makeRequest(tags, nsfw, limit, page, category, generation, providerId, fitProfile, sorting) {
         root.nowMs = Date.now()
         if (nsfw === undefined)
@@ -885,7 +897,7 @@ QtObject {
 
         if (!text || text.length === 0) {
             _log("[Wallhaven] Request failed: empty response")
-            newResponse.message = failMessage
+            newResponse.message = root.unreachableMessage(root._currentSearchProvider)
             root._appendResponse(newResponse)
             root.responseFinished()
             if (root._currentSearchResponse === newResponse)

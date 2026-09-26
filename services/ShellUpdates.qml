@@ -187,8 +187,19 @@ Singleton {
         print("[ShellUpdates] Notification sent: Update available" + version)
     }
 
+    // A check that could not run for lack of internet; retried when the connection returns.
+    property bool waitingForNetwork: false
+    Connections {
+        target: Network
+        function onOnlineChanged() {
+            if (Network.online && root.waitingForNetwork) root.check()
+        }
+    }
+
     function check(): void {
         if (!enabled || isChecking || isUpdating || managedExternally) return
+        root.waitingForNetwork = !Network.online
+        if (root.waitingForNetwork) return
         root.isChecking = true
         root.lastError = ""
         fetchProc.running = true
