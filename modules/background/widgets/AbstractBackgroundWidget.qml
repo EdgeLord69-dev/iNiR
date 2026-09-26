@@ -1088,10 +1088,15 @@ AbstractWidget {
             id: editPopoverPanel
             property bool open: false
             readonly property real targetHeight: popoverLoader.item ? popoverLoader.item.implicitHeight + 24 : 0
+            // The sheet keeps the tallest page it has shown while open: switching pages or
+            // toggling a row never resizes it back and forth.
+            property real heldHeight: 0
             onOpenChanged: {
                 if (open) {
+                    editPopoverPanel.heldHeight = editPopoverPanel.targetHeight
                     root._latchEditPlacement()
                 } else {
+                    editPopoverPanel.heldHeight = 0
                     root._editPlacementSide = ""
                     root._popoverReserve = 0
                     root._popoverReserveWidth = 0
@@ -1099,7 +1104,10 @@ AbstractWidget {
                 if (!open && GlobalStates.desktopWidgetQuickControls === root.editInstanceKey)
                     GlobalStates.desktopWidgetQuickControls = ""
             }
-            onTargetHeightChanged: if (open) root._latchEditPlacement()
+            onTargetHeightChanged: if (open) {
+                editPopoverPanel.heldHeight = Math.max(editPopoverPanel.heldHeight, editPopoverPanel.targetHeight)
+                root._latchEditPlacement()
+            }
             onWidthChanged: if (open) root._latchEditPlacement()
             visible: opacity > 0
             enabled: open && !root._irisGesture
@@ -1108,14 +1116,7 @@ AbstractWidget {
             y: root._editControlsGeometry.popoverY - root._editControlsGeometry.toolbarY
             width: Math.min(root.quickControlsAvailableWidth,
                 popoverLoader.item ? (popoverLoader.item.resolvedWidth ?? popoverLoader.item.implicitWidth) + 24 : 344)
-            height: editPopoverPanel.targetHeight
-            Behavior on height {
-                enabled: root.animateGeometry && editPopoverPanel.open
-                NumberAnimation {
-                    duration: root.widgetIris ? IrisStyle.duration(180) : Appearance.animation.elementMove.duration
-                    easing.type: Easing.OutCubic
-                }
-            }
+            height: Math.max(editPopoverPanel.targetHeight, editPopoverPanel.heldHeight)
 
             Behavior on opacity {
                 enabled: Appearance.animationsEnabled

@@ -8,7 +8,7 @@ import qs.modules.common
 import qs.modules.common.widgets
 import qs.modules.iris.style
 
-// Where a widget sits and what can be done to it: anchor, free or quietest spot, nudge, scale and
+// Where a widget sits and what can be done to it: anchor, free or quietest spot, scale and
 // opacity, then lock, front, reset and remove. The same page answers "More actions" and a right click,
 // so nothing here opens a popup window over the desktop layer.
 ColumnLayout {
@@ -61,24 +61,6 @@ ColumnLayout {
                         root.widget._setOutputValue("placementStrategy", value)
                 }
             }
-        }
-    }
-
-    WidgetQuickSection {
-        title: Translation.tr("Nudge")
-        detail: Translation.tr("Arrow keys too")
-
-        WidgetQuickChoices {
-            maxColumns: 4
-            isSelected: entry => false
-            model: [
-                { value: "west", icon: "west", tooltip: Translation.tr("Move one pixel left") },
-                { value: "north", icon: "north", tooltip: Translation.tr("Move one pixel up") },
-                { value: "south", icon: "south", tooltip: Translation.tr("Move one pixel down") },
-                { value: "east", icon: "east", tooltip: Translation.tr("Move one pixel right") }
-            ]
-            onPicked: value => root.widget.nudge(value === "west" ? -1 : value === "east" ? 1 : 0,
-                value === "north" ? -1 : value === "south" ? 1 : 0)
         }
     }
 
