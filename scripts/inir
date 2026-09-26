@@ -1759,8 +1759,25 @@ apply_qt_runtime_env() {
     # it back with no measurable CPU cost.
     [[ -z "${MALLOC_CONF:-}" ]] && export MALLOC_CONF="background_thread:true,narenas:2,dirty_decay_ms:1000,muzzy_decay_ms:0,tcache_max:4096"
     # Mesa's GL worker thread buys nothing behind Qt's own render threads and
-    # costs ~50 MB across the shell's windows.
-    [[ -z "${mesa_glthread:-}" ]] && export mesa_glthread=false
+    # costs ~50 MB across the shell's windows. The mesa_glthread variable prints
+    # a notice for every GL context (~2000 journal lines a day), so it is turned
+    # off through a driconf app profile: the system drirc.d plus one file.
+    if [[ -z "${mesa_glthread:-}" && -z "${DRIRC_CONFIGDIR:-}" ]]; then
+        local _drirc_sys _drirc_dir="${XDG_RUNTIME_DIR:-/tmp}/inir/drirc.d"
+        for _drirc_sys in /usr/share/drirc.d /usr/local/share/drirc.d /run/opengl-driver/share/drirc.d ""; do
+            [[ -n "$_drirc_sys" && -d "$_drirc_sys" ]] && break
+        done
+        if [[ -n "$_drirc_sys" ]] && rm -rf "$_drirc_dir" && mkdir -p "$_drirc_dir" \
+                && ln -s "$_drirc_sys"/*.conf "$_drirc_dir"/ 2>/dev/null \
+                && printf '%s\n' '<?xml version="1.0" standalone="yes"?>' '<driconf><device>' \
+                    '<application name="Quickshell" executable="qs"><option name="mesa_glthread_app_profile" value="0"/></application>' \
+                    '<application name="Quickshell" executable="quickshell"><option name="mesa_glthread_app_profile" value="0"/></application>' \
+                    '</device></driconf>' > "$_drirc_dir/99-inir.conf"; then
+            export DRIRC_CONFIGDIR="$_drirc_dir"
+        else
+            export mesa_glthread=false
+        fi
+    fi
 
     # Qt platform theme drives icon resolution (QIcon::fromTheme) and widget styling.
     # Override via INIR_QT_QPA_PLATFORMTHEME / INIR_QT_STYLE_OVERRIDE if needed.
