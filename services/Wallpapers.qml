@@ -305,7 +305,7 @@ Singleton {
         const hash = MD5.hash(videoPath)
         const expectedPath = root._videoThumbDir + "/" + hash + ".jpg"
         root._ffQueue.push({ videoPath: videoPath, outputPath: expectedPath })
-        if (!_ffCheckProc.running && !_ffGenProc.running) _processNextFF()
+        if (!_ffGenProc.running) _processNextFF()
     }
 
     function _cacheFirstFrame(videoPath: string, imagePath: string) {
@@ -323,36 +323,16 @@ Singleton {
     function _processNextFF() {
         if (root._ffQueue.length === 0) return
         const item = root._ffQueue.shift()
-        _ffCheckProc._videoPath = item.videoPath
-        _ffCheckProc._outputPath = item.outputPath
-        _ffCheckProc.command = ["test", "-f", item.outputPath]
-        _ffCheckProc.running = true
-    }
-
-    Process {
-        id: _ffCheckProc
-        property string _videoPath
-        property string _outputPath
-        onExited: (exitCode) => {
-            if (exitCode === 0) {
-                root._cacheFirstFrame(_ffCheckProc._videoPath, _ffCheckProc._outputPath)
-                root._processNextFF()
-            } else {
-                _ffGenProc._videoPath = _ffCheckProc._videoPath
-                _ffGenProc._outputPath = _ffCheckProc._outputPath
-                _ffGenProc.command = ["bash", "-c",
-                    // Wallpaper loops usually fade in from black, so frame 0 gives
-                    // this file a nearly black palette — and this frame is what the
-                    // theming pipeline quantizes. Pick a representative frame.
-                    "mkdir -p " + JSON.stringify(root._videoThumbDir) +
-                    " && ffmpeg -hide_banner -loglevel error -y -ss 1 -i " + JSON.stringify(_ffCheckProc._videoPath) +
-                    " -vf " + JSON.stringify("thumbnail=n=30") +
-                    " -frames:v 1 -update 1 -q:v 2 " + JSON.stringify(_ffCheckProc._outputPath) +
-                    " || ffmpeg -hide_banner -loglevel error -y -i " + JSON.stringify(_ffCheckProc._videoPath) +
-                    " -vframes 1 -update 1 -q:v 2 " + JSON.stringify(_ffCheckProc._outputPath)]
-                _ffGenProc.running = true
-            }
-        }
+        _ffGenProc._videoPath = item.videoPath
+        _ffGenProc._outputPath = item.outputPath
+        // Wallpaper loops usually fade in from black, so frame 0 gives this file a nearly black
+        // palette, and this frame is what theming quantizes: pick a representative one.
+        _ffGenProc.command = ["sh", "-c",
+            '[ -s "$2" ] && exit 0; mkdir -p "$(dirname "$2")" || exit 1; '
+            + 'ffmpeg -hide_banner -loglevel error -y -ss 1 -i "$1" -vf thumbnail=n=30 -frames:v 1 -update 1 -q:v 2 "$2" '
+            + '|| ffmpeg -hide_banner -loglevel error -y -i "$1" -vframes 1 -update 1 -q:v 2 "$2"',
+            "sh", item.videoPath, item.outputPath]
+        _ffGenProc.running = true
     }
 
     Process {
@@ -509,6 +489,82 @@ Singleton {
         const nextKnown = Object.assign({}, root._knownThumbnailOutputs)
         delete nextKnown[normalizedPath]
         root._knownThumbnailOutputs = nextKnown
+    }
+
+    // Sources the generator could not turn into a thumbnail this session. Asking again would only
+    // spawn the same failing magick/ffmpeg every time a tile reloads.
+    property var _failedThumbnailOutputs: ({})
+    function thumbnailFailed(outputPath: string): bool {
+        return !!root._failedThumbnailOutputs[FileUtils.trimFileProtocol(String(outputPath ?? ""))]
+    }
+
+    // Whether thumbnails exist is asked for many paths per process, never one process per tile:
+    // a folder of a few hundred wallpapers used to start a few hundred `test -f` at once and ran
+    // the shell out of file descriptors.
+    signal thumbnailsChecked(var found)
+    property var _thumbnailCheckQueue: ({})
+    property int _thumbnailCheckRetryMs: 0
+    function requestThumbnailCheck(outputPath: string): void {
+        const normalizedPath = FileUtils.trimFileProtocol(String(outputPath ?? ""))
+        if (!normalizedPath) return
+        root._thumbnailCheckQueue[normalizedPath] = true
+        if (!thumbnailCheckProc.running && !thumbnailCheckRetry.running) thumbnailCheckFlush.restart()
+    }
+    function _runThumbnailCheck(): void {
+        if (thumbnailCheckProc.running) return
+        const paths = Object.keys(root._thumbnailCheckQueue).slice(0, 400)
+        if (paths.length === 0) return
+        paths.forEach(path => delete root._thumbnailCheckQueue[path])
+        thumbnailCheckProc.paths = paths
+        thumbnailCheckProc.lines = []
+        thumbnailCheckProc.finished = false
+        thumbnailCheckProc.command = ["sh", "-c", 'for p do [ -s "$p" ] && printf "%s\\n" "$p"; done; echo __done__', "sh"].concat(paths)
+        thumbnailCheckProc.running = true
+    }
+    function _requeueThumbnailCheck(paths: var): void {
+        paths.forEach(path => root._thumbnailCheckQueue[path] = true)
+        root._thumbnailCheckRetryMs = Math.min(8000, Math.max(1000, root._thumbnailCheckRetryMs * 2))
+        thumbnailCheckRetry.interval = root._thumbnailCheckRetryMs
+        thumbnailCheckRetry.restart()
+    }
+    Timer { id: thumbnailCheckFlush; interval: 40; onTriggered: root._runThumbnailCheck() }
+    Timer { id: thumbnailCheckRetry; onTriggered: root._runThumbnailCheck() }
+    Process {
+        id: thumbnailCheckProc
+        property var paths: []
+        property var lines: []
+        property bool finished: false
+        stdout: SplitParser {
+            onRead: line => thumbnailCheckProc.lines.push(line)
+        }
+        onExited: (exitCode, exitStatus) => {
+            thumbnailCheckProc.finished = true
+            const paths = thumbnailCheckProc.paths
+            if (!thumbnailCheckProc.lines.includes("__done__")) {
+                root._requeueThumbnailCheck(paths)
+                return
+            }
+            root._thumbnailCheckRetryMs = 0
+            const existing = new Set(thumbnailCheckProc.lines)
+            const found = {}
+            const nextKnown = Object.assign({}, root._knownThumbnailOutputs)
+            paths.forEach(path => {
+                found[path] = existing.has(path)
+                if (found[path]) nextKnown[path] = true
+                else delete nextKnown[path]
+            })
+            root._knownThumbnailOutputs = nextKnown
+            root.thumbnailsChecked(found)
+            if (Object.keys(root._thumbnailCheckQueue).length > 0) thumbnailCheckFlush.restart()
+        }
+        // Out of descriptors or processes, the check never starts and never exits: try it later
+        // instead of reading that as "no thumbnail" and queueing generation for every tile.
+        onRunningChanged: if (!running) thumbnailCheckStartGuard.restart()
+    }
+    Timer {
+        id: thumbnailCheckStartGuard
+        interval: 0
+        onTriggered: if (!thumbnailCheckProc.finished) root._requeueThumbnailCheck(thumbnailCheckProc.paths)
     }
 
     function load() {}
@@ -1105,29 +1161,30 @@ Singleton {
         return `${Directories.stateUserPath}/generated/wallpaper/still-${MD5.hash(clean)}.png`
     }
 
-    function ensureVideoStill(filePath: string): void {
+    function ensureVideoStill(filePath: string, replace = false): void {
         const clean = FileUtils.trimFileProtocol(String(filePath ?? ""))
         if (!clean || !root.isVideoFile(clean)) return
         const outputPath = root.videoStillPath(clean)
-        if (!outputPath) return
+        if (!outputPath || (!replace && root.thumbnailFailed(outputPath))) return
 
         const key = `still:${clean}`
         if (root._singleThumbPending[key]) return
         const pending = Object.assign({}, root._singleThumbPending)
         pending[key] = true
         root._singleThumbPending = pending
-        root._singleThumbQueue.push({ key: key, filePath: clean, size: "large", outputPath: outputPath })
+        root._singleThumbQueue.push({ key: key, filePath: clean, size: "large", outputPath: outputPath, replace: replace })
         if (!_singleThumbProc.running)
             _processNextSingleThumb()
     }
 
-    function ensureThumbnailForPath(filePath: string, size = "large") {
+    function ensureThumbnailForPath(filePath: string, size = "large", replace = false) {
         const normalizedPath = FileUtils.trimFileProtocol(String(filePath ?? ""))
         if (!normalizedPath || normalizedPath.length === 0) return
         if (!["normal", "large", "x-large", "xx-large"].includes(size)) return
 
         const outputPath = root.getExpectedThumbnailPath(normalizedPath, size)
         if (!outputPath || outputPath.length === 0) return
+        if (!replace && root.thumbnailFailed(outputPath)) return
 
         const key = `${size}:${normalizedPath}`
         if (root._singleThumbPending[key]) return
@@ -1135,7 +1192,7 @@ Singleton {
         const pending = Object.assign({}, root._singleThumbPending)
         pending[key] = true
         root._singleThumbPending = pending
-        root._singleThumbQueue.push({ key: key, filePath: normalizedPath, size: size, outputPath: outputPath })
+        root._singleThumbQueue.push({ key: key, filePath: normalizedPath, size: size, outputPath: outputPath, replace: replace })
 
         if (!_singleThumbProc.running)
             _processNextSingleThumb()
@@ -1147,20 +1204,19 @@ Singleton {
         const item = root._singleThumbQueue.shift()
         const maxSize = Images.thumbnailSizes[item.size] ?? 256
         const outputDir = FileUtils.parentDirectory(item.outputPath)
-        const commandBody = root.isVideoFile(item.filePath)
-            ? "mkdir -p " + JSON.stringify(outputDir)
-                + " && [ -f " + JSON.stringify(item.outputPath) + " ] && exit 0 || { ffmpeg -hide_banner -loglevel error -y -i " + JSON.stringify(item.filePath)
-                + " -vf " + JSON.stringify(`thumbnail=n=100,scale='min(${maxSize},iw)':'min(${maxSize},ih)':force_original_aspect_ratio=decrease`)
-                + " -frames:v 1 -update 1 "
-                + " " + JSON.stringify(item.outputPath) + " >/dev/null 2>&1 && exit 1; }"
-            : "mkdir -p " + JSON.stringify(outputDir)
-                + " && [ -f " + JSON.stringify(item.outputPath) + " ] && exit 0 || { magick " + JSON.stringify(item.filePath + "[0]")
-                + " -resize " + `${maxSize}x${maxSize}` + " " + JSON.stringify(item.outputPath) + " >/dev/null 2>&1 && exit 1; }"
+        // 0: it was already there · 10: made now · anything else: the source could not be read.
+        // Paths go in as arguments, never pasted into the script.
+        const script = 'mkdir -p "$(dirname "$2")" || exit 20; '
+            + 'if [ "$4" != 1 ] && [ -s "$2" ]; then exit 0; fi; rm -f "$2"; '
+            + (root.isVideoFile(item.filePath)
+                ? 'ffmpeg -hide_banner -loglevel error -y -i "$1" -vf "thumbnail=n=100,scale=\'min($3,iw)\':\'min($3,ih)\':force_original_aspect_ratio=decrease" -frames:v 1 -update 1 "$2" >/dev/null 2>&1'
+                : 'magick "$1[0]" -resize "${3}x${3}" "$2" >/dev/null 2>&1')
+            + ' && [ -s "$2" ] && exit 10; rm -f "$2"; exit 20'
 
         _singleThumbProc._key = item.key
         _singleThumbProc._filePath = item.filePath
         _singleThumbProc._outputPath = item.outputPath
-        _singleThumbProc.command = ["bash", "-c", commandBody]
+        _singleThumbProc.command = ["sh", "-c", script, "sh", item.filePath, item.outputPath, String(maxSize), item.replace ? "1" : "0"]
         _singleThumbProc.running = true
     }
 
@@ -1220,10 +1276,15 @@ Singleton {
         property string _filePath: ""
         property string _outputPath: ""
         onExited: (exitCode, exitStatus) => {
-            if (exitCode === 0 || exitCode === 1)
+            if (exitCode === 0 || exitCode === 10)
                 root.rememberThumbnail(_singleThumbProc._outputPath)
-            if (exitCode === 1)
+            if (exitCode === 10)
                 root.thumbnailGeneratedFile(_singleThumbProc._filePath)
+            if (exitCode === 20) {
+                const failed = Object.assign({}, root._failedThumbnailOutputs)
+                failed[_singleThumbProc._outputPath] = true
+                root._failedThumbnailOutputs = failed
+            }
             root._finishSingleThumb(_singleThumbProc._key)
             root._processNextSingleThumb()
         }
