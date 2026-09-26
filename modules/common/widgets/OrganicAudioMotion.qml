@@ -23,9 +23,9 @@ Item {
         root._bandsA.x, root._bandsA.y, root._bandsA.z, root._bandsA.w,
         root._bandsB.x, root._bandsB.y)
 
-    property vector4d _targetA: Qt.vector4d(0, 0, 0, 0)
-    property vector4d _targetB: Qt.vector4d(0, 0, 0, 0)
-    property vector4d _targetC: Qt.vector4d(0, 0, 0, 0)
+    // Kept across passes: this runs at the display rate and at cava's, where fresh arrays are only garbage.
+    readonly property var _work: ({ weighted: [], smoothed: [], raw: new Float64Array(12),
+        targets: new Float64Array(12), bands: new Float64Array(12), peaks: new Float64Array(12) })
     property vector4d _bandsA: Qt.vector4d(0, 0, 0, 0)
     property vector4d _bandsB: Qt.vector4d(0, 0, 0, 0)
     property vector4d _bandsC: Qt.vector4d(0, 0, 0, 0)
@@ -65,7 +65,8 @@ Item {
         if (source.length === 0)
             return []
 
-        const weighted = new Array(source.length)
+        const weighted = root._work.weighted
+        weighted.length = source.length
         const profileStrength = Math.max(0, Math.min(1, root.accentStrength))
         for (let i = 0; i < source.length; ++i) {
             const rawPosition = source.length > 1 ? i / (source.length - 1) : 0.5
@@ -80,7 +81,8 @@ Item {
         if (radius === 0 || weighted.length < 3)
             return weighted
 
-        const smoothed = new Array(weighted.length)
+        const smoothed = root._work.smoothed
+        smoothed.length = weighted.length
         let start = 0
         let end = Math.min(weighted.length - 1, radius)
         let total = 0
@@ -123,8 +125,9 @@ Item {
     }
 
     function _updateTargets(): void {
+        root._targetsStale = false
         const values = root._processedPoints()
-        const rawLevels = new Array(12)
+        const rawLevels = root._work.raw
         let weightedEnergy = 0
         let minimum = 1
         let maximum = 0
@@ -136,19 +139,24 @@ Item {
         }
         const spread = Math.max(0.10, maximum - minimum)
         const activity = Math.min(1, Math.pow(maximum, 0.72) * 1.16)
-        const levels = new Array(12)
+        const levels = root._work.targets
         for (let i = 0; i < 12; ++i) {
             const contrast = Math.max(0, Math.min(1, (rawLevels[i] - minimum) / spread))
             levels[i] = Math.min(1, rawLevels[i] * 0.34 + contrast * activity * 0.76)
         }
-        root._targetA = Qt.vector4d(levels[0], levels[1], levels[2], levels[3])
-        root._targetB = Qt.vector4d(levels[4], levels[5], levels[6], levels[7])
-        root._targetC = Qt.vector4d(levels[8], levels[9], levels[10], levels[11])
         root._targetEnergy = Math.min(1, weightedEnergy / 9.6)
     }
 
-    onPointsChanged: root._updateTargets()
-    onNormalizationCeilingChanged: root._updateTargets()
+    // A hidden or held field (a closed card, the overlay behind an organic aura) still hears every cava frame:
+    // it catches up once it moves again instead of working for nothing.
+    property bool _targetsStale: true
+    function _refreshTargets(): void {
+        if (root._moving) root._updateTargets()
+        else root._targetsStale = true
+    }
+    onPointsChanged: root._refreshTargets()
+    onNormalizationCeilingChanged: root._refreshTargets()
+    on_MovingChanged: if (root._moving && root._targetsStale) root._updateTargets()
 
     // Silent, the field only drifts: the shared 42 ms idle clock keeps it smooth without holding the window's
     // render loop at the display rate the way a running FrameAnimation does.
@@ -175,6 +183,10 @@ Item {
         function onTick(dt: real): void { root._step(dt) }
     }
 
+    function _follow(current: real, target: real, attack: real, release: real): real {
+        return current + (target - current) * (target > current ? attack : release)
+    }
+
     function _step(frameTime: real): void {
         const dt = Math.min(frameTime, 0.05)
         const smoothingFactor = Math.max(0, Math.min(8, root.smoothing))
@@ -190,21 +202,19 @@ Item {
         const kAttack = step(attackRate)
         const kRelease = step(releaseRate)
         const kPeakRelease = step(peakReleaseRate)
-        function follow(current, target, attack, release) {
-            return current + (target - current) * (target > current ? attack : release)
+        const follow = root._follow
+        const w = root._work
+        const bands = w.bands, peaks = w.peaks, targets = w.targets
+        for (let i = 0; i < 12; ++i) {
+            bands[i] = follow(bands[i], targets[i], kAttack, kRelease)
+            peaks[i] = follow(peaks[i], bands[i], kAttack, kPeakRelease)
         }
-        const bands = (live, target) => Qt.vector4d(
-            follow(live.x, target.x, kAttack, kRelease), follow(live.y, target.y, kAttack, kRelease),
-            follow(live.z, target.z, kAttack, kRelease), follow(live.w, target.w, kAttack, kRelease))
-        const peaks = (peak, live) => Qt.vector4d(
-            follow(peak.x, live.x, kAttack, kPeakRelease), follow(peak.y, live.y, kAttack, kPeakRelease),
-            follow(peak.z, live.z, kAttack, kPeakRelease), follow(peak.w, live.w, kAttack, kPeakRelease))
-        root._bandsA = bands(root._bandsA, root._targetA)
-        root._bandsB = bands(root._bandsB, root._targetB)
-        root._bandsC = bands(root._bandsC, root._targetC)
-        root._peakA = peaks(root._peakA, root._bandsA)
-        root._peakB = peaks(root._peakB, root._bandsB)
-        root._peakC = peaks(root._peakC, root._bandsC)
+        root._bandsA = Qt.vector4d(bands[0], bands[1], bands[2], bands[3])
+        root._bandsB = Qt.vector4d(bands[4], bands[5], bands[6], bands[7])
+        root._bandsC = Qt.vector4d(bands[8], bands[9], bands[10], bands[11])
+        root._peakA = Qt.vector4d(peaks[0], peaks[1], peaks[2], peaks[3])
+        root._peakB = Qt.vector4d(peaks[4], peaks[5], peaks[6], peaks[7])
+        root._peakC = Qt.vector4d(peaks[8], peaks[9], peaks[10], peaks[11])
         root._energy = follow(root._energy, root._targetEnergy,
             step(energyAttackRate), step(energyReleaseRate))
         const rise = Math.max(0, root._energy - root._previousEnergy)

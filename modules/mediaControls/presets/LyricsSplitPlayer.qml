@@ -12,6 +12,7 @@ import qs.modules.mediaControls.components
 
 Item {
     id: root
+    property bool motion: true
     property MprisPlayer player: null
     property list<real> visualizerPoints: []
     property real radius: Appearance.zzzEverywhere ? Appearance.zzz.panelRadius : Appearance.angelEverywhere ? Appearance.angel.roundingNormal : Appearance.rounding.normal
@@ -263,6 +264,7 @@ Item {
                 spacing: 10
 
                 PlayerProgress {
+                    motion: root.motion
                     Layout.fillWidth: true
                     implicitHeight: 16
                     position: playerBase.effectivePosition
