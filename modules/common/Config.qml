@@ -3825,6 +3825,8 @@ Singleton {
                 // The VPN button in the Control Center / quick controls. Off by default:
                 // it changes the toggle grid's shape, so it is asked for, not assumed.
                 property bool quickToggle: false
+                // The VPN card's details: addresses, name, account, exit node, devices and live traffic.
+                property bool details: false
             }
             property JsonObject shellUpdates: JsonObject {
                 property bool enabled: true

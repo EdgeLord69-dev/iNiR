@@ -2333,7 +2333,8 @@
         "filterPassive": true
     },
     "vpn": {
-        "quickToggle": false
+        "quickToggle": false,
+        "details": false
     },
     "shellUpdates": {
         "enabled": true,
