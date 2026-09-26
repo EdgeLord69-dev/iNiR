@@ -1666,6 +1666,25 @@ ContentPage {
         title: Translation.tr("Widget Colors")
 
         SettingsGroup {
+            WidgetSettingRow {
+                label: Translation.tr("Global widget design")
+                icon: "widgets"
+                trailing: false
+                ConfigSelectionArray {
+                    currentValue: DesktopWidgetDesign.shared
+                    options: DesktopWidgetDesign.choices.map(choice => ({
+                        displayName: Translation.tr(choice.label), icon: choice.icon, value: choice.value
+                    }))
+                    onSelected: newValue => DesktopWidgetDesign.apply(newValue)
+                }
+            }
+            StyledText {
+                Layout.fillWidth: true
+                text: Translation.tr("One look across your widgets. Individual brings back each widget's saved design.")
+                color: Appearance.colors.colSubtext
+                font.pixelSize: Appearance.font.pixelSize.smaller
+                wrapMode: Text.WordWrap
+            }
             StyledText {
                 Layout.fillWidth: true
                 text: Translation.tr("Apply one wallpaper-generated color preset to every built-in desktop widget. You can still tune any widget individually below.")

@@ -460,6 +460,7 @@
             ]
         },
         "widgets": {
+            "design": "individual",
             "screenList": [],
             "layerOrder": [],
             "adaptColorsToWallpaperPosition": true,

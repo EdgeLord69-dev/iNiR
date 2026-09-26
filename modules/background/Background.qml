@@ -96,6 +96,11 @@ Scope {
 
     IpcHandler {
         target: "background"
+        function widgetDesign(name: string): string {
+            if (name === "status") return DesktopWidgetDesign.current
+            return DesktopWidgetDesign.apply(name)
+        }
+
         function toggleEditMode(): string {
             GlobalStates.setWidgetEditMode(!GlobalStates.widgetEditMode)
             return GlobalStates.widgetEditMode ? "edit mode on" : "edit mode off"

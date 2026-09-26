@@ -32,6 +32,9 @@ AbstractWidget {
     function _setOutputValues(values): void {
         if (!values || typeof values !== "object")
             return
+        if (root.widgetSharedDesign !== "individual"
+                && (values.style !== undefined || values.displayMode !== undefined))
+            values = Object.assign({}, values, { design: "individual" })
         if (root.outputName.length > 0) {
             DesktopWidgetLayout.setValues(root.outputName, root.configEntryName, values)
             return
@@ -1690,6 +1693,19 @@ AbstractWidget {
                 }
 
                 WidgetQuickSection {
+                    visible: DesktopWidgetDesign.supports(root.configEntryName) && !root.irisFaced
+                        && DesktopWidgetDesign.shared !== "individual"
+                    title: Translation.tr("Design")
+                    WidgetQuickToggle {
+                        Layout.fillWidth: true
+                        iconName: "widgets"
+                        label: Translation.tr("Follow global design")
+                        checked: root.widgetSharedDesign === DesktopWidgetDesign.shared
+                        onToggled: root._setOutputValue("design", checked ? "individual" : "auto")
+                    }
+                }
+
+                WidgetQuickSection {
                     visible: root.semanticPaletteQuickControls
                     title: Translation.tr("Colors")
                     detail: root.widgetPalettePresetLabel
@@ -1761,7 +1777,18 @@ AbstractWidget {
     property int resizeMaxHeight: 800
 
     // Read a possibly-nested key from configEntry (e.g. "cookie.size" → configEntry.cookie.size)
+    readonly property string widgetSharedDesign: {
+        if (!["ii", "iris"].includes(Config.options?.panelFamily ?? "ii")) return "individual"
+        const own = String(root._storedConfigKey("design") ?? "auto")
+        return own === "auto" ? DesktopWidgetDesign.shared : own
+    }
+    readonly property var widgetDesignValues: DesktopWidgetDesign.values(root.configEntryName, root.widgetSharedDesign)
     function _readConfigKey(key: string): var {
+        if (Object.prototype.hasOwnProperty.call(root.widgetDesignValues, key))
+            return root.widgetDesignValues[key]
+        return root._storedConfigKey(key)
+    }
+    function _storedConfigKey(key: string): var {
         if ((root._isResizing || root._irisSizing || root._irisPreviewing)
                 && Object.prototype.hasOwnProperty.call(root._resizePreviewValues, key))
             return root._resizePreviewValues[key]
@@ -2173,7 +2200,7 @@ AbstractWidget {
     // Family-owned type: iRiS widgets speak the Island's typeface; every other
     // family keeps the shell fonts it always used.
     readonly property string widgetBodyFamily: root.widgetIris ? IrisStyle.fontMain : Appearance.font.family.main
-    readonly property string widgetNumbersFamily: root.widgetIris ? IrisStyle.fontNumbers : Appearance.font.family.numbers
+    readonly property string widgetNumbersFamily: root.widgetIrisFamily ? IrisStyle.fontNumbers : Appearance.font.family.numbers
     // Metadata labels: shouting caps are Material/Instrument grammar; iRiS uses
     // sentence case (first letter up, the rest as written by the locale).
     function widgetCase(text): string {
