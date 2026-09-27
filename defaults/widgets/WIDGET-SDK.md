@@ -293,12 +293,12 @@ Graph {
 ```qml
 CavaProcess {
     id: cava
-    active: true  // starts cava subprocess
+    active: root.visible  // subscribes to the shared cava stream
 }
 CavaVisualizer {
     width: 200; height: 60
     points: cava.points
-    barColor: Appearance.colors.colPrimary
+    colorHigh: Appearance.colors.colPrimary
     barRadius: Appearance.rounding.verysmall
 }
 ```
