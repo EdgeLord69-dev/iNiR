@@ -11,10 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Customize iRiS on the shell.** The Island grows Themes, Look, Pieces, undo and Done; tap the Island, the Dock or a bubble to edit it where it is. Studio is gone.
 - **Menu bar, a new Island layout.** A thin strip with your workspaces, window and pieces, the Island hanging from it as a notch.
+- **Themes for the bars.** Twilight and Daybreak leave a clear menu bar over the wallpaper; Horizon draws one black band across the top.
+- **Pieces in a bar read on one line,** glyph and figure side by side, lit while what they opened is showing. Over a clear menu bar, colours keep a depth you can read. `inir iris strip transparent|band`.
 - **Arrange the Control Center.** Drag, resize and add controls from a library, with six starting layouts and all 20 quick toggles. `inir iris control edit`.
 - **Design the lock screen.** Move the clock, player and sign-in field on the real lock, pick what plays behind them, video included, and give each widget there a design, material, corners and opacity of its own. `inir iris lock edit`.
 - **Anime pieces.** Airing counts down to the next episode from AniList; Continue searches, plays in mpv and remembers where you stopped.
-- **VPN, without the terminal.** A bubble and an optional Control Center button for NetworkManager and Tailscale connections.
+- **VPN, without the terminal.** A bubble and an optional Control Center button for NetworkManager and Tailscale connections. Its card can show addresses, your tailnet's devices and live traffic, and imports WireGuard and OpenVPN files. `inir vpn`.
 - **A bubble for new iNiR versions.** Shows what changed and updates from its card.
 - **Presets for Niri's window animations.** Snappy, Niri, Material, Bouncy, Gentle and Instant, in every family's Settings. Material comes from @cnvuls's PR #205.
 - **iRiS Settings covers the whole desktop.** Date and time, language, notifications, sounds, night light, battery, game mode, idle, wallpaper effects, screenshots, and a new Sources section for weather, calendars and updates.
@@ -24,6 +26,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **You decide what the iRiS OSD shows,** in fullscreen too, and the volume limit goes up to 153 %.
 - **The wallpaper library filters by kind:** stills, live wallpapers or GIFs.
 - **iRiS speaks Spanish.**
+- **Notices when something connects or drops.** Mice, keyboards, controllers, phones, drives and SD cards by name, plus Bluetooth, the charger, displays, sound output and the internet, in every family. `inir connections sample usb`.
+- **Widgets read the wallpaper under them.** Over a bright one they turn to dark ink and deeper accents, and iRiS glass turns to frost; it follows a widget as you drag it. *Ink follows the wallpaper* in Settings, `inir background legibilityState`.
+- **One design for every widget.** iRiS, Material, iNstrument or Readout, from Settings or a widget's Look controls. Widgets that kept a look of their own can be matched, and Undo brings your mix back. `inir background widgetDesign`.
+- **iNstrument reaches music, Screen Time and Controls,** and weather, world clock, tasks, timers and uptime now read like the rest of the set.
+- **Widget accents you choose once.** Wallpaper, iRiS, Spectrum or Mono, with a strength from soft to vivid, on every widget and design. Settings › Desktop › Widgets.
+- **New iRiS theme: Lume.** Clear glass, a bare menu bar and iNstrument widgets drawn on the wallpaper in its own light.
 - **Lume on every widget.** A switch that backs every widget's text even where the wallpaper wouldn't need it.
 - **`/` in Spotlight flips iRiS settings.** Every switch, the widget design and accents and the themes, found by a few letters and switched in place.
 
@@ -39,12 +47,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Themes dress the lock screen and the Control Center too.**
 - **A fresh iRiS install keeps the wallpaper clear** of Material's blur and dim.
 - **Cards leave a little air** between themselves and the bubble that opened them.
+- **Widget quick controls are one clean sheet** in every widget: Widget, Look and Arrange, choices in even rows, switches for on and off, opaque over a dimmed widget. The widget bar is tidier too: Add widgets, the rail, one grid control and Done.
+- **The iRiS desktop menu is yours to arrange.** Pick its actions in Settings › Desktop (screenshot, terminal, files, colour picker, next wallpaper and more); the wallpaper at the top gets a button for the next one.
 - **The music widget rests** as a single tile when nothing plays.
+- **Widget quick controls keep their size** when you switch between Widget, Look and Arrange.
+- **Online things say when you're offline.** Wallpaper sources, news, anime, weather, lyrics and AI chat tell you, then pick up again when the connection is back; weather keeps its last forecast.
+- **Dock window previews show where each window is.** The app's icon in the middle, a strip of its workspace's columns with its own lit, in the order they sit on screen; middle-click one to close it.
+- **The iRiS menu bar goes transparent, with the Island as its notch.** Your items sit on the wallpaper and turn dark over a light one, the notch grows into what it opens, and what a piece opens drops just under it. *Band* brings the bar back. New theme: Twilight.
+- **Control Center controls unfold.** Right-click a display or system control for brightness, Night Light warmth and schedule, dark mode, Do Not Disturb, Game mode, Stay awake and the power profile. `inir iris control expand:display`.
+- **Full width shows the Island inside the bar,** and its pages grow out of it.
+- **iRiS Settings reads better on glass.** Cards and the sidebar take just enough of a backing for their text over bright windows or wallpapers, the section you're in is lit in the accent, search shows which section each result lives in and marks the words you typed, and scroll bars appear only under the pointer.
 
 ### Fixed
 
+- **iRiS loads again on Ubuntu, Debian and Fedora.** Four names the Qt they ship still reserves stopped the Island, the Dock and the theme previews from loading there.
 - **Live wallpapers no longer restart** when you uncover the desktop or leave the Overview.
 - **Island bubbles no longer contact AniList** unless you placed the Airing piece.
+- **Done and other edit-mode buttons answer the first click.** Leaving widget editing or Customize no longer eats the click after it, and "More actions" opens the Arrange page instead of a menu that swallowed clicks.
 - **Sharper iRiS text, covers and thumbnails,** and smooth card, panel and Dock edges.
 - **iRiS side panels join the frame** instead of showing a dark notch on glass.
 - **Locking and unlocking iRiS no longer flash,** and lock-screen widgets actually show up.
@@ -54,10 +73,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Setup leaves your font settings alone.**
 - **`inir update` names the checkout it updates** and stops flagging our own files as your changes.
 - **No Hyprland noise in the logs on Niri.**
+- **External calendars no longer empty out** after a sync without internet.
 - **Repeating calendar events show every time they repeat.** A class on Monday and Wednesday shows on both days; skipped and moved dates are respected, and daily events started long ago reach today (#261).
 - **Fullscreen is noticed every time.** A second fullscreen window on the same workspace kept the bar showing and game mode off (#265).
 - **Switching families no longer shows a pixelated live wallpaper.** The transition draws the video's full-size frame, lightly blurred into iRiS.
 - **Screen corners open on their own monitor,** so a hot corner no longer opens Orbit on the other screen (#262).
+- **Wallpaper searches no longer blame your tags** when the source is down.
+- **Big wallpaper folders no longer choke the shell.** Thumbnails are checked in batches instead of one process per tile (3736 processes → 31 opening a 300-image folder), a file that can't be read no longer stops the rest, and folders with spaces in their name get thumbnails.
+- **A wallpaper's file name can no longer run a command** while its thumbnail or colours are made.
 
 ## [2.31.0] - 2026-09-19
 
