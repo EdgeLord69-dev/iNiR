@@ -79,6 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Switching families no longer shows a pixelated live wallpaper.** The transition draws the video's full-size frame, lightly blurred into iRiS.
 - **Screen corners open on their own monitor,** so a hot corner no longer opens Orbit on the other screen (#262).
 - **The wide lyrics player never shows an empty band.** Without lyrics, the title, artist and time sit beside the cover.
+- **The Overview backdrop plays a live wallpaper at your screen's size,** not the 4K original.
 - **Wallpaper searches no longer blame your tags** when the source is down.
 - **Big wallpaper folders no longer choke the shell.** Thumbnails are checked in batches instead of one process per tile (3736 processes → 31 opening a 300-image folder), a file that can't be read no longer stops the rest, and folders with spaces in their name get thumbnails.
 - **A wallpaper's file name can no longer run a command** while its thumbnail or colours are made.

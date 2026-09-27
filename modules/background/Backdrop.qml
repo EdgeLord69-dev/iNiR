@@ -51,6 +51,11 @@ Variants {
         readonly property size backdropSourceSize: Qt.size(
             Math.ceil(((screen?.width ?? 1920) + backdropDecodeOverflow * 2) * backdropDecodeScale),
             Math.ceil(((screen?.height ?? 1080) + backdropDecodeOverflow * 2) * backdropDecodeScale))
+        // A live wallpaper plays from the cached copy at the output's height, not a 4K original.
+        readonly property string videoSource: {
+            const path = wallpaperIsVideo ? Wallpapers.videoPlaybackPath(wallpaperPathRaw, Math.ceil((screen?.height ?? 1080) * backdropDecodeScale)) : ""
+            return !path ? "" : path.startsWith("file://") ? path : ("file://" + path)
+        }
         readonly property int thumbnailBlurStrength: Config.options?.background?.effects?.thumbnailBlurStrength ?? 50
         readonly property bool enableAnimatedBlur: iiBackdrop.enableAnimatedBlur ?? false
         // Niri's backdrop is a full-screen visual layer, not a photo viewer. It
@@ -263,9 +268,7 @@ Variants {
                     // The Aurora branch owns its own player. Keep this pipeline
                     // completely unloaded while that style is visible.
                     if (!videoWallpaper.visible || !backdropWindow.wallpaperIsVideo) return "";
-                    const path = backdropWindow.wallpaperPathRaw;
-                    if (!path) return "";
-                    return path.startsWith("file://") ? path : ("file://" + path);
+                    return backdropWindow.videoSource;
                 }
                 fillMode: backdropWindow.videoFillMode
                 loops: MediaPlayer.Infinite
@@ -420,9 +423,7 @@ Variants {
                     // Do not borrow videoWallpaper.source: that kept the hidden
                     // non-Aurora MediaPlayer loaded as a second decoder.
                     if (!auroraVideoWallpaper.visible) return "";
-                    const path = backdropWindow.wallpaperPathRaw;
-                    if (!path) return "";
-                    return path.startsWith("file://") ? path : ("file://" + path);
+                    return backdropWindow.videoSource;
                 }
                 fillMode: backdropWindow.videoFillMode
                 loops: MediaPlayer.Infinite
