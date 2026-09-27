@@ -80,6 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Screen corners open on their own monitor,** so a hot corner no longer opens Orbit on the other screen (#262).
 - **A crowded Material bar no longer cuts its modules in half.** The music title gives up its room first (#268).
 - **Your language shows outside the one region it was written for.** Spanish in Mexico or Colombia, Portuguese in Portugal and the rest find their catalogue instead of English.
+- **Windows are app windows again in Chinese, Hindi and Arabic,** not glass panes or the other operating system, and German disks are no longer floppies.
 - **The wide lyrics player never shows an empty band.** Without lyrics, the title, artist and time sit beside the cover.
 - **The Overview backdrop plays a live wallpaper at your screen's size,** not the 4K original.
 - **Wallpaper searches no longer blame your tags** when the source is down.
