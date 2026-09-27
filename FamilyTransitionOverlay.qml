@@ -19,7 +19,7 @@ import qs.modules.iris.style
 // Each family has its own visual identity:
 //   Waffle  → Fluent acrylic card with decelerate curve and accent shimmer
 //   Material → Ink ripple with Material emphasized curves and container badge
-//   iRiS    → Minimal optical mark with restrained type and no blur
+//   iRiS    → Minimal optical mark with restrained type over a light blur
 Scope {
     id: root
 
@@ -115,7 +115,10 @@ Scope {
             // Side effect kept out of the source binding: make sure the still
             // for a video/GIF wallpaper exists before the overlay asks for it.
             const wp = Config.options?.background?.wallpaperPath ?? ""
-            if (wp) Wallpapers.ensureVideoStill(wp)
+            if (wp) {
+                Wallpapers.ensureVideoFirstFrame(FileUtils.trimFileProtocol(wp))
+                Wallpapers.ensureVideoStill(wp)
+            }
 
             // Cancel any running exit
             fadeOut.stop()
@@ -175,7 +178,7 @@ Scope {
     NumberAnimation {
         id: blurIn
         target: root; property: "_blurAmount"
-        from: 0; to: root._isIris ? 0 : 0.8
+        from: 0; to: root._isIris ? 0.22 : 0.8
         duration: _animated ? 360 : 5
         easing.type: Easing.OutQuad
     }
@@ -300,7 +303,11 @@ Scope {
                             // Pure: generating the thumbnail from in here mutated
                             // state this same binding reads and Qt flagged a
                             // binding loop. _beginTransition() requests it.
+                            // The full-size first frame, not the 256 px thumbnail still: iRiS
+                            // barely blurs it, and a stretched thumbnail read as pixelated.
                             if (/\.(mp4|webm|mkv|avi|mov)$/i.test(path)) {
+                                const frame = Wallpapers.stillUrlFor(path)
+                                if (frame) return frame
                                 const still = Wallpapers.videoStillPath(path)
                                 if (!still) return ""
                                 return still.startsWith("file://") ? still : "file://" + still
@@ -308,6 +315,8 @@ Scope {
                             return path.startsWith("file://") ? path : "file://" + path
                         }
                         fillMode: Image.PreserveAspectCrop
+                        // Decoded at the output's size: a 4K frame never becomes a 4K texture.
+                        sourceSize: Qt.size(Math.ceil(Screen.width * Screen.devicePixelRatio), Math.ceil(Screen.height * Screen.devicePixelRatio))
                         asynchronous: true
                         cache: true
                         visible: false
@@ -317,7 +326,7 @@ Scope {
                         anchors.fill: parent
                         source: wallpaperImg
                         visible: wallpaperImg.status === Image.Ready
-                        blurEnabled: Appearance.effectsEnabled && !root._isIris
+                        blurEnabled: Appearance.effectsEnabled
                         blur: root._blurAmount
                         blurMax: 64
                         saturation: 0.25
