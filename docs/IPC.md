@@ -861,7 +861,7 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `watchSkip` | Close the episode that is playing and start the `next` (default) or `previous` one without searching again. Its place is saved first |
 | `watchSubs` | Subtitles of the episode that is playing: `size+`, `size-` (kept for every episode), `delay+`, `delay-`, `delay0` (this episode), `off`, `track:<id>`, `file:<path>` to load one. No argument lists the tracks |
 | `watchSeek` | Jump inside the episode that is playing by seconds: `85` skips an opening, `-10` goes back |
-| `status` | JSON with the Island, Dock, Control Center, Spotlight and side panel state, plus the player the Island follows (title, position, length) |
+| `status` | JSON with the Island, Dock, Control Center, Spotlight and side panel state, which edit modes, Settings or the wallpaper gallery hold the screen (`editing`, `settings`, `gallery`), plus the player the Island follows (title, position, length) |
 
 ```bash
 inir iris open
