@@ -54,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **No Hyprland noise in the logs on Niri.**
 - **Repeating calendar events show every time they repeat.** A class on Monday and Wednesday shows on both days; skipped and moved dates are respected, and daily events started long ago reach today (#261).
 - **Fullscreen is noticed every time.** A second fullscreen window on the same workspace kept the bar showing and game mode off (#265).
+- **Screen corners open on their own monitor,** so a hot corner no longer opens Orbit on the other screen (#262).
 
 ## [2.31.0] - 2026-09-19
 
