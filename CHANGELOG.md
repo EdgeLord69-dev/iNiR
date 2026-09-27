@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **The tray bubble can be the tray,** and every iRiS menu, tray menus included, grows out of what opened it.
 - **You decide what the iRiS OSD shows,** in fullscreen too, and the volume limit goes up to 153 %.
 - **The wallpaper library filters by kind:** stills, live wallpapers or GIFs.
-- **iRiS speaks Spanish.**
+- **iRiS speaks Spanish,** in neutral Latin American Spanish that replaces the Argentine catalogue.
 - **Notices when something connects or drops.** Mice, keyboards, controllers, phones, drives and SD cards by name, plus Bluetooth, the charger, displays, sound output and the internet, in every family. `inir connections sample usb`.
 - **Widgets read the wallpaper under them.** Over a bright one they turn to dark ink and deeper accents, and iRiS glass turns to frost; it follows a widget as you drag it. *Ink follows the wallpaper* in Settings, `inir background legibilityState`.
 - **One design for every widget.** iRiS, Material, iNstrument or Readout, from Settings or a widget's Look controls. Widgets that kept a look of their own can be matched, and Undo brings your mix back. `inir background widgetDesign`.
