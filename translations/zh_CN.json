@@ -6736,5 +6736,7 @@
   "Wallpaper glass composition: Islands bar, island dock, island sidebars and floating content with restrained transparent desktop widgets.": "壁纸玻璃组合：Islands 栏、岛式 Dock、岛式侧边栏，以及搭配克制透明桌面小组件的浮动内容。",
   "When enabled, Settings opens as a floating overlay inside the shell instead of a separate window. Switching modes takes effect immediately and keeps you on this Settings page.": "启用后，设置会作为 shell 内的浮动覆盖层打开，而不是单独窗口。切换模式会立即生效，并保持在当前设置页面。",
   "Widget library": "小组件库",
-  "Widgets panel": "小组件面板"
+  "Widgets panel": "小组件面板",
+  "Lume on every widget": "所有小组件启用 Lume",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "每个小组件都按下方壁纸明亮且繁杂的情况显示：玻璃上更深的遮罩、裸露文字下更明显的阴影，即使并不需要。"
 }

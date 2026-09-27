@@ -8411,5 +8411,7 @@
   "To add or edit a VPN here, install NetworkManager's connection editor (nm-connection-editor).": "To add or edit a VPN here, install NetworkManager's connection editor (nm-connection-editor).",
   "OpenVPN files need NetworkManager's OpenVPN plugin (networkmanager-openvpn or NetworkManager-openvpn).": "OpenVPN files need NetworkManager's OpenVPN plugin (networkmanager-openvpn or NetworkManager-openvpn).",
   "New WireGuard…": "New WireGuard…",
-  "Other VPN…": "Other VPN…"
+  "Other VPN…": "Other VPN…",
+  "Lume on every widget": "Lume on every widget",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed."
 }

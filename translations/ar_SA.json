@@ -6736,5 +6736,7 @@
   "Wallpaper glass composition: Islands bar, island dock, island sidebars and floating content with restrained transparent desktop widgets.": "تكوين زجاجي فوق الخلفية: شريط Islands، وdock جزيري، وأشرطة جانبية جزيرية، ومحتوى عائم مع شفافية هادئة لأدوات سطح المكتب.",
   "When enabled, Settings opens as a floating overlay inside the shell instead of a separate window. Switching modes takes effect immediately and keeps you on this Settings page.": "عند التفعيل، تُفتح الإعدادات كطبقة عائمة داخل shell بدل نافذة منفصلة. يُطبَّق تغيير الوضع فورًا مع إبقائك على صفحة الإعدادات الحالية.",
   "Widget library": "مكتبة الأدوات",
-  "Widgets panel": "لوحة الأدوات"
+  "Widgets panel": "لوحة الأدوات",
+  "Lume on every widget": "Lume على كل الأدوات",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "تُقرأ كل أداة كأن الخلفية تحتها ساطعة ومزدحمة: حجاب أعمق على الزجاج وظل أقوى على النص المكشوف، حتى حيث لا حاجة له."
 }

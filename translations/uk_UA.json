@@ -6736,5 +6736,7 @@
   "Wallpaper glass composition: Islands bar, island dock, island sidebars and floating content with restrained transparent desktop widgets.": "Скляна композиція поверх шпалер: панель Islands, острівний док і бічні панелі, плаваючий вміст та помірно прозорі віджети стільниці.",
   "When enabled, Settings opens as a floating overlay inside the shell instead of a separate window. Switching modes takes effect immediately and keeps you on this Settings page.": "Коли ввімкнено, Налаштування відкриваються як плаваюче накладання всередині оболонки, а не окремим вікном. Зміна режиму застосовується одразу й зберігає поточну сторінку.",
   "Widget library": "Бібліотека віджетів",
-  "Widgets panel": "Панель віджетів"
+  "Widgets panel": "Панель віджетів",
+  "Lume on every widget": "Lume на всіх віджетах",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Кожен віджет читається так, ніби шпалери під ним світлі й строкаті: щільніша вуаль на склі та чіткіша тінь під відкритим текстом, навіть там, де це не потрібно."
 }

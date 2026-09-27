@@ -6736,5 +6736,7 @@
   "Wallpaper glass composition: Islands bar, island dock, island sidebars and floating content with restrained transparent desktop widgets.": "Wallpaper glass composition: Islands bar, island dock, island sidebars और संतुलित transparency वाले floating desktop widgets।",
   "When enabled, Settings opens as a floating overlay inside the shell instead of a separate window. Switching modes takes effect immediately and keeps you on this Settings page.": "चालू होने पर Settings अलग window की जगह shell के भीतर floating overlay के रूप में खुलती है। Mode बदलते ही असर होता है और यही Settings page खुला रहता है।",
   "Widget library": "विजेट लाइब्रेरी",
-  "Widgets panel": "विजेट पैनल"
+  "Widgets panel": "विजेट पैनल",
+  "Lume on every widget": "हर विजेट पर Lume",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "हर विजेट ऐसे पढ़ा जाता है जैसे नीचे का वॉलपेपर चमकीला और भरा हुआ हो: कांच पर गहरा परदा और खुले टेक्स्ट पर मज़बूत छाया, ज़रूरत न होने पर भी।"
 }

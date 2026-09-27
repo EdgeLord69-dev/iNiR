@@ -113,6 +113,8 @@ The iRiS widget gallery covers the everyday desktop set, including clock, weathe
 
 One design covers every widget: iRiS faces, Material, iNstrument (gauges, scales and monospace captions drawn straight on the wallpaper) or Readout. Pick it in Settings › Desktop › Widgets or in a widget's Look controls; *Use on every widget* and *Match* put widgets that kept a look of their own back in line, and *Undo* returns the mix you had before. The Lume theme puts every widget in iNstrument.
 
+*Lume on every widget* (Settings › Desktop › Widgets) backs every widget's text as if the wallpaper under it were bright and busy, for wallpapers where you want it even when it isn't needed.
+
 ```bash
 inir background widgetDesign instrument
 inir background widgetDesign undo

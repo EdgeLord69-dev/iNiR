@@ -6736,5 +6736,7 @@
   "Wallpaper glass composition: Islands bar, island dock, island sidebars and floating content with restrained transparent desktop widgets.": "Bố cục kính trên hình nền: thanh Islands, dock dạng đảo, thanh bên dạng đảo và nội dung nổi cùng các tiện ích trong suốt vừa phải.",
   "When enabled, Settings opens as a floating overlay inside the shell instead of a separate window. Switching modes takes effect immediately and keeps you on this Settings page.": "Khi bật, Cài đặt mở dưới dạng lớp phủ nổi bên trong shell thay vì một cửa sổ riêng. Chuyển chế độ có hiệu lực ngay và vẫn giữ nguyên trang Cài đặt hiện tại.",
   "Widget library": "Thư viện tiện ích",
-  "Widgets panel": "Bảng tiện ích"
+  "Widgets panel": "Bảng tiện ích",
+  "Lume on every widget": "Lume trên mọi widget",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Mọi widget hiển thị như thể hình nền bên dưới sáng và rối: lớp phủ đậm hơn trên kính và bóng rõ hơn dưới chữ trần, kể cả khi không cần."
 }

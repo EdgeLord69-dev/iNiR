@@ -6736,5 +6736,7 @@
   "Wallpaper glass composition: Islands bar, island dock, island sidebars and floating content with restrained transparent desktop widgets.": "Duvar kağıdı üzerinde cam bileşimi: Islands çubuğu, ada dock, ada kenar çubukları ve ölçülü şeffaf masaüstü widget’larıyla yüzen içerik.",
   "When enabled, Settings opens as a floating overlay inside the shell instead of a separate window. Switching modes takes effect immediately and keeps you on this Settings page.": "Etkinleştirildiğinde Ayarlar ayrı bir pencere yerine kabuk içinde yüzen bir katman olarak açılır. Mod değişikliği hemen uygulanır ve bu Ayarlar sayfasında kalırsın.",
   "Widget library": "Widget kitaplığı",
-  "Widgets panel": "Widget paneli"
+  "Widgets panel": "Widget paneli",
+  "Lume on every widget": "Tüm widget'larda Lume",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Her widget, altındaki duvar kâğıdı parlak ve karışıkmış gibi okunur: camda daha koyu bir örtü, çıplak metinde daha belirgin bir gölge, gerekmediği yerde bile."
 }

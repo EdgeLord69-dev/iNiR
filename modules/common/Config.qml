@@ -3910,6 +3910,7 @@ Singleton {
                     property int opacity: 100
                     property string tint: "wallpaper" // accents: "wallpaper", "system" (iRiS), "spectrum" or "mono"
                     property int vibrance: 85 // how strong widget accents are (0-100)
+                    property bool legibleAlways: false // Lume backs every widget as if the wallpaper under it were bright and busy
                     property string design: "iris" // "iris" faces, "material" (each widget's own style), "instrument" or "readout"
                     property string material: "glass" // "glass", "clear", "solid" or "tinted"
                     property string weight: "regular" // "light", "regular" or "bold"

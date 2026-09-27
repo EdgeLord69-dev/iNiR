@@ -6736,5 +6736,7 @@
   "Wallpaper glass composition: Islands bar, island dock, island sidebars and floating content with restrained transparent desktop widgets.": "הרכב זכוכית מעל הטפט: סרגל Islands, dock כאי, סרגלי צד כאיים ותוכן צף עם וידג׳טים שקופים במידה.",
   "When enabled, Settings opens as a floating overlay inside the shell instead of a separate window. Switching modes takes effect immediately and keeps you on this Settings page.": "כאשר האפשרות פעילה, ההגדרות נפתחות כשכבה צפה בתוך ה-shell במקום בחלון נפרד. החלפת מצב נכנסת לתוקף מיד ומשאירה אתכם בדף ההגדרות הנוכחי.",
   "Widget library": "ספריית וידג׳טים",
-  "Widgets panel": "לוח וידג׳טים"
+  "Widgets panel": "לוח וידג׳טים",
+  "Lume on every widget": "Lume בכל הווידג'טים",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "כל ווידג'ט נקרא כאילו הטפט מתחתיו בהיר ועמוס: מסך עמוק יותר על הזכוכית וצל חזק יותר מתחת לטקסט חשוף, גם כשאין בכך צורך."
 }

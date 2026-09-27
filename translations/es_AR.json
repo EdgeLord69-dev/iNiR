@@ -8433,5 +8433,7 @@
   "Accents": "Acentos",
   "The three colours every widget draws its rings, bars and figures with. Wallpaper takes the generated colours, iRiS your accent and highlight, Spectrum fixed blue, orange and teal, Mono one hue in three tones.": "Los tres colores con los que cada widget dibuja anillos, barras y cifras. Wallpaper usa los colores generados, iRiS tu acento y resaltado, Espectro azul, naranja y verde azulado fijos, Mono un tono en tres matices.",
   "Spectrum": "Espectro",
-  "Low keeps soft pastels; high makes accents saturated and bright. They stay readable over the wallpaper either way.": "Bajo deja pasteles suaves; alto los vuelve saturados y brillantes. Siempre se leen sobre el wallpaper."
+  "Low keeps soft pastels; high makes accents saturated and bright. They stay readable over the wallpaper either way.": "Bajo deja pasteles suaves; alto los vuelve saturados y brillantes. Siempre se leen sobre el wallpaper.",
+  "Lume on every widget": "Lume en todos los widgets",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Cada widget se lee como si el fondo debajo fuera claro y cargado: un velo más denso en el vidrio y una sombra más firme en el texto sin placa, aunque no haga falta."
 }

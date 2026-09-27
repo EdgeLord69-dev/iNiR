@@ -6736,5 +6736,7 @@
   "Wallpaper glass composition: Islands bar, island dock, island sidebars and floating content with restrained transparent desktop widgets.": "Composizione in vetro sullo sfondo: barra Islands, dock a isola, barre laterali a isola e contenuti fluttuanti con widget desktop dalla trasparenza controllata.",
   "When enabled, Settings opens as a floating overlay inside the shell instead of a separate window. Switching modes takes effect immediately and keeps you on this Settings page.": "Quando è attivo, Impostazioni si apre come overlay flottante dentro la shell invece che in una finestra separata. Il cambio di modalità è immediato e mantiene aperta questa pagina.",
   "Widget library": "Libreria widget",
-  "Widgets panel": "Pannello widget"
+  "Widgets panel": "Pannello widget",
+  "Lume on every widget": "Lume su tutti i widget",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Ogni widget si legge come se lo sfondo sotto fosse chiaro e fitto: un velo più denso sul vetro e un'ombra più decisa sul testo nudo, anche dove non serve."
 }

@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **You decide what the iRiS OSD shows,** in fullscreen too, and the volume limit goes up to 153 %.
 - **The wallpaper library filters by kind:** stills, live wallpapers or GIFs.
 - **iRiS speaks Spanish.**
+- **Lume on every widget.** A switch that backs every widget's text even where the wallpaper wouldn't need it.
 
 ### Changed
 

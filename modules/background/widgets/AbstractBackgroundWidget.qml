@@ -2301,7 +2301,8 @@ AbstractWidget {
     // Legibility shadow behind plate-less text, scaled by how busy the region is. Light ink gets a
     // dark shadow; dark ink on a light region gets only a faint light lift over its darker patches,
     // since a dark shadow under dark text reads as a smear and a strong light one as a glow.
-    readonly property real _haloBusy: root.positionColorAdaptationEnabled
+    readonly property bool legibleAlways: root.widgetIrisFamily && Boolean(root.irisWidgetOptions.legibleAlways ?? false)
+    readonly property real _haloBusy: root.legibleAlways ? 1 : root.positionColorAdaptationEnabled
         ? Math.min(1, root.regionBrightnessSpread / 0.28) : 0
     readonly property color colHalo: root.inkOnLight && !root.forceDarkInk
         ? Qt.rgba(1, 1, 1, 0.12 + 0.3 * root._haloBusy)

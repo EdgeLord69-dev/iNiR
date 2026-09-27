@@ -6736,5 +6736,7 @@
   "Wallpaper glass composition: Islands bar, island dock, island sidebars and floating content with restrained transparent desktop widgets.": "배경화면 위 유리 구성입니다. Islands 바, 아일랜드 독, 아일랜드 사이드바, 절제된 투명도를 지닌 데스크톱 위젯과 떠 있는 콘텐츠를 결합합니다.",
   "When enabled, Settings opens as a floating overlay inside the shell instead of a separate window. Switching modes takes effect immediately and keeps you on this Settings page.": "활성화하면 설정이 별도 창 대신 셸 내부의 떠 있는 오버레이로 열립니다. 모드 전환은 즉시 적용되며 현재 설정 페이지를 유지합니다.",
   "Widget library": "위젯 라이브러리",
-  "Widgets panel": "위젯 패널"
+  "Widgets panel": "위젯 패널",
+  "Lume on every widget": "모든 위젯에 Lume",
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "아래 배경화면이 밝고 복잡한 것처럼 모든 위젯을 표시합니다. 유리에는 더 짙은 베일, 맨 글자에는 더 뚜렷한 그림자를 필요 없는 곳에도 적용합니다."
 }
