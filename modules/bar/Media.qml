@@ -36,6 +36,8 @@ Item {
         ? maxMediaWidth
         : Math.min(rowLayout.implicitWidth + rowLayout.spacing * 2, maxMediaWidth)
     implicitHeight: Appearance.sizes.barHeight
+    // Narrowest it gets in a crowded bar: the glyph alone.
+    readonly property real minimumWidth: compactMediaGlyph.implicitWidth + rowLayout.spacing * 2
     clip: true
 
     Timer {
