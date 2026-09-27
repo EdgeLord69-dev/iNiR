@@ -21,7 +21,7 @@ QtObject {
         notes: "#ffcc00", calendarUpcoming: "#ff3b30", monthCalendar: "#ff3b30", dateBadge: "#ff3b30",
         todo: "#ff9f0a", timers: "#ff9f0a", newsTicker: "#30b0c7", userCard: "#0a84ff",
         customImage: "#30b0c7", imageConverter: "#30b0c7", japaneseTypography: "#bf5af2",
-        editorial: "#8e8e93", shape: "#bf5af2", mascot: "#ff375f", controls: "#0a84ff", screenTime: "#5e5ce6"
+        editorial: "#5e5ce6", shape: "#bf5af2", mascot: "#ff375f", controls: "#0a84ff", screenTime: "#5e5ce6"
     })
     readonly property string customTint: "#5e5ce6"
     readonly property string fallbackTint: "#8e8e93"
