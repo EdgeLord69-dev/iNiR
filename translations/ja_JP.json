@@ -3347,7 +3347,7 @@
   "Usage: %1save CHAT_NAME": "使用法: %1save チャット名",
   "Usage: %1tool TOOL_NAME": "使用法: %1tool ツール名",
   "Usage: install-package <package-name>": "使用法: install-package <package-name>",
-  "Usage: remove-package <package-name>": "使用法: 削除パッケージ <package-name>",
+  "Usage: remove-package <package-name>": "使用法: remove-package <package-name>",
   "Usage: superpaste NUM[i]\nExamples: superpaste 4i (last 4 images), superpaste 7 (last 7 entries)": "使用法: スーパーペースト NUM[i]\n例: superpaste 4i (最後の 4 つの画像)、superpaste 7 (最後の 7 つのエントリ)",
   "Usage: todo <task description>": "使用法: todo <task description>",
   "Use 5 GHz (802.11a) instead of 2.4 GHz. Requires adapter support.": "2.4 GHz の代わりに 5 GHz (802.11a) を使用します。アダプターのサポートが必要です。",

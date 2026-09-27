@@ -3347,7 +3347,7 @@
   "Usage: %1save CHAT_NAME": "Verwendung: %1CHAT_NAME speichern",
   "Usage: %1tool TOOL_NAME": "Verwendung: %1tool TOOL_NAME",
   "Usage: install-package <package-name>": "Verwendung: install-package <package-name>",
-  "Usage: remove-package <package-name>": "Verwendung: Remove-Package <package-name>",
+  "Usage: remove-package <package-name>": "Verwendung: remove-package <package-name>",
   "Usage: superpaste NUM[i]\nExamples: superpaste 4i (last 4 images), superpaste 7 (last 7 entries)": "Verwendung: Superpaste NUM[i]\nBeispiele: Superpaste 4i (letzte 4 Bilder), Superpaste 7 (letzte 7 Einträge)",
   "Usage: todo <task description>": "Verwendung: todo <task description>",
   "Use 5 GHz (802.11a) instead of 2.4 GHz. Requires adapter support.": "Verwenden Sie 5 GHz (802.11a) anstelle von 2,4 GHz. Erfordert Adapterunterstützung.",

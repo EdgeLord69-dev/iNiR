@@ -3347,7 +3347,7 @@
   "Usage: %1save CHAT_NAME": "Использование: %1save ИМЯ_ЧАТА",
   "Usage: %1tool TOOL_NAME": "Использование: %1tool ИНСТРУМЕНТ",
   "Usage: install-package <package-name>": "Использование: install-package <package-name>",
-  "Usage: remove-package <package-name>": "Использование: удалить-пакет <package-name>",
+  "Usage: remove-package <package-name>": "Использование: remove-package <package-name>",
   "Usage: superpaste NUM[i]\nExamples: superpaste 4i (last 4 images), superpaste 7 (last 7 entries)": "Использование: суперпаста NUM[i]\nПримеры: суперпаста 4i (последние 4 изображения), суперпаста 7 (последние 7 записей).",
   "Usage: todo <task description>": "Использование: todo <task description>",
   "Use 5 GHz (802.11a) instead of 2.4 GHz. Requires adapter support.": "Используйте частоту 5 ГГц (802.11a) вместо 2,4 ГГц. Требуется поддержка адаптера.",

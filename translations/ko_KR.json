@@ -3347,7 +3347,7 @@
   "Usage: %1save CHAT_NAME": "사용법: %1CHAT_NAME 저장",
   "Usage: %1tool TOOL_NAME": "사용법: %1도구 TOOL_NAME",
   "Usage: install-package <package-name>": "사용법: install-package <package-name>",
-  "Usage: remove-package <package-name>": "사용법: 제거 패키지 <package-name>",
+  "Usage: remove-package <package-name>": "사용법: remove-package <package-name>",
   "Usage: superpaste NUM[i]\nExamples: superpaste 4i (last 4 images), superpaste 7 (last 7 entries)": "사용법: 슈퍼 페이스트 NUM[i]\n예: superpaste 4i(마지막 4개 이미지), superpaste 7(마지막 7개 항목)",
   "Usage: todo <task description>": "사용법: todo <task description>",
   "Use 5 GHz (802.11a) instead of 2.4 GHz. Requires adapter support.": "2.4GHz 대신 5GHz(802.11a)를 사용합니다. 어댑터 지원이 필요합니다.",
