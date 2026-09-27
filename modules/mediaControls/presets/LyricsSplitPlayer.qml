@@ -48,8 +48,10 @@ Item {
     readonly property string vizType: Config.getNestedValue("background.widgets.mediaControls.visualizerType", "wave")
     readonly property string vizPosition: Config.getNestedValue("background.widgets.mediaControls.visualizerPosition", "bottom")
 
+    // Without lyrics the title, artist and time move up beside the artwork, so the row is never an empty band.
+    readonly property bool titleUp: !lyricSheet.hasLyrics
     readonly property real topRowHeight: Math.max(0, card.height - 28
-        - infoRow.implicitHeight - seekRow.implicitHeight - 16)
+        - (root.titleUp ? 0 : infoRow.implicitHeight + 8) - seekRow.implicitHeight - 8)
     readonly property real artSize: Math.min(card.width * 0.32, root.topRowHeight)
     readonly property bool sheetFits: root.topRowHeight >= 72
     readonly property bool showSheet: lyricSheet.hasLyrics && root.sheetFits
@@ -216,15 +218,31 @@ Item {
                             playerColor: root.themeSourceColor
                         }
 
-                        StyledText {
-                            anchors.centerIn: parent
-                            width: parent.width
-                            visible: root.vizPosition === "none"
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideRight
-                            font.pixelSize: Appearance.font.pixelSize.smaller
-                            color: ColorUtils.applyAlpha(root.subInk, 0.7)
-                            text: lyricSheet.hasLyrics ? "" : Translation.tr("No synced lyrics")
+                        ColumnLayout {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            visible: root.titleUp
+                            spacing: 4
+
+                            PlayerInfo {
+                                Layout.fillWidth: true
+                                title: playerBase.effectiveTitle
+                                artist: playerBase.effectiveArtist
+                                titleSize: Appearance.font.pixelSize.huge
+                                titleWeight: Font.DemiBold
+                                titleLines: root.topRowHeight >= 96 ? 2 : 1
+                                artistSize: Appearance.font.pixelSize.small
+                                slideDirection: playerBase.slideDirection
+                                titleColor: root.ink
+                                artistColor: root.subInk
+                            }
+                            StyledText {
+                                text: `${StringUtils.friendlyTimeForSeconds(playerBase.effectivePosition)} / ${StringUtils.friendlyTimeForSeconds(playerBase.effectiveLength)}`
+                                color: root.subInk
+                                font.family: Appearance.font.family.numbers
+                                font.pixelSize: Appearance.font.pixelSize.smaller
+                            }
                         }
                     }
                 }
@@ -232,6 +250,7 @@ Item {
 
             RowLayout {
                 id: infoRow
+                visible: !root.titleUp
                 Layout.fillWidth: true
                 Layout.minimumHeight: implicitHeight
                 spacing: 10

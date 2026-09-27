@@ -78,6 +78,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Fullscreen is noticed every time.** A second fullscreen window on the same workspace kept the bar showing and game mode off (#265).
 - **Switching families no longer shows a pixelated live wallpaper.** The transition draws the video's full-size frame, lightly blurred into iRiS.
 - **Screen corners open on their own monitor,** so a hot corner no longer opens Orbit on the other screen (#262).
+- **The wide lyrics player never shows an empty band.** Without lyrics, the title, artist and time sit beside the cover.
 - **Wallpaper searches no longer blame your tags** when the source is down.
 - **Big wallpaper folders no longer choke the shell.** Thumbnails are checked in batches instead of one process per tile (3736 processes → 31 opening a 300-image folder), a file that can't be read no longer stops the rest, and folders with spaces in their name get thumbnails.
 - **A wallpaper's file name can no longer run a command** while its thumbnail or colours are made.
