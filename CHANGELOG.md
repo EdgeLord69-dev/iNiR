@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **The wallpaper library filters by kind:** stills, live wallpapers or GIFs.
 - **iRiS speaks Spanish.**
 - **Lume on every widget.** A switch that backs every widget's text even where the wallpaper wouldn't need it.
+- **`/` in Spotlight flips iRiS settings.** Every switch, the widget design and accents and the themes, found by a few letters and switched in place.
 
 ### Changed
 

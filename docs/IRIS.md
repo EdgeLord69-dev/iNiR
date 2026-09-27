@@ -115,6 +115,8 @@ One design covers every widget: iRiS faces, Material, iNstrument (gauges, scales
 
 *Lume on every widget* (Settings › Desktop › Widgets) backs every widget's text as if the wallpaper under it were bright and busy, for wallpapers where you want it even when it isn't needed.
 
+In Spotlight, `/` lists iRiS's own switches and picks: type a few letters (`/lume`, `/night`, `/design`) and flip them in place; each row says where it lives in Settings.
+
 ```bash
 inir background widgetDesign instrument
 inir background widgetDesign undo

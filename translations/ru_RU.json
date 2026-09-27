@@ -6738,5 +6738,9 @@
   "Widget library": "Библиотека виджетов",
   "Widgets panel": "Панель виджетов",
   "Lume on every widget": "Lume на всех виджетах",
-  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Каждый виджет читается так, будто обои под ним светлые и пёстрые: плотнее вуаль на стекле и чётче тень под открытым текстом, даже там, где это не нужно."
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Каждый виджет читается так, будто обои под ним светлые и пёстрые: плотнее вуаль на стекле и чётче тень под открытым текстом, даже там, где это не нужно.",
+  "Widget design": "Дизайн виджетов",
+  "Widget accents": "Акценты виджетов",
+  "Theme: %1": "Тема: %1",
+  "Switch": "Переключить"
 }

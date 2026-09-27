@@ -40,11 +40,14 @@ Singleton {
         ThemeService.setGlobalStyle(styleId)
     }
 
-    function toggleIrisMusic(mode: string): void {
+    function irisMusicOn(mode: string): bool {
         const edge = Config.options?.background?.edgeWidgets?.organic ?? ({})
         const surround = Config.options?.iris?.surround ?? ({})
-        const playingHere = Boolean(edge.enable) && String(surround.music ?? "widget") === mode
-        if (playingHere) {
+        return Boolean(edge.enable) && String(surround.music ?? "widget") === mode
+    }
+
+    function toggleIrisMusic(mode: string): void {
+        if (root.irisMusicOn(mode)) {
             Config.setNestedValue("background.edgeWidgets.organic.enable", false)
             return
         }
@@ -420,6 +423,7 @@ Singleton {
             icon: "graphic_eq",
             category: "appearance",
             keywords: ["iris", "frame", "chassis", "music", "visualizer"],
+            isOn: () => root.irisMusicOn("frame"),
             execute: () => root.toggleIrisMusic("frame")
         },
         {
@@ -429,6 +433,7 @@ Singleton {
             icon: "waves",
             category: "appearance",
             keywords: ["iris", "edge", "music", "wave", "visualizer"],
+            isOn: () => root.irisMusicOn("widget"),
             execute: () => root.toggleIrisMusic("widget")
         }
     ]

@@ -6738,5 +6738,9 @@
   "Widget library": "ウィジェットライブラリ",
   "Widgets panel": "ウィジェットパネル",
   "Lume on every widget": "すべてのウィジェットに Lume",
-  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "下の壁紙が明るく複雑な場合と同じように表示します。ガラスにはより濃いベール、地の文字にはより強い影を、必要のない場所でも付けます。"
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "下の壁紙が明るく複雑な場合と同じように表示します。ガラスにはより濃いベール、地の文字にはより強い影を、必要のない場所でも付けます。",
+  "Widget design": "ウィジェットのデザイン",
+  "Widget accents": "ウィジェットのアクセント",
+  "Theme: %1": "テーマ: %1",
+  "Switch": "切り替え"
 }
