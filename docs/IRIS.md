@@ -168,12 +168,13 @@ inir iris control compact
 inir iris control undo
 ```
 
-The lock screen opens as a rehearsal: the real surface, editable, with no PAM behind it. Its first page holds four layouts that move the blocks and change the clock without touching the picture behind them.
+The lock screen opens as a rehearsal: the real surface, editable, with no PAM behind it. Its first page holds four layouts that move the blocks and change the clock without touching the picture behind them. Tap a widget on it to give it a design, material, corners and opacity of its own on the lock; the desktop keeps its look.
 
 ```bash
 inir iris lock edit
 inir iris lock page:layouts
 inir iris lock centered
+inir iris lock select:screenTime/look
 ```
 
 Scripts can publish progress into the Island as live activities:

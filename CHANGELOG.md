@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Customize iRiS on the shell.** The Island grows Themes, Look, Pieces, undo and Done; tap the Island, the Dock or a bubble to edit it where it is. Studio is gone.
 - **Menu bar, a new Island layout.** A thin strip with your workspaces, window and pieces, the Island hanging from it as a notch.
 - **Arrange the Control Center.** Drag, resize and add controls from a library, with six starting layouts and all 20 quick toggles. `inir iris control edit`.
-- **Design the lock screen.** Move the clock, player and sign-in field on the real lock, pick what plays behind them, video included. `inir iris lock edit`.
+- **Design the lock screen.** Move the clock, player and sign-in field on the real lock, pick what plays behind them, video included, and give each widget there a design, material, corners and opacity of its own. `inir iris lock edit`.
 - **Anime pieces.** Airing counts down to the next episode from AniList; Continue searches, plays in mpv and remembers where you stopped.
 - **VPN, without the terminal.** A bubble and an optional Control Center button for NetworkManager and Tailscale connections.
 - **A bubble for new iNiR versions.** Shows what changed and updates from its card.

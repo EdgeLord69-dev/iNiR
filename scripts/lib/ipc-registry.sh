@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 434dcff18d58a914
+# IPC.md hash: 9efca6bd3767a400
 # Targets: 68
 
 declare -gA IPC_TARGET_DESC=(
@@ -370,7 +370,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:preset"]="Set the iRiS appearance preset: \`iris\`, \`soft\`, \`round\`, \`crisp\`, \`angular\` or \`contrast\`"
   ["iris:icon"]="Choose the glyph a piece wears: \`controls\`, \`tools\`, \`focus\`, \`notifications\`, \`bluetooth\`, \`updates\`, \`anime\` or \`watching\`, then a Material Symbol name (e.g. \`inir iris icon controls settings\`) or \`reset\` to go back to its own face"
   ["iris:control"]="Arrange the Control Center in place (drag controls, resize them from a corner, add or take them out): \`edit\`, \`done\`, \`toggle\`, \`undo\`, \`tab:<controls\\"
-  ["iris:lock"]="Rehearse the lock screen (the real surface, editable, with nothing to unlock): \`edit\`, \`done\`, \`toggle\`, \`page:<name>\` to open the inspector on a page (\`layouts\`, \`scene\`, \`type\`, \`clock\`, \`widgets\`…), \`widget:<key>\` to put a desktop widget on the lock or take it off (\`clock\`, \`weather\`, \`monthCalendar\`…), or a layout (\`iris\`, \`centered\`, \`corner\`, \`minimal\`)"
+  ["iris:lock"]="Rehearse the lock screen (the real surface, editable, with nothing to unlock): \`edit\`, \`done\`, \`toggle\`, \`page:<name>\` to open the inspector on a page (\`layouts\`, \`scene\`, \`type\`, \`clock\`, \`widgets\`…), \`widget:<key>\` to put a desktop widget on the lock or take it off (\`clock\`, \`weather\`, \`monthCalendar\`…), \`select:<key>\` to select one on the lock and open its controls in the inspector (\`select:<key>/look\` for shape, material and opacity; \`/arrange\`, \`/widget\`), or a layout (\`iris\`, \`centered\`, \`corner\`, \`minimal\`)"
   ["iris:utility"]="Set the utility satellite: \`tray\`, \`tools\`, \`sound\`, \`mic\` or \`none\`"
   ["iris:watch"]="What the Continue bubble has in progress, or resume one of them: no argument lists them numbered with the episode and saved position, a number or part of a title resumes that show. Anything that matches nothing in progress starts a search instead. Only ani-cli can be pointed at one show; jerry and curd run their own picker"
   ["iris:watchPick"]="Answer whatever the Continue bubble is asking (which show, which episode, what next once one ends, which quality): no argument lists the options, a number or part of a label chooses one, \`cancel\` stops the run"

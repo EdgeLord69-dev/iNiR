@@ -371,6 +371,8 @@ Singleton {
     // The lock screen rehearsal: the same surface, editable, with no PAM behind it.
     property bool irisLockEdit: false
     property string irisLockSelection: ""
+    // The quick-controls tab `inir iris lock select:<key>/<tab>` asks the selected lock widget to show.
+    property string irisLockWidgetTab: ""
     property string irisLockPage: "scene"
     property bool irisEdit: false
     // What the edit bar is inspecting: a piece slot ("extra:vitals", "left",

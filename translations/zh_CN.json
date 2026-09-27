@@ -6742,5 +6742,6 @@
   "Widget design": "小组件设计",
   "Widget accents": "小组件强调色",
   "Theme: %1": "主题：%1",
-  "Switch": "切换"
+  "Switch": "切换",
+  "Your desktop widgets, as they look there. Tap one on the lock to give it a shape and material of its own.": "你的桌面小组件，保持在桌面上的样子。在锁屏上轻点一个，即可为它设置独立的形状和材质。"
 }

@@ -7854,7 +7854,6 @@
   "Regular": "Normal",
   "Roomy": "Amplio",
   "Broad": "Muy amplio",
-  "Your desktop widgets, as they look there. Drag one here to place it on the lock.": "Tus widgets de escritorio, tal como se ven ahí. Arrastrá uno acá para ubicarlo en el bloqueo.",
   "OSD position": "Posición del indicador",
   "Where the level pill shows when the Island is not there to answer, like over a fullscreen game.": "Dónde aparece la pastilla de nivel cuando la Isla no está para responder, como sobre un juego en pantalla completa.",
   "Distance from the edge": "Distancia al borde",
@@ -8439,5 +8438,6 @@
   "Theme: %1": "Tema: %1",
   "Switch": "Cambiar",
   "Lume on every widget": "Lume en todos los widgets",
-  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Cada widget se lee como si el fondo debajo fuera claro y cargado: un velo más denso en el vidrio y una sombra más firme en el texto sin placa, aunque no haga falta."
+  "Every widget reads as if the wallpaper under it were bright and busy: a deeper veil on glass and a firmer shadow on bare text, even where it is not needed.": "Cada widget se lee como si el fondo debajo fuera claro y cargado: un velo más denso en el vidrio y una sombra más firme en el texto sin placa, aunque no haga falta.",
+  "Your desktop widgets, as they look there. Tap one on the lock to give it a shape and material of its own.": "Tus widgets de escritorio, tal como se ven ahí. Toca uno en la pantalla de bloqueo para darle una forma y un material propios."
 }

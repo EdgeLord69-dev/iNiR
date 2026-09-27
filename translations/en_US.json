@@ -7873,7 +7873,6 @@
   "Regular": "Regular",
   "Roomy": "Roomy",
   "Broad": "Broad",
-  "Your desktop widgets, as they look there. Drag one here to place it on the lock.": "Your desktop widgets, as they look there. Drag one here to place it on the lock.",
   "OSD position": "OSD position",
   "Where the level pill shows when the Island is not there to answer, like over a fullscreen game.": "Where the level pill shows when the Island is not there to answer, like over a fullscreen game.",
   "Distance from the edge": "Distance from the edge",
@@ -8417,5 +8416,6 @@
   "Widget design": "Widget design",
   "Widget accents": "Widget accents",
   "Theme: %1": "Theme: %1",
-  "Switch": "Switch"
+  "Switch": "Switch",
+  "Your desktop widgets, as they look there. Tap one on the lock to give it a shape and material of its own.": "Your desktop widgets, as they look there. Tap one on the lock to give it a shape and material of its own."
 }
