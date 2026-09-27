@@ -850,7 +850,7 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `spotlightClose` | Close Spotlight |
 | `gallerySource` | Show or hide an online source in the wallpaper gallery: `wallhaven`, `live`, `konachan` or `yandere`, then `on`, `off` or `toggle`; returns the sources shown, in order |
 | `bubbleCard` | Grow a bubble's own card: `weather`, `notifications`, `sound`, `mic`, `tools` or `tray` (from the bubble showing it, else the Island), or `close` |
-| `tap` | Tap a piece the Island carries (`controls`, `sound`, `tray`, `notifications`, `weather`…) as a click would: its card or page grows from it |
+| `tap` | Tap a piece the Island carries (`controls`, `sound`, `tray`, `notifications`, `weather`…) as a click would: its card or page grows from it, or says the focused screen's bar has no such piece |
 | `bubbleMenu` | Open a floating bubble's own menu — what it opens, where it rests and how to put it away — by kind (`weather`, `sound`, …) or piece id (`app:kitty`) |
 | `icon <piece> <glyph>` | Choose the glyph a piece wears: `controls`, `tools`, `focus`, `notifications`, `bluetooth`, `updates`, `anime` or `watching`, then a Material Symbol name (e.g. `inir iris icon controls settings`) or `reset` to go back to its own face |
 | `utility` | Set the utility satellite: `tray`, `tools`, `sound`, `mic` or `none` |

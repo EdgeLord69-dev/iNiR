@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 2faf6e37706aa395
+# IPC.md hash: 00c4dab78d69de56
 # Targets: 68
 
 declare -gA IPC_TARGET_DESC=(
@@ -360,7 +360,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:gallerySource"]="Show or hide an online source in the wallpaper gallery: \`wallhaven\`, \`live\`, \`konachan\` or \`yandere\`, then \`on\`, \`off\` or \`toggle\`; returns the sources shown, in order"
   ["iris:spotlightClose"]="Close Spotlight"
   ["iris:bubbleCard"]="Grow a bubble's own card: \`weather\`, \`notifications\`, \`sound\`, \`mic\`, \`tools\` or \`tray\` (from the bubble showing it, else the Island), or \`close\`"
-  ["iris:tap"]="Tap a piece the Island carries (\`controls\`, \`sound\`, \`tray\`, \`notifications\`, \`weather\`…) as a click would: its card or page grows from it"
+  ["iris:tap"]="Tap a piece the Island carries (\`controls\`, \`sound\`, \`tray\`, \`notifications\`, \`weather\`…) as a click would: its card or page grows from it, or says the focused screen's bar has no such piece"
   ["iris:bubbleMenu"]="Open a floating bubble's own menu — what it opens, where it rests and how to put it away — by kind (\`weather\`, \`sound\`, …) or piece id (\`app:kitty\`)"
   ["iris:morph"]="Set how iRiS morphs: \`direct\`, \`liquid\`, \`glide\`, \`snap\`, \`elastic\` or \`instant\`"
   ["iris:activity"]="Publish a live activity into the Island from any script: \`<action> <id> <value>\` — \`start <id> <title>\`, \`title\`, \`progress\` (\`0.4\`, \`40\`, \`40%\` or \`-1\` for indeterminate), \`detail\`, \`glyph\` (a Material Symbol), \`tint\` (\`blue\`, \`sky\`, \`teal\`, \`green\`, \`yellow\`, \`orange\`, \`red\`, \`pink\`, \`indigo\`, \`purple\`, \`lavender\`, \`gray\`), \`end <id> <detail>\` (shows a done event and retires), \`dismiss <id> -\`, \`clear all -\`. Values cannot contain commas"
