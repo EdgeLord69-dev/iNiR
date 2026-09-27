@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Setup leaves your font settings alone.**
 - **`inir update` names the checkout it updates** and stops flagging our own files as your changes.
 - **No Hyprland noise in the logs on Niri.**
+- **Fullscreen is noticed every time.** A second fullscreen window on the same workspace kept the bar showing and game mode off (#265).
 
 ## [2.31.0] - 2026-09-19
 
