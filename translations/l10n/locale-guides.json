@@ -5,6 +5,7 @@
   "fr_FR": "Natural concise French. Use vous consistently in instructions. Prefer established desktop terminology and avoid English syntax calques.",
   "he_HE": "Natural modern Hebrew. Concise RTL UI language. Preserve product names, commands and technical acronyms.",
   "hi_IN": "Natural standard Hindi suitable for a Linux desktop. Keep common technical product names and commands in Latin script when that is clearer.",
+  "id_ID": "Natural standard Indonesian for a Linux desktop. Address the user as Anda, keep labels short, prefer established terms (pengaturan, jendela, wallpaper) and preserve product names and commands.",
   "it_IT": "Natural informal Italian. Use tu consistently. Prefer established Linux and desktop terms and concise settings descriptions.",
   "ja_JP": "Natural compact Japanese UI language. Avoid unnecessary pronouns and literal English word order. Preserve product names and commands in Latin script.",
   "kl_GL": "Natural Kalaallisut (West Greenlandic) suitable for a Linux desktop. Prefer concise UI language, preserve established product names, commands, codecs, protocols and technical acronyms, and keep compact labels short enough for gauges, bars and OSD surfaces.",

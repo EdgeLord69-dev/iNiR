@@ -190,7 +190,7 @@ Rechte Seitenleiste:
 - **Auto-Updates** — `inir update` mit Rollback, Migrationen und Erhalt von Benutzeränderungen
 - **Sperrbildschirm** und **Sitzungsbildschirm** (Abmelden/Neustart/Herunterfahren/Ruhezustand)
 - **Polkit-Agent**, **Bildschirmtastatur**, **Autostart-Manager**
-- **17 Sprachversionen** — automatische Erkennung, mit KI-unterstützter Übersetzungsgenerierung
+- **18 Sprachen** — automatisch erkannt, mit Rückfall auf die Sprache, wenn die Region fehlt
 - **Nachtlicht** — geplant oder manuell
 - **Wetter** — Open-Meteo, unterstützt GPS, manuelle Koordinaten oder Stadtnamen
 - **Batterieverwaltung** — konfigurierbare Schwellenwerte, automatischer Ruhezustand bei kritischem Stand

@@ -190,7 +190,7 @@ Sidebar direito:
 - **Atualizações automáticas** — `inir update` com rollback, migrações e preservação de mudanças do usuário
 - **Tela de bloqueio** e **tela de sessão** (logout/reboot/shutdown/suspend)
 - **Agente polkit**, **teclado na tela**, **gerenciador de autostart**
-- **17 locales** — detecção automática, com geração de traduções assistida por IA
+- **18 idiomas** — detecção automática, e o idioma é encontrado mesmo quando a região não tem catálogo próprio
 - **Luz noturna** — agendada ou manual
 - **Clima** — Open-Meteo, suporte a GPS, coordenadas manuais ou nome da cidade
 - **Gerenciamento de bateria** — limiares configuráveis, auto-suspend em nível crítico

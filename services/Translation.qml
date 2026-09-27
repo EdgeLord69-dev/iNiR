@@ -179,6 +179,7 @@ Singleton {
             "fr_FR": "Français",
             "he_HE": "עברית",
             "hi_IN": "हिन्दी",
+            "id_ID": "Bahasa Indonesia",
             "it_IT": "Italiano",
             "ja_JP": "日本語",
             "kl_GL": "Kalaallisut",
