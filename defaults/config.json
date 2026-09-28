@@ -2418,6 +2418,7 @@
             "previews": true,
             "customize": "shell",
             "themeColoursOnly": false,
+            "settingsLayout": "sidebar",
             "saved": [],
             "themeId": "iris",
             "glass": {
