@@ -3998,9 +3998,12 @@ Singleton {
                         property int press: 100        // how deep controls dip when pressed
                         property string pieceShape: "circle" // bubbles, bars and satellites: "circle", "squircle" or "square"
                     }
-                    // iRiS Studio shows the target's preview beside its controls.
                     // Animated previews in iRiS Settings and Studio; off builds none of them.
                     property bool previews: true
+                    // How Customize opens: "shell" (on the shell itself) or "studio" (a panel beside it).
+                    property string customize: "shell"
+                    // Choosing a theme takes only its colours; its shapes, layout and motion stay as they are.
+                    property bool themeColoursOnly: false
                     // Looks saved from iRiS Studio: [{ name, values: { "iris.…": value } }].
                     property list<var> saved: []
                     property string themeId: "iris" // the iRiS theme last applied (curated id or a file in ~/.config/inir/iris/themes)

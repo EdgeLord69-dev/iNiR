@@ -384,20 +384,25 @@ Singleton {
     onIrisEditChanged: {
         if (!irisEdit) { irisEditSelection = ""; irisEditTarget = "" }
         else if (widgetEditMode) setWidgetEditMode(false)
+        if (irisEdit && irisStudioOpen) irisStudioOpen = false
     }
     onIrisEditSelectionChanged: if (irisEditSelection.length > 0) irisEditTarget = ""
     onIrisEditTargetChanged: if (irisEditTarget.length > 0) irisEditSelection = ""
     onControlPanelOpenChanged: if (!controlPanelOpen) irisControlEdit = false
     onIrisControlEditChanged: if (!irisControlEdit) irisControlTab = "controls"
-    // iRiS Studio, the live appearance editor, is open.
-    // Asking for Studio opens Customize on the shell itself, on the target it named.
+    // iRiS Studio, the panel form of Customize, is open. It and Customize on the shell never show together.
     property bool irisStudioOpen: false
-    onIrisStudioOpenChanged: {
-        if (!irisStudioOpen) return
-        if (irisStudioTarget.length > 0) irisEditTarget = irisStudioTarget
-        irisStudioTarget = ""
-        irisEdit = true
-        irisStudioOpen = false
+    onIrisStudioOpenChanged: if (irisStudioOpen && irisEdit) irisEdit = false
+    // Customize, in the form the person chose (iris.appearance.customize), on a target ("" = where it was).
+    function openIrisCustomize(target): void {
+        const wanted = String(target ?? "")
+        if (String(Config.options?.iris?.appearance?.customize ?? "shell") === "studio") {
+            irisStudioTarget = wanted
+            irisStudioOpen = true
+        } else {
+            irisEditTarget = wanted
+            irisEdit = true
+        }
     }
     // A target Studio should show when it opens or is already open ("" = keep).
     property string irisStudioTarget: ""

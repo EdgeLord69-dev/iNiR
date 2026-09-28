@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 00c4dab78d69de56
+# IPC.md hash: 0e14461aeebdc6ec
 # Targets: 68
 
 declare -gA IPC_TARGET_DESC=(
@@ -352,7 +352,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:barPiece"]="Turn one of the Island's own pieces on or off: \`weather\`, \`notifications\`, \`controls\`, \`sound\`, \`mic\`, \`tools\`, \`media\` or \`tray\`, plus \`on\`, \`off\` or \`toggle\`"
   ["iris:arrange"]="Arrange the Island's desktop page in place — move, remove and add its blocks: \`on\`, \`off\` or \`toggle\`"
   ["iris:edit"]="Customize iRiS on the shell itself: the Island grows a capsule (Themes, Look, Pieces, undo, Done) and whatever you click (a piece, the Island, the Dock) grows its own options: \`on\`, \`off\`, \`toggle\`, a sheet (\`themes\`, \`pieces\`, or a Look tab: \`material\`, \`colour\`, \`type\`, \`motion\`, \`bodies\`, \`places\`, \`transients\`, \`desktop\`), \`island\`, \`dock\` or a piece to inspect (\`vitals\`, \`left\`, \`app:kitty\`)"
-  ["iris:studio"]="Same as \`edit\`, kept for old keybinds: \`on\`, \`off\`, \`toggle\` or a sheet/target to open Customize on"
+  ["iris:studio"]="Customize as a panel beside the screen (Studio): \`on\`, \`off\`, \`toggle\`, an area to open it on (\`material\`, \`colour\`, \`type\`, \`motion\`, \`island\`, \`pieces\`, \`bodies\`, \`places\`, \`transients\`, \`dock\`, \`desktop\`, \`themes\`) or \`search:<words>\` to open it with a search typed"
   ["iris:notch"]="Melt the Island into its edge (or into the Surround band): \`on\`, \`off\` or \`toggle\`"
   ["iris:surround"]="Close the shell around the screen with a band on every edge: \`on\`, \`off\` or \`toggle\`"
   ["iris:accent"]="Set iRiS accent: \`blue\`, \`mint\`, \`rose\`, \`lilac\` or \`wallpaper\`"

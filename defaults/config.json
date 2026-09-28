@@ -2416,6 +2416,8 @@
             "aura": "subtle",
             "adaptive": 0,
             "previews": true,
+            "customize": "shell",
+            "themeColoursOnly": false,
             "saved": [],
             "themeId": "iris",
             "glass": {
