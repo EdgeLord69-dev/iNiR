@@ -104,6 +104,25 @@ Scope {
             return DesktopWidgetDesign.apply(name)
         }
 
+        function widgetSearch(query: string): string {
+            if ((Config.options?.panelFamily ?? "ii") !== "iris")
+                return "the widget search is part of the iRiS widget bar"
+            if (query === "close") {
+                GlobalStates.widgetSearchOpen = false
+                GlobalStates.widgetSearchText = ""
+                return "search closed"
+            }
+            if (["next", "previous", "take"].includes(query)) {
+                GlobalStates.widgetSearchCommand(query)
+                return query
+            }
+            if (!GlobalStates.widgetEditMode)
+                GlobalStates.setWidgetEditMode(true)
+            GlobalStates.widgetSearchText = query === "open" ? "" : query
+            GlobalStates.widgetSearchOpen = true
+            return "searching: " + GlobalStates.widgetSearchText
+        }
+
         function toggleEditMode(): string {
             GlobalStates.setWidgetEditMode(!GlobalStates.widgetEditMode)
             return GlobalStates.widgetEditMode ? "edit mode on" : "edit mode off"
@@ -176,12 +195,12 @@ Scope {
                 .find(item => item.configEntryName === name) ?? null
             if (!widget)
                 return "select a widget first: focusWidget <name> true"
-            const pages = widget.irisFaced ? ["widget", "look", "arrange"] : ["widget", "colors", "layout"]
+            const pages = widget.irisFaced ? ["widget", "look", "arrange"].concat(widget.stacked ? ["stack"] : []) : ["widget", "colors", "layout"]
             const aliases = ({ look: widget.irisFaced ? "look" : "colors", colors: widget.irisFaced ? "look" : "colors",
-                arrange: widget._arrangeTab, layout: widget._arrangeTab, widget: "widget" })
+                arrange: widget._arrangeTab, layout: widget._arrangeTab, widget: "widget", stack: "stack" })
             const target = aliases[String(page ?? "").trim()] ?? ""
             if (!pages.includes(target))
-                return "pages: widget, look, arrange"
+                return "pages: widget, look, arrange" + (widget.stacked ? ", stack" : "")
             widget.openQuickControls(target)
             return JSON.stringify({ widget: key, page: target })
         }

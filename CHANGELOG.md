@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Find a widget while arranging.** Ctrl+F or the magnifier in the widget bar: type a name or what it does (typos are forgiven), move with the arrows, Enter adds it or shows where it is. Spotlight finds widgets too. `inir background widgetSearch`.
 - **Widget stacks.** Drop one desktop widget on another while arranging and they share one place, one page at a time: it turns by itself, with the wheel or from the dots on its edge. Pick the page, reorder, set how often it turns, take a widget out or split it from the quick controls. Suggested by jen9 on Discord. `inir widgetStacks`.
 - **A visualizer bubble, and five ways to draw it.** Capsules, a rising equalizer, dots, a wave or a ring, on the resting Island, its player page and a new Visualizer bubble you can place anywhere. Bands and colour are in Now Playing.
 - **Customize iRiS on the shell.** The Island grows Themes, Look, Pieces, undo and Done; tap the Island, the Dock or a bubble to edit it where it is. Studio is gone.
@@ -46,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **A calmer widget bar in iRiS.** Its widgets sit level in their rail with no running dot, the buttons keep their own height, the tools share a pill, and the quick controls of a widget fit the page you are on instead of the tallest one.
 - **Island settings are grouped by what they change.** Layout, Shape and At rest come first, Appearance opens on Look, Material and Shape, the banner width sits with Notifications, and every surface's corners are also listed together under Appearance. *Expanded corners* is now *Base corners* under Appearance › Shape, and the open Island has its own corners setting. Spotlight also searches setting descriptions, so "square" or "round" finds the shape rows.
 - **Live wallpapers use far less memory.** Videos play from a copy sized to your screen, and glass shares one decoder. 1.8 GB → under 700 MB with a 4K wallpaper.
 - **The desktop stops drawing when nobody can see it.** Music visuals, the system monitor and the Organic edge hold still behind windows. Idle GPU use went from 22 % to 9 %.

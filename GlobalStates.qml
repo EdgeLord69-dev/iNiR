@@ -226,6 +226,12 @@ Singleton {
     property bool wallpaperLauncherOpen: false
     property string wallpaperLauncherMode: "static"
     property bool widgetEditMode: false
+    // Finding a widget while arranging (the iRiS widget bar); `inir background widgetSearch` drives the same state.
+    property bool widgetSearchOpen: false
+    property string widgetSearchText: ""
+    signal widgetSearchCommand(string verb)
+    // Arrow keys while arranging under iRiS: the chassis owns the keyboard and hands the step to the selected widget.
+    signal desktopWidgetNudge(int dx, int dy)
     property string selectedDesktopWidget: ""
     property string selectedDesktopItem: ""
     property string desktopWidgetQuickControls: ""
@@ -241,6 +247,8 @@ Singleton {
             selectedDesktopWidget = ""
             selectedDesktopItem = ""
             desktopWidgetQuickControls = ""
+            widgetSearchOpen = false
+            widgetSearchText = ""
         }
         widgetEditMode = enabled
     }
