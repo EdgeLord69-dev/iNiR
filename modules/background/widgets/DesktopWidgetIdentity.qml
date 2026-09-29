@@ -23,9 +23,22 @@ QtObject {
         customImage: "#30b0c7", imageConverter: "#30b0c7", japaneseTypography: "#bf5af2",
         editorial: "#5e5ce6", shape: "#bf5af2", mascot: "#ff375f", controls: "#0a84ff", screenTime: "#5e5ce6"
     })
+    // What people call them besides their name, for searching while arranging.
+    readonly property var keywords: ({
+        weather: "forecast temperature rain sun wind climate", clock: "time hour watch", worldClock: "time zones cities timezone",
+        dayProgress: "day sun hours", uptime: "boot session running", mediaControls: "music player now playing song spotify cover",
+        visualizer: "audio cava spectrum equalizer sound", systemMonitor: "vitals cpu gpu ram memory temperature performance",
+        battery: "power charge", notes: "sticky memo text write", calendarUpcoming: "agenda events next up",
+        monthCalendar: "calendar month date days", dateBadge: "date day today", todo: "tasks checklist list",
+        timers: "timer stopwatch countdown alarm pomodoro", newsTicker: "news feed rss headlines", userCard: "profile avatar account you",
+        customImage: "picture photo image", imageConverter: "picture convert image", japaneseTypography: "japanese kanji text",
+        editorial: "text typography quote", shape: "decoration decorative", mascot: "pet character companion",
+        controls: "toggles wifi bluetooth volume brightness quick settings", screenTime: "usage apps time tracker"
+    })
     readonly property string customTint: "#5e5ce6"
     readonly property string fallbackTint: "#8e8e93"
 
     function glyph(key: string): string { return root.glyphs[key] ?? "widgets" }
+    function keywordsOf(key: string): string { return root.keywords[key] ?? "" }
     function tint(key: string): string { return root.tints[key] ?? (key.startsWith("custom.") ? root.customTint : root.fallbackTint) }
 }
