@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../images/iris-2.32-principal.webp" alt="iNiR 2.32 iRiS desktop" width="900">
+  <img src="../images/iris-2.31-principal.webp" alt="iNiR iRiS desktop" width="900">
 </p>
 
 <h1 align="center">iNiR</h1>
@@ -91,13 +91,12 @@ Volevo che il mio desktop avesse un certo aspetto e funzionasse in un certo modo
 <summary><b>iRiS</b>: Island, Customize, barra dei menu, card e Dock</summary>
 
 <p align="center">
-  <img src="../images/iris-2.32-customize.webp" alt="iRiS Customize with the Themes sheet open" width="49%">
-  <img src="../images/iris-2.32-menubar.webp" alt="iRiS menu bar layout over the wallpaper" width="49%">
+  <img src="../images/iris-2.31-desktop.webp" alt="iRiS desktop layout" width="49%">
+  <img src="../images/iris-2.31-card.webp" alt="iRiS card surface" width="49%">
 </p>
 
 <p align="center">
-  <img src="../images/iris-2.31-card.webp" alt="iRiS card surface" width="49%">
-  <img src="../images/iris-2.31-dock.webp" alt="iRiS Dock and edge layout" width="49%">
+  <img src="../images/iris-2.31-dock.webp" alt="iRiS Dock and edge layout" width="99%">
 </p>
 
 </details>
