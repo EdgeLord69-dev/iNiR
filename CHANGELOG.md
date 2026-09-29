@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **A visualizer bubble, and five ways to draw it.** Capsules, a rising equalizer, dots, a wave or a ring, on the resting Island, its player page and a new Visualizer bubble you can place anywhere. Bands and colour are in Now Playing.
 - **Customize iRiS on the shell.** The Island grows Themes, Look, Pieces, undo and Done; tap the Island, the Dock or a bubble to edit it where it is. Studio is gone.
 - **Menu bar, a new Island layout.** A thin strip with your workspaces, window and pieces, the Island hanging from it as a notch.
 - **Themes for the bars.** Twilight and Daybreak leave a clear menu bar over the wallpaper; Horizon draws one black band across the top.

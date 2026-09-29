@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 506e0f5dc3ca206a
+# IPC.md hash: 4663c01e8bde7626
 # Targets: 69
 
 declare -gA IPC_TARGET_DESC=(
@@ -344,7 +344,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:card"]="\`open\`, \`close\` or \`toggle\` the media bubble's floating card, or \`pin\` to keep it open"
   ["iris:theme"]="iRiS themes, each a whole redesign of the family: \`list\`, \`apply:<id>\`, \`save:<name>\` (what you see now becomes a theme file), \`import:<path>\` (a shared \`.json\`), \`export\` or \`export:<id>\` (prints the theme as JSON to share) and \`folder\` (where theme files live, \`~/.config/inir/iris/themes\`)"
   ["iris:settings"]="Open iRiS Settings on a section: \`general\`, \`appearance\`, \`motion\`, \`bar\`, \`bubbles\`, \`dock\`, \`desktop\`, \`windows\`, \`sidebars\`, \`controlCenter\`, \`spotlight\`, \`notifications\`, \`sound\`, \`capture\`, \`display\`, \`keyboard\`, \`battery\`, \`gaming\`, \`lock\`, \`player\`, \`anime\`, \`sources\` or \`system\`; add \`/<group>\` to open that group, e.g. \`bubbles/behaviour\` or \`lock/security\`. It also takes \`next\`, \`prev\`, \`back\`, \`forward\` (the history), \`search:<words>\` and \`open\` (the first result)"
-  ["iris:bubble"]="Place an Island bubble (\`left\`, \`right\`, \`utility\`) or an extra bubble (\`weather\`, \`notifications\`, \`controls\`, \`sound\`, \`mic\`, \`tools\`, \`media\`, \`tray\`): a zone (\`top-left\`, \`top-right\`, \`left\`, \`right\`, \`bottom-left\`, \`bottom-right\`), \`edge:<top"
+  ["iris:bubble"]="Place an Island bubble (\`left\`, \`right\`, \`utility\`) or an extra bubble (\`weather\`, \`notifications\`, \`controls\`, \`sound\`, \`mic\`, \`tools\`, \`media\`, \`visualizer\`, \`tray\`): a zone (\`top-left\`, \`top-right\`, \`left\`, \`right\`, \`bottom-left\`, \`bottom-right\`), \`edge:<top"
   ["iris:dock"]="\`reveal\`, \`hide\` or \`toggle\` the iRiS Dock (revealed stays until hidden or an app is chosen)"
   ["iris:dockApp"]="Open a Dock app's \`windows\` or \`menu\` by app id (e.g. \`kitty windows\`), or \`<any> close\`"
   ["iris:appBubble"]="Carry a Dock app out as a bubble of its own (e.g. \`kitty right\`): a zone, \`x,y\` fractions of the output, or \`dock\` to send it back"
@@ -354,7 +354,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:edge"]="Move the Island to a screen edge: \`top\`, \`bottom\`, \`left\` or \`right\` (on a side edge it rests as an upright capsule and its pages grow inward)"
   ["iris:dockEdge"]="Move the Dock: \`auto\` (opposite the Island), \`top\`, \`bottom\`, \`left\` or \`right\`"
   ["iris:zone"]="What a full-width Island carries in a zone: \`start\`, \`center\` or \`end\`, then kinds joined by \`+\` (\`island\`, \`workspaces\`, \`window\`, \`time\` or a piece kind), or \`none\`"
-  ["iris:barPiece"]="Turn one of the Island's own pieces on or off: \`weather\`, \`notifications\`, \`controls\`, \`sound\`, \`mic\`, \`tools\`, \`media\` or \`tray\`, plus \`on\`, \`off\` or \`toggle\`"
+  ["iris:barPiece"]="Turn one of the Island's own pieces on or off: \`weather\`, \`notifications\`, \`controls\`, \`sound\`, \`mic\`, \`tools\`, \`media\`, \`visualizer\` or \`tray\`, plus \`on\`, \`off\` or \`toggle\`"
   ["iris:arrange"]="Arrange the Island's desktop page in place — move, remove and add its blocks: \`on\`, \`off\` or \`toggle\`"
   ["iris:edit"]="Customize iRiS on the shell itself: the Island grows a capsule (Themes, Look, Pieces, undo, Done) and whatever you click (a piece, the Island, the Dock) grows its own options: \`on\`, \`off\`, \`toggle\`, a sheet (\`themes\`, \`pieces\`, or a Look tab: \`material\`, \`colour\`, \`type\`, \`motion\`, \`bodies\`, \`places\`, \`transients\`, \`desktop\`), \`island\`, \`dock\` or a piece to inspect (\`vitals\`, \`left\`, \`app:kitty\`)"
   ["iris:studio"]="Customize as a panel beside the screen (Studio): \`on\`, \`off\`, \`toggle\`, an area to open it on (\`material\`, \`colour\`, \`type\`, \`motion\`, \`island\`, \`pieces\`, \`bodies\`, \`places\`, \`transients\`, \`dock\`, \`desktop\`, \`themes\`) or \`search:<words>\` to open it with a search typed"
