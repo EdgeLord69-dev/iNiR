@@ -2,8 +2,8 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 4663c01e8bde7626
-# Targets: 69
+# IPC.md hash: 91c456eafc945d65
+# Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
   [ai]="Shared multi-provider AI service. It supports Gemini, OpenAI-compatible chat and Responses APIs, Mistral and Anthropic; live provider catalogs are normalized into capability-aware model records. Catalog visibility is separate from execution readiness, so public model lists remain browseable without pretending an API key exists. OpenCode Zen and Go resolve their current model lists and per-model API routes dynamically. Normal shell tools use typed actions and approval cards, while arbitrary commands are isolated in Advanced mode."
@@ -69,6 +69,7 @@ declare -gA IPC_TARGET_DESC=(
   [wallpaperLauncher]="Navigation and apply controls for the compact wallpaper launcher."
   [wallpaperSelector]="Wallpaper picker with grid, coverflow and compact launcher styles."
   [wbar]="Waffle taskbar visibility."
+  [widgetStacks]="iRiS widget stacks: several desktop widgets sharing one place, one page shown at a time. Service: \`services/DesktopWidgetStacks.qml\`. Applies while the widgets wear the iRiS design."
   [widgetpower]="Desktop-widget power management (pauses widget rendering on game mode, fullscreen, present windows, or edit mode). Service: \`services/WidgetPowerManager.qml\`."
   [wnotificationCenter]="Waffle notification center."
   [workspaceStrip]="Workspace edge strip. Shows a compact per-workspace rail and expands it for switching without opening the full overview."
@@ -141,6 +142,7 @@ declare -gA IPC_TARGET_FAMILY=(
   [wallpaperLauncher]="shared"
   [wallpaperSelector]="shared"
   [wbar]="waffle"
+  [widgetStacks]="waffle"
   [widgetpower]="waffle"
   [wnotificationCenter]="waffle"
   [workspaceStrip]="shared"
@@ -213,6 +215,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [wallpaperLauncher]="next previous applyCurrent status"
   [wallpaperSelector]="toggle open close openLauncher toggleOnMonitor random set preview cancelPreview browse kind status"
   [wbar]="toggle close open"
+  [widgetStacks]="status create add remove dissolve page move rotate interval"
   [widgetpower]="status"
   [wnotificationCenter]="toggle close open"
   [workspaceStrip]="open close toggle status"
@@ -587,6 +590,15 @@ declare -gA IPC_FUNCTION_DESC=(
   ["wbar:toggle"]="Show/hide taskbar"
   ["wbar:close"]="Hide taskbar"
   ["wbar:open"]="Show taskbar"
+  ["widgetStacks:status"]="Returns JSON: whether stacks are live, each stack's id, pages in order, rotation, interval, the size classes all its pages share and the page shown on each output"
+  ["widgetStacks:create"]="Stack two or more iRiS widgets joined with \`+\` (\`weather+monthCalendar\`); the first one's place and size become the stack's"
+  ["widgetStacks:add"]="Add a widget as the last page"
+  ["widgetStacks:remove"]="Take a widget out; it stays where the stack is and the layout moves it beside. A stack left with one page dissolves"
+  ["widgetStacks:dissolve"]="Split the stack back into single widgets"
+  ["widgetStacks:page"]="Show a page: a widget name, \`next\` or \`previous\`"
+  ["widgetStacks:move"]="Move a page earlier (\`-1\`) or later (\`1\`) in the order"
+  ["widgetStacks:rotate"]="\`on\` or \`off\`: the stack turns its own pages"
+  ["widgetStacks:interval"]="Seconds between turns (5 to 3600)"
   ["widgetpower:status"]="Returns JSON: \`enabled\`, \`widgetsActive\`, \`pauseReason\`, and the active \`triggers\` (gameMode, fullscreen, windowsPresent, editMode)"
   ["wnotificationCenter:toggle"]="Open/close notification center"
   ["wnotificationCenter:close"]="Close notification center"
@@ -729,6 +741,14 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["wallpaperSelector:preview"]="<path>"
   ["wallpaperSelector:browse"]="<source> <query>"
   ["wallpaperSelector:kind"]="<name>"
+  ["widgetStacks:create"]="<widgets>"
+  ["widgetStacks:add"]="<stack> <widget>"
+  ["widgetStacks:remove"]="<widget>"
+  ["widgetStacks:dissolve"]="<stack>"
+  ["widgetStacks:page"]="<stack> <to>"
+  ["widgetStacks:move"]="<stack> <widget> <delta>"
+  ["widgetStacks:rotate"]="<stack> <mode>"
+  ["widgetStacks:interval"]="<stack> <seconds>"
 )
 
 declare -gA IPC_TARGET_EXAMPLE=(
@@ -771,10 +791,10 @@ bind "Ctrl+Alt+A" { spawn "inir" "wallpaperSelector" "openLauncher" "animated"; 
   [ytmusic]='bind "Mod+M+Space" { spawn "inir" "ytmusic" "playPause"; }'
 )
 
-IPC_ALL_TARGETS=(ai altSwitcher appCatalog audio autostart background bar brightness cheatsheet clipboard cliphistService closeConfirm colorMode connections controlPanel coverflowSelector customWidgets dashboard dev equalizer gamemode globalActions globalStyle iris keyboard lock mascot mascotMood mediaControls memory minimize mpris network niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill recordingOsd region search session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch vpn wactionCenter waffleAltSwitcher wallpaperLauncher wallpaperSelector wbar widgetpower wnotificationCenter workspaceStrip wwidgets ytmusic zoom)
+IPC_ALL_TARGETS=(ai altSwitcher appCatalog audio autostart background bar brightness cheatsheet clipboard cliphistService closeConfirm colorMode connections controlPanel coverflowSelector customWidgets dashboard dev equalizer gamemode globalActions globalStyle iris keyboard lock mascot mascotMood mediaControls memory minimize mpris network niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill recordingOsd region search session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch vpn wactionCenter waffleAltSwitcher wallpaperLauncher wallpaperSelector wbar widgetStacks widgetpower wnotificationCenter workspaceStrip wwidgets ytmusic zoom)
 IPC_SHARED_TARGETS=(ai altSwitcher appCatalog audio background bar brightness cheatsheet clipboard cliphistService closeConfirm colorMode connections controlPanel coverflowSelector dashboard dev gamemode globalActions globalStyle iris keyboard lock mascot mascotMood mediaControls memory minimize mpris network niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill region session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch vpn wallpaperLauncher wallpaperSelector workspaceStrip ytmusic zoom)
 IPC_II_TARGETS=(equalizer)
-IPC_WAFFLE_TARGETS=(autostart customWidgets recordingOsd search wactionCenter waffleAltSwitcher wbar widgetpower wnotificationCenter wwidgets)
+IPC_WAFFLE_TARGETS=(autostart customWidgets recordingOsd search wactionCenter waffleAltSwitcher wbar widgetStacks widgetpower wnotificationCenter wwidgets)
 
 declare -gA IPC_KEBAB_ALIASES=(
   [alt-switcher]=altSwitcher
@@ -804,6 +824,7 @@ declare -gA IPC_KEBAB_ALIASES=(
   [waffle-alt-switcher]=waffleAltSwitcher
   [wallpaper-launcher]=wallpaperLauncher
   [wallpaper-selector]=wallpaperSelector
+  [widget-stacks]=widgetStacks
   [wnotification-center]=wnotificationCenter
   [workspace-strip]=workspaceStrip
 )

@@ -113,6 +113,8 @@ The iRiS widget gallery covers the everyday desktop set, including clock, weathe
 
 One design covers every widget: iRiS faces, Material, iNstrument (gauges, scales and monospace captions drawn straight on the wallpaper) or Readout. Pick it in Settings › Desktop › Widgets or in a widget's Look controls; *Use on every widget* and *Match* put widgets that kept a look of their own back in line, and *Undo* returns the mix you had before. The Lume theme puts every widget in iNstrument.
 
+While arranging, drop one widget on another to stack them: the stack keeps one place and shows one widget at a time, turning by itself every 20 seconds, with the mouse wheel or from the dots on its edge. In a widget's quick controls you pick the page, change the order, set how often it turns, take a widget out or split the stack. Stacks are for the iRiS design.
+
 *Lume on every widget* (Settings › Desktop › Widgets) backs every widget's text as if the wallpaper under it were bright and busy, for wallpapers where you want it even when it isn't needed.
 
 In Spotlight, `/` lists iRiS's own switches and picks: type a few letters (`/lume`, `/night`, `/design`) and flip them in place; each row says where it lives in Settings.
@@ -121,6 +123,8 @@ In Spotlight, `/` lists iRiS's own switches and picks: type a few letters (`/lum
 inir background widgetDesign instrument
 inir background widgetDesign undo
 inir background widgetDesign status
+inir widgetStacks create weather+monthCalendar
+inir widgetStacks status
 ```
 
 ## Wallpaper gallery

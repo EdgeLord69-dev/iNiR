@@ -73,8 +73,14 @@ Singleton {
         return value && typeof value === "object" ? value : null
     }
 
+    // A widget in an iRiS stack shares its place and look with the stack: those values live in the
+    // stack's record, everything else in the widget's own.
+    function _holder(outputName, widgetKey, key): string {
+        return DesktopWidgetStacks.owner(root._outputName(outputName), root._widgetKey(widgetKey), String(key ?? ""))
+    }
+
     function hasValue(outputName, widgetKey, key): bool {
-        const override = root.widgetOverride(outputName, widgetKey)
+        const override = root.widgetOverride(outputName, root._holder(outputName, widgetKey, key))
         return override !== null
             && Object.prototype.hasOwnProperty.call(override, String(key ?? ""))
     }
@@ -89,7 +95,8 @@ Singleton {
 
     function value(outputName, widgetKey, key, fallback): var {
         const valueKey = String(key ?? "")
-        const override = root.widgetOverride(outputName, widgetKey)
+        const holder = root._holder(outputName, widgetKey, valueKey)
+        const override = root.widgetOverride(outputName, holder)
         if (override !== null
                 && Object.prototype.hasOwnProperty.call(override, valueKey))
             return override[valueKey]
@@ -177,17 +184,21 @@ Singleton {
             record = { output: output, widgets: ({}) }
             list.push(record)
         }
-        const next = Object.assign({}, record.widgets[widget] ?? {})
         let changed = false
+        const holders = ({})
         for (const key of keys) {
-            if (values[key] !== undefined && next[key] !== values[key]) {
-                next[key] = values[key]
+            const holder = root._holder(output, widget, key)
+            if (holders[holder] === undefined)
+                holders[holder] = Object.assign({}, record.widgets[holder] ?? {})
+            if (values[key] !== undefined && holders[holder][key] !== values[key]) {
+                holders[holder][key] = values[key]
                 changed = true
             }
         }
         if (!changed)
             return false
-        record.widgets[widget] = next
+        for (const holder of Object.keys(holders))
+            record.widgets[holder] = holders[holder]
         Config.setNestedValue("background.widgets.outputOverrides", list)
         return true
     }
@@ -223,8 +234,15 @@ Singleton {
             const values = widgetValues[widgetKey]
             if (!values || typeof values !== "object")
                 continue
-            record.widgets[widgetKey] = Object.assign(
-                {}, record.widgets[widgetKey] ?? {}, values)
+            const parts = ({})
+            for (const key of Object.keys(values)) {
+                const holder = root._holder(output, widgetKey, key)
+                if (parts[holder] === undefined)
+                    parts[holder] = ({})
+                parts[holder][key] = values[key]
+            }
+            for (const holder of Object.keys(parts))
+                record.widgets[holder] = Object.assign({}, record.widgets[holder] ?? {}, parts[holder])
         }
         record.layoutVersion = root.layoutVersion
         record.width = outputWidth
@@ -285,6 +303,8 @@ Singleton {
         const path = root._basePath(widgetKey)
         if (!path)
             return false
+        if (!enabled)
+            DesktopWidgetStacks.leave(root._widgetKey(widgetKey))
         Config.setNestedValue(path + ".enable", Boolean(enabled))
         root.clearEnableOverrides()
         return true

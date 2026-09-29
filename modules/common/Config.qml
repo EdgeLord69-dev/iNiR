@@ -1300,6 +1300,9 @@ Singleton {
                     // output-qualified ("OUTPUT::configEntryName") so each screen
                     // keeps its own overlap order after edit mode closes/restarts.
                     property list<string> layerOrder: []
+                    // iRiS widget stacks: [{ id, members: [widget keys], rotate, interval (seconds) }].
+                    // A stack's place and look live in outputOverrides under "stack:<id>".
+                    property list<var> stacks: []
                     property JsonObject clock: JsonObject {
                         property bool enable: false
                         property bool locked: false

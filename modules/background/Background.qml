@@ -2029,6 +2029,38 @@ Scope {
                     return widgets
                 }
 
+                // The widget lit as a drop target while another is carried over it (iRiS stacks).
+                property string stackHint: ""
+
+                function loadedWidget(instanceKey: string): var {
+                    return widgetCanvas._loadedDesktopWidgets().find(item => item.editInstanceKey === instanceKey) ?? null
+                }
+
+                // The stackable widget most covered by the one being carried, or "" when none is covered enough.
+                function stackDropCandidate(instanceKey: string): string {
+                    const widgets = widgetCanvas._loadedDesktopWidgets()
+                    const carried = widgets.find(item => item.editInstanceKey === instanceKey)
+                    if (!carried || !carried.stackable)
+                        return ""
+                    const area = Math.max(1, carried.width * carried.height)
+                    let best = ""
+                    let bestShare = 0.4
+                    for (const other of widgets) {
+                        if (other === carried || !other.stackable || (carried.stacked && other.stacked))
+                            continue
+                        const across = Math.min(carried.x + carried.width, other.x + other.width) - Math.max(carried.x, other.x)
+                        const down = Math.min(carried.y + carried.height, other.y + other.height) - Math.max(carried.y, other.y)
+                        if (across <= 0 || down <= 0)
+                            continue
+                        const share = across * down / Math.min(area, Math.max(1, other.width * other.height))
+                        if (share > bestShare) {
+                            bestShare = share
+                            best = other.editInstanceKey
+                        }
+                    }
+                    return best
+                }
+
                 function _rectOverlaps(a, b, gap): bool {
                     return a.x < b.x + b.width + gap
                         && a.x + a.width + gap > b.x
@@ -2110,11 +2142,12 @@ Scope {
                     let missingGeometry = false
                     for (const item of widgets) {
                         const strategy = String(item.placementStrategy ?? "free")
-                        if (strategy === "free"
+                        if (DesktopWidgetStacks.isSplit(item.configEntryName)
+                                || (strategy === "free"
                                 && (!DesktopWidgetLayout.hasValue(outputName,
                                         item.configEntryName, "x")
                                     || !DesktopWidgetLayout.hasValue(outputName,
-                                        item.configEntryName, "y"))) {
+                                        item.configEntryName, "y")))) {
                             missingGeometry = true
                             break
                         }
@@ -2130,6 +2163,10 @@ Scope {
                             outputName, b.configEntryName, "x") ? 1 : 0
                         if (!geometryChanged && aLocal !== bLocal)
                             return bLocal - aLocal
+                        // A widget that just left a stack is the one that moves aside.
+                        const aSplit = DesktopWidgetStacks.isSplit(a.configEntryName)
+                        if (aSplit !== DesktopWidgetStacks.isSplit(b.configEntryName))
+                            return aSplit ? 1 : -1
                         if (Boolean(a.locked) !== Boolean(b.locked))
                             return a.locked ? -1 : 1
                         return b.width * b.height - a.width * a.height
@@ -2156,13 +2193,13 @@ Scope {
                         let position = { x: Math.round(desiredX), y: Math.round(desiredY) }
                         const collides = !widgetCanvas._positionIsFree(
                             position.x, position.y, item.width, item.height, placed, 14)
-                        if (collides && !item.locked)
+                        if (collides && (!item.locked || DesktopWidgetStacks.isSplit(item.configEntryName)))
                             position = widgetCanvas._nearestFreePosition(
                                 item, desiredX, desiredY, placed, work)
 
                         const moved = Math.round(position.x) !== Math.round(item.x)
                             || Math.round(position.y) !== Math.round(item.y)
-                        if (needsLocal || moved || (collides && !item.locked)) {
+                        if (needsLocal || moved || (collides && (!item.locked || DesktopWidgetStacks.isSplit(item.configEntryName)))) {
                             updates[item.configEntryName] = {
                                 x: position.x,
                                 y: position.y,
@@ -2180,13 +2217,14 @@ Scope {
                     widgetCanvas._outputLayoutAttempts = 0
                     DesktopWidgetLayout.initializeOutputLayout(
                         outputName, outputWidth, outputHeight, updates)
+                    DesktopWidgetStacks.clearSplits()
                 }
 
                 property int _outputLayoutAttempts: 0
 
                 Timer {
                     id: outputLayoutTimer
-                    interval: 1400
+                    interval: DesktopWidgetStacks.splitPending ? 250 : 1400
                     repeat: false
                     onTriggered: widgetCanvas.initializeOutputWidgetLayout()
                 }
@@ -2215,7 +2253,9 @@ Scope {
                     const current = widgets.find(item => item.editInstanceKey === instanceKey)
                     if (!current || current.width <= 0 || current.height <= 0)
                         return []
+                    // The pages of one stack are one layer, not several piled up.
                     const matches = widgets.filter(item => item.width > 0 && item.height > 0
+                        && (item === current || !current.stacked || item.stack?.id !== current.stack.id)
                         && item.x < current.x + current.width
                         && item.x + item.width > current.x
                         && item.y < current.y + current.height
@@ -2253,11 +2293,11 @@ Scope {
                     return nextKey
                 }
 
-                function promoteDesktopWidget(instanceKey: string): string {
+                function promoteDesktopWidget(instanceKey: string, layerKey: string): string {
                     const key = String(instanceKey ?? "")
                     if (!key)
                         return ""
-                    backgroundScope.promoteDesktopWidgetKey(key)
+                    backgroundScope.promoteDesktopWidgetKey(String(layerKey ?? "") || key)
                     GlobalStates.selectDesktopWidget(key)
                     return key
                 }

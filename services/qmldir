@@ -21,6 +21,7 @@ singleton DateTime 1.0 DateTime.qml
 singleton DeviceEvents 1.0 DeviceEvents.qml
 singleton DesktopItems 1.0 DesktopItems.qml
 singleton DesktopWidgetLayout 1.0 DesktopWidgetLayout.qml
+singleton DesktopWidgetStacks 1.0 DesktopWidgetStacks.qml
 singleton DevNavigation 1.0 DevNavigation.qml
 singleton Events 1.0 Events.qml
 singleton FirstRunExperience 1.0 FirstRunExperience.qml

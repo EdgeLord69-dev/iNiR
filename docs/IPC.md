@@ -1185,6 +1185,24 @@ Custom widget management. Create, list, reload, and remove user-installed widget
 
 ---
 
+### widgetStacks
+
+iRiS widget stacks: several desktop widgets sharing one place, one page shown at a time. Service: `services/DesktopWidgetStacks.qml`. Applies while the widgets wear the iRiS design.
+
+| Function | Description |
+|----------|-------------|
+| `status` | Returns JSON: whether stacks are live, each stack's id, pages in order, rotation, interval, the size classes all its pages share and the page shown on each output |
+| `create widgets` | Stack two or more iRiS widgets joined with `+` (`weather+monthCalendar`); the first one's place and size become the stack's |
+| `add stack widget` | Add a widget as the last page |
+| `remove widget` | Take a widget out; it stays where the stack is and the layout moves it beside. A stack left with one page dissolves |
+| `dissolve stack` | Split the stack back into single widgets |
+| `page stack to` | Show a page: a widget name, `next` or `previous` |
+| `move stack widget delta` | Move a page earlier (`-1`) or later (`1`) in the order |
+| `rotate stack mode` | `on` or `off`: the stack turns its own pages |
+| `interval stack seconds` | Seconds between turns (5 to 3600) |
+
+---
+
 ### widgetpower
 
 Desktop-widget power management (pauses widget rendering on game mode, fullscreen, present windows, or edit mode). Service: `services/WidgetPowerManager.qml`.

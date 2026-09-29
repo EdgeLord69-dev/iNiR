@@ -56,16 +56,28 @@ AbstractWidget {
     readonly property string editInstanceKey: root.outputName + "::" + root.configEntryName
     readonly property bool editSelected: GlobalStates.widgetEditMode
         && GlobalStates.selectedDesktopWidget === root.editInstanceKey
+    // iRiS stack (DesktopWidgetStacks): this widget is one page of several that share a place.
+    readonly property var stack: DesktopWidgetStacks.info(root.outputName, root.configEntryName)
+    readonly property bool stacked: root.stack !== null
+    readonly property bool stackShown: root.stack === null || root.stack.shown
+    // 0 while this page is shown; a page's length away (+1 below, -1 above) while it waits or leaves.
+    property real stackPos: 0
+    readonly property bool stackMoving: stackSlide.running
+    readonly property bool stackPresent: root.stackShown || (root.stackMoving && root.irisFaced)
+    readonly property bool stackLeaving: root.stacked && !root.stackShown && root.stackPresent
+    // A stack sits in the layer order as one.
+    readonly property string layerKey: root.stacked ? root.outputName + "::stack:" + root.stack.id : root.editInstanceKey
     readonly property int desktopPersistentZ: {
         Config.revision
         const order = Config.getNestedValue("background.widgets.layerOrder", []) ?? []
-        const index = order.indexOf(root.editInstanceKey)
+        const index = order.indexOf(root.layerKey)
         return index >= 0 ? 1000 + index : root.widgetIndex
     }
     // Selection temporarily rises above every widget while editing, but the
     // persisted order remains active both inside and outside edit mode.
-    readonly property int desktopStackZ: root.editSelected
-        ? 10000 : root.desktopPersistentZ
+    // A page leaving a stack stays above the one arriving until it is gone.
+    readonly property int desktopStackZ: root.stackLeaving ? 10001
+        : root.editSelected ? 10000 : root.desktopPersistentZ
     // Diagnostic-only control, supplied by Background.qml when the supervised
     // shell is loaded with INIR_REGION_DEBUG=1.
     property bool debugQuickControlsOpen: false
@@ -497,6 +509,8 @@ AbstractWidget {
     // iRiS dims the face only, so its edit toolbar and sheet stay legible over a dimmed widget.
     opacity: ((GlobalStates.screenLocked && !visibleWhenLocked) ? 0 : 1)
         * (root.irisFaced ? 1 : root.widgetOpacity * root.dimOpacity)
+        * (root.stackPresent ? 1 : 0)
+        * (1 - root.absorb)
     enabled: !GlobalStates.screenLocked
     Behavior on opacity {
         animation: NumberAnimation { duration: Appearance.animation.elementMoveFast.duration; easing.type: Appearance.animation.elementMoveFast.type; easing.bezierCurve: Appearance.animation.elementMoveFast.bezierCurve }
@@ -756,7 +770,7 @@ AbstractWidget {
         const canvas = root.parent?.parent ?? null
         if (!canvas || typeof canvas.promoteDesktopWidget !== "function")
             return
-        canvas.promoteDesktopWidget(root.editInstanceKey)
+        canvas.promoteDesktopWidget(root.editInstanceKey, root.layerKey)
     }
 
     readonly property string editControlsGeometryReport: {
@@ -1517,7 +1531,7 @@ AbstractWidget {
     IrisSizeGrip {
         z: 202
         widget: root
-        visible: GlobalStates.widgetEditMode && root.irisFaced && root.irisSizes.length > 1 && !root.locked
+        visible: GlobalStates.widgetEditMode && root.irisFaced && root.irisSizeChoices.length > 1 && !root.locked
             && (root.editSelected || widgetEditHover.hovered || root._irisSizing)
     }
 
@@ -1540,6 +1554,120 @@ AbstractWidget {
         }
     }
 
+    // Carrying one widget over another lights the other as a drop target; letting go stacks them.
+    readonly property bool stackable: root.irisFaced && DesktopWidgetStacks.live && !root.locked
+        && !root.outputName.startsWith("lock:")
+    readonly property var _canvas: root.parent?.parent ?? null
+    readonly property bool stackDropHint: root._canvas !== null && root._canvas.stackHint === root.editInstanceKey
+    property string _dropKey: ""
+    // 0 at rest, 1 once the widget has glided into the stack it was dropped on.
+    property real absorb: 0
+
+    function _probeStackDrop(): void {
+        const canvas = root._canvas
+        if (!canvas || typeof canvas.stackDropCandidate !== "function")
+            return
+        const key = root.isDragging && root.stackable ? canvas.stackDropCandidate(root.editInstanceKey) : ""
+        if (key === root._dropKey)
+            return
+        root._dropKey = key
+        canvas.stackHint = key
+    }
+    function _clearStackDrop(): void {
+        root._dropKey = ""
+        if (root._canvas && root._canvas.stackHint !== undefined)
+            root._canvas.stackHint = ""
+    }
+    Connections {
+        target: root
+        function onXChanged(): void { if (root.isDragging) root._probeStackDrop() }
+        function onYChanged(): void { if (root.isDragging) root._probeStackDrop() }
+    }
+
+    // The dropped widget glides onto the target's place and dissolves into it, then joins.
+    function _absorb(): void {
+        const target = root._canvas?.loadedWidget(root._dropKey) ?? null
+        if (!target) {
+            root._clearStackDrop()
+            return
+        }
+        stackAbsorb.targetKey = target.configEntryName
+        stackAbsorb.toX = Math.round(target.x + (target.width - root.width) / 2)
+        stackAbsorb.toY = Math.round(target.y + (target.height - root.height) / 2)
+        if (root.animationsActive) {
+            stackAbsorb.restart()
+        } else {
+            root._joinStack(stackAbsorb.targetKey)
+        }
+    }
+    function _joinStack(targetName: string): void {
+        const id = DesktopWidgetStacks.merge(targetName, root.configEntryName)
+        root._clearStackDrop()
+        root.absorb = 0
+        // Joined, this widget stands where its stack does; refused, where it stood.
+        root.x = root.targetX
+        root.y = root.targetY
+        if (id.length > 0)
+            stackLand.restart()
+    }
+    ParallelAnimation {
+        id: stackAbsorb
+        property string targetKey: ""
+        property real toX: 0
+        property real toY: 0
+        NumberAnimation { target: root; property: "x"; to: stackAbsorb.toX; duration: IrisStyle.moveDuration; easing.type: Easing.BezierSpline; easing.bezierCurve: IrisStyle.moveCurve }
+        NumberAnimation { target: root; property: "y"; to: stackAbsorb.toY; duration: IrisStyle.moveDuration; easing.type: Easing.BezierSpline; easing.bezierCurve: IrisStyle.moveCurve }
+        NumberAnimation { target: root; property: "absorb"; from: 0; to: 1; duration: IrisStyle.moveDuration; easing.type: Easing.BezierSpline; easing.bezierCurve: IrisStyle.moveCurve }
+        onFinished: root._joinStack(stackAbsorb.targetKey)
+    }
+    // Once it has joined, the stack turns to it, so the drop is seen to have landed.
+    Timer {
+        id: stackLand
+        interval: 260
+        onTriggered: {
+            const id = DesktopWidgetStacks.memberMap[root.configEntryName]
+            if (id !== undefined)
+                DesktopWidgetStacks.show(root.outputName, id, root.configEntryName)
+        }
+    }
+
+    // The page shown changes: the one leaving slides out, the one arriving slides in from the side it
+    // was turned from. Forming or dissolving a stack never animates.
+    property string _stackMemo: ""
+    function _stackKey(): string {
+        return root.stack === null ? "" : root.stack.id + (root.stack.shown ? "+" : "-")
+    }
+    onStackChanged: {
+        const memo = root._stackKey()
+        if (memo === root._stackMemo)
+            return
+        const before = root._stackMemo
+        root._stackMemo = memo
+        const turned = before.length > 0 && memo.length > 0 && before.slice(0, -1) === memo.slice(0, -1)
+        if (!turned || !root.animationsActive || !root.irisFaced || !root.visible && memo.endsWith("-")) {
+            stackSlide.stop()
+            root.stackPos = 0
+            return
+        }
+        const arriving = memo.endsWith("+")
+        stackSlide.stop()
+        root.stackPos = arriving ? root.stack.dir : 0
+        stackSlide.to = arriving ? 0 : -root.stack.dir
+        stackSlide.restart()
+        // Arranging: the page that comes up is the one being arranged.
+        if (arriving && GlobalStates.widgetEditMode
+                && DesktopWidgetStacks.memberMap[String(GlobalStates.selectedDesktopWidget).split("::")[1]] === root.stack.id)
+            GlobalStates.selectDesktopWidget(root.editInstanceKey)
+    }
+    NumberAnimation {
+        id: stackSlide
+        target: root
+        property: "stackPos"
+        duration: IrisStyle.moveDuration
+        easing.type: Easing.BezierSpline
+        easing.bezierCurve: IrisStyle.moveCurve
+    }
+
     ShellEditSizeBadge {
         z: 203
         anchors.centerIn: parent
@@ -1552,8 +1680,13 @@ AbstractWidget {
         fontPixelSize: Appearance.font.pixelSize.smaller
     }
 
+    onCanceled: root._clearStackDrop()
     onReleased: {
         if (GlobalStates.screenLocked || !root.dragMoved) return;
+        if (root._dropKey.length > 0) {
+            root._absorb()
+            return
+        }
         let newX = root.x;
         let newY = root.y;
 
@@ -1823,6 +1956,9 @@ AbstractWidget {
         _seedDefaultsIfNeeded();
         root._syncPlacementStrategy();
         Qt.callLater(root.applyPlacementFromConfig);
+        if (!root.outputName.startsWith("lock:"))
+            DesktopWidgetStacks.report(root.configEntryName, root.irisSizes, root.irisDefaultSize, root.irisFace !== null)
+        root._stackMemo = root._stackKey()
     }
     function resetToDefaults(): void {
         const updates = {};
@@ -2048,6 +2184,8 @@ AbstractWidget {
     readonly property bool widgetDesignMatchable: !root.widgetDesignShared || DesktopWidgetDesign.exceptionCount > 0
     function useDesignEverywhere(): void { DesktopWidgetDesign.apply(root.widgetDesign) }
     function pickDesign(value: string): void {
+        if (root.stacked)
+            return
         root._setOutputValue("iris.design", value === DesktopWidgetDesign.current ? "auto" : value)
     }
     property var irisSizes: ["small"]
@@ -2061,9 +2199,14 @@ AbstractWidget {
         return root.irisMaterials.includes(own) ? own : root.irisMaterials.includes(shared) ? shared : "glass"
     }
     readonly property bool irisReadsRegion: root.irisFaced && (root.irisMaterial === "glass" || root.irisMaterial === "clear")
+    // A stack keeps the size classes all its pages have.
+    readonly property var irisSizeChoices: root.stacked ? root.stack.sizes : root.irisSizes
     readonly property string irisSize: {
         const chosen = String(root._readConfigKey("iris.size") ?? "")
-        return root.irisSizes.includes(chosen) ? chosen : root.irisDefaultSize
+        if (!root.stacked)
+            return root.irisSizes.includes(chosen) ? chosen : root.irisDefaultSize
+        const choices = root.stack.sizes
+        return choices.includes(chosen) ? chosen : choices.includes(root.stack.size) ? root.stack.size : choices[0]
     }
     readonly property real irisUnit: Math.round(170 * IrisStyle.density * root.scaleFactor)
     readonly property real irisGutter: Math.round(16 * IrisStyle.density * root.scaleFactor)

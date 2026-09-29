@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Widget stacks.** Drop one desktop widget on another while arranging and they share one place, one page at a time: it turns by itself, with the wheel or from the dots on its edge. Pick the page, reorder, set how often it turns, take a widget out or split it from the quick controls. Suggested by jen9 on Discord. `inir widgetStacks`.
 - **A visualizer bubble, and five ways to draw it.** Capsules, a rising equalizer, dots, a wave or a ring, on the resting Island, its player page and a new Visualizer bubble you can place anywhere. Bands and colour are in Now Playing.
 - **Customize iRiS on the shell.** The Island grows Themes, Look, Pieces, undo and Done; tap the Island, the Dock or a bubble to edit it where it is. Studio is gone.
 - **Menu bar, a new Island layout.** A thin strip with your workspaces, window and pieces, the Island hanging from it as a notch.
