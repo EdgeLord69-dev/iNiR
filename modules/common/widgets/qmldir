@@ -55,6 +55,7 @@ InputChip 1.0 InputChip.qml
 FilterChip 1.0 FilterChip.qml
 KeyboardKey 1.0 KeyboardKey.qml
 LightDarkPreferenceButton 1.0 LightDarkPreferenceButton.qml
+LiveLayer 1.0 LiveLayer.qml
 MascotAnimation 1.0 MascotAnimation.qml
 ArrangeChip 1.0 ArrangeChip.qml
 ArrangeDropSlot 1.0 ArrangeDropSlot.qml
