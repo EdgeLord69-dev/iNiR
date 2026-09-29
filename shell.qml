@@ -978,6 +978,8 @@ ShellRoot {
             _transitionInProgress = false
         }
         if (_transitionInProgress) return
+        if ((Config.options?.panelFamily ?? "ii") === "iris")
+            GlobalStates.endIrisEditing()
 
         // If animation is disabled, switch instantly
         if (!(Config.options?.familyTransitionAnimation ?? true)) {
