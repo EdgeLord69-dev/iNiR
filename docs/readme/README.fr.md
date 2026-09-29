@@ -156,7 +156,7 @@ Je voulais que mon bureau ait une certaine allure et fonctionne d'une certaine f
 - **Les pièces rejoignent ce qu'elles touchent** : pose-en une sur le bord du Dock ou de l'Island et elle fait partie de ce corps au lieu de flotter par-dessus
 - **Dock** sur n'importe quel bord (`inir iris dockEdge <side|auto>`) ; en auto il se place en face de l'Island, et si tu envoies l'un sur le bord de l'autre, ils échangent leurs places
 - **Glass** qui dépolit le fond d'écran sous chaque surface et garde le texte lisible, même sur des fonds clairs ou chargés. Le flou du compositeur existe aussi, mais il est encore en chantier, donc ne le juge pas tout de suite
-- **Themes** : 21 refontes choisies (Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 et d'autres) plus les tiens en fichiers JSON à partager (`inir iris theme`)
+- **Themes** : 20 refontes choisies (Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 et d'autres) plus les tiens en fichiers JSON à partager (`inir iris theme`)
 - **Clair, Encre et Sombre**, chacun avec sa teinte et son dépoli, et des thèmes de couleur (Catppuccin, Nord, Rosé Pine, Tokyo Night…) que tes apps portent aussi (`inir iris palette`)
 - **Forme** : capsule, ronde, squircle ou carrée pour l'Island et le Dock
 - **Customize sur le shell** : touche l'Island, le Dock ou une bulle et ses options en sortent directement, avec Themes, Look, Pieces et annuler sous l'Island (`inir iris edit`). Si tu préfères, Studio regroupe tout dans un panneau à côté de l'écran

@@ -156,7 +156,7 @@ Wayland → GPU
 - **组件会并入它碰到的东西**：把一个放到 Dock 或 Island 的边上，它就成为那个主体的一部分，而不是浮在上面
 - **Dock** 可放在任意边缘（`inir iris dockEdge <side|auto>`）；auto 时位于 Island 对面，把一个移到另一个所在的边缘，它们会互换位置
 - **玻璃**：在每个表面下对壁纸做磨砂处理，即使在明亮或花哨的壁纸上也能保持文字清晰。合成器模糊也有，但仍在开发中，先别急着评价
-- **Themes**：21 套精选重新设计（Liquid Glass、Frost、Obsidian、Terminal、Neo Tokyo、Twilight、Lume、Sakura、Unit-01 等），以及你自己的、可分享的 JSON 文件（`inir iris theme`）
+- **Themes**：20 套精选重新设计（Liquid Glass、Frost、Obsidian、Terminal、Neo Tokyo、Twilight、Lume、Sakura、Unit-01 等），以及你自己的、可分享的 JSON 文件（`inir iris theme`）
 - **浅色、墨色和深色**，各有自己的色调和磨砂程度，还有你的应用也会跟着使用的配色主题（Catppuccin、Nord、Rosé Pine、Tokyo Night…）（`inir iris palette`）
 - **形状**：Island 和 Dock 可选胶囊、圆形、超椭圆或方形
 - **在 shell 上直接 Customize**：点一下 Island、Dock 或气泡，它的选项就从原地展开，Island 下方有 Themes、Look、Pieces 和撤销（`inir iris edit`）。如果你更喜欢，Studio 会把所有内容放在屏幕旁的一个面板里

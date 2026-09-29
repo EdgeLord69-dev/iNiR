@@ -156,7 +156,7 @@ Ich wollte, dass mein Desktop auf eine bestimmte Art aussieht und funktioniert, 
 - **Pieces verbinden sich mit dem, was sie berühren**: leg eines an den Rand des Docks oder der Island, und es wird Teil davon, statt darüber zu schweben
 - **Dock** an jedem Rand (`inir iris dockEdge <side|auto>`); auf auto sitzt es gegenüber der Island, und schickst du eines an den Rand des anderen, tauschen sie die Plätze
 - **Glass**, das den Hintergrund unter jeder Fläche mattiert und Text auch auf hellen oder unruhigen Hintergründen lesbar hält. Compositor-Blur gibt es auch, aber er ist noch im Bau, also urteil noch nicht
-- **Themes**: 21 kuratierte Neugestaltungen (Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 und mehr) plus deine eigenen als teilbare JSON-Dateien (`inir iris theme`)
+- **Themes**: 20 kuratierte Neugestaltungen (Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 und mehr) plus deine eigenen als teilbare JSON-Dateien (`inir iris theme`)
 - **Hell, Tinte und Dunkel**, jeweils mit eigenem Ton und eigener Mattierung, und Farbthemen (Catppuccin, Nord, Rosé Pine, Tokyo Night…), die auch deine Apps tragen (`inir iris palette`)
 - **Form**: Kapsel, rund, Squircle oder eckig für Island und Dock
 - **Customize auf der Shell**: tipp auf die Island, das Dock oder eine Bubble, und ihre Optionen wachsen direkt daraus hervor, mit Themes, Look, Pieces und Rückgängig unter der Island (`inir iris edit`). Wer lieber ein Panel mag: Studio zeigt alles in einer Spalte neben dem Bildschirm

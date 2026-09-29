@@ -162,7 +162,7 @@ Wayland → GPU
 - **القطع تلتحم بما تلمسه**: ضع واحدة على حافة الـ Dock أو الـ Island فتصبح جزءًا منه بدل أن تطفو فوقه
 - **Dock** على أي حافة (`inir iris dockEdge <side|auto>`)؛ في الوضع auto يجلس مقابل الـ Island، وإن أرسلت أحدهما إلى حافة الآخر تبادلا المكانين
 - **زجاج** يُغبّش الخلفية تحت كل سطح ويبقي النص مقروءًا حتى على الخلفيات الساطعة أو المزدحمة. تمويه المُركِّب موجود أيضًا، لكنه ما زال قيد العمل، فلا تحكم عليه بعد
-- **Themes**: 21 إعادة تصميم مختارة (Liquid Glass وFrost وObsidian وTerminal وNeo Tokyo وTwilight وLume وSakura وUnit-01 وغيرها) إضافة إلى سماتك كملفات JSON قابلة للمشاركة (`inir iris theme`)
+- **Themes**: 20 إعادة تصميم مختارة (Liquid Glass وFrost وObsidian وTerminal وNeo Tokyo وTwilight وLume وSakura وUnit-01 وغيرها) إضافة إلى سماتك كملفات JSON قابلة للمشاركة (`inir iris theme`)
 - **فاتح وحبري وداكن**، لكل منها درجته وتغبيشه، وسمات ألوان (Catppuccin وNord وRosé Pine وTokyo Night…) تلبسها تطبيقاتك أيضًا (`inir iris palette`)
 - **الشكل**: كبسولة أو دائري أو squircle أو مربع للـ Island والـ Dock
 - **Customize على الـ shell نفسه**: المس الـ Island أو الـ Dock أو فقاعة فتخرج خياراتها منها مباشرة، مع Themes وLook وPieces والتراجع تحت الـ Island (`inir iris edit`). وإن فضّلت، يجمع Studio كل شيء في لوحة بجانب الشاشة

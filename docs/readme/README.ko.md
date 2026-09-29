@@ -156,7 +156,7 @@ Wayland → GPU
 - **조각은 닿은 것과 합쳐집니다**: Dock이나 Island 가장자리에 두면 위에 떠 있지 않고 그 몸체의 일부가 됩니다
 - **Dock**은 어느 가장자리에나(`inir iris dockEdge <side|auto>`). auto에서는 Island 반대편에 놓이고, 하나를 다른 쪽 가장자리로 보내면 자리를 바꿉니다
 - **글래스**: 모든 표면 아래의 배경화면을 반투명 유리처럼 처리하고, 밝거나 복잡한 배경화면에서도 글자를 읽기 쉽게 유지합니다. 컴포지터 블러도 있지만 아직 작업 중이니 너무 일찍 판단하지는 마세요
-- **Themes**: 21가지 엄선된 리디자인(Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 등)과 공유할 수 있는 JSON 파일로 된 나만의 테마(`inir iris theme`)
+- **Themes**: 20가지 엄선된 리디자인(Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 등)과 공유할 수 있는 JSON 파일로 된 나만의 테마(`inir iris theme`)
 - **라이트, 잉크, 다크**: 각각 고유한 톤과 반투명도를 가지며, 앱에도 적용되는 색상 테마(Catppuccin, Nord, Rosé Pine, Tokyo Night…)도 있습니다(`inir iris palette`)
 - **모양**: Island와 Dock을 캡슐, 원형, 스쿼클, 사각형 중에서
 - **셸 위에서 바로 Customize**: Island, Dock, 버블을 탭하면 그 자리에서 옵션이 펼쳐지고, Island 아래에 Themes, Look, Pieces, 실행 취소가 있습니다(`inir iris edit`). 원하면 Studio가 모든 걸 화면 옆 패널 하나에 모아 줍니다

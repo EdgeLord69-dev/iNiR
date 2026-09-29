@@ -48,7 +48,7 @@ Frame Music can shape and illuminate the chassis while audio plays. In Spotlight
 
 ## Themes, glass and Customize
 
-iRiS Themes are whole-family redesigns, not just color palettes. 21 curated Themes ship with iNiR, and your own live as JSON files in:
+iRiS Themes are whole-family redesigns, not just color palettes. 20 curated Themes ship with iNiR, and your own live as JSON files in:
 
 ```text
 ~/.config/inir/iris/themes

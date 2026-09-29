@@ -156,7 +156,7 @@ Wayland → GPU
 - **ピースは触れたものとつながる**：Dock や Island の縁に置くと、上に浮かぶのではなくその本体の一部になります
 - **Dock** はどの端にも（`inir iris dockEdge <side|auto>`）。auto では Island の反対側に置かれ、片方をもう片方の端に送ると入れ替わります
 - **グラス**：あらゆる面の下の壁紙をすりガラスにし、明るい壁紙や情報量の多い壁紙でも文字を読みやすく保ちます。コンポジターのブラーもありますが、まだ作業中なので評価はもう少し待ってください
-- **Themes**：21 の厳選リデザイン（Liquid Glass、Frost、Obsidian、Terminal、Neo Tokyo、Twilight、Lume、Sakura、Unit-01 など）と、共有できる JSON ファイルの自作テーマ（`inir iris theme`）
+- **Themes**：20 の厳選リデザイン（Liquid Glass、Frost、Obsidian、Terminal、Neo Tokyo、Twilight、Lume、Sakura、Unit-01 など）と、共有できる JSON ファイルの自作テーマ（`inir iris theme`）
 - **ライト、インク、ダーク**：それぞれ独自のトーンとすりガラスを持ち、アプリにも適用されるカラーテーマ（Catppuccin、Nord、Rosé Pine、Tokyo Night…）も（`inir iris palette`）
 - **形**：Island と Dock をカプセル、丸、スクワークル、四角から
 - **シェル上での Customize**：Island、Dock、バブルをタップすると、その場から設定が広がり、Island の下に Themes、Look、Pieces、元に戻すが並びます（`inir iris edit`）。好みなら Studio がすべてを画面横の一つのパネルにまとめます

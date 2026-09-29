@@ -156,7 +156,7 @@ Wayland → GPU
 - **पीस जिससे छूते हैं उसी से जुड़ जाते हैं**: किसी को Dock या Island के किनारे पर रखें, तो वह ऊपर तैरने के बजाय उसी का हिस्सा बन जाता है
 - **Dock** किसी भी किनारे पर (`inir iris dockEdge <side|auto>`); auto में यह Island के सामने बैठता है, और एक को दूसरे के किनारे पर भेजें तो दोनों जगह बदल लेते हैं
 - **ग्लास** जो हर सतह के नीचे वॉलपेपर को धुंधला करता है और चमकीले या भीड़ वाले वॉलपेपर पर भी टेक्स्ट पढ़ने लायक रखता है। कंपोज़िटर ब्लर भी है, पर अभी बन रहा है, तो अभी उसे मत आँकिए
-- **Themes**: 21 चुने हुए रीडिज़ाइन (Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 और भी) और आपके अपने, शेयर करने लायक JSON फ़ाइलों में (`inir iris theme`)
+- **Themes**: 20 चुने हुए रीडिज़ाइन (Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 और भी) और आपके अपने, शेयर करने लायक JSON फ़ाइलों में (`inir iris theme`)
 - **लाइट, इंक और डार्क**, हर एक का अपना टोन और धुंधलापन, और रंग थीम (Catppuccin, Nord, Rosé Pine, Tokyo Night…) जो आपके ऐप भी पहनते हैं (`inir iris palette`)
 - **आकार**: Island और Dock के लिए कैप्सूल, गोल, स्क्विर्कल या चौकोर
 - **शेल पर ही Customize**: Island, Dock या किसी बबल को टैप करें और उसके विकल्प वहीं से निकलते हैं, Island के नीचे Themes, Look, Pieces और अनडू के साथ (`inir iris edit`)। चाहें तो Studio सब कुछ स्क्रीन के बगल में एक पैनल में रखता है

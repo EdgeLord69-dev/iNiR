@@ -156,7 +156,7 @@ Volevo che il mio desktop avesse un certo aspetto e funzionasse in un certo modo
 - **I pezzi si uniscono a ciò che toccano**: mettine uno sul bordo del Dock o della Island e diventa parte di quel corpo invece di galleggiarci sopra
 - **Dock** su qualsiasi bordo (`inir iris dockEdge <side|auto>`); in auto sta di fronte alla Island, e se ne mandi uno sul bordo dell'altro si scambiano di posto
 - **Glass** che smeriglia lo sfondo sotto ogni superficie e tiene il testo leggibile anche su sfondi chiari o pieni di dettagli. Esiste anche il blur del compositor, ma è ancora in lavorazione, quindi non giudicarlo per ora
-- **Themes**: 21 riprogettazioni curate (Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 e altre) più le tue come file JSON da condividere (`inir iris theme`)
+- **Themes**: 20 riprogettazioni curate (Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 e altre) più le tue come file JSON da condividere (`inir iris theme`)
 - **Chiaro, Inchiostro e Scuro**, ciascuno con il suo tono e la sua smerigliatura, e temi di colore (Catppuccin, Nord, Rosé Pine, Tokyo Night…) che usano anche le tue app (`inir iris palette`)
 - **Forma**: capsula, rotonda, squircle o quadrata per la Island e il Dock
 - **Customize sulla shell**: tocca la Island, il Dock o una bolla e le sue opzioni escono da lì, con Themes, Look, Pieces e annulla sotto la Island (`inir iris edit`). Se preferisci, Studio raccoglie tutto in un pannello accanto allo schermo
