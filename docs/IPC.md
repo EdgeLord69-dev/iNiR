@@ -842,6 +842,7 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `dockEdge` | Move the Dock: `auto` (opposite the Island), `top`, `bottom`, `left` or `right` |
 | `zone` | What a full-width Island carries in a zone: `start`, `center` or `end`, then kinds joined by `+` (`island`, `workspaces`, `window`, `time` or a piece kind), or `none` |
 | `preset` | Set the iRiS appearance preset: `iris`, `soft`, `round`, `crisp`, `angular` or `contrast` |
+| `palette` | The colour theme the shell and your apps wear: an id such as `catppuccin-mocha` or `iris-ink`, `auto` to follow the wallpaper, `list` for the ones iRiS shows, or `current` for the one in use |
 | `theme <action>` | iRiS themes, each a whole redesign of the family: `list`, `apply:<id>`, `save:<name>` (what you see now becomes a theme file), `import:<path>` (a shared `.json`), `export` or `export:<id>` (prints the theme as JSON to share) and `folder` (where theme files live, `~/.config/inir/iris/themes`) |
 | `morph` | Set how iRiS morphs: `direct`, `liquid`, `glide`, `snap`, `elastic` or `instant` |
 | `set` | Set any iRiS option by path, e.g. `iris.appearance.theme.pieceShape squircle` or `iris.bubbles.scale 120` (values are JSON when they parse) |

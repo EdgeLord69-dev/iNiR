@@ -436,7 +436,7 @@ Item {
                     text: root.searchText
                     color: IrisStyle.text
                     selectionColor: IrisStyle.accentContainer
-                    selectedTextColor: IrisStyle.onAccentContainer
+                    selectedTextColor: IrisStyle.inkOnAccentContainer
                     font.family: IrisStyle.fontMain
                     font.pixelSize: 13 * IrisStyle.typeScale
                     clip: true

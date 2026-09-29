@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: e347997ba6b5bb0e
+# IPC.md hash: 506e0f5dc3ca206a
 # Targets: 69
 
 declare -gA IPC_TARGET_DESC=(
@@ -173,7 +173,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [gamemode]="toggle activate deactivate status"
   [globalActions]="run runWithArgs list search open"
   [globalStyle]="set get list"
-  [iris]="open page close toggle card theme settings bubble dock dockApp appBubble pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive preset icon control lock utility watch watchPick desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
+  [iris]="open page close toggle card theme settings bubble dock dockApp appBubble pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive palette preset icon control lock utility watch watchPick desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
   [keyboard]="switchLayout switchLayoutPrevious getCurrentLayout getLayouts"
   [lock]="activate prepareSleep deactivate status focus"
   [mascot]="poke status setVoice romp chase hideSeek tidy appear appearContextual appearWithLine hide snooze"
@@ -372,6 +372,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:activities"]="Return the live activities scripts have published, as JSON"
   ["iris:set"]="Set any iRiS option by path, e.g. \`iris.appearance.theme.pieceShape squircle\` or \`iris.bubbles.scale 120\` (values are JSON when they parse)"
   ["iris:adaptive"]="How much the wallpaper shapes iRiS, \`0\`-\`100\`; any other word prints what was read from the wallpaper"
+  ["iris:palette"]="The colour theme the shell and your apps wear: an id such as \`catppuccin-mocha\` or \`iris-ink\`, \`auto\` to follow the wallpaper, \`list\` for the ones iRiS shows, or \`current\` for the one in use"
   ["iris:preset"]="Set the iRiS appearance preset: \`iris\`, \`soft\`, \`round\`, \`crisp\`, \`angular\` or \`contrast\`"
   ["iris:icon"]="Choose the glyph a piece wears: \`controls\`, \`tools\`, \`focus\`, \`notifications\`, \`bluetooth\`, \`updates\`, \`anime\` or \`watching\`, then a Material Symbol name (e.g. \`inir iris icon controls settings\`) or \`reset\` to go back to its own face"
   ["iris:control"]="Arrange the Control Center in place (drag controls, resize them from a corner, add or take them out): \`edit\`, \`done\`, \`toggle\`, \`undo\`, \`tab:<controls\\"
@@ -673,6 +674,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["iris:activity"]="<action> <id> <value>"
   ["iris:set"]="<path> <value>"
   ["iris:adaptive"]="<amount>"
+  ["iris:palette"]="<id>"
   ["iris:preset"]="<name>"
   ["iris:icon"]="<piece> <glyph>"
   ["iris:control"]="<action>"

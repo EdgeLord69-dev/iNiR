@@ -68,7 +68,7 @@ Scope {
     readonly property color welcomeScrim: Appearance.m3colors.m3scrim
     readonly property color welcomePrimary: root.irisFamily ? IrisStyle.accent
         : root.waffleFamily ? Looks.colors.accent : Appearance.m3colors.m3primary
-    readonly property color welcomeOnPrimary: root.irisFamily ? IrisStyle.onAccent
+    readonly property color welcomeOnPrimary: root.irisFamily ? IrisStyle.inkOnAccent
         : root.waffleFamily ? Looks.colors.accentFg : Appearance.m3colors.m3onPrimary
     readonly property color welcomePrimaryContainer: root.irisFamily ? IrisStyle.tintFill(IrisStyle.accent)
         : root.waffleFamily ? ColorUtils.mix(Looks.colors.bg1Base, Looks.colors.accent, 0.84)

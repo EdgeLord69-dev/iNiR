@@ -44,7 +44,7 @@ SLICES = [
     ("readonly property real animeStrength:", "readonly property bool animeHighlightOn:"),
     ("readonly property bool animeHighlightOn:", "readonly property color baseAccent:"),
     ("readonly property color baseAccent:", "readonly property color accent:"),
-    ("readonly property color accent:", "readonly property color onAccent:"),
+    ("readonly property color accent:", "readonly property color inkOnAccent:"),
     ("readonly property color baseSecondaryAccent:", "readonly property color secondaryAccent:"),
     ("readonly property color secondaryAccent:", "readonly property string auraName:"),
 ]
@@ -77,7 +77,7 @@ def build_harness():
     style = STYLE.read_text(encoding="utf-8")
     colors = COLOR_UTILS.read_text(encoding="utf-8")
     parts = [
-        extract_balanced(style, "readonly property var accents", "(", ")"),
+        extract_between(style, "readonly property var accents", "readonly property var highlights"),
         extract_balanced(style, "readonly property var highlights", "(", ")"),
         extract_balanced(style, "readonly property var animePalettes", "(", ")"),
     ]
@@ -98,6 +98,10 @@ TestCase {{
 
     property var appearance: ({{}})
     readonly property color base: Qt.color("#a8c7fa")
+    // The scheme tuning is not under test: this is the dark scheme at full colour.
+    readonly property bool light: false
+    readonly property bool ink: false
+    function chroma(c) {{ return c }}
 
     {body}
 
@@ -270,7 +274,7 @@ def structural_failures():
     if "Config.setNestedValue" in style:
         failures.append("IrisStyle.qml writes Config; the anime layer must be a pure transform")
     for needle in ["Object.prototype.hasOwnProperty.call(root.animePalettes", "root.accentFrom(", "root.highlightFrom(",
-                   "root.accentFrom(String(root.appearance", "root.highlightFrom(String(root.appearance"]:
+                   "String(root.appearance?.accent", "String(root.appearance?.highlight"]:
         if needle not in style:
             failures.append(f"IrisStyle.qml no longer owns/validates the base colour path ({needle})")
 

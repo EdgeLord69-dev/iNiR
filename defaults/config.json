@@ -2410,6 +2410,14 @@
             "motion": true,
             "motionDuration": 220,
             "accent": "blue",
+            "scheme": "auto",
+            "followTheme": true,
+            "materialForApps": true,
+            "tune": {
+                "dark": { "tone": 0, "colour": 100, "widgets": 100, "lume": false },
+                "ink": { "tone": 0, "colour": 100, "widgets": 120, "lume": true },
+                "light": { "tone": 0, "colour": 85, "widgets": 110, "lume": true }
+            },
             "expandedRadius": 28,
             "preset": "iris",
             "morph": "direct",
@@ -2628,7 +2636,8 @@
             "roundCover": false,
             "artworkBackground": true,
             "bubbleOpens": "card",
-            "cardPinned": false
+            "cardPinned": false,
+            "visualizer": { "style": "capsules", "bars": 5, "colour": "art" }
         },
         "bubbles": {
             "scale": 100,
@@ -2654,6 +2663,7 @@
                 "workspaces": { "enable": false, "place": "right", "fx": 0.5, "fy": 0.5, "opens": "card" },
                 "updates": { "enable": false, "place": "right", "fx": 0.5, "fy": 0.5 },
                 "vpn": { "enable": false, "place": "right", "fx": 0.5, "fy": 0.5 },
+                "visualizer": { "enable": false, "place": "right", "fx": 0.5, "fy": 0.5 },
                 "shellUpdate": { "enable": true, "place": "right", "fx": 0.5, "fy": 0.5 },
                 "anime": { "enable": false, "place": "right", "fx": 0.5, "fy": 0.5 },
                 "watching": { "enable": false, "place": "right", "fx": 0.5, "fy": 0.5 }

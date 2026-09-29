@@ -53,7 +53,7 @@ IconToolbarButton {
     }
     Binding {
         target: root; property: "colText"; when: root.iris; restoreMode: Binding.RestoreBinding
-        value: root.primary ? IrisStyle.onAccent : root.toggled ? IrisStyle.text : IrisStyle.subtext
+        value: root.primary ? IrisStyle.inkOnAccent : root.toggled ? IrisStyle.text : IrisStyle.subtext
     }
 
     TextMetrics {

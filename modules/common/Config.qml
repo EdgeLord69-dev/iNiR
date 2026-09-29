@@ -3940,6 +3940,17 @@ Singleton {
                     property string preset: "iris" // IrisStyle.presets: iris, soft, round, crisp, angular, contrast
                     property string morph: "direct" // IrisStyle.morphStyles: direct, liquid, glide, snap, elastic, instant
                     property string accent: "blue" // "blue", "mint", "rose", "lilac" or "wallpaper"
+                    property string scheme: "auto" // "auto" (follows the system), "dark", "ink" or "light"
+                    property bool followTheme: true // with a colour theme chosen, the shell wears its accent, highlight and material
+                    property bool materialForApps: true // with the wallpaper colour theme, terminals and apps sit on the shell's material
+                    // Per scheme: tone lifts or dims the material (-30..30), colour is how strong accents read (0..100 %),
+                    // widgets is how colourful the desktop widgets read (40..160 %), lume makes bodies frost the wallpaper
+                    // shows through instead of solid.
+                    property JsonObject tune: JsonObject {
+                        property JsonObject dark: JsonObject { property int tone: 0; property int colour: 100; property int widgets: 100; property bool lume: false }
+                        property JsonObject ink: JsonObject { property int tone: 0; property int colour: 100; property int widgets: 120; property bool lume: true }
+                        property JsonObject light: JsonObject { property int tone: 0; property int colour: 85; property int widgets: 110; property bool lume: true }
+                    }
                     property string highlight: "orange" // "orange", "yellow", "red", "pink", "green", "accent" or "wallpaper"
                     property JsonObject anime: JsonObject {
                         property bool enabled: false
@@ -4124,6 +4135,12 @@ Singleton {
                     property string bubbleOpens: "card"
                     // Keep the card floating beside the Island while something is playing.
                     property bool cardPinned: false
+                    // The visualizer on the Island, its player page and the Visualizer bubble.
+                    property JsonObject visualizer: JsonObject {
+                        property string style: "capsules" // capsules | rise | dots | wave | ring
+                        property int bars: 5
+                        property string colour: "art" // art | accent | highlight | ink
+                    }
                 }
                 // Where each Island bubble slot rests: "island", a zone ("top-left",
                 // "top-right", "left", "right", "bottom-left", "bottom-right") or "free"
@@ -4252,6 +4269,12 @@ Singleton {
                             property real fy: 0.5
                         }
                         property JsonObject vpn: JsonObject {
+                            property bool enable: false
+                            property string place: "right"
+                            property real fx: 0.5
+                            property real fy: 0.5
+                        }
+                        property JsonObject visualizer: JsonObject {
                             property bool enable: false
                             property string place: "right"
                             property real fx: 0.5

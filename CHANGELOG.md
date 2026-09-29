@@ -34,6 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New iRiS theme: Lume.** Clear glass, a bare menu bar and iNstrument widgets drawn on the wallpaper in its own light.
 - **Lume on every widget.** A switch that backs every widget's text even where the wallpaper wouldn't need it.
 - **`/` in Spotlight flips iRiS settings.** Every switch, the widget design and accents and the themes, found by a few letters and switched in place.
+- **Settings say why.** Options that follow something else (the accent under a colour theme, Glass under Lume) explain it and dim, Adaptive shows what it is doing, and the colour themes are cards painted in their own palettes.
+- **Widget colour, per mode.** *Dark look*, *Ink look* and *Light look* each get a slider for how colourful the desktop widgets read, accents and the glass over the wallpaper. Ink and Light start a little livelier. `inir iris set iris.appearance.tune.ink.widgets 130`.
+- **Colour themes in iRiS.** Pick the palette your shell and your apps wear (Catppuccin, Nord, Rosé Pine, Tokyo Night and more, plus the new *iRiS Ink*), or keep the wallpaper's. *Match the shell* gives iRiS the theme's accent, highlight and material. `inir iris palette catppuccin-mocha`.
+- **iRiS in light, ink and dark.** *Scheme* in Appearance follows the system, or stays dark, light or the new *Ink*: washi and sumi, softer than white. Each mode has its own *Tone*, *Colour strength* and *Lume frost*, so surfaces can be frost the wallpaper shows through instead of solid. `inir iris set iris.appearance.scheme ink`.
+- **Your apps sit on iRiS's material.** With the wallpaper colour theme, terminals, GTK and the other themed apps take the surfaces the shell wears (Black, Graphite, Midnight, Wallpaper or the ink and light versions, tone included). Accents still come from the wallpaper. Turn it off with *Apps use this material*.
 - **One switch for light and dark.** Dark, Ink or Light in iRiS is the system's mode, so the shell and the apps agree, and Auto says where its mode comes from: the wallpaper, a colour theme or your last choice. `inir colorMode set dark|light|toggle`, `inir colorMode get`.
 - **Choose the shape of the Island and the Dock.** Auto keeps the capsule; Round, Squircle and Square reshape them, and the open Island follows. *One shape for all* gives the Island and the Dock the bubbles' shape. Settings › Appearance › Shape, Settings › Island and Customize. `inir iris set iris.bar.shape square`.
 
@@ -65,11 +70,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **YouTube previews no longer take over what is playing.** Resting the pointer on a thumbnail used to put that preview's title and cover in the Island, the cards and the lock while the real video went on playing.
 - **Apps name themselves in the sound lists.** An app that plays through mpv or GStreamer showed as "mpv"; it now shows as itself.
+- **Paper looks lit, not grey.** In the light and Ink schemes controls, groups and widget faces darken in the body's own hue and raised parts are lighter than the glass, instead of a grey film over the wallpaper.
 - **The shell starts without recolouring your apps.** Every start ran the whole app theming again.
 - **A light or dark switch you make by hand stays.** It used to be undone seconds later when the wallpaper's brightness decided again. Now it turns off *Light or dark from the wallpaper*, and the shell and every themed app follow the mode you chose.
 - **Your apps wear what the shell looks like.** Under frost or Blur glass the apps take the material as it shows over your wallpaper instead of the raw paper, so a light desktop over a dark wallpaper no longer opens white apps beside grey glass. Their text and accents are solved against those surfaces, live wallpapers included.
 - **Comments in VS Code's light theme stay readable** on any editor background.
 - **Auto picks light or dark from the wallpaper it actually shows.** PNGs with an alpha channel, opaque ones too, always read as bright and turned the shell light; 56 of 265 wallpapers here flipped. A video's first frame and a backdrop used for colours are read as well.
+- **Accents and highlights taken from the wallpaper read in light mode.** They are solved for contrast on the surface they sit on instead of one fixed lightness, so a mustard date no longer vanishes on the Island and the selected row in Settings keeps white text.
+- **Text on an accent fill was black in iRiS.** Buttons, selected rows and checks now use white on light and dark ink on dark, as designed.
 - **VS Code and other editors have a real light theme.** In light mode the theme was declared dark, so VS Code drew its webviews and unset colours as dark, and code colours like strings and types sat at 1.2:1. Light gets its own theme and colours that keep 4.5:1 on the editor, with borders on inputs and panels and a readable placeholder.
 - **Muted text and terminal suggestions are readable in light mode.** Secondary text in themed apps and the terminal's autosuggestion colour no longer drop under 3:1.
 - **Light mode with a backdrop wallpaper for colours** no longer generates dark colours.

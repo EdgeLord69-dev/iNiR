@@ -48,9 +48,27 @@ SPACING = re.compile(r"\b\w*(?:spacing|[Mm]argins?|[Pp]adding)\w*\s*:\s*Math\.ro
 SPACING_OFF_GRID_BASELINE = 30
 
 
+# A property named on + Capital whose lowercase twin is declared in the same file (`onAccent` beside `accent`) is read
+# from outside as the twin's handler: it comes back black, and hid the white ink on every accent fill of the light scheme.
+ON_PROPERTY = re.compile(r"^\s*(?:readonly\s+)?property\s+\w+\s+on([A-Z]\w*)\s*:", re.M)
+
+
+def on_twins(text: str) -> list[str]:
+    names = []
+    for match in ON_PROPERTY.finditer(text):
+        twin = match.group(1)[0].lower() + match.group(1)[1:]
+        if re.search(rf"^\s*(?:readonly\s+)?property\s+\w+\s+{twin}\s*:", text, re.M):
+            names.append(f"on{match.group(1)} beside {twin}")
+    return names
+
+
 def main() -> int:
     failures = []
     off_grid = []
+    for path in sorted(IRIS.rglob("*.qml")):
+        for name in on_twins(path.read_text(encoding="utf-8")):
+            failures.append(f"{path.relative_to(ROOT)}: on+Capital property reads black from outside ({name}); "
+                            "name it for what it is, e.g. inkOnAccent")
     for path in sorted(IRIS.rglob("*.qml")):
         if any(parent in EXEMPT_DIRS for parent in path.parents):
             continue
