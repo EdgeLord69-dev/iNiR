@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: c44f9e0bd2029ca5
+# IPC.md hash: f6c95a51f7a265b6
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -175,7 +175,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [gamemode]="toggle activate deactivate status"
   [globalActions]="run runWithArgs list search open"
   [globalStyle]="set get list"
-  [iris]="open page close toggle card theme settings bubble dock dockApp appBubble pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource orbit orbitCorner orbitClose spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive palette preset icon control lock utility watch watchPick desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
+  [iris]="open page close toggle card theme settings bubble dock dockApp appBubble focus today controlCenter pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource orbit orbitCorner orbitClose spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive palette preset icon control lock utility watch watchPick desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
   [keyboard]="switchLayout switchLayoutPrevious getCurrentLayout getLayouts"
   [lock]="activate prepareSleep deactivate status focus"
   [mascot]="poke status setVoice romp chase hideSeek tidy appear appearContextual appearWithLine hide snooze"
@@ -352,6 +352,9 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:dock"]="\`reveal\`, \`hide\` or \`toggle\` the iRiS Dock (revealed stays until hidden or an app is chosen)"
   ["iris:dockApp"]="Open a Dock app's \`windows\` or \`menu\` by app id (e.g. \`kitty windows\`), or \`<any> close\`"
   ["iris:appBubble"]="Carry a Dock app out as a bubble of its own (e.g. \`kitty right\`): a zone, \`x,y\` fractions of the output, or \`dock\` to send it back"
+  ["iris:focus"]="\`open\`, \`close\` or \`toggle\` the Focus panel (the left one), and say whether it is open"
+  ["iris:today"]="\`open\`, \`close\` or \`toggle\` the Today panel (the right one), and say whether it is open"
+  ["iris:controlCenter"]="\`open\`, \`close\` or \`toggle\` the Control Center, and say whether it is open"
   ["iris:pin"]="Keep the \`left\` (Focus) or \`right\` (Today) panel open beside windows, or stop"
   ["iris:layout"]="How the Island sits on its edge: \`island\`, \`left\`, \`right\`, \`full\` or \`menubar\` (top or bottom)"
   ["iris:strip"]="What the menu bar lays under its items: \`transparent\` (on the wallpaper) or \`band\`"
@@ -669,6 +672,9 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["iris:dock"]="<action>"
   ["iris:dockApp"]="<appId> <mode>"
   ["iris:appBubble"]="<appId> <place>"
+  ["iris:focus"]="<action>"
+  ["iris:today"]="<action>"
+  ["iris:controlCenter"]="<action>"
   ["iris:pin"]="<side>"
   ["iris:layout"]="<name>"
   ["iris:strip"]="<name>"
@@ -757,44 +763,114 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["widgetStacks:interval"]="<stack> <seconds>"
 )
 
+declare -gA IPC_FUNCTION_VALUES=(
+  ["audio:playEvent"]="batteryLow timerDone"
+  ["autostart:addCommand"]="spawn-sh-at-startup"
+  ["background:widgetDesign"]="iris material individual instrument readout undo status"
+  ["background:widgetSearch"]="open next previous take close"
+  ["colorMode:set"]="dark light toggle"
+  ["connections:sample"]="network internet bluetooth usb power audio displays drives"
+  ["dev:dragSim"]="extra-clock"
+  ["iris:page"]="media activity desktop tray tools next prev"
+  ["iris:card"]="open close toggle pin"
+  ["iris:theme"]="list apply: save: import: export export: folder"
+  ["iris:settings"]="general appearance motion bar bubbles dock desktop windows sidebars controlCenter spotlight orbit notifications sound capture display keyboard battery gaming lock player anime sources system lock/security next prev back forward search: open"
+  ["iris:bubble"]="left right utility weather notifications controls sound mic tools media visualizer tray top-left top-right bottom-left bottom-right"
+  ["iris:dock"]="reveal hide toggle"
+  ["iris:dockApp"]="windows menu"
+  ["iris:appBubble"]="dock"
+  ["iris:focus"]="open close toggle"
+  ["iris:today"]="open close toggle"
+  ["iris:controlCenter"]="open close toggle"
+  ["iris:pin"]="left right"
+  ["iris:layout"]="island left right full menubar"
+  ["iris:strip"]="transparent band"
+  ["iris:edge"]="top bottom left right"
+  ["iris:dockEdge"]="auto top bottom left right"
+  ["iris:zone"]="start center end island workspaces window time none"
+  ["iris:barPiece"]="weather notifications controls sound mic tools media visualizer tray on off toggle"
+  ["iris:arrange"]="on off toggle"
+  ["iris:edit"]="on off toggle themes pieces material colour type motion bodies places transients desktop island dock vitals left"
+  ["iris:studio"]="on off toggle material colour type motion island pieces bodies places transients dock desktop themes search:"
+  ["iris:notch"]="on off toggle"
+  ["iris:surround"]="on off toggle"
+  ["iris:accent"]="blue mint rose lilac wallpaper"
+  ["iris:gallerySource"]="wallhaven live konachan yandere on off toggle"
+  ["iris:bubbleCard"]="weather notifications sound mic tools tray close"
+  ["iris:tap"]="controls sound tray notifications weather"
+  ["iris:bubbleMenu"]="weather sound"
+  ["iris:morph"]="direct liquid glide snap elastic instant"
+  ["iris:activity"]="title progress detail glyph tint blue sky teal green yellow orange red pink indigo purple lavender gray"
+  ["iris:palette"]="catppuccin-mocha iris-ink auto list current"
+  ["iris:preset"]="iris soft round crisp angular contrast"
+  ["iris:icon"]="controls tools focus notifications bluetooth updates anime watching reset"
+  ["iris:control"]="edit done toggle undo"
+  ["iris:lock"]="edit done toggle page: layouts scene type clock widgets widget: weather monthCalendar select: iris centered corner minimal"
+  ["iris:utility"]="tray tools sound mic none"
+  ["iris:watchPick"]="cancel"
+  ["iris:watchSubs"]="size+ size- delay+ delay- delay0 off track: file:"
+  ["iris:watchSkip"]="next previous"
+  ["iris:motion"]="spotlight orbit gallery settings focus today motioned"
+  ["mascot:setVoice"]="adaptive casual dry composed chaotic"
+  ["mascot:appear"]="left right top bottom"
+  ["mascot:appearContextual"]="battery media update network dnd mascot.companion.contextualPlacement"
+  ["mascotMood:set"]="neutral sleepy hyper snarky contemplative"
+  ["network:simulate"]="none limited portal full"
+  ["niriAnimations:apply"]="snappy niri material bouncy gentle instant"
+  ["osd:media"]="play pause next previous"
+  ["overlay:tool"]="crosshair fpsLimiter floatingImage recorder resources notes discord volumeMixer notifications on off toggle"
+  ["settings:openOverlayAt"]="index"
+  ["settings:openWindowAt"]="index"
+  ["settings:setOverlayStyle"]="index"
+  ["shellLayout:setProperty"]="sizeMode height thickness"
+  ["vpn:details"]="on off toggle"
+  ["vpn:add"]="wireguard vpn nmtui"
+  ["wallpaperSelector:openLauncher"]="static animated"
+  ["wallpaperSelector:browse"]="library wallhaven live"
+  ["wallpaperSelector:kind"]="all still live gif"
+  ["widgetStacks:create"]="weather+monthCalendar"
+  ["widgetStacks:page"]="next previous"
+  ["widgetStacks:rotate"]="on off"
+)
+
 declare -gA IPC_TARGET_EXAMPLE=(
-  [altSwitcher]='bind "Alt+Tab" { spawn "inir" "altSwitcher" "next"; }
-bind "Alt+Shift+Tab" { spawn "inir" "altSwitcher" "previous"; }'
-  [background]='bind "Super+W" { spawn "inir" "background" "toggleEditMode"; }'
-  [cheatsheet]='bind "Super+Slash" { spawn "inir" "cheatsheet" "toggle"; }'
-  [clipboard]='bind "Super+V" repeat=false { spawn "inir" "clipboard" "toggle"; }'
-  [closeConfirm]='bind "Mod+Q" repeat=false { spawn "inir" "close-window"; }'
-  [colorMode]='bind "Mod+Alt+L" { spawn "inir" "colorMode" "set" "toggle"; }'
-  [equalizer]='bind "Ctrl+Alt+F" { spawn "inir" "equalizer" "toggle"; }'
-  [gamemode]='bind "Super+F12" { spawn "inir" "gamemode" "toggle"; }'
-  [globalActions]='bind "Super+Slash" { spawn "inir" "globalActions" "open"; }
-bind "Super+M" { spawn "inir" "globalActions" "run" "toggle-mute"; }'
-  [globalStyle]='bind "Mod+Alt+S" { spawn "inir" "globalStyle" "set" "aurora"; }'
-  [keyboard]='bind "Mod+Alt+K" { spawn "inir" "keyboard" "switchLayout"; }'
-  [lock]='bind "Super+Alt+L" allow-when-locked=true { spawn "inir" "lock" "activate"; }'
-  [mpris]='bind "Ctrl+Mod+Space" { spawn "inir" "mpris" "playPause"; }
-bind "Mod+Alt+N" { spawn "inir" "mpris" "next"; }
-bind "Mod+Alt+P" { spawn "inir" "mpris" "previous"; }'
-  [niriAnimations]='bind "Super+Alt+A" { spawn "inir" "niriAnimations" "apply" "snappy"; }'
-  [osd]='bind "Mod+Shift+K" { spawn "inir" "osd" "keyboard"; }'
-  [overlay]='bind "Super+G" { spawn "inir" "overlay" "toggle"; }'
-  [overview]='bind "Mod+Space" { spawn "inir" "overview" "toggle"; }'
-  [panelFamily]='bind "Mod+Shift+W" { spawn "inir" "panelFamily" "cycle"; }'
-  [pill]='bind "Super+V" repeat=false { spawn "inir" "pill" "toggle" "clipboard"; }'
-  [region]='bind "Super+Shift+S" { spawn "inir" "region" "screenshot"; }
-bind "Super+Shift+X" { spawn "inir" "region" "ocr"; }
-bind "Super+Shift+A" { spawn "inir" "region" "search"; }
-bind "Ctrl+Shift+S" { spawn "inir" "region" "menu"; }'
-  [session]='bind "Super+Shift+E" { spawn "inir" "session" "toggle"; }'
-  [settings]='bind "Super+Comma" { spawn "inir" "settings"; }'
-  [shellLayout]='bind "Super+W" { spawn "inir" "shellLayout" "toggle"; }'
-  [voiceSearch]='bind "Super+Shift+V" { spawn "inir" "voiceSearch" "toggle"; }'
-  [vpn]='bind "Super+Alt+V" { spawn "inir" "vpn" "toggle"; }'
-  [wallpaperSelector]='bind "Ctrl+Alt+T" { spawn "inir" "wallpaperSelector" "toggle"; }
-bind "Ctrl+Alt+L" { spawn "inir" "wallpaperSelector" "browse" "live" "-"; }
-bind "Ctrl+Alt+A" { spawn "inir" "wallpaperSelector" "openLauncher" "animated"; }'
-  [workspaceStrip]='bind "Super+Tab" { spawn "inir" "workspaceStrip" "toggle"; }'
-  [ytmusic]='bind "Mod+M+Space" { spawn "inir" "ytmusic" "playPause"; }'
+  [altSwitcher]='Alt+Tab { spawn "inir" "altSwitcher" "next"; }
+Alt+Shift+Tab { spawn "inir" "altSwitcher" "previous"; }'
+  [background]='Super+W { spawn "inir" "background" "toggleEditMode"; }'
+  [cheatsheet]='Super+Slash { spawn "inir" "cheatsheet" "toggle"; }'
+  [clipboard]='Super+V repeat=false { spawn "inir" "clipboard" "toggle"; }'
+  [closeConfirm]='Mod+Q repeat=false { spawn "inir" "close-window"; }'
+  [colorMode]='Mod+Alt+L { spawn "inir" "colorMode" "set" "toggle"; }'
+  [equalizer]='Ctrl+Alt+F { spawn "inir" "equalizer" "toggle"; }'
+  [gamemode]='Super+F12 { spawn "inir" "gamemode" "toggle"; }'
+  [globalActions]='Super+Slash { spawn "inir" "globalActions" "open"; }
+Super+M { spawn "inir" "globalActions" "run" "toggle-mute"; }'
+  [globalStyle]='Mod+Alt+S { spawn "inir" "globalStyle" "set" "aurora"; }'
+  [keyboard]='Mod+Alt+K { spawn "inir" "keyboard" "switchLayout"; }'
+  [lock]='Super+Alt+L allow-when-locked=true { spawn "inir" "lock" "activate"; }'
+  [mpris]='Ctrl+Mod+Space { spawn "inir" "mpris" "playPause"; }
+Mod+Alt+N { spawn "inir" "mpris" "next"; }
+Mod+Alt+P { spawn "inir" "mpris" "previous"; }'
+  [niriAnimations]='Super+Alt+A { spawn "inir" "niriAnimations" "apply" "snappy"; }'
+  [osd]='Mod+Shift+K { spawn "inir" "osd" "keyboard"; }'
+  [overlay]='Super+G { spawn "inir" "overlay" "toggle"; }'
+  [overview]='Mod+Space { spawn "inir" "overview" "toggle"; }'
+  [panelFamily]='Mod+Shift+W { spawn "inir" "panelFamily" "cycle"; }'
+  [pill]='Super+V repeat=false { spawn "inir" "pill" "toggle" "clipboard"; }'
+  [region]='Super+Shift+S { spawn "inir" "region" "screenshot"; }
+Super+Shift+X { spawn "inir" "region" "ocr"; }
+Super+Shift+A { spawn "inir" "region" "search"; }
+Ctrl+Shift+S { spawn "inir" "region" "menu"; }'
+  [session]='Super+Shift+E { spawn "inir" "session" "toggle"; }'
+  [settings]='Super+Comma { spawn "inir" "settings"; }'
+  [shellLayout]='Super+W { spawn "inir" "shellLayout" "toggle"; }'
+  [voiceSearch]='Super+Shift+V { spawn "inir" "voiceSearch" "toggle"; }'
+  [vpn]='Super+Alt+V { spawn "inir" "vpn" "toggle"; }'
+  [wallpaperSelector]='Ctrl+Alt+T { spawn "inir" "wallpaperSelector" "toggle"; }
+Ctrl+Alt+L { spawn "inir" "wallpaperSelector" "browse" "live" "-"; }
+Ctrl+Alt+A { spawn "inir" "wallpaperSelector" "openLauncher" "animated"; }'
+  [workspaceStrip]='Super+Tab { spawn "inir" "workspaceStrip" "toggle"; }'
+  [ytmusic]='Mod+M+Space { spawn "inir" "ytmusic" "playPause"; }'
 )
 
 IPC_ALL_TARGETS=(ai altSwitcher appCatalog audio autostart background bar brightness cheatsheet clipboard cliphistService closeConfirm colorMode connections controlPanel coverflowSelector customWidgets dashboard dev equalizer gamemode globalActions globalStyle iris keyboard lock mascot mascotMood mediaControls memory minimize mpris network niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill recordingOsd region search session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch vpn wactionCenter waffleAltSwitcher wallpaperLauncher wallpaperSelector wbar widgetStacks widgetpower wnotificationCenter workspaceStrip wwidgets ytmusic zoom)

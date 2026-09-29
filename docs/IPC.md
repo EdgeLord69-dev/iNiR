@@ -3,19 +3,33 @@
 iNiR exposes IPC targets you can call from Niri keybinds, scripts, or your terminal.
 
 > **Quick discovery:** `inir help` lists all targets, `inir <target> --help` shows available functions.
-> Shell completions: `eval "$(inir completions bash)"` (also zsh, fish).
+> Tab completion knows every target, function and the values each one takes: `inir completions install`.
 
 From terminal (for testing, or showing off):
 
 ```bash
-inir <target> <function>
+inir <target> <function> [values…]
 ```
 
-In Niri config (for actual keybinds):
+As a Niri keybind, let `inir bind` write it for you. It checks the call, tells you if the keys already do something, and saves the bind to your own block in `~/.config/niri/config.d/90-user-extra.kdl`:
+
+```bash
+inir bind Mod+O orbit toggle          # shows the line and what those keys do now
+inir bind --add Mod+O orbit toggle    # saves it; Niri picks it up right away
+inir bind --examples                  # ready binds for your panel family
+inir bind --list                      # the binds you added
+inir bind --remove Mod+O
+```
+
+Or by hand, as a line inside the `binds { }` block of your Niri config:
 
 ```kdl
-bind "Key" { spawn "inir" "<target>" "<function>"; }
+binds {
+    Mod+O repeat=false { spawn "inir" "orbit" "toggle"; }
+}
 ```
+
+The examples below are lines for that block.
 
 For low-level debugging, `inir ipc <target> <function>` still works.
 
@@ -76,7 +90,7 @@ Toggle the workspace overview panel. The one with all your windows looking tiny 
 | `toggleReleaseInterrupt` | Clear the super-key release interrupt flag |
 
 ```kdl
-bind "Mod+Space" { spawn "inir" "overview" "toggle"; }
+Mod+Space { spawn "inir" "overview" "toggle"; }
 ```
 
 ---
@@ -126,7 +140,7 @@ Workspace edge strip. Shows a compact per-workspace rail and expands it for swit
 | `status` | Return strip state (`open` or `auto`) |
 
 ```kdl
-bind "Super+Tab" { spawn "inir" "workspaceStrip" "toggle"; }
+Super+Tab { spawn "inir" "workspaceStrip" "toggle"; }
 ```
 
 ---
@@ -141,7 +155,7 @@ Floating tools (Super+G): notes, images, crosshair, recorder, resources and othe
 | `tool` | Show or hide one floating tool by id (`crosshair`, `fpsLimiter`, `floatingImage`, `recorder`, `resources`, `notes`, `discord`, `volumeMixer`, `notifications`): `on`, `off` or `toggle` |
 
 ```kdl
-bind "Super+G" { spawn "inir" "overlay" "toggle"; }
+Super+G { spawn "inir" "overlay" "toggle"; }
 ```
 
 ---
@@ -158,7 +172,7 @@ The pill bar's morphing surfaces (only registered while Bar appearance is set to
 | `state` | Print the open surface name, or `closed` |
 
 ```kdl
-bind "Super+V" repeat=false { spawn "inir" "pill" "toggle" "clipboard"; }
+Super+V repeat=false { spawn "inir" "pill" "toggle" "clipboard"; }
 ```
 
 ---
@@ -174,7 +188,7 @@ Clipboard history panel. Because Ctrl+V only remembers one thing, and that's not
 | `close` | Close panel |
 
 ```kdl
-bind "Super+V" repeat=false { spawn "inir" "clipboard" "toggle"; }
+Super+V repeat=false { spawn "inir" "clipboard" "toggle"; }
 ```
 
 ---
@@ -192,8 +206,8 @@ Alt+Tab window switcher. Works across workspaces, unlike some other implementati
 | `previous` | Focus previous window |
 
 ```kdl
-bind "Alt+Tab" { spawn "inir" "altSwitcher" "next"; }
-bind "Alt+Shift+Tab" { spawn "inir" "altSwitcher" "previous"; }
+Alt+Tab { spawn "inir" "altSwitcher" "next"; }
+Alt+Shift+Tab { spawn "inir" "altSwitcher" "previous"; }
 ```
 
 ---
@@ -215,10 +229,10 @@ Region selection tools. Screenshots, OCR, recording. Draw a box, get stuff done.
 | `current` | Return the selector state (open/action/mode) as JSON |
 
 ```kdl
-bind "Super+Shift+S" { spawn "inir" "region" "screenshot"; }
-bind "Super+Shift+X" { spawn "inir" "region" "ocr"; }
-bind "Super+Shift+A" { spawn "inir" "region" "search"; }
-bind "Ctrl+Shift+S" { spawn "inir" "region" "menu"; }
+Super+Shift+S { spawn "inir" "region" "screenshot"; }
+Super+Shift+X { spawn "inir" "region" "ocr"; }
+Super+Shift+A { spawn "inir" "region" "search"; }
+Ctrl+Shift+S { spawn "inir" "region" "menu"; }
 ```
 
 ---
@@ -236,7 +250,7 @@ Provider-neutral voice input for web search and AI dictation. Auto prefers local
 | `status` | Return backend, local detection, recording and error state as JSON |
 
 ```kdl
-bind "Super+Shift+V" { spawn "inir" "voiceSearch" "toggle"; }
+Super+Shift+V { spawn "inir" "voiceSearch" "toggle"; }
 ```
 
 ---
@@ -252,7 +266,7 @@ Power menu. Logout, suspend, reboot, shutdown. The "I'm done for today" buttons.
 | `close` | Hide session screen |
 
 ```kdl
-bind "Super+Shift+E" { spawn "inir" "session" "toggle"; }
+Super+Shift+E { spawn "inir" "session" "toggle"; }
 ```
 
 ---
@@ -270,7 +284,7 @@ Lock screen. For when you need to pretend you're working.
 | `focus` | Refocus the lock screen input |
 
 ```kdl
-bind "Super+Alt+L" allow-when-locked=true { spawn "inir" "lock" "activate"; }
+Super+Alt+L allow-when-locked=true { spawn "inir" "lock" "activate"; }
 ```
 
 ---
@@ -300,7 +314,7 @@ Keyboard shortcuts reference. For when you forget what you just configured five 
 | `close` | Hide cheatsheet overlay |
 
 ```kdl
-bind "Super+Slash" { spawn "inir" "cheatsheet" "toggle"; }
+Super+Slash { spawn "inir" "cheatsheet" "toggle"; }
 ```
 
 ---
@@ -316,7 +330,7 @@ Close window confirmation dialog. Shows a prompt before closing the focused wind
 | `close` | Dismiss the dialog without closing |
 
 ```kdl
-bind "Mod+Q" repeat=false { spawn "inir" "close-window"; }
+Mod+Q repeat=false { spawn "inir" "close-window"; }
 ```
 
 By default, confirmation is disabled (closes immediately). Enable it in settings or config:
@@ -343,7 +357,7 @@ Open or toggle the settings window. GUI config so you don't have to edit JSON by
 | `setOverlayStyle style index` | Switch overlay chrome while preserving page `index` |
 
 ```kdl
-bind "Super+Comma" { spawn "inir" "settings"; }
+Super+Comma { spawn "inir" "settings"; }
 ```
 
 ---
@@ -476,8 +490,8 @@ Command palette / action registry. Search and execute shell actions from scripts
 Categories: `system`, `appearance`, `tools`, `media`, `settings`, `custom`.
 
 ```kdl
-bind "Super+Slash" { spawn "inir" "globalActions" "open"; }
-bind "Super+M" { spawn "inir" "globalActions" "run" "toggle-mute"; }
+Super+Slash { spawn "inir" "globalActions" "open"; }
+Super+M { spawn "inir" "globalActions" "run" "toggle-mute"; }
 ```
 
 ---
@@ -502,9 +516,9 @@ Wallpaper picker with grid, coverflow and compact launcher styles.
 | `status` | Return picker style, open surface, target monitor and selection target as JSON |
 
 ```kdl
-bind "Ctrl+Alt+T" { spawn "inir" "wallpaperSelector" "toggle"; }
-bind "Ctrl+Alt+L" { spawn "inir" "wallpaperSelector" "browse" "live" "-"; }
-bind "Ctrl+Alt+A" { spawn "inir" "wallpaperSelector" "openLauncher" "animated"; }
+Ctrl+Alt+T { spawn "inir" "wallpaperSelector" "toggle"; }
+Ctrl+Alt+L { spawn "inir" "wallpaperSelector" "browse" "live" "-"; }
+Ctrl+Alt+A { spawn "inir" "wallpaperSelector" "openLauncher" "animated"; }
 ```
 
 ---
@@ -571,7 +585,7 @@ Open the ii-family EasyEffects output equalizer. The integration is optional and
 | `configure` | Convert the active Equalizer to the iNiR 10-band layout |
 
 ```kdl
-bind "Ctrl+Alt+F" { spawn "inir" "equalizer" "toggle"; }
+Ctrl+Alt+F { spawn "inir" "equalizer" "toggle"; }
 ```
 
 ---
@@ -625,9 +639,9 @@ Media player control. Automatically detects and uses YtMusic controls when activ
 | `next` | Next track (uses YtMusic if active) |
 
 ```kdl
-bind "Ctrl+Mod+Space" { spawn "inir" "mpris" "playPause"; }
-bind "Mod+Alt+N" { spawn "inir" "mpris" "next"; }
-bind "Mod+Alt+P" { spawn "inir" "mpris" "previous"; }
+Ctrl+Mod+Space { spawn "inir" "mpris" "playPause"; }
+Mod+Alt+N { spawn "inir" "mpris" "next"; }
+Mod+Alt+P { spawn "inir" "mpris" "previous"; }
 ```
 
 ---
@@ -644,7 +658,7 @@ Direct YtMusic player control. Use these if you want to control YtMusic specific
 | `stop` | Stop YtMusic playback |
 
 ```kdl
-bind "Mod+M+Space" { spawn "inir" "ytmusic" "playPause"; }
+Mod+M+Space { spawn "inir" "ytmusic" "playPause"; }
 ```
 
 ---
@@ -675,7 +689,7 @@ On-screen feedback for any family. The active family's OSD or Island decides whe
 | `hide` | Hide whatever is showing |
 
 ```kdl
-bind "Mod+Shift+K" { spawn "inir" "osd" "keyboard"; }
+Mod+Shift+K { spawn "inir" "osd" "keyboard"; }
 ```
 
 ---
@@ -742,7 +756,7 @@ Performance mode for gaming. Auto-detects fullscreen apps and disables animation
 | `status` | Print current gamemode state (e.g. `active (manual)`, `inactive (off)`) |
 
 ```kdl
-bind "Super+F12" { spawn "inir" "gamemode" "toggle"; }
+Super+F12 { spawn "inir" "gamemode" "toggle"; }
 ```
 
 ---
@@ -785,7 +799,7 @@ NetworkManager VPN profiles (OpenVPN, WireGuard, anything with an NM plugin) and
 | `add <kind>` | Create a VPN in NetworkManager's connection editor: `wireguard`, or `vpn` for the installed plugins (OpenVPN, L2TP…); `nmtui` in your terminal when the editor is not installed |
 
 ```kdl
-bind "Super+Alt+V" { spawn "inir" "vpn" "toggle"; }
+Super+Alt+V { spawn "inir" "vpn" "toggle"; }
 ```
 
 ---
@@ -801,7 +815,7 @@ Presets for Niri's own window, workspace and overview animations. Applying one r
 | `apply <id>` | Apply a preset: `snappy`, `niri`, `material`, `bouncy`, `gentle`, `instant` or one of yours |
 
 ```kdl
-bind "Super+Alt+A" { spawn "inir" "niriAnimations" "apply" "snappy"; }
+Super+Alt+A { spawn "inir" "niriAnimations" "apply" "snappy"; }
 ```
 
 ---
@@ -822,6 +836,9 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `dock` | `reveal`, `hide` or `toggle` the iRiS Dock (revealed stays until hidden or an app is chosen) |
 | `dockApp` | Open a Dock app's `windows` or `menu` by app id (e.g. `kitty windows`), or `<any> close` |
 | `appBubble` | Carry a Dock app out as a bubble of its own (e.g. `kitty right`): a zone, `x,y` fractions of the output, or `dock` to send it back |
+| `focus` | `open`, `close` or `toggle` the Focus panel (the left one), and say whether it is open |
+| `today` | `open`, `close` or `toggle` the Today panel (the right one), and say whether it is open |
+| `controlCenter` | `open`, `close` or `toggle` the Control Center, and say whether it is open |
 | `pin` | Keep the `left` (Focus) or `right` (Today) panel open beside windows, or stop |
 | `accent` | Set iRiS accent: `blue`, `mint`, `rose`, `lilac` or `wallpaper` |
 | `arrange` | Arrange the Island's desktop page in place — move, remove and add its blocks: `on`, `off` or `toggle` |
@@ -890,7 +907,7 @@ Switch between the three shell families: Material ii (default), Waffle (Windows 
 | `set` | Set specific family ("ii", "waffle", or "iris") |
 
 ```kdl
-bind "Mod+Shift+W" { spawn "inir" "panelFamily" "cycle"; }
+Mod+Shift+W { spawn "inir" "panelFamily" "cycle"; }
 ```
 
 ---
@@ -906,7 +923,7 @@ The Global Style every Material surface and desktop widget follows: material, ca
 | `list` | List the styles |
 
 ```kdl
-bind "Mod+Alt+S" { spawn "inir" "globalStyle" "set" "aurora"; }
+Mod+Alt+S { spawn "inir" "globalStyle" "set" "aurora"; }
 ```
 
 ---
@@ -921,7 +938,7 @@ The system's light or dark mode, the one the shell and your apps share. With iRi
 | `get` | JSON: the mode in use, the colour theme, the saved choice, whether the wallpaper decides and iRiS's scheme |
 
 ```kdl
-bind "Mod+Alt+L" { spawn "inir" "colorMode" "set" "toggle"; }
+Mod+Alt+L { spawn "inir" "colorMode" "set" "toggle"; }
 ```
 
 ---
@@ -965,7 +982,7 @@ inir shellLayout close
 ```
 
 ```kdl
-bind "Super+W" { spawn "inir" "shellLayout" "toggle"; }
+Super+W { spawn "inir" "shellLayout" "toggle"; }
 ```
 
 ---
@@ -1039,7 +1056,7 @@ Keyboard layout switching (Niri only). Cycles through configured keyboard layout
 | `getLayouts` | Get all configured layout names (JSON array) |
 
 ```kdl
-bind "Mod+Alt+K" { spawn "inir" "keyboard" "switchLayout"; }
+Mod+Alt+K { spawn "inir" "keyboard" "switchLayout"; }
 ```
 
 ---
@@ -1171,7 +1188,7 @@ use; always finish a diagnostic run with `clockDebugRestore` before removing
 the environment flag.
 
 ```kdl
-bind "Super+W" { spawn "inir" "background" "toggleEditMode"; }
+Super+W { spawn "inir" "background" "toggleEditMode"; }
 ```
 
 ---
@@ -1262,7 +1279,7 @@ These are top-level `inir` commands that work directly, without going through IP
 Launch `hyprpicker` to pick a color from anywhere on the screen. The hex value is copied to the clipboard (`-a` flag).
 
 ```kdl
-bind "Super+Shift+C" { spawn "inir" "colorpicker"; }
+Super+Shift+C { spawn "inir" "colorpicker"; }
 ```
 
 Requires `hyprpicker` installed.

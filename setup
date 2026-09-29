@@ -229,6 +229,8 @@ sync_launcher_from_repo() {
     chmod +x "$launcher_source"
     [[ "$install_mode" == "repo-link" ]] || chmod +x "$launcher_target"
     ensure_launcher_path_in_shells "$XDG_BIN_HOME"
+    # Tab completion in the person's own shell: a link to the runtime's file, never over one of theirs.
+    "$launcher_target" completions install "$(basename "${SHELL:-bash}")" >/dev/null 2>&1 || true
     printf '%s\n' "$launcher_target"
 }
 
