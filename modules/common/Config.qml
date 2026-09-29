@@ -3928,6 +3928,7 @@ Singleton {
                     property string material: "inherit" // "inherit" (iRiS glass), "solid", "glass" or "blur" (Niri blurs what is below)
                     property int iconSize: 40
                     property bool notch: true
+                    property string shape: "auto" // "auto" (capsule when notched, else the bubbles' shape), "round", "squircle" or "square"
                     property bool magnification: false
                     property int magnifySize: 150 // hovered icon at its largest, % of its size
                     property bool badges: true // Unread notification counts on app icons
@@ -3997,6 +3998,7 @@ Singleton {
                         property int contentTiming: 100 // when content shows up inside a growing shape, % of the style
                         property int press: 100        // how deep controls dip when pressed
                         property string pieceShape: "circle" // bubbles, bars and satellites: "circle", "squircle" or "square"
+                        property bool linkShapes: false // the Island and the Dock take the bubbles' shape
                     }
                     // Animated previews in iRiS Settings and Studio; off builds none of them.
                     property bool previews: true
@@ -4023,7 +4025,7 @@ Singleton {
                     // Per surface: its own corners (0 = the family's) and its light
                     // ("inherit" = its identity, "wallpaper", or "off").
                     property JsonObject surfaces: JsonObject {
-                        property JsonObject island: JsonObject { property int speed: 100; property string morph: "" }
+                        property JsonObject island: JsonObject { property int radius: 0; property int speed: 100; property string morph: "" }
                         property JsonObject controlCenter: JsonObject { property int radius: 0; property string light: "inherit"; property int speed: 100; property string morph: ""; property string material: "" }
                         property JsonObject cards: JsonObject { property string design: "welded"; property int radius: 0; property string light: "inherit"; property int width: 0; property int speed: 100; property string morph: ""; property string material: ""; property bool joinOrigin: false; property int gap: 0; property int pad: 0; property string grabber: "auto"; property bool header: true; property bool devices: true; property bool mixer: true }
                         property JsonObject panels: JsonObject { property int radius: 0; property string light: "inherit"; property int speed: 100; property string morph: ""; property string material: "" }
@@ -4040,6 +4042,7 @@ Singleton {
                     property bool notch: true
                     // Notch shoulders: how far the Island melts into its edge (%).
                     property int notchCurve: 100
+                    property string shape: "auto" // "auto" (capsule when notched, else the bubbles' shape), "round", "squircle" or "square"
                     property int satelliteGap: 6
                     property int clockScale: 100 // resting clock and date size, %
                     property string clockAccent: "highlight" // time separator and day number: "highlight", "accent" or "plain"

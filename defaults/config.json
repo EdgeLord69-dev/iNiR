@@ -2390,6 +2390,7 @@
             "blur": false,
             "material": "inherit",
             "notch": true,
+            "shape": "auto",
             "iconSize": 40,
             "magnification": false,
             "magnifySize": 150,
@@ -2462,10 +2463,12 @@
                 "moveTime": 100,
                 "contentTiming": 100,
                 "press": 100,
-                "pieceShape": "circle"
+                "pieceShape": "circle",
+                "linkShapes": false
             },
             "surfaces": {
                 "island": {
+                    "radius": 0,
                     "speed": 100,
                     "morph": ""
                 },
@@ -2542,6 +2545,7 @@
             "composition": "cluster",
             "notch": true,
             "notchCurve": 100,
+            "shape": "auto",
             "satelliteGap": 6,
             "clockScale": 100,
             "clockAccent": "highlight",

@@ -34,10 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New iRiS theme: Lume.** Clear glass, a bare menu bar and iNstrument widgets drawn on the wallpaper in its own light.
 - **Lume on every widget.** A switch that backs every widget's text even where the wallpaper wouldn't need it.
 - **`/` in Spotlight flips iRiS settings.** Every switch, the widget design and accents and the themes, found by a few letters and switched in place.
+- **Choose the shape of the Island and the Dock.** Auto keeps the capsule; Round, Squircle and Square reshape them, and the open Island follows. *One shape for all* gives the Island and the Dock the bubbles' shape. Settings › Appearance › Shape, Settings › Island and Customize. `inir iris set iris.bar.shape square`.
 
 ### Changed
 
-- **Island settings are grouped by what they change.** Layout, Shape and At rest come first, Appearance opens on Look, Material and Shape, the banner width sits with Notifications, and every surface's corners are also listed together under Appearance. Spotlight also searches setting descriptions, so a word from what a row says finds it.
+- **Island settings are grouped by what they change.** Layout, Shape and At rest come first, Appearance opens on Look, Material and Shape, the banner width sits with Notifications, and every surface's corners are also listed together under Appearance. *Expanded corners* is now *Base corners* under Appearance › Shape, and the open Island has its own corners setting. Spotlight also searches setting descriptions, so "square" or "round" finds the shape rows.
 - **Live wallpapers use far less memory.** Videos play from a copy sized to your screen, and glass shares one decoder. 1.8 GB → under 700 MB with a 4K wallpaper.
 - **The desktop stops drawing when nobody can see it.** Music visuals, the system monitor and the Organic edge hold still behind windows. Idle GPU use went from 22 % to 9 %.
 - **Live wallpapers download in 4K.** MotionBgs' HD files are soft even at 1080p; the 4K one scaled to your screen is sharper. Light keeps HD.
