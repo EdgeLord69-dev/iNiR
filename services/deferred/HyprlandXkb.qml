@@ -37,6 +37,13 @@ Singleton {
         const names = NiriService.keyboardLayoutNames || [];
         root.layoutCodes = names;
         root.currentLayoutName = NiriService.getCurrentKeyboardLayoutName();
+
+        // Same as the Hyprland event path: the on-screen keyboard follows the active layout
+        if (names.length > 1 && root.currentLayoutName.length > 0) {
+            const oskLayout = root.currentLayoutName.split(" (")[0];
+            if (Config.options?.osk?.layout !== oskLayout)
+                Config.setNestedValue(["osk", "layout"], oskLayout);
+        }
     }
 
     // Get the layout code from the base.lst file by grabbing the line with the current layout name
