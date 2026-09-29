@@ -384,7 +384,8 @@ write_notes() {
     local url="https://github.com/${github_repo}/releases/download/v${v}/$(basename "$image")"
     awk -v url="$url" -v v="$v" '
       { print }
-      NF && $0 !~ /^\*\*iRiS [0-9.]+\*\*$/ && !done {
+      # The hero follows the intro line; the iRiS tag and a note above the intro (a quote) come first.
+      NF && $0 !~ /^\*\*iRiS [0-9.]+\*\*$/ && $0 !~ /^> / && !done {
         print ""
         print "<p align=\"center\">"
         print "  <img src=\"" url "\" alt=\"iNiR " v " desktop\" width=\"100%\">"
