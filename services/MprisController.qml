@@ -43,7 +43,7 @@ Singleton {
 	function _rememberLength(player): void {
 		if (!player || !player.lengthSupported || Number(player.length ?? 0) <= 0) return
 		const name = player.dbusName ?? ""
-		const entry = { title: player.trackTitle ?? "", length: Number(player.length) }
+		const entry = { title: root.titleOf(player), length: Number(player.length) }
 		const known = root.knownLengths[name]
 		if (known && known.title === entry.title && known.length === entry.length) return
 		const next = Object.assign({}, root.knownLengths)
@@ -54,7 +54,124 @@ Singleton {
 		if (!player) return 0
 		if (player.lengthSupported) return Number(player.length ?? 0)
 		const known = root.knownLengths[player.dbusName ?? ""]
-		return known && known.title === (player.trackTitle ?? "") ? known.length : 0
+		return known && known.title === root.titleOf(player) ? known.length : 0
+	}
+
+	// YouTube plays the thumbnail a pointer rests on, and that preview sets the page's media session: the browser then
+	// publishes the preview's title, artist and art while its URL, length and position stay the page video's. A
+	// /watch?v=ID page has one title, so for such a page the first title (or the one the tab itself shows) is held, and
+	// another title under the same ID is a preview. Every surface reads a track through titleOf/artistOf/artUrlOf.
+	property var pageTracks: ({})
+	function _pageVideoId(player): string {
+		if (!player || !root._isBrowserPlayer(player)) return ""
+		const url = String(player.metadata?.["xesam:url"] ?? "")
+		return root._isYoutubeUrl(url) && !/music\.youtube\.com/i.test(url) ? root._extractYoutubeVideoId(url) : ""
+	}
+	function _tabShows(title: string): bool {
+		const wanted = root._normTitle(title)
+		if (!wanted.length || !CompositorService.isNiri) return false
+		for (const win of (NiriService.windows ?? [])) {
+			const shown = root._normTitle(win?.title)
+			if (shown.includes(wanted + " - youtube")) return true
+		}
+		return false
+	}
+	function _notePageTrack(player): void {
+		const name = player?.dbusName ?? ""
+		if (!name.length) return
+		const id = root._pageVideoId(player)
+		const entry = root.pageTracks[name]
+		const title = String(player.trackTitle ?? "")
+		// Home, search or a channel page plays no full video but the miniplayer (the page's own title) or previews.
+		if (!id.length && entry && root._onYoutubeBrowsePage(player)) return
+		if (!id.length || !title.length) {
+			if (entry && !id.length) {
+				const next = Object.assign({}, root.pageTracks)
+				delete next[name]
+				root.pageTracks = next
+			}
+			return
+		}
+		const same = entry && entry.id === id && entry.title === title
+		const artist = String(player.trackArtist ?? "")
+		const art = String(player.trackArtUrl ?? "")
+		if (same && entry.artist === artist && entry.art === art) return
+		// Same page, another title, and the tab does not show it: a hover preview. The page's own track stands.
+		if (entry && entry.id === id && !same && !root._tabShows(title)) return
+		const next = Object.assign({}, root.pageTracks)
+		// First seen mid-preview (the shell started while a thumbnail played): the one YouTube tab on screen names the
+		// page's video; its art is the video's own thumbnail and its artist unknown until the page speaks again.
+		const tab = !entry || entry.id !== id ? root._youtubeTabTitle() : ""
+		const shown = root._tabShows(title)
+		// `sure`: the tab confirmed it. Unsure (no window list yet at startup) is checked again when the windows arrive.
+		next[name] = tab.length && !shown ? { id: id, title: tab, artist: "", art: "", sure: true }
+			: { id: id, title: title, artist: artist, art: art, sure: shown || (entry?.sure ?? false) && entry.id === id }
+		root.pageTracks = next
+	}
+	function _confirmPageTracks(): void {
+		for (const player of Mpris.players.values) {
+			const name = player?.dbusName ?? ""
+			const entry = root.pageTracks[name]
+			if (!entry || entry.sure) continue
+			if (root._tabShows(entry.title)) {
+				const next = Object.assign({}, root.pageTracks)
+				next[name] = Object.assign({}, entry, { sure: true })
+				root.pageTracks = next
+				continue
+			}
+			const tab = root._youtubeTabTitle()
+			if (!tab.length || root._pageVideoId(player) !== entry.id) continue
+			const own = root._tabShows(player.trackTitle)
+			const next = Object.assign({}, root.pageTracks)
+			next[name] = own ? { id: entry.id, title: String(player.trackTitle ?? ""), artist: String(player.trackArtist ?? ""), art: String(player.trackArtUrl ?? ""), sure: true }
+				: { id: entry.id, title: tab, artist: "", art: "", sure: true }
+			root.pageTracks = next
+		}
+	}
+	function _youtubeTabTitle(): string {
+		if (!CompositorService.isNiri) return ""
+		const found = []
+		for (const win of (NiriService.windows ?? [])) {
+			const raw = String(win?.title ?? "")
+			const at = raw.lastIndexOf(" - YouTube")
+			if (at > 0) found.push(raw.slice(0, at).trim())
+		}
+		return found.length === 1 ? found[0] : ""
+	}
+	function _onYoutubeBrowsePage(player): bool {
+		const url = String(player?.metadata?.["xesam:url"] ?? "")
+		return root._isBrowserPlayer(player) && root._isYoutubeUrl(url) && !/music\.youtube\.com/i.test(url)
+			&& root._extractYoutubeVideoId(url) === ""
+	}
+	function _heldTrack(player): var {
+		const entry = root.pageTracks[player?.dbusName ?? ""]
+		if (!entry || entry.title === String(player.trackTitle ?? "")) return null
+		const id = root._pageVideoId(player)
+		return id === entry.id || (id === "" && root._onYoutubeBrowsePage(player)) ? entry : null
+	}
+	function titleOf(player): string {
+		if (!player) return ""
+		const held = root._heldTrack(player)
+		return held ? held.title : String(player.trackTitle ?? "")
+	}
+	function artistOf(player): string {
+		if (!player) return ""
+		const held = root._heldTrack(player)
+		return held ? held.artist : String(player.trackArtist ?? "")
+	}
+	function artUrlOf(player): string {
+		if (!player) return ""
+		const held = root._heldTrack(player)
+		return held ? held.art : String(player.trackArtUrl ?? "")
+	}
+	Connections {
+		target: CompositorService.isNiri ? NiriService : null
+		// A tab title that arrives after its metadata settles which title the page really plays.
+		function onWindowsChanged(): void {
+			root._confirmPageTracks()
+			for (const player of Mpris.players.values)
+				if (root._heldTrack(player) && root._tabShows(player.trackTitle)) root._notePageTrack(player)
+		}
 	}
 	// A seek sets Quickshell's position itself; an offset measured before it would be added on top.
 	function clearPositionOffset(player): void { root._setPositionOffset(player?.dbusName ?? "", 0) }
@@ -630,7 +747,7 @@ Singleton {
 
 	function _hasConflictingBrowserPeer(player): bool {
 		const url = (player?.metadata?.["xesam:url"] ?? "").toString();
-		const title = root._normTitle(player?.trackTitle)
+		const title = root._normTitle(root.titleOf(player))
 			.replace(/\s+-\s+youtube$/, "");
 		if (!url.length || !title.length) return false;
 
@@ -638,7 +755,7 @@ Singleton {
 			if (candidate === player || !root._isBrowserPlayer(candidate)) continue;
 			const candidateUrl = (candidate?.metadata?.["xesam:url"] ?? "").toString();
 			if (candidateUrl !== url) continue;
-			const candidateTitle = root._normTitle(candidate?.trackTitle)
+			const candidateTitle = root._normTitle(root.titleOf(candidate))
 				.replace(/\s+-\s+youtube$/, "");
 			if (candidateTitle.length > 0 && !title.includes(candidateTitle)
 					&& !candidateTitle.includes(title))
@@ -659,7 +776,7 @@ Singleton {
 		if (!CompositorService.isNiri || !player)
 			return null;
 
-		const playerTitle = root._normTitle(player.trackTitle).replace(/\s+-\s+youtube$/, "");
+		const playerTitle = root._normTitle(root.titleOf(player)).replace(/\s+-\s+youtube$/, "");
 		const wins = NiriService.windows ?? [];
 		let bestWindow = null;
 		let bestScore = 0;
@@ -864,6 +981,7 @@ Singleton {
 			target: modelData;
 
 			Component.onCompleted: {
+				root._notePageTrack(modelData);
 				// Only track if it's a real player
 				if (!root._manualPlayerSelection && isRealPlayer(modelData) && (root.trackedPlayer == null || modelData.isPlaying)) {
 					root.trackedPlayer = modelData;
@@ -909,8 +1027,10 @@ Singleton {
 			
 			// Rebuild when track title changes (affects isRealPlayer filter)
 			function onTrackTitleChanged() {
+				root._notePageTrack(modelData);
 				root._rebuildPlayerList();
 			}
+			function onMetadataChanged() { root._notePageTrack(modelData) }
 
 			function onTrackArtUrlChanged() {
 				root._rebuildPlayerList();
@@ -940,7 +1060,7 @@ Singleton {
 
 		function onTrackArtUrlChanged() {
 			if ((root.activePlayer?.uniqueId ?? 0) === (root.activeTrack?.uniqueId ?? 0)
-				&& (root.activePlayer?.trackArtUrl ?? "") !== (root.activeTrack?.artUrl ?? "")) {
+				&& root.artUrlOf(root.activePlayer) !== (root.activeTrack?.artUrl ?? "")) {
 				const r = root.__reverse;
 				root.updateTrack();
 				root.__reverse = r;
@@ -953,9 +1073,9 @@ Singleton {
 	function updateTrack() {
 		this.activeTrack = {
 			uniqueId: this.activePlayer?.uniqueId ?? 0,
-			artUrl: this.activePlayer?.trackArtUrl ?? "",
-			title: this.activePlayer?.trackTitle || Translation.tr("Unknown Title"),
-			artist: this.activePlayer?.trackArtist || Translation.tr("Unknown Artist"),
+			artUrl: root.artUrlOf(this.activePlayer),
+			title: root.titleOf(this.activePlayer) || Translation.tr("Unknown Title"),
+			artist: root.artistOf(this.activePlayer) || Translation.tr("Unknown Artist"),
 			album: this.activePlayer?.trackAlbum || Translation.tr("Unknown Album"),
 		};
 
@@ -1397,7 +1517,7 @@ Singleton {
 	// Preferred art source for a player: real MPRIS art if present, else a
 	// favicon fallback derived from the track's site URL.
 	function effectiveArtUrl(player): string {
-		const direct = player?.trackArtUrl ?? "";
+		const direct = root.artUrlOf(player);
 		if (direct.length > 0) return direct;
 		if (AnimeWatch.ownsPlayer(player) && AnimeWatch.playingCover.length > 0) return AnimeWatch.playingCover;
 		const videoId = root._extractYoutubeVideoId(

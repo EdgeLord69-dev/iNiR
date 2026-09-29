@@ -680,7 +680,7 @@ MouseArea {
             active: root.showMedia &&
                     MprisController.activePlayer !== null && 
                     MprisController.activePlayer.playbackState !== MprisPlaybackState.Stopped &&
-                    (MprisController.activePlayer.trackTitle?.length > 0 ?? false)
+                    (MprisController.titleOf(MprisController.activePlayer)?.length > 0 ?? false)
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.verticalCenter

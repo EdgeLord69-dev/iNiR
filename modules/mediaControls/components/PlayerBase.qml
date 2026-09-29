@@ -31,10 +31,10 @@ QtObject {
     // Effective properties (YtMusic or regular player)
     readonly property string effectiveTitle: isYtMusicPlayer 
         ? YtMusic.currentTitle 
-        : (player?.trackTitle ?? "")
+        : (MprisController.titleOf(player) ?? "")
     readonly property string effectiveArtist: isYtMusicPlayer 
         ? YtMusic.currentArtist 
-        : (player?.trackArtist ?? "")
+        : (MprisController.artistOf(player) ?? "")
     readonly property string effectiveArtUrl: isYtMusicPlayer
         ? YtMusic.currentThumbnail
         : MprisController.effectiveArtUrl(player)

@@ -63,6 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **YouTube previews no longer take over what is playing.** Resting the pointer on a thumbnail used to put that preview's title and cover in the Island, the cards and the lock while the real video went on playing.
+- **Apps name themselves in the sound lists.** An app that plays through mpv or GStreamer showed as "mpv"; it now shows as itself.
 - **The shell starts without recolouring your apps.** Every start ran the whole app theming again.
 - **A light or dark switch you make by hand stays.** It used to be undone seconds later when the wallpaper's brightness decided again. Now it turns off *Light or dark from the wallpaper*, and the shell and every themed app follow the mode you chose.
 - **Your apps wear what the shell looks like.** Under frost or Blur glass the apps take the material as it shows over your wallpaper instead of the raw paper, so a light desktop over a dark wallpaper no longer opens white apps beside grey glass. Their text and accents are solved against those surfaces, live wallpapers included.

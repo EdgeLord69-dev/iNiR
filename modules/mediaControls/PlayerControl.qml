@@ -58,8 +58,8 @@ Item {
     property real screenY: 0
 
     readonly property string effectiveArtUrl: isYtMusicPlayer ? YtMusic.currentThumbnail : MprisController.effectiveArtUrl(player)
-    readonly property string effectiveTitle: isYtMusicPlayer ? YtMusic.currentTitle : (player?.trackTitle ?? "")
-    readonly property string effectiveArtist: isYtMusicPlayer ? YtMusic.currentArtist : (player?.trackArtist ?? "")
+    readonly property string effectiveTitle: isYtMusicPlayer ? YtMusic.currentTitle : (MprisController.titleOf(player) ?? "")
+    readonly property string effectiveArtist: isYtMusicPlayer ? YtMusic.currentArtist : (MprisController.artistOf(player) ?? "")
     // Only the artwork identity may trigger cover motion. Title/artist often
     // arrive before the real art URL and caused the same cover to slide twice.
     readonly property string mediaTransitionKey: (root.effectiveArtUrl ?? "").split("?")[0].split("#")[0]
@@ -333,7 +333,7 @@ Item {
 
                     StyledText {
                         Layout.fillWidth: true
-                        text: StringUtils.cleanMusicTitle(root.isYtMusicPlayer ? YtMusic.currentTitle : root.player?.trackTitle) || "—"
+                        text: StringUtils.cleanMusicTitle(root.isYtMusicPlayer ? YtMusic.currentTitle : MprisController.titleOf(root.player)) || "—"
                         font.pixelSize: Appearance.font.pixelSize.large
                         font.weight: Appearance.zzzEverywhere ? Font.Black : Font.Medium
                         font.italic: Appearance.zzzEverywhere
@@ -386,7 +386,7 @@ Item {
                 // Artist
                 StyledText {
                     Layout.fillWidth: true
-                    text: root.isYtMusicPlayer ? YtMusic.currentArtist : (root.player?.trackArtist || "")
+                    text: root.isYtMusicPlayer ? YtMusic.currentArtist : (MprisController.artistOf(root.player) || "")
                     font.pixelSize: Appearance.font.pixelSize.small
                     color: Appearance.zzzEverywhere ? Appearance.zzz.inkMuted
                         : Appearance.inirEverywhere ? root.inirTextSecondary : (blendedColors?.colSubtext ?? Appearance.colors.colSubtext)

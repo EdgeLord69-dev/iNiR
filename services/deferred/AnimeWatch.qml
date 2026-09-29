@@ -117,7 +117,7 @@ Singleton {
 
     // The Island's player is this run's mpv when MPRIS reports the title the wrapper set.
     function ownsPlayer(player: var): bool {
-        return root.playingTitle.length > 0 && String(player?.trackTitle ?? "") === root.playingTitle
+        return root.playingTitle.length > 0 && String(MprisController.titleOf(player) ?? "") === root.playingTitle
     }
 
     property var pick: null
@@ -546,7 +546,7 @@ Singleton {
         repeat: true
         onTriggered: {
             const title = mpv.mediaTitle
-            const player = title.length > 0 ? Array.from(MprisController.players ?? []).find(candidate => String(candidate?.trackTitle ?? "") === title) : null
+            const player = title.length > 0 ? Array.from(MprisController.players ?? []).find(candidate => String(MprisController.titleOf(candidate) ?? "") === title) : null
             if (player) MprisController.setActivePlayer(player)
             if (player || ++claimTimer.tries >= 12 || root.phase !== "playing") claimTimer.stop()
         }

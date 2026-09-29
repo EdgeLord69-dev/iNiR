@@ -24,8 +24,8 @@ Item {
     readonly property bool editorial: Appearance.editorialEverywhere
 
     required property MprisPlayer player
-    readonly property bool hasPlayer: player && player.trackTitle
-    readonly property string artUrl: player?.trackArtUrl ?? ""
+    readonly property bool hasPlayer: player && MprisController.titleOf(player)
+    readonly property string artUrl: MprisController.artUrlOf(player) ?? ""
     property string artDownloadLocation: Directories.coverArt
     readonly property bool downloaded: MediaArtwork.ready
     property string displayedArtFilePath: MediaArtwork.displaySource
@@ -277,7 +277,7 @@ Item {
                 // Title
                 StyledText {
                     Layout.fillWidth: true
-                    text: StringUtils.cleanMusicTitle(root.player?.trackTitle) || "—"
+                    text: StringUtils.cleanMusicTitle(MprisController.titleOf(root.player)) || "—"
                     font.pixelSize: Appearance.font.pixelSize.normal
                     font.family: root.editorial ? Appearance.editorial.displayFamily : Appearance.font.family.main
                     font.weight: root.editorial ? Appearance.editorial.titleWeight : Font.Medium
@@ -293,7 +293,7 @@ Item {
                 // Artist
                 StyledText {
                     Layout.fillWidth: true
-                    text: root.player?.trackArtist || ""
+                    text: MprisController.artistOf(root.player) || ""
                     font.pixelSize: Appearance.font.pixelSize.smaller
                     color: root.editorial ? Appearance.editorial.muted
                         : Appearance.inirEverywhere ? root.jiraColTextSecondary

@@ -161,8 +161,8 @@ AbstractBackgroundWidget {
         id: organicArtworkResolver
         sourceUrl: root.vizType === "organic" && root.meaningfulPlayer
             ? MprisController.effectiveArtUrl(root.meaningfulPlayer) : ""
-        title: root.meaningfulPlayer?.trackTitle ?? ""
-        artist: root.meaningfulPlayer?.trackArtist ?? ""
+        title: MprisController.titleOf(root.meaningfulPlayer) ?? ""
+        artist: MprisController.artistOf(root.meaningfulPlayer) ?? ""
         album: root.meaningfulPlayer?.trackAlbum ?? ""
     }
 

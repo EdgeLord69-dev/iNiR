@@ -339,7 +339,7 @@ AbstractBackgroundWidget {
     //   Audio.value (0-2.0), Audio.sink?.audio?.muted, Audio.ready
     //   Network.wifi, Network.networkName, Network.networkStrength (0-100)
     //   ResourceUsage.cpuUsage (0-1), ResourceUsage.memoryUsedPercentage (call ensureRunning() first)
-    //   MprisController.activePlayer?.trackTitle, MprisController.displayPlayers
+    //   MprisController.titleOf(MprisController.activePlayer), MprisController.displayPlayers
     //   Notifications.unread, Notifications.list
 
     // Available components (import qs.modules.common.widgets):

@@ -159,8 +159,8 @@ Item {
         id: albumArtworkResolver
         sourceUrl: root.palette === "album" || root.palette === "adaptive"
             ? MprisController.effectiveArtUrl(root.activePlayer) : ""
-        title: root.activePlayer?.trackTitle ?? ""
-        artist: root.activePlayer?.trackArtist ?? ""
+        title: MprisController.titleOf(root.activePlayer) ?? ""
+        artist: MprisController.artistOf(root.activePlayer) ?? ""
         album: root.activePlayer?.trackAlbum ?? ""
     }
 

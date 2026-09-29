@@ -79,8 +79,8 @@ Item { // Player instance - Old style design
     MediaArtworkResolver {
         id: artworkResolver
         sourceUrl: root.artUrl ?? ""
-        title: root.player?.trackTitle ?? ""
-        artist: root.player?.trackArtist ?? ""
+        title: MprisController.titleOf(root.player) ?? ""
+        artist: MprisController.artistOf(root.player) ?? ""
         album: root.player?.trackAlbum ?? ""
         cacheDirectory: root.artDownloadLocation
     }
@@ -260,7 +260,7 @@ Item { // Player instance - Old style design
                         : Appearance.auroraEverywhere ? Appearance.colors.colOnLayer0
                         : blendedColors.colOnLayer0
                     elide: Text.ElideRight
-                    text: StringUtils.cleanMusicTitle(root.player?.trackTitle) || "Untitled"
+                    text: StringUtils.cleanMusicTitle(MprisController.titleOf(root.player)) || "Untitled"
                     animateChange: true
                     animationDistanceX: 6
                     animationDistanceY: 0
@@ -274,7 +274,7 @@ Item { // Player instance - Old style design
                         : Appearance.auroraEverywhere ? Appearance.aurora.colTextSecondary
                         : blendedColors.colSubtext
                     elide: Text.ElideRight
-                    text: root.player?.trackArtist ?? ""
+                    text: MprisController.artistOf(root.player) ?? ""
                     animateChange: true
                     animationDistanceX: 6
                     animationDistanceY: 0

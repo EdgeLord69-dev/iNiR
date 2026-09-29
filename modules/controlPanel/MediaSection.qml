@@ -28,13 +28,13 @@ Item {
     
     readonly property MprisPlayer player: MprisController.activePlayer
     readonly property bool isYtMusicActive: MprisController.isYtMusicActive
-    readonly property bool hasPlayer: (player && player.trackTitle) || (isYtMusicActive && YtMusic.currentVideoId)
+    readonly property bool hasPlayer: (player && MprisController.titleOf(player)) || (isYtMusicActive && YtMusic.currentVideoId)
     readonly property bool inirEverywhere: Appearance.inirEverywhere
     readonly property bool auroraEverywhere: Appearance.auroraEverywhere
 
-    readonly property string effectiveArtUrl: isYtMusicActive && YtMusic.currentThumbnail ? YtMusic.currentThumbnail : (player?.trackArtUrl ?? "")
-    readonly property string effectiveTitle: isYtMusicActive && YtMusic.currentTitle ? YtMusic.currentTitle : (player?.trackTitle ?? "")
-    readonly property string effectiveArtist: isYtMusicActive && YtMusic.currentArtist ? YtMusic.currentArtist : (player?.trackArtist ?? "")
+    readonly property string effectiveArtUrl: isYtMusicActive && YtMusic.currentThumbnail ? YtMusic.currentThumbnail : (MprisController.artUrlOf(player) ?? "")
+    readonly property string effectiveTitle: isYtMusicActive && YtMusic.currentTitle ? YtMusic.currentTitle : (MprisController.titleOf(player) ?? "")
+    readonly property string effectiveArtist: isYtMusicActive && YtMusic.currentArtist ? YtMusic.currentArtist : (MprisController.artistOf(player) ?? "")
     readonly property bool effectiveIsPlaying: isYtMusicActive ? YtMusic.isPlaying : (player?.isPlaying ?? false)
 
     property string artDownloadLocation: Directories.coverArt

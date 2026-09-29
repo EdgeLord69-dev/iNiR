@@ -223,7 +223,7 @@ PanelSurface {
 
                 StyledText {
                     width: parent.width
-                    text: StringUtils.cleanMusicTitle(media.player?.trackTitle ?? "")
+                    text: StringUtils.cleanMusicTitle(MprisController.titleOf(media.player) ?? "")
                         || Translation.tr("Unknown track")
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
@@ -235,7 +235,7 @@ PanelSurface {
                 }
                 StyledText {
                     width: parent.width
-                    text: media.player?.trackArtist ?? ""
+                    text: MprisController.artistOf(media.player) ?? ""
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
                     maximumLineCount: 1

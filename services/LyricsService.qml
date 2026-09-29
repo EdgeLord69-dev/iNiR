@@ -64,8 +64,8 @@ Singleton {
 
     function _snapshot(): var {
         const player = root.activePlayer;
-        const title = player?.trackTitle ?? "";
-        const artist = player?.trackArtist ?? "";
+        const title = MprisController.titleOf(player) ?? "";
+        const artist = MprisController.artistOf(player) ?? "";
         const album = player?.trackAlbum ?? "";
         const duration = MprisController.lengthOf(player);
         const key = JSON.stringify([

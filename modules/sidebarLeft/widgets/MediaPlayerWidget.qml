@@ -20,11 +20,11 @@ Item {
 
     property MprisPlayer player: MprisController.activePlayer
     readonly property bool isYtMusicPlayer: MprisController.isYtMusicActive
-    readonly property bool hasPlayer: (player && player.trackTitle) || (isYtMusicPlayer && YtMusic.currentVideoId)
+    readonly property bool hasPlayer: (player && MprisController.titleOf(player)) || (isYtMusicPlayer && YtMusic.currentVideoId)
     
-    readonly property string effectiveTitle: isYtMusicPlayer ? YtMusic.currentTitle : (player?.trackTitle ?? "")
-    readonly property string effectiveArtist: isYtMusicPlayer ? YtMusic.currentArtist : (player?.trackArtist ?? "")
-    readonly property string effectiveArtUrl: isYtMusicPlayer ? YtMusic.currentThumbnail : (player?.trackArtUrl ?? "")
+    readonly property string effectiveTitle: isYtMusicPlayer ? YtMusic.currentTitle : (MprisController.titleOf(player) ?? "")
+    readonly property string effectiveArtist: isYtMusicPlayer ? YtMusic.currentArtist : (MprisController.artistOf(player) ?? "")
+    readonly property string effectiveArtUrl: isYtMusicPlayer ? YtMusic.currentThumbnail : (MprisController.artUrlOf(player) ?? "")
     readonly property real effectivePosition: isYtMusicPlayer ? YtMusic.currentPosition : MprisController.positionOf(player)
     readonly property real effectiveLength: isYtMusicPlayer ? YtMusic.currentDuration : MprisController.lengthOf(player)
     readonly property bool effectiveIsPlaying: isYtMusicPlayer ? YtMusic.isPlaying : (player?.isPlaying ?? false)

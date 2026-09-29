@@ -57,9 +57,10 @@ Singleton {
     function friendlyDeviceName(node) {
         return node ? (node.nickname || node.description || Translation.tr("Unknown")) : Translation.tr("Unknown");
     }
+    // The app behind a stream, not its engine: an app playing through mpv or GStreamer names itself "mpv".
     function appNodeDisplayName(node) {
         if (!node) return Translation.tr("Unknown");
-        return (node.properties?.["application.name"] || node.description || node.name || Translation.tr("Unknown"))
+        return MprisController.streamDisplayName(node)
     }
 
     function resolveControllableSink(node) {
