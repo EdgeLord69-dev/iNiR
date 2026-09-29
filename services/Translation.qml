@@ -175,7 +175,7 @@ Singleton {
             "ar_SA": "العربية",
             "de_DE": "Deutsch",
             "en_US": "English",
-            "es_419": "Español",
+            "es_419": "Español (Latinoamérica)",
             "fr_FR": "Français",
             "he_HE": "עברית",
             "hi_IN": "हिन्दी",
@@ -184,14 +184,18 @@ Singleton {
             "ja_JP": "日本語",
             "kl_GL": "Kalaallisut",
             "ko_KR": "한국어",
-            "pt_BR": "Português",
+            "pt_BR": "Português (Brasil)",
             "ru_RU": "Русский",
             "tr_TR": "Türkçe",
             "uk_UA": "Українська",
             "vi_VN": "Tiếng Việt",
             "zh_CN": "简体中文"
         };
-        return names[locale] ?? locale;
+        if (names[locale] !== undefined)
+            return names[locale];
+        // A language made with Gemini, or added by hand: the name Qt has for it in its own language.
+        const own = String(Qt.locale(locale).nativeLanguageName ?? "");
+        return own.length > 0 ? own.charAt(0).toUpperCase() + own.slice(1) : locale;
     }
 
     component TranslationScanner: Process {
