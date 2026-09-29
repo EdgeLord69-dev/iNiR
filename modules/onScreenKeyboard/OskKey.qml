@@ -14,6 +14,7 @@ RippleButton {
     property var keycode: keyData.keycode
     property string shape: keyData.shape
     property bool isShift: Ydotool.shiftKeys.includes(keycode)
+    property bool isCaps: type === "caps"
     property bool isBackspace: (key.toLowerCase() == "backspace")
     property bool isEnter: (key.toLowerCase() == "enter" || key.toLowerCase() == "return")
     property real baseWidth: 45
@@ -42,7 +43,7 @@ RippleButton {
         "shift": 1,
         "control": 1
     })
-    toggled: isShift ? Ydotool.shiftMode : false
+    toggled: isShift ? Ydotool.shiftMode : isCaps ? Ydotool.shiftMode == 2 : false
 
     enabled: shape != "empty"
     // ZZZ: raised carbon keycaps (bg2) over the bg0 backplate, with the active
@@ -82,11 +83,20 @@ RippleButton {
     }
 
     downAction: () => {
+        if (root.isCaps)
+            return;
         Ydotool.press(root.keycode);
         if (isShift && Ydotool.shiftMode == 0) Ydotool.shiftMode = 1;
     }
     releaseAction: () => {
-        if (root.type == "normal") {
+        if (root.isCaps) {
+            if (Ydotool.shiftMode == 2) {
+                Ydotool.releaseShiftKeys();
+            } else {
+                Ydotool.press(Ydotool.shiftKeys[0]);
+                Ydotool.shiftMode = 2; // Caps lock mode
+            }
+        } else if (root.type == "normal") {
             Ydotool.release(root.keycode);
             if (Ydotool.shiftMode == 1) {
                 Ydotool.releaseShiftKeys()
