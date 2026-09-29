@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 2.32.0 brings iRiS 0.2: you customize it on the shell itself, it comes in light, ink and dark with colour themes, and desktop widgets stack. Every family gets connection notices, Niri animation presets and 17 complete translations.
 
+Try it first: right-click the desktop and pick *Customize iRiS*. `inir update` brings it in, with nothing to change by hand.
+
 ### Added
 
 - **Customize iRiS on the shell.** Tap the Island, the Dock or a bubble to edit it where it is, or keep Studio as a panel beside the screen.

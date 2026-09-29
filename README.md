@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/images/iris-2.31-principal.webp" alt="iNiR 2.31 iRiS desktop" width="900">
+  <img src="docs/images/iris-2.32-principal.webp" alt="iNiR 2.32 iRiS desktop" width="900">
 </p>
 
 <h1 align="center">iNiR</h1>
@@ -84,15 +84,16 @@ I wanted my desktop to look and work a certain way and nothing else did exactly 
 ## Screenshots
 
 <details open>
-<summary><b>iRiS</b>: Island, desktop pieces, cards and Dock</summary>
+<summary><b>iRiS</b>: Island, Customize, menu bar, cards and Dock</summary>
 
 <p align="center">
-  <img src="docs/images/iris-2.31-desktop.webp" alt="iRiS desktop layout" width="49%">
-  <img src="docs/images/iris-2.31-card.webp" alt="iRiS card surface" width="49%">
+  <img src="docs/images/iris-2.32-customize.webp" alt="iRiS Customize with the Themes sheet open" width="49%">
+  <img src="docs/images/iris-2.32-menubar.webp" alt="iRiS menu bar layout over the wallpaper" width="49%">
 </p>
 
 <p align="center">
-  <img src="docs/images/iris-2.31-dock.webp" alt="iRiS Dock and edge layout" width="99%">
+  <img src="docs/images/iris-2.31-card.webp" alt="iRiS card surface" width="49%">
+  <img src="docs/images/iris-2.31-dock.webp" alt="iRiS Dock and edge layout" width="49%">
 </p>
 
 </details>
@@ -128,7 +129,7 @@ I wanted my desktop to look and work a certain way and nothing else did exactly 
 **Three panel families**, switchable on the fly with `Super+Shift+W`:
 - **Material ii**: floating bar, sidebars, dock, and 9 global styles (Material, Cards, Aurora, iNiR, Angel, Regalia, ZZZ, Cookie Shapes, Editorial)
 - **Waffle**: Windows 11-inspired taskbar, start menu, action center, notification center
-- **iRiS**: the new flagship. An Island on any screen edge that grows into pages, cards and panels, pieces you can carry, a Dock on any edge, glass, whole-redesign Themes and a Studio that edits all of it live
+- **iRiS**: the flagship. An Island on any screen edge that grows into pages, cards and panels, pieces you can carry, a Dock on any edge, glass, whole-redesign Themes, light, ink and dark, and Customize right on the shell
 
 **Automatic theming**. Pick a wallpaper and everything adapts:
 - Shell colors via Material You, propagated to GTK3/4, Qt, terminals, Firefox, Discord, SDDM
@@ -145,15 +146,17 @@ I wanted my desktop to look and work a certain way and nothing else did exactly 
 ### iRiS
 
 - **The Island**: one shape on a screen edge that answers "what's happening" and becomes the page, card or panel you opened, then folds back into itself. Top, bottom, left or right (`inir iris edge <side>`, or drag it there). On a side it stands up with a stacked clock and bubbles above and below
+- **Menu bar**: a thin strip with your workspaces, window and pieces, the Island hanging from it as a notch (`inir iris layout menubar`)
 - **Full width bar mode** with start, center and end zones for the Island, workspaces, the focused window, the time or any piece (`inir iris zone start|center|end kinds+joined+with+plus`)
-- **Pieces**: weather, sound, mic, tray, notifications, tools, media and your own apps as bubbles you can park on the Island, on the screen contour or loose on the desktop
+- **Pieces**: weather, sound, mic, tray, notifications, tools, media, VPN, a visualizer, anime (Airing and Continue) and your own apps as bubbles you can park on the Island, on the screen contour or loose on the desktop
 - **Pieces join what they touch**: park one on the Dock's or the Island's edge and it becomes part of that body instead of floating on top
 - **Dock** on any edge (`inir iris dockEdge <side|auto>`); auto sits opposite the Island, and sending one to the other's edge makes them trade places
 - **Glass** that frosts the wallpaper under every surface, and keeps text readable even on bright or busy wallpapers. Compositor Blur exists too, but it is still under construction, so don't judge it yet
-- **Themes**: 14 curated redesigns (iRiS, Liquid Glass, Frost, Obsidian, Aurora, Terminal, Neo Tokyo, Monolith, Sakura, Meadow, Unit-01, Signal, iNiR Theme, Adaptive) plus your own as shareable JSON files (`inir iris theme`)
-- **Studio**: a live editor for material, colour, type, motion and every surface, with undo, search and previews that follow where your Island and Dock actually live (`inir iris studio`)
-- **Edit in place**: grab pieces straight off the screen and rearrange them (`inir iris edit`)
-- **Control Center you arrange**: every shared quick toggle, the player and each slider as cells you drag, resize from a corner and add from a library beside it, with five starting layouts (`inir iris control edit`)
+- **Themes**: 21 curated redesigns (Liquid Glass, Frost, Obsidian, Terminal, Neo Tokyo, Twilight, Lume, Sakura, Unit-01 and more) plus your own as shareable JSON files (`inir iris theme`)
+- **Light, Ink and Dark**, each with its own tone and frost, and colour themes (Catppuccin, Nord, Rosé Pine, Tokyo Night…) that your apps wear too (`inir iris palette`)
+- **Shape**: capsule, round, squircle or square for the Island and the Dock
+- **Customize on the shell**: tap the Island, the Dock or a bubble and its options grow out of it, with Themes, Look, Pieces and undo under the Island (`inir iris edit`). Studio keeps every area in one panel beside the screen if you prefer
+- **Control Center you arrange**: every shared quick toggle, the player and each slider as cells you drag, resize from a corner and add from a library beside it, with six starting layouts; right-click a control to unfold it (`inir iris control edit`)
 - **Lock screen you rehearse**: the real lock opens editable with nothing to unlock; drag the clock, player and sign-in field around, and set what plays behind them, video included (`inir iris lock edit`)
 
 ### Theming and appearance
@@ -164,7 +167,7 @@ I wanted my desktop to look and work a certain way and nothing else did exactly 
 - **App theming**: GTK3/4, Qt (via plasma-integration and darkly), Firefox (MaterialFox), Discord/Vesktop (System24), Zed, Spicetify, Steam, SDDM
 - **Theme presets**: Gruvbox, Catppuccin, Rosé Pine, and more, or create your own
 - **Video wallpapers**: mp4/webm/gif with optional blur, or frozen first frame for performance
-- **Desktop widgets**: clock (multiple styles), weather, media controls on the wallpaper layer
+- **Desktop widgets**: one design for all of them (iRiS, Material, iNstrument or Readout), stacks that turn like iOS ones, and ink that follows the wallpaper under them
 
 ### Bar
 

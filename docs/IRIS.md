@@ -48,7 +48,7 @@ Frame Music can shape and illuminate the chassis while audio plays. In Spotlight
 
 ## Themes, glass and Customize
 
-iRiS Themes are whole-family redesigns, not just color palettes. 2.31 ships 16 curated Themes and also supports user Themes as JSON files in:
+iRiS Themes are whole-family redesigns, not just color palettes. 21 curated Themes ship with iNiR, and your own live as JSON files in:
 
 ```text
 ~/.config/inir/iris/themes
@@ -64,7 +64,34 @@ inir iris theme apply:liquid-glass
 inir iris theme save:my-theme
 ```
 
+Rather have one panel? Settings, Appearance, *Customize opens*, Studio puts every area in a column beside the screen with one search.
+
 Wallpaper glass samples the wallpaper beneath iRiS surfaces and raises its tint where needed to keep text readable. Niri compositor blur can blur windows below a surface too, but it is intentionally marked experimental because moving/transient surfaces can still expose compositor artifacts.
+
+## Light, Ink and Dark
+
+*Scheme* in Appearance follows the system, or stays Dark, Light or Ink: washi and sumi, softer than white. Each has its own tone, colour strength and frost. The scheme is the system's mode, so your apps switch with it.
+
+Colour themes give the shell and your apps one palette (Catppuccin, Nord, Rosé Pine, Tokyo Night, iRiS Ink and more) instead of the wallpaper's. *Match the shell* also hands iRiS the theme's accent and material.
+
+```bash
+inir iris set iris.appearance.scheme ink
+inir colorMode set light
+inir iris palette catppuccin-mocha
+inir iris palette auto
+```
+
+## Menu bar and shape
+
+Menu bar is a thin strip along the top or bottom with your workspaces, window and pieces; the Island hangs from it as a notch and grows into what it opens. The strip is clear over the wallpaper, its items turning dark over a light one, or sits on a band. Twilight, Daybreak and Lume use it.
+
+Settings, Appearance, Shape sets the Island and the Dock to the capsule, Round, Squircle or Square.
+
+```bash
+inir iris layout menubar
+inir iris strip transparent
+inir iris strip band
+```
 
 ## Anime colours
 
