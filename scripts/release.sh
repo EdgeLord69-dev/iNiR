@@ -3,6 +3,7 @@
 # so a release reaches them the moment main moves; the tag and the GitHub release
 # only announce it. Everything here keeps main fast-forward only.
 set -euo pipefail
+trap 'printf "error: release.sh stopped at line %s\n" "$LINENO" >&2' ERR
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd "$script_dir/.." && pwd)"
@@ -363,7 +364,7 @@ check_private_text() {
     magick "$image" -resize 300% -colorspace Gray -normalize "$tmp/a.png" 2>/dev/null || continue
     magick "$tmp/a.png" -negate "$tmp/b.png"
     text="$(tesseract "$tmp/a.png" - --psm 11 2>/dev/null; tesseract "$tmp/b.png" - --psm 11 2>/dev/null)"
-    hits="$(grep -oiE "$pattern" <<<"$text" | sort -uf | tr '\n' ' ')"
+    hits="$(grep -oiE "$pattern" <<<"$text" | sort -uf | tr '\n' ' ' || true)"
     [[ -z "$hits" ]] || fail "$image shows: $hits(retake it without that on screen)"
   done
   rm -rf "$tmp"
