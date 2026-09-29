@@ -509,19 +509,21 @@ ShellRoot {
         target: "taskview"
         function _isWaffle(): bool { return (Config.options?.panelFamily ?? "ii") === "waffle" }
         function _isIris(): bool { return (Config.options?.panelFamily ?? "ii") === "iris" }
+        // iRiS: Orbit when it is on, Spotlight (what task view opened before Orbit) when it is off.
+        function _irisOrbit(): bool { return Config.options?.iris?.orbit?.enable ?? false }
         function toggle(): void {
             if (_isWaffle()) { GlobalStates.waffleTaskViewOpen = !GlobalStates.waffleTaskViewOpen; return }
-            if (_isIris()) { GlobalStates.irisOrbitOpen = !GlobalStates.irisOrbitOpen; return }
+            if (_isIris()) { if (_irisOrbit()) GlobalStates.irisOrbitOpen = !GlobalStates.irisOrbitOpen; else GlobalStates.searchOpen = !GlobalStates.searchOpen; return }
             if (CompositorService.isNiri) GlobalStates.toggleOrbit("")
         }
         function close(): void {
             if (_isWaffle()) { GlobalStates.waffleTaskViewOpen = false; return }
-            if (_isIris()) { GlobalStates.irisOrbitOpen = false; return }
+            if (_isIris()) { GlobalStates.irisOrbitOpen = false; GlobalStates.searchOpen = false; return }
             if (GlobalStates.overviewMode === "orbit") GlobalStates.closeOverview()
         }
         function open(): void {
             if (_isWaffle()) { GlobalStates.waffleTaskViewOpen = true; return }
-            if (_isIris()) { GlobalStates.irisOrbitOpen = true; return }
+            if (_isIris()) { if (_irisOrbit()) GlobalStates.irisOrbitOpen = true; else GlobalStates.searchOpen = true; return }
             if (CompositorService.isNiri) GlobalStates.openOrbit("")
         }
     }
@@ -563,7 +565,7 @@ ShellRoot {
         }
         function status(): string {
             if (_isIris()) return JSON.stringify({ family: "iris", open: GlobalStates.irisOrbitOpen,
-                enabled: Config.options?.iris?.orbit?.enable ?? true, output: GlobalStates.focusedScreen?.name ?? "" })
+                enabled: Config.options?.iris?.orbit?.enable ?? false, output: GlobalStates.focusedScreen?.name ?? "" })
             const outputName = NiriService.currentOutput ?? ""
             const orbitCorner = Config.options?.orbit?.hotCorner ?? "topRight"
             return JSON.stringify(Object.assign({}, GlobalStates.orbitRuntimeStatus, {

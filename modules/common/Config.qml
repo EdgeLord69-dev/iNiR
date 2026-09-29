@@ -4112,7 +4112,7 @@ Singleton {
                     property list<string> rightModules: [] // Island Desktop page: "custom:<widget-id>" modules
                 }
                 property JsonObject orbit: JsonObject {
-                    property bool enable: true
+                    property bool enable: false
                     property string opens: "island" // "island": the Island becomes Orbit; "floating": a sheet under it
                     property bool previews: true // Niri's own screenshot of each window, when there is one
                     property int previewAge: 10 // seconds a picture of the workspace you are on may be old

@@ -2615,7 +2615,7 @@
             "rightModules": []
         },
         "orbit": {
-            "enable": true,
+            "enable": false,
             "opens": "island",
             "previews": true,
             "previewAge": 10,
