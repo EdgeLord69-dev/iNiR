@@ -9,64 +9,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.32.0] - 2026-09-29
 
-2.32.0 brings iRiS 0.2: you customize it on the shell itself, it comes in light, ink and dark with colour themes, and desktop widgets stack. Every family gets connection notices, Niri animation presets and 17 complete translations.
-
-Try it first: right-click the desktop and pick *Customize iRiS*. `inir update` brings it in, with nothing to change by hand.
+Ten days after 2.31.0, iRiS reaches 0.2: you customize it on the shell itself, it comes in light, ink and dark with colour themes, desktop widgets stack, and every family gets connection notices, Niri animation presets and 17 complete translations.
 
 ### Added
-
-- **Customize iRiS on the shell.** Tap the Island, the Dock or a bubble to edit it where it is, or keep Studio as a panel beside the screen.
-- **Light, Ink and Dark.** Ink is washi and sumi, softer than white. Each has its own tone and frost, and your apps follow it. `inir colorMode set dark|light|toggle`.
-- **Colour themes.** Catppuccin, Nord, Rosé Pine, Tokyo Night and more for the shell and your apps. `inir iris palette catppuccin-mocha`.
-- **Menu bar, a new Island layout:** a thin strip with the Island as its notch. Round, Squircle and Square reshape the Island and the Dock, and Twilight, Daybreak, Horizon and Lume are new themes.
-- **Widget stacks.** Drop one widget on another and they share a place, turning by themselves or with the wheel. Suggested by jen9 on Discord.
-- **One design for every widget:** iRiS, Material, iNstrument or Readout. Over a bright wallpaper they turn to dark ink.
-- **Spotlight finds widgets, actions and options,** typos forgiven, and `/` flips iRiS settings in place. Ctrl+F finds a widget while arranging.
-- **Arrange the Control Center** from a library of controls; right-click one to unfold it.
-- **Design the lock screen** on the real lock, video included.
-- **A visualizer bubble** in five designs, also on the Island.
-- **VPN without the terminal** for NetworkManager and Tailscale.
-- **Anime pieces:** Airing counts down from AniList, Continue plays in mpv where you stopped.
-- **A bubble for new iNiR versions** that shows what changed and updates.
-- **Notices when something connects or drops,** from mice and drives to the charger and the internet, in every family.
-- **Niri from Settings:** animation presets, and window opacity and blur rules.
-- **iRiS Settings covers the whole desktop,** as a sidebar, a rail or a home, and each surface can be solid or glass.
-- **17 complete translations.** Indonesian is new, Spanish is now neutral Latin American, Greenlandic is still partly English.
-- **Your avatar can be the Material bar's top-left icon.**
+- **Customize on the shell**: tap the Island, the Dock or a bubble and edit it where it is, or keep Studio as a panel beside the screen.
+- **Light, Ink and Dark**: Ink is washi and sumi, softer than white. Each has its own tone and frost, and your apps follow the mode (`inir colorMode set dark|light|toggle`).
+- **Colour themes**: Catppuccin, Nord, Rosé Pine, Tokyo Night and more, worn by the shell and your apps alike (`inir iris palette catppuccin-mocha`).
+- **Menu bar layout and shapes**: a thin strip with the Island as its notch; Round, Squircle and Square for the Island and the Dock; Twilight, Daybreak, Horizon and Lume as new themes.
+- **Widget stacks**: drop one widget on another and they share a place, turning by themselves or with the wheel.
+- **One design for every widget**: iRiS, Material, iNstrument or Readout, with ink that turns dark over a bright wallpaper.
+- **Control Center and lock screen you arrange**: controls from a library that unfold on right-click, and the real lock opened for editing, video backgrounds included.
+- **New pieces**: a visualizer in five designs, VPN for NetworkManager and Tailscale, Airing and Continue for anime, and a bubble that announces new iNiR versions.
+- **Spotlight for widgets, actions and options**: it finds them all, and `/` flips iRiS settings in place.
+- **Connection notices in every family**: mice, drives, controllers, the charger, displays and the internet, by name.
+- **Niri from Settings**: window animation presets, and window opacity and blur rules.
+- **iRiS Settings for the whole desktop**: laid out as a sidebar, a rail or a home, with solid or glass per surface.
+- **17 complete translations**: Indonesian is new and Spanish is now neutral Latin American; Greenlandic is still partly English.
 
 ### Changed
-
-- **Live wallpapers use far less memory:** 1.8 GB → under 700 MB with a 4K one.
-- **The desktop stops drawing when nobody can see it.** Idle GPU use went from 22 % to 9 %.
-- **Snappy is the default Niri animation** on fresh installs.
-- **iRiS has its own type:** Inter, Inter Display and Rubik ship with iNiR.
-- **Widget quick controls are one sheet,** and the widget bar is calmer.
-- **Online things say when you're offline** and pick up again when the connection is back.
-- **Dock previews show where each window sits** in its workspace.
-- **iRiS glass catches light on its edge,** so it no longer vanishes over a dark desktop.
-- **Themes dress the lock screen and the Control Center too.**
+- Live wallpapers use far less memory: 1.8 GB became under 700 MB with a 4K wallpaper.
+- The desktop stops drawing when nobody can see it; idle GPU use went from 22 % to 9 %.
+- Snappy is the default Niri animation on fresh installs.
+- iRiS ships its own type: Inter, Inter Display and Rubik.
+- Widget quick controls are one sheet, and the widget bar is calmer.
+- Online features say when you are offline and recover on their own.
+- Dock previews show where each window sits in its workspace.
+- iRiS glass catches light on its edge, so it no longer vanishes over a dark desktop.
+- Themes dress the lock screen and the Control Center too.
+- Your avatar can be the Material bar's top-left icon.
 
 ### Fixed
-
-- **Light mode keeps its contrast,** and VS Code gets a real light theme.
-- **Auto reads the wallpaper you actually see,** and a mode you pick by hand stays.
-- **The shell starts without recolouring your apps.**
-- **iRiS loads on Ubuntu, Debian and Fedora again.**
-- **YouTube previews no longer take over what is playing.**
-- **Repeating calendar events show every time** ([#261](https://github.com/snowarch/iNiR/issues/261)), and external calendars survive a sync offline.
-- **Fullscreen is noticed every time** ([#265](https://github.com/snowarch/iNiR/issues/265)), and the next song no longer pops up over your game.
-- **Screen corners open on their own monitor** ([#262](https://github.com/snowarch/iNiR/issues/262)).
-- **A crowded Material bar no longer cuts modules in half** ([#268](https://github.com/snowarch/iNiR/issues/268)).
-- **Your language shows outside the region it was written for.**
-- **Big wallpaper folders no longer choke the shell,** and a file name can no longer run a command.
-- **Live wallpapers no longer restart** when you uncover the desktop.
-- **Edit-mode buttons answer the first click,** and locking iRiS no longer flashes.
-- **Sidebars open on the monitor you clicked.**
-- **Setup leaves your font settings alone,** and `inir update` stops flagging our own files as your changes.
+- Light mode keeps its contrast, and VS Code gets a real light theme.
+- Auto light or dark reads the wallpaper you actually see, and a mode you pick by hand stays.
+- The shell starts without recolouring your apps.
+- iRiS loads again on Ubuntu, Debian and Fedora.
+- YouTube previews no longer take over what is playing.
+- Repeating calendar events show every time they repeat, and external calendars survive a sync offline.
+- Fullscreen is noticed every time, and the next song no longer pops up over a game.
+- Screen corners open on their own monitor.
+- A crowded Material bar no longer cuts its modules in half.
+- Your language shows outside the region it was written for.
+- Big wallpaper folders no longer choke the shell, and a file name can no longer run a command.
+- Edit-mode buttons answer the first click, locking iRiS no longer flashes, and sidebars open on the monitor you clicked.
+- Setup leaves your font settings alone.
 
 ### Issues / PRs
+- Fixed [#261](https://github.com/snowarch/iNiR/issues/261), [#262](https://github.com/snowarch/iNiR/issues/262), [#265](https://github.com/snowarch/iNiR/issues/265) and [#268](https://github.com/snowarch/iNiR/issues/268).
+- Included contributions from [#205](https://github.com/snowarch/iNiR/pull/205) and [#252](https://github.com/snowarch/iNiR/pull/252).
 
-- Includes [#205](https://github.com/snowarch/iNiR/pull/205) by @cnvuls and [#252](https://github.com/snowarch/iNiR/pull/252) by @Azhar457.
+### Contributors
+Thanks to [@cnvuls](https://github.com/cnvuls) and [@Azhar457](https://github.com/Azhar457) for the code included in this release, to jen9 on Discord for the idea behind widget stacks, and to [@Itstatertots](https://github.com/Itstatertots), [@kayliox](https://github.com/kayliox), [@Angel173hu](https://github.com/Angel173hu) and [@noxygalaxy](https://github.com/noxygalaxy) for the reports behind the fixes.
 
 ## [2.31.0] - 2026-09-19
 
@@ -1838,6 +1830,3 @@ Shoutout to [@yukazakiri](https://github.com/yukazakiri) for basically adopting 
 - **Tiling Overlay**: Visual overlay for tiling operations
 - **Tools tab**: New tools section in settings
 - **GIF wallpaper support**: Native animated GIF wallpapers with performance optimizations
-- **iRiS Settings › General opens on your wallpaper.** A card with the current wallpaper; one tap changes it.
-- **About and Shortcuts are iRiS pages now.** They render with iRiS's own marks and rows instead of Material's.
-- **Settings group marks carry their own colour.** General's groups each show an identity tint instead of a wall of grey.
