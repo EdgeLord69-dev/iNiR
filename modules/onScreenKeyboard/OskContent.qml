@@ -10,6 +10,17 @@ Item {
         ? Config.options?.osk.layout 
         : Layouts.defaultLayout
     property var currentLayout: layouts[activeLayoutName]
+    // A family draws the keys its own way: it hands over a component with `required property var modelData`.
+    property Component keyComponent: defaultKey
+    property real keySpacing: 5
+
+    Component {
+        id: defaultKey
+        OskKey {
+            required property var modelData
+            keyData: modelData
+        }
+    }
 
     implicitWidth: keyRows.implicitWidth
     implicitHeight: keyRows.implicitHeight
@@ -17,7 +28,7 @@ Item {
     ColumnLayout {
         id: keyRows
         anchors.fill: parent
-        spacing: 5
+        spacing: root.keySpacing
 
         Repeater {
             model: root.currentLayout.keys
@@ -25,15 +36,12 @@ Item {
             delegate: RowLayout {
                 id: keyRow
                 required property var modelData
-                spacing: 5
+                spacing: root.keySpacing
                 
                 Repeater {
                     model: modelData
                     // A normal key looks like this: {label: "a", labelShift: "A", shape: "normal", keycode: 30, type: "normal"}
-                    delegate: OskKey { 
-                        required property var modelData
-                        keyData: modelData
-                    }
+                    delegate: root.keyComponent
                 }
             }
         }

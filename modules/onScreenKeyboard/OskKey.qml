@@ -18,6 +18,14 @@ RippleButton {
     property bool isEnter: (key.toLowerCase() == "enter" || key.toLowerCase() == "return")
     property real baseWidth: 45
     property real baseHeight: 45
+    // What a family may restyle; the defaults are Material's and Waffle's keycap.
+    property color colKeyText: Appearance.zzzEverywhere ? Appearance.zzz.ink : Appearance.colors.colOnLayer1
+    property color colKeyTextToggled: Appearance.zzzEverywhere ? Appearance.zzz.onSticker : Appearance.colors.colOnPrimary
+    property string keyFontFamily: Appearance.font.family.main
+    property string glyphFontFamily: Appearance.font.family.iconMaterial
+    property real keyFontSize: Appearance.font.pixelSize.large
+    property real fnFontSize: Appearance.font.pixelSize.small
+    property real glyphFontSize: Appearance.font.pixelSize.huge
     property var widthMultiplier: ({
         "normal": 1,
         "fn": 1,
@@ -113,14 +121,12 @@ RippleButton {
     contentItem: StyledText {
         id: keyText
         anchors.fill: parent
-        font.family: (isBackspace || isEnter) ? Appearance.font.family.iconMaterial : Appearance.font.family.main
-        font.pixelSize: root.shape == "fn" ? Appearance.font.pixelSize.small : 
-            (isBackspace || isEnter) ? Appearance.font.pixelSize.huge :
-            Appearance.font.pixelSize.large
+        font.family: (isBackspace || isEnter) ? root.glyphFontFamily : root.keyFontFamily
+        font.pixelSize: root.shape == "fn" ? root.fnFontSize :
+            (isBackspace || isEnter) ? root.glyphFontSize :
+            root.keyFontSize
         horizontalAlignment: Text.AlignHCenter
-        color: root.toggled
-            ? (Appearance.zzzEverywhere ? Appearance.zzz.onSticker : Appearance.colors.colOnPrimary)
-            : (Appearance.zzzEverywhere ? Appearance.zzz.ink : Appearance.colors.colOnLayer1)
+        color: root.toggled ? root.colKeyTextToggled : root.colKeyText
         text: root.isBackspace ? "backspace" : root.isEnter ? "subdirectory_arrow_left" :
             (root.toggled && root.keyData.labelToggled) ? root.keyData.labelToggled :
             Ydotool.shiftMode == 2 ? (root.keyData.labelCaps || root.keyData.labelShift || root.keyData.label) :
