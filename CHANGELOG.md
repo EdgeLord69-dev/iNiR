@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **iRiS 0.2**
 
-> **iRiS is still under construction.** Some corners look rough, a few look like they were made at 4 a.m. (they were), and every release sands more of them down. Point us at the worst ones on Discord.
+> **iRiS is still under construction.** Parts of it might look ass for now, and they get better every release. Point us at the worst ones on Discord.
 
 2.32.0 turns iRiS into a desktop you shape by touching it: click the Island, the Dock, a bubble or a widget and its options grow right there, widgets stack and read the wallpaper under them, the Control Center and the lock screen are yours to arrange, Orbit lays your whole session out from the Island, and the shell and your apps switch together between dark, ink and light.
 
