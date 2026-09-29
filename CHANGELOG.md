@@ -66,7 +66,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **The shell starts without recolouring your apps.** Every start ran the whole app theming again.
 - **A light or dark switch you make by hand stays.** It used to be undone seconds later when the wallpaper's brightness decided again. Now it turns off *Light or dark from the wallpaper*, and the shell and every themed app follow the mode you chose.
 - **Your apps wear what the shell looks like.** Under frost or Blur glass the apps take the material as it shows over your wallpaper instead of the raw paper, so a light desktop over a dark wallpaper no longer opens white apps beside grey glass. Their text and accents are solved against those surfaces, live wallpapers included.
+- **Comments in VS Code's light theme stay readable** on any editor background.
 - **Auto picks light or dark from the wallpaper it actually shows.** PNGs with an alpha channel, opaque ones too, always read as bright and turned the shell light; 56 of 265 wallpapers here flipped. A video's first frame and a backdrop used for colours are read as well.
+- **VS Code and other editors have a real light theme.** In light mode the theme was declared dark, so VS Code drew its webviews and unset colours as dark, and code colours like strings and types sat at 1.2:1. Light gets its own theme and colours that keep 4.5:1 on the editor, with borders on inputs and panels and a readable placeholder.
 - **Muted text and terminal suggestions are readable in light mode.** Secondary text in themed apps and the terminal's autosuggestion colour no longer drop under 3:1.
 - **Light mode with a backdrop wallpaper for colours** no longer generates dark colours.
 - **Transparent widgets are bare.** They no longer sit on a faint dark plate; the backing only appears with *Lume on every widget*.
