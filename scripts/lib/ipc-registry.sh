@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 263caf261964bb5d
+# IPC.md hash: c44f9e0bd2029ca5
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -41,7 +41,7 @@ declare -gA IPC_TARGET_DESC=(
   [network]="Whether the shell can reach the internet, as NetworkManager sees it. Surfaces that show online content (wallpaper sources, news, anime, weather, calendars, lyrics) read this to say why they are empty instead of failing quietly."
   [niriAnimations]="Presets for Niri's own window, workspace and overview animations. Applying one rewrites the animations in \`config.d/60-animations.kdl\` and keeps \`off\` and \`slowdown\` as they were. The same picker lives in Settings in every family. Your own presets go in \`~/.config/inir/niri-animation-presets.json\` as \`{\"presets\": [...]}\`, in the same shape as \`defaults/niri-animation-presets.json\`; one with a shipped id replaces it."
   [notifications]="Notification management."
-  [orbit]="Niri-only Material session navigator for the ii family. Orbit presents nearby workspaces and readable window previews, with MRU Trail navigation and temporary Stash parking."
+  [orbit]="Niri-only session navigator. On ii it presents nearby workspaces and readable window previews, with MRU Trail navigation and temporary Stash parking. On iRiS it is the Island growing into one strip per workspace, with a search that lights up the windows that match; \`stage\`, \`orbital\`, \`studio\` and \`toggleView\` are ii's and do nothing there, \`pocket\` and \`find\` open Orbit, and \`next\` and \`previous\` move Niri to the workspace below or above."
   [osd]="On-screen feedback for any family. The active family's OSD or Island decides where it is drawn."
   [osdVolume]="On-screen volume indicator."
   [osk]="On-screen keyboard."
@@ -175,7 +175,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [gamemode]="toggle activate deactivate status"
   [globalActions]="run runWithArgs list search open"
   [globalStyle]="set get list"
-  [iris]="open page close toggle card theme settings bubble dock dockApp appBubble pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive palette preset icon control lock utility watch watchPick desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
+  [iris]="open page close toggle card theme settings bubble dock dockApp appBubble pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource orbit orbitCorner orbitClose spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive palette preset icon control lock utility watch watchPick desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
   [keyboard]="switchLayout switchLayoutPrevious getCurrentLayout getLayouts"
   [lock]="activate prepareSleep deactivate status focus"
   [mascot]="poke status setVoice romp chase hideSeek tidy appear appearContextual appearWithLine hide snooze"
@@ -347,7 +347,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:toggle"]="Expand or collapse the island on the focused output"
   ["iris:card"]="\`open\`, \`close\` or \`toggle\` the media bubble's floating card, or \`pin\` to keep it open"
   ["iris:theme"]="iRiS themes, each a whole redesign of the family: \`list\`, \`apply:<id>\`, \`save:<name>\` (what you see now becomes a theme file), \`import:<path>\` (a shared \`.json\`), \`export\` or \`export:<id>\` (prints the theme as JSON to share) and \`folder\` (where theme files live, \`~/.config/inir/iris/themes\`)"
-  ["iris:settings"]="Open iRiS Settings on a section: \`general\`, \`appearance\`, \`motion\`, \`bar\`, \`bubbles\`, \`dock\`, \`desktop\`, \`windows\`, \`sidebars\`, \`controlCenter\`, \`spotlight\`, \`notifications\`, \`sound\`, \`capture\`, \`display\`, \`keyboard\`, \`battery\`, \`gaming\`, \`lock\`, \`player\`, \`anime\`, \`sources\` or \`system\`; add \`/<group>\` to open that group, e.g. \`bubbles/behaviour\` or \`lock/security\`. It also takes \`next\`, \`prev\`, \`back\`, \`forward\` (the history), \`search:<words>\` and \`open\` (the first result)"
+  ["iris:settings"]="Open iRiS Settings on a section: \`general\`, \`appearance\`, \`motion\`, \`bar\`, \`bubbles\`, \`dock\`, \`desktop\`, \`windows\`, \`sidebars\`, \`controlCenter\`, \`spotlight\`, \`orbit\`, \`notifications\`, \`sound\`, \`capture\`, \`display\`, \`keyboard\`, \`battery\`, \`gaming\`, \`lock\`, \`player\`, \`anime\`, \`sources\` or \`system\`; add \`/<group>\` to open that group, e.g. \`bubbles/behaviour\` or \`lock/security\`. It also takes \`next\`, \`prev\`, \`back\`, \`forward\` (the history), \`search:<words>\` and \`open\` (the first result)"
   ["iris:bubble"]="Place an Island bubble (\`left\`, \`right\`, \`utility\`) or an extra bubble (\`weather\`, \`notifications\`, \`controls\`, \`sound\`, \`mic\`, \`tools\`, \`media\`, \`visualizer\`, \`tray\`): a zone (\`top-left\`, \`top-right\`, \`left\`, \`right\`, \`bottom-left\`, \`bottom-right\`), \`edge:<top"
   ["iris:dock"]="\`reveal\`, \`hide\` or \`toggle\` the iRiS Dock (revealed stays until hidden or an app is chosen)"
   ["iris:dockApp"]="Open a Dock app's \`windows\` or \`menu\` by app id (e.g. \`kitty windows\`), or \`<any> close\`"
@@ -367,6 +367,9 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:accent"]="Set iRiS accent: \`blue\`, \`mint\`, \`rose\`, \`lilac\` or \`wallpaper\`"
   ["iris:spotlight"]="Open Spotlight with a query already typed, e.g. \`firefox\` or \`12*7\` (empty for suggestions)"
   ["iris:gallerySource"]="Show or hide an online source in the wallpaper gallery: \`wallhaven\`, \`live\`, \`konachan\` or \`yandere\`, then \`on\`, \`off\` or \`toggle\`; returns the sources shown, in order"
+  ["iris:orbit"]="Open Orbit with a search already typed, e.g. \`firefox\` (empty for all the workspaces)"
+  ["iris:orbitCorner"]="The corner each output's Orbit hot corner is on right now, as JSON (empty where Niri's own corner or the setting leaves none)"
+  ["iris:orbitClose"]="Close Orbit"
   ["iris:spotlightClose"]="Close Spotlight"
   ["iris:bubbleCard"]="Grow a bubble's own card: \`weather\`, \`notifications\`, \`sound\`, \`mic\`, \`tools\` or \`tray\` (from the bubble showing it, else the Island), or \`close\`"
   ["iris:tap"]="Tap a piece the Island carries (\`controls\`, \`sound\`, \`tray\`, \`notifications\`, \`weather\`…) as a click would: its card or page grows from it, or says the focused screen's bar has no such piece"
@@ -389,7 +392,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:watchSubs"]="Subtitles of the episode that is playing: \`size+\`, \`size-\` (kept for every episode), \`delay+\`, \`delay-\`, \`delay0\` (this episode), \`off\`, \`track:<id>\`, \`file:<path>\` to load one. No argument lists the tracks"
   ["iris:watchSeek"]="Jump inside the episode that is playing by seconds: \`85\` skips an opening, \`-10\` goes back"
   ["iris:watchSkip"]="Close the episode that is playing and start the \`next\` (default) or \`previous\` one without searching again. Its place is saved first"
-  ["iris:motion"]="Measure how a Place opens, closes and reverses halfway, from the expanded Island: \`spotlight\`, \`gallery\`, \`settings\`, \`focus\` or \`today\`. Read the result with \`motioned\`"
+  ["iris:motion"]="Measure how a Place opens, closes and reverses halfway, from the expanded Island: \`spotlight\`, \`orbit\`, \`gallery\`, \`settings\`, \`focus\` or \`today\`. Read the result with \`motioned\`"
   ["iris:motioned"]="The last \`motion\` measurement as JSON: frame pace, continuity, material, one surface, origin and a clean end, each passed or not, with the numbers behind them"
   ["iris:status"]="JSON with the Island, Dock, Control Center, Spotlight and side panel state, which edit modes, Settings or the wallpaper gallery hold the screen (\`editing\`, \`settings\`, \`gallery\`), plus the player the Island follows (title, position, length)"
   ["keyboard:switchLayout"]="Switch to next keyboard layout"
@@ -681,6 +684,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["iris:accent"]="<name>"
   ["iris:spotlight"]="<query>"
   ["iris:gallerySource"]="<source> <state>"
+  ["iris:orbit"]="<query>"
   ["iris:bubbleCard"]="<kind>"
   ["iris:tap"]="<kind>"
   ["iris:bubbleMenu"]="<kind>"

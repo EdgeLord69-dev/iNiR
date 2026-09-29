@@ -83,7 +83,7 @@ bind "Mod+Space" { spawn "inir" "overview" "toggle"; }
 
 ### orbit
 
-Niri-only Material session navigator for the ii family. Orbit presents nearby workspaces and readable window previews, with MRU Trail navigation and temporary Stash parking.
+Niri-only session navigator. On ii it presents nearby workspaces and readable window previews, with MRU Trail navigation and temporary Stash parking. On iRiS it is the Island growing into one strip per workspace, with a search that lights up the windows that match; `stage`, `orbital`, `studio` and `toggleView` are ii's and do nothing there, `pocket` and `find` open Orbit, and `next` and `previous` move Niri to the workspace below or above.
 
 | Function | Description |
 |----------|-------------|
@@ -817,7 +817,7 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `page` | Expand the island on a page: `media`, `activity`, `desktop`, `tray` or `tools`, or step through its navigation with `next` / `prev` (the same path as scrolling over the navigation row) |
 | `toggle` | Expand or collapse the island on the focused output |
 | `card` | `open`, `close` or `toggle` the media bubble's floating card, or `pin` to keep it open |
-| `settings` | Open iRiS Settings on a section: `general`, `appearance`, `motion`, `bar`, `bubbles`, `dock`, `desktop`, `windows`, `sidebars`, `controlCenter`, `spotlight`, `notifications`, `sound`, `capture`, `display`, `keyboard`, `battery`, `gaming`, `lock`, `player`, `anime`, `sources` or `system`; add `/<group>` to open that group, e.g. `bubbles/behaviour` or `lock/security`. It also takes `next`, `prev`, `back`, `forward` (the history), `search:<words>` and `open` (the first result) |
+| `settings` | Open iRiS Settings on a section: `general`, `appearance`, `motion`, `bar`, `bubbles`, `dock`, `desktop`, `windows`, `sidebars`, `controlCenter`, `spotlight`, `orbit`, `notifications`, `sound`, `capture`, `display`, `keyboard`, `battery`, `gaming`, `lock`, `player`, `anime`, `sources` or `system`; add `/<group>` to open that group, e.g. `bubbles/behaviour` or `lock/security`. It also takes `next`, `prev`, `back`, `forward` (the history), `search:<words>` and `open` (the first result) |
 | `bubble` | Place an Island bubble (`left`, `right`, `utility`) or an extra bubble (`weather`, `notifications`, `controls`, `sound`, `mic`, `tools`, `media`, `visualizer`, `tray`): a zone (`top-left`, `top-right`, `left`, `right`, `bottom-left`, `bottom-right`), `edge:<top|bottom|left|right>` with an optional `:<fraction>` along that edge (e.g. `edge:top:0.3`), `x,y` fractions of the output, `island` (slots) or `off` (extras) |
 | `dock` | `reveal`, `hide` or `toggle` the iRiS Dock (revealed stays until hidden or an app is chosen) |
 | `dockApp` | Open a Dock app's `windows` or `menu` by app id (e.g. `kitty windows`), or `<any> close` |
@@ -827,7 +827,7 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `arrange` | Arrange the Island's desktop page in place — move, remove and add its blocks: `on`, `off` or `toggle` |
 | `activity` | Publish a live activity into the Island from any script: `<action> <id> <value>` — `start <id> <title>`, `title`, `progress` (`0.4`, `40`, `40%` or `-1` for indeterminate), `detail`, `glyph` (a Material Symbol), `tint` (`blue`, `sky`, `teal`, `green`, `yellow`, `orange`, `red`, `pink`, `indigo`, `purple`, `lavender`, `gray`), `end <id> <detail>` (shows a done event and retires), `dismiss <id> -`, `clear all -`. Values cannot contain commas |
 | `activities` | Return the live activities scripts have published, as JSON |
-| `motion <target>` | Measure how a Place opens, closes and reverses halfway, from the expanded Island: `spotlight`, `gallery`, `settings`, `focus` or `today`. Read the result with `motioned` |
+| `motion <target>` | Measure how a Place opens, closes and reverses halfway, from the expanded Island: `spotlight`, `orbit`, `gallery`, `settings`, `focus` or `today`. Read the result with `motioned` |
 | `motioned` | The last `motion` measurement as JSON: frame pace, continuity, material, one surface, origin and a clean end, each passed or not, with the numbers behind them |
 | `edit` | Customize iRiS on the shell itself: the Island grows a capsule (Themes, Look, Pieces, undo, Done) and whatever you click (a piece, the Island, the Dock) grows its own options: `on`, `off`, `toggle`, a sheet (`themes`, `pieces`, or a Look tab: `material`, `colour`, `type`, `motion`, `bodies`, `places`, `transients`, `desktop`), `island`, `dock` or a piece to inspect (`vitals`, `left`, `app:kitty`) |
 | `control` | Arrange the Control Center in place (drag controls, resize them from a corner, add or take them out): `edit`, `done`, `toggle`, `undo`, `tab:<controls\|layouts\|panel>` to open the side library on that page, `expand:<display\|system\|devices\|network\|bluetooth\|none>` to open the Control Center with that expansion unfolded, or a layout (`iris`, `discs`, `compact`, `glance`, `studio`, `everything`) |
@@ -849,6 +849,9 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `adaptive` | How much the wallpaper shapes iRiS, `0`-`100`; any other word prints what was read from the wallpaper |
 | `spotlight` | Open Spotlight with a query already typed, e.g. `firefox` or `12*7` (empty for suggestions) |
 | `spotlightClose` | Close Spotlight |
+| `orbit` | Open Orbit with a search already typed, e.g. `firefox` (empty for all the workspaces) |
+| `orbitClose` | Close Orbit |
+| `orbitCorner` | The corner each output's Orbit hot corner is on right now, as JSON (empty where Niri's own corner or the setting leaves none) |
 | `gallerySource` | Show or hide an online source in the wallpaper gallery: `wallhaven`, `live`, `konachan` or `yandere`, then `on`, `off` or `toggle`; returns the sources shown, in order |
 | `bubbleCard` | Grow a bubble's own card: `weather`, `notifications`, `sound`, `mic`, `tools` or `tray` (from the bubble showing it, else the Island), or `close` |
 | `tap` | Tap a piece the Island carries (`controls`, `sound`, `tray`, `notifications`, `weather`…) as a click would: its card or page grows from it, or says the focused screen's bar has no such piece |

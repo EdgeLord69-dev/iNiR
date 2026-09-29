@@ -2519,6 +2519,13 @@
                     "morph": "",
                     "material": ""
                 },
+                "orbit": {
+                    "radius": 0,
+                    "light": "inherit",
+                    "speed": 100,
+                    "morph": "",
+                    "material": ""
+                },
                 "settings": {
                     "radius": 0,
                     "light": "inherit",
@@ -2606,6 +2613,34 @@
             "leftModules": [],
             "centerModules": [],
             "rightModules": []
+        },
+        "orbit": {
+            "enable": true,
+            "opens": "island",
+            "previews": true,
+            "previewAge": 10,
+            "width": 1100,
+            "cardHeight": 440,
+            "peek": 56,
+            "wallpaper": true,
+            "titles": "hover",
+            "labels": "full",
+            "dimMatches": 78,
+            "hints": true,
+            "showRecent": true,
+            "recentCount": 5,
+            "showMinimised": true,
+            "showActions": true,
+            "thumbSize": 88,
+            "closeOnGo": true,
+            "scroll": true,
+            "askSpotlight": true,
+            "stashRestore": "original",
+            "keys": "niri",
+            "hotCorner": true,
+            "hotCornerAt": "auto",
+            "hotCornerSize": 12,
+            "hotCornerDelay": 150
         },
         "palette": {
             "opens": "floating",

@@ -4051,6 +4051,7 @@ Singleton {
                         property JsonObject cards: JsonObject { property string design: "welded"; property int radius: 0; property string light: "inherit"; property int width: 0; property int speed: 100; property string morph: ""; property string material: ""; property bool joinOrigin: false; property int gap: 0; property int pad: 0; property string grabber: "auto"; property bool header: true; property bool devices: true; property bool mixer: true }
                         property JsonObject panels: JsonObject { property int radius: 0; property string light: "inherit"; property int speed: 100; property string morph: ""; property string material: "" }
                         property JsonObject spotlight: JsonObject { property int radius: 0; property string light: "inherit"; property int speed: 100; property string morph: ""; property string material: "" }
+                        property JsonObject orbit: JsonObject { property int radius: 0; property string light: "inherit"; property int speed: 100; property string morph: ""; property string material: "" }
                         property JsonObject settings: JsonObject { property int radius: 0; property string light: "inherit"; property int speed: 100; property string morph: ""; property string material: "" }
                         property JsonObject gallery: JsonObject { property int radius: 0; property string light: "inherit"; property int speed: 100; property string morph: ""; property string material: "" }
                         property JsonObject menus: JsonObject { property int radius: 0; property string light: "inherit"; property int speed: 100; property string morph: ""; property string material: ""; property string density: "compact" }
@@ -4109,6 +4110,34 @@ Singleton {
                     property list<string> leftModules: []
                     property list<string> centerModules: []
                     property list<string> rightModules: [] // Island Desktop page: "custom:<widget-id>" modules
+                }
+                property JsonObject orbit: JsonObject {
+                    property bool enable: true
+                    property string opens: "island" // "island": the Island becomes Orbit; "floating": a sheet under it
+                    property bool previews: true // Niri's own screenshot of each window, when there is one
+                    property int previewAge: 10 // seconds a picture of the workspace you are on may be old
+                    property int width: 1100
+                    property int cardHeight: 440 // the tallest the workspace you are on gets
+                    property int peek: 56 // how much of the neighbouring workspaces shows (0 hides them)
+                    property bool wallpaper: true
+                    property string titles: "hover" // "hover", "always" or "off"
+                    property string labels: "full" // "full" (number and name) or "number"
+                    property int dimMatches: 78 // how far the windows that do not match a search fall back
+                    property bool hints: true
+                    property bool showRecent: true
+                    property int recentCount: 5
+                    property bool showMinimised: true
+                    property bool showActions: true
+                    property int thumbSize: 88
+                    property bool closeOnGo: true
+                    property bool scroll: true
+                    property bool askSpotlight: true
+                    property string stashRestore: "original" // "original" workspace or the "current" one
+                    property string keys: "niri" // "niri": ↑ ↓ workspaces, ← → windows; "swapped" the other way
+                    property bool hotCorner: true
+                    property string hotCornerAt: "auto" // "auto" picks a free corner; or "topLeft", "topRight", "bottomLeft", "bottomRight"
+                    property int hotCornerSize: 12
+                    property int hotCornerDelay: 150 // ms the pointer rests in the corner before Orbit opens
                 }
                 property JsonObject palette: JsonObject {
                     property string opens: "floating" // "floating" below the Island, or "island": the Island itself becomes Spotlight

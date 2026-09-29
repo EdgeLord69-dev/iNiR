@@ -302,6 +302,7 @@ Singleton {
     // Target monitor for wallpaper selector (set before opening, avoids config timing issues)
     property string wallpaperSelectorTargetMonitor: ""
     onWallpaperSelectorOpenChanged: {
+        if (wallpaperSelectorOpen) irisOrbitOpen = false
         // Reset selection target when selector closes without selection
         if (!wallpaperSelectorOpen) {
             wallpaperSelectionTarget = "main";
@@ -317,6 +318,7 @@ Singleton {
         }
     }
     onWallpaperLauncherOpenChanged: {
+        if (wallpaperLauncherOpen) irisOrbitOpen = false
         if (!wallpaperLauncherOpen) {
             // Restore the configured wallpaper if the user browsed away without applying.
             Wallpapers.cancelWallpaperPreview()
@@ -440,6 +442,28 @@ Singleton {
     property var irisDockMenuRequest: null
     // A query for Spotlight to type as it opens (IPC); taken and cleared by the palette.
     property string irisSpotlightQuery: ""
+    // Orbit (iRiS): Niri's workspaces and windows as a place to find and go. `irisOrbitQuery` is what it types as it opens.
+    property bool irisOrbitOpen: false
+    property string irisOrbitQuery: ""
+    // The output Orbit opened on when a hot corner asked for one; empty means the focused output. It stays put until the
+    // next open, so a leaving Orbit is not pulled to another output.
+    property string irisOrbitOutput: ""
+    property bool _irisOrbitOutputAsked: false
+    // The corner each output's Orbit hot corner is on right now ("" = none), published by the corner itself.
+    property var irisOrbitCorners: ({})
+    function openIrisOrbit(outputName: string): void {
+        irisOrbitOutput = outputName
+        _irisOrbitOutputAsked = true
+        irisOrbitOpen = true
+    }
+    onIrisOrbitOpenChanged: {
+        if (!irisOrbitOpen) return
+        if (!_irisOrbitOutputAsked) irisOrbitOutput = ""
+        _irisOrbitOutputAsked = false
+        searchOpen = false
+        wallpaperSelectorOpen = false
+        wallpaperLauncherOpen = false
+    }
     // Desktop widget manager toggle routed to the output that should show it.
     signal desktopWidgetManagerToggleRequested(string outputName)
     // The iRiS desktop menu opened at a point of an output (`inir iris desktopMenu`).
@@ -666,6 +690,7 @@ Singleton {
     // Close other waffle popups when one opens (unless allowMultiplePanels is enabled)
     property bool _allowMultiple: Config.options?.waffles?.behavior?.allowMultiplePanels ?? false
     onSearchOpenChanged: {
+        if (searchOpen) irisOrbitOpen = false
         if (searchOpen && !_allowMultiple) {
             waffleActionCenterOpen = false
             waffleNotificationCenterOpen = false
