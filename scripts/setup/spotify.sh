@@ -356,22 +356,18 @@ _remove_incompatible() {
         spicetify_git_installed=true
     fi
 
+    # Leftover spotify-launcher data does not conflict with /opt/spotify, and
+    # this script itself keeps it after removing the package: never block on it.
     if ! $flatpak_installed && ! $snap_installed &&
         ! $launcher_package_installed && ! $launcher_command_present &&
-        ! $launcher_data_present &&
         ! $spicetify_git_installed; then
         return 0
     fi
 
-    # A binary or data directory without a package owner may come from a
-    # manual install. Do not guess how to remove user-managed files.
-    if ! $launcher_package_installed; then
-        if $launcher_command_present; then
-            manual_conflicts+=("spotify-launcher executable on PATH")
-        fi
-        if $launcher_data_present; then
-            manual_conflicts+=("spotify-launcher data at $HOME/.local/share/spotify-launcher")
-        fi
+    # A binary without a package owner may come from a manual install.
+    # Do not guess how to remove user-managed files.
+    if ! $launcher_package_installed && $launcher_command_present; then
+        manual_conflicts+=("spotify-launcher executable on PATH")
     fi
     if (( ${#manual_conflicts[@]} )); then
         echo >&2
