@@ -1994,7 +1994,7 @@ AbstractWidget {
         root._applyBackdropSample()
         _seedDefaultsIfNeeded();
         root._syncPlacementStrategy();
-        Qt.callLater(root.applyPlacementFromConfig);
+        _placementLater.restart();
         if (!root.outputName.startsWith("lock:"))
             DesktopWidgetStacks.report(root.configEntryName, root.irisSizes, root.irisDefaultSize, root.irisFace !== null)
         root._stackMemo = root._stackKey()
@@ -2542,7 +2542,14 @@ AbstractWidget {
         if (root.isDragging && editPopoverPanel.open)
             root.closeQuickControls()
     }
-    onPlacementStrategyChanged: Qt.callLater(root.applyPlacementFromConfig)
+    onPlacementStrategyChanged: _placementLater.restart()
+    // Deferred placement dies with the widget: a Qt.callLater queued as a config write disables it
+    // ran into a destroyed context.
+    Timer {
+        id: _placementLater
+        interval: 0
+        onTriggered: root.applyPlacementFromConfig()
+    }
     // Re-snap zone positions when screen size changes
     onScaledScreenWidthChanged: if (root._isZonePlacement) _zoneResnapDebounce.restart()
         else if (root.placementStrategy === "free") _geometryPlacementDebounce.restart()
