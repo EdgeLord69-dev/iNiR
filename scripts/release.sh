@@ -98,6 +98,11 @@ write_srcinfo() {
   fi
 }
 
+# iRiS keeps its own version (modules/iris/VERSION); every section opens with it.
+iris_version() {
+  tr -d '[:space:]' < modules/iris/VERSION 2>/dev/null
+}
+
 # The dated section for <version>, without its heading.
 section_body() {
   awk -v v="$1" '
@@ -130,8 +135,8 @@ cut_changelog_section() {
   fi
   grep -q '^## \[Unreleased\]$' "$changelog" || die "$changelog has no ## [Unreleased] heading"
   [[ -n "$(unreleased_body | tr -d '[:space:]')" ]] || die "[Unreleased] is empty: write the changes first"
-  awk -v v="$v" -v d="$today" '
-    !done && $0 == "## [Unreleased]" { print; print ""; print "## [" v "] - " d; print ""; done = 1; skip = 1; next }
+  awk -v v="$v" -v d="$today" -v iris="$(iris_version)" '
+    !done && $0 == "## [Unreleased]" { print; print ""; print "## [" v "] - " d; print ""; if (iris != "") { print "**iRiS " iris "**"; print "" } done = 1; skip = 1; next }
     skip && /^$/ { skip = 0; next }
     { skip = 0; print }
   ' "$changelog" > "$changelog.tmp"
@@ -140,6 +145,20 @@ cut_changelog_section() {
 
 previous_tag() {
   git describe --tags --abbrev=0 --match 'v[0-9]*.[0-9]*.[0-9]*' HEAD 2>/dev/null || true
+}
+
+# Screenshots for the release body live in docs/images/releases/<version>/ (docs/
+# never ships in the runtime payload): NN-name.webp files and captions.tsv with
+# "file<TAB>caption" per line, shown two per row under the hero image.
+media_dir() {
+  printf 'docs/images/releases/%s' "$1"
+}
+
+gallery_files() {
+  local dir
+  dir="$(media_dir "$1")"
+  [[ -f "$dir/captions.tsv" ]] || return 0
+  awk -F '\t' -v d="$dir" 'NF >= 2 { print d "/" $1 }' "$dir/captions.tsv"
 }
 
 readme_release_image() {
@@ -182,7 +201,15 @@ release_groups=("Added" "Changed" "Fixed" "Issues / PRs" "Contributors")
 check_shape() {
   local v="$1" body="$2"
   local intro line heading prev="" section="" rank=-1 found i n=0
-  intro="$(awk 'NF { print; exit }' <<<"$body")"
+  local iris tag
+  iris="$(iris_version)"
+  tag="$(awk 'NF { print; exit }' <<<"$body")"
+  if [[ -n "$iris" ]]; then
+    [[ "$tag" == "**iRiS $iris**" ]] || fail "the $v notes must open with \"**iRiS $iris**\" (modules/iris/VERSION)"
+    intro="$(awk 'NF { n++ } NF && n == 2 { print; exit }' <<<"$body")"
+  else
+    intro="$tag"
+  fi
   [[ -n "$intro" && "$intro" != "#"* && "$intro" != "- "* ]] || fail "the $v notes must open with one intro line"
   while IFS= read -r line; do
     n=$((n + 1))
@@ -265,6 +292,7 @@ run_check() {
   check_versions "$v"
   check_changelog "$v"
   check_links
+  check_media "$v"
   [[ "$quick" == "--content" ]] || check_git "$v"
   if [[ -z "$quick" && ${#failures[@]} -eq 0 ]]; then
     say "running make test-local"
@@ -297,6 +325,50 @@ footer_link() {
   esac
 }
 
+# Every minor release shows what changed; a patch may go without screenshots.
+check_media() {
+  local v="$1" dir file caption count=0 image
+  dir="$(media_dir "$v")"
+  if [[ ! -f "$dir/captions.tsv" ]]; then
+    if [[ "$v" == *.0 ]]; then
+      fail "no screenshots for $v: add $dir/NN-name.webp and $dir/captions.tsv (see the inir-release skill)"
+    else
+      warn "no screenshots for $v"
+    fi
+    return
+  fi
+  while IFS=$'\t' read -r file caption; do
+    [[ -n "$file" ]] || continue
+    [[ -f "$dir/$file" ]] || fail "$dir/captions.tsv names $file, which is missing"
+    [[ -n "$caption" ]] || fail "$dir/$file has no caption"
+    count=$((count + 1))
+  done < "$dir/captions.tsv"
+  (( count >= 4 )) || warn "$v shows $count screenshots; four to eight cover a release"
+  (( count % 2 == 0 )) || warn "$v shows an odd number of screenshots; the gallery reads best in pairs"
+  image="$(readme_release_image || true)"
+  check_private_text "$image" $(gallery_files "$v")
+}
+
+# Text that must never reach a public image: the git email, and any mention of AI
+# tools (notifications from them do show up in the Control Center).
+check_private_text() {
+  command -v tesseract >/dev/null 2>&1 || { warn "tesseract is missing: screenshots were not read for private text"; return; }
+  local email pattern image tmp text hits
+  email="$(git config user.email || true)"
+  pattern='claude|anthropic|openai|chatgpt|codex|copilot|gemini cli'
+  [[ -n "$email" ]] && pattern="$pattern|${email//./\\.}"
+  tmp="$(mktemp -d)"
+  for image in "$@"; do
+    [[ -f "$image" ]] || continue
+    magick "$image" -resize 300% -colorspace Gray -normalize "$tmp/a.png" 2>/dev/null || continue
+    magick "$tmp/a.png" -negate "$tmp/b.png"
+    text="$(tesseract "$tmp/a.png" - --psm 11 2>/dev/null; tesseract "$tmp/b.png" - --psm 11 2>/dev/null)"
+    hits="$(grep -oiE "$pattern" <<<"$text" | sort -uf | tr '\n' ' ')"
+    [[ -z "$hits" ]] || fail "$image shows: $hits(retake it without that on screen)"
+  done
+  rm -rf "$tmp"
+}
+
 check_links() {
   grep -qx '## Update' docs/SETUP.md || fail "docs/SETUP.md lost its \"## Update\" heading (the Update link's anchor)"
   [[ -f docs/INSTALL.md ]] || fail "docs/INSTALL.md is missing (the Fresh install link)"
@@ -316,14 +388,22 @@ write_notes() {
     local url="https://github.com/${github_repo}/releases/download/v${v}/$(basename "$image")"
     awk -v url="$url" -v v="$v" '
       { print }
-      !done && NF {
+      NF && $0 !~ /^\*\*iRiS [0-9.]+\*\*$/ && !done {
         print ""
         print "<p align=\"center\">"
         print "  <img src=\"" url "\" alt=\"iNiR " v " desktop\" width=\"100%\">"
         print "</p>"
         done = 1
       }
-    ' <<<"$notes" > "$out"
+    ' <<<"$notes" > "$out.body"
+    local gallery
+    gallery="$(gallery_html "$v")"
+    if [[ -n "$gallery" ]]; then
+      awk -v g="$gallery" '{ print } /^<\/p>$/ && !done { print ""; print g; done = 1 }' "$out.body" > "$out"
+    else
+      mv "$out.body" "$out"
+    fi
+    rm -f "$out.body"
   else
     printf '%s\n' "$notes" > "$out"
   fi
@@ -341,6 +421,22 @@ EOF
 fixed_issues() {
   section_body "$1" | awk '/^### Issues \/ PRs$/ { on = 1; next } on && /^### / { exit } on && /^- Fixed / { print }' \
     | grep -o 'issues/[0-9]*' | cut -d/ -f2 | sort -un
+}
+
+gallery_html() {
+  local v="$1" dir file caption cell=0 rows=""
+  dir="$(media_dir "$v")"
+  [[ -f "$dir/captions.tsv" ]] || return 0
+  rows="<table>"
+  while IFS=$'\t' read -r file caption; do
+    [[ -n "$file" && -n "$caption" ]] || continue
+    (( cell % 2 == 0 )) && rows+=$'\n'"<tr>"
+    rows+=$'\n'"<td width=\"50%\" align=\"center\"><img src=\"https://github.com/${github_repo}/releases/download/v${v}/${file}\" alt=\"${caption}\" width=\"100%\"><br><sub>${caption}</sub></td>"
+    cell=$((cell + 1))
+    (( cell % 2 == 0 )) && rows+=$'\n'"</tr>"
+  done < "$dir/captions.tsv"
+  (( cell % 2 == 1 )) && rows+=$'\n'"<td></td></tr>"
+  printf '%s\n</table>' "$rows"
 }
 
 # ---------------------------------------------------------------------------- commands
@@ -392,10 +488,12 @@ cmd_publish() {
 
   # Everything that can fail locally happens before anything leaves this machine.
   if ! git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+    local message="iNiR $v"
+    [[ -z "$(iris_version)" ]] || message="$message, iRiS $(iris_version)"
     if [[ "$title" == "$tag" ]]; then
-      git tag -a "$tag" -m "iNiR $v"
+      git tag -a "$tag" -m "$message"
     else
-      git tag -a "$tag" -m "iNiR $v" -m "$title"
+      git tag -a "$tag" -m "$message" -m "$title"
     fi
   fi
   git push --quiet "$remote" "HEAD:refs/heads/$branch"
@@ -418,7 +516,9 @@ cmd_publish() {
     local notes
     notes="$(mktemp)"
     write_notes "$v" "$notes" "$image"
-    gh release create "$tag" "$image" --repo "$github_repo" --verify-tag --latest \
+    local assets=("$image")
+    mapfile -t -O 1 assets < <(gallery_files "$v")
+    gh release create "$tag" "${assets[@]}" --repo "$github_repo" --verify-tag --latest \
       --title "$title" --notes-file "$notes"
     rm -f "$notes"
   fi
