@@ -907,6 +907,21 @@ bind "Mod+Alt+S" { spawn "inir" "globalStyle" "set" "aurora"; }
 
 ---
 
+### colorMode
+
+The system's light or dark mode, the one the shell and your apps share. With iRiS keeping a scheme (Dark, Ink or Light), `set` moves that scheme too.
+
+| Function | Description |
+|----------|-------------|
+| `set` | `dark`, `light` or `toggle` |
+| `get` | JSON: the mode in use, the colour theme, the saved choice, whether the wallpaper decides and iRiS's scheme |
+
+```kdl
+bind "Mod+Alt+L" { spawn "inir" "colorMode" "set" "toggle"; }
+```
+
+---
+
 ### shellLayout
 
 Dedicated persistent-shell layout editing and diagnostics. It is independent

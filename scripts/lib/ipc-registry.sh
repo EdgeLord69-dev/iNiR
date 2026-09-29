@@ -2,8 +2,8 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 0e14461aeebdc6ec
-# Targets: 68
+# IPC.md hash: e347997ba6b5bb0e
+# Targets: 69
 
 declare -gA IPC_TARGET_DESC=(
   [ai]="Shared multi-provider AI service. It supports Gemini, OpenAI-compatible chat and Responses APIs, Mistral and Anthropic; live provider catalogs are normalized into capability-aware model records. Catalog visibility is separate from execution readiness, so public model lists remain browseable without pretending an API key exists. OpenCode Zen and Go resolve their current model lists and per-model API routes dynamically. Normal shell tools use typed actions and approval cards, while arbitrary commands are isolated in Advanced mode."
@@ -18,6 +18,7 @@ declare -gA IPC_TARGET_DESC=(
   [clipboard]="Clipboard history panel. Because Ctrl+V only remembers one thing, and that's not enough for power users."
   [cliphistService]="Clipboard history service. The backend that makes clipboard panel work. You probably don't need to call this directly."
   [closeConfirm]="Close window confirmation dialog. Shows a prompt before closing the focused window. Useful if you're the type who accidentally closes things and then regrets it."
+  [colorMode]="The system's light or dark mode, the one the shell and your apps share. With iRiS keeping a scheme (Dark, Ink or Light), \`set\` moves that scheme too."
   [connections]="Short notices when something is plugged in, connected, unplugged or lost: networks, the internet, Bluetooth devices, USB devices by name (mice, keyboards, controllers, cameras, phones), the charger, the sound output, displays, and drives and memory cards with their name and size. Each family shows them its own way: a pill under the bar in Material, a panel in Waffle, the Island in iRiS. Settings has a switch for each kind."
   [controlPanel]="Quick settings panel. Toggles, sliders, and system controls without opening full settings."
   [coverflowSelector]="Wallpaper coverflow (3D card) picker."
@@ -89,6 +90,7 @@ declare -gA IPC_TARGET_FAMILY=(
   [clipboard]="shared"
   [cliphistService]="shared"
   [closeConfirm]="shared"
+  [colorMode]="shared"
   [connections]="shared"
   [controlPanel]="shared"
   [coverflowSelector]="shared"
@@ -160,6 +162,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [clipboard]="open close toggle"
   [cliphistService]="update"
   [closeConfirm]="trigger triggerWindow close"
+  [colorMode]="set get"
   [connections]="sample status enable disable toggle"
   [controlPanel]="toggle close open"
   [coverflowSelector]="toggle open close"
@@ -286,6 +289,8 @@ declare -gA IPC_FUNCTION_DESC=(
   ["closeConfirm:trigger"]="Show close confirmation for focused window"
   ["closeConfirm:triggerWindow"]="Close or confirm the exact window captured by \`inir close-window\`"
   ["closeConfirm:close"]="Dismiss the dialog without closing"
+  ["colorMode:set"]="\`dark\`, \`light\` or \`toggle\`"
+  ["colorMode:get"]="JSON: the mode in use, the colour theme, the saved choice, whether the wallpaper decides and iRiS's scheme"
   ["connections:sample"]="Show how a notice looks without plugging anything: \`network\`, \`internet\`, \`bluetooth\`, \`usb\`, \`power\`, \`audio\`, \`displays\` or \`drives\`"
   ["connections:status"]="Print which kinds are on as JSON, and whether udev is there to watch USB devices and drives"
   ["connections:enable"]=""
@@ -624,6 +629,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["background:clockDebugSetRegion"]="<color> <brightness> <spread>"
   ["background:clockDebugSetLayout"]="<x> <y> <quickControlsOpen>"
   ["closeConfirm:triggerWindow"]="<windowId> <appId>"
+  ["colorMode:set"]="<mode>"
   ["connections:sample"]="<kind>"
   ["customWidgets:create"]="<name>"
   ["customWidgets:remove"]="<widgetId>"
@@ -730,6 +736,7 @@ bind "Alt+Shift+Tab" { spawn "inir" "altSwitcher" "previous"; }'
   [cheatsheet]='bind "Super+Slash" { spawn "inir" "cheatsheet" "toggle"; }'
   [clipboard]='bind "Super+V" repeat=false { spawn "inir" "clipboard" "toggle"; }'
   [closeConfirm]='bind "Mod+Q" repeat=false { spawn "inir" "close-window"; }'
+  [colorMode]='bind "Mod+Alt+L" { spawn "inir" "colorMode" "set" "toggle"; }'
   [equalizer]='bind "Ctrl+Alt+F" { spawn "inir" "equalizer" "toggle"; }'
   [gamemode]='bind "Super+F12" { spawn "inir" "gamemode" "toggle"; }'
   [globalActions]='bind "Super+Slash" { spawn "inir" "globalActions" "open"; }
@@ -762,8 +769,8 @@ bind "Ctrl+Alt+A" { spawn "inir" "wallpaperSelector" "openLauncher" "animated"; 
   [ytmusic]='bind "Mod+M+Space" { spawn "inir" "ytmusic" "playPause"; }'
 )
 
-IPC_ALL_TARGETS=(ai altSwitcher appCatalog audio autostart background bar brightness cheatsheet clipboard cliphistService closeConfirm connections controlPanel coverflowSelector customWidgets dashboard dev equalizer gamemode globalActions globalStyle iris keyboard lock mascot mascotMood mediaControls memory minimize mpris network niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill recordingOsd region search session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch vpn wactionCenter waffleAltSwitcher wallpaperLauncher wallpaperSelector wbar widgetpower wnotificationCenter workspaceStrip wwidgets ytmusic zoom)
-IPC_SHARED_TARGETS=(ai altSwitcher appCatalog audio background bar brightness cheatsheet clipboard cliphistService closeConfirm connections controlPanel coverflowSelector dashboard dev gamemode globalActions globalStyle iris keyboard lock mascot mascotMood mediaControls memory minimize mpris network niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill region session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch vpn wallpaperLauncher wallpaperSelector workspaceStrip ytmusic zoom)
+IPC_ALL_TARGETS=(ai altSwitcher appCatalog audio autostart background bar brightness cheatsheet clipboard cliphistService closeConfirm colorMode connections controlPanel coverflowSelector customWidgets dashboard dev equalizer gamemode globalActions globalStyle iris keyboard lock mascot mascotMood mediaControls memory minimize mpris network niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill recordingOsd region search session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch vpn wactionCenter waffleAltSwitcher wallpaperLauncher wallpaperSelector wbar widgetpower wnotificationCenter workspaceStrip wwidgets ytmusic zoom)
+IPC_SHARED_TARGETS=(ai altSwitcher appCatalog audio background bar brightness cheatsheet clipboard cliphistService closeConfirm colorMode connections controlPanel coverflowSelector dashboard dev gamemode globalActions globalStyle iris keyboard lock mascot mascotMood mediaControls memory minimize mpris network niriAnimations notifications orbit osd osdVolume osk overlay overview packageSearch panelFamily pill region session settings settingsNav shellLayout shellUpdate sidebarLeft sidebarRight taskview tiling voiceSearch vpn wallpaperLauncher wallpaperSelector workspaceStrip ytmusic zoom)
 IPC_II_TARGETS=(equalizer)
 IPC_WAFFLE_TARGETS=(autostart customWidgets recordingOsd search wactionCenter waffleAltSwitcher wbar widgetpower wnotificationCenter wwidgets)
 
@@ -772,6 +779,7 @@ declare -gA IPC_KEBAB_ALIASES=(
   [app-catalog]=appCatalog
   [cliphist-service]=cliphistService
   [close-confirm]=closeConfirm
+  [color-mode]=colorMode
   [control-panel]=controlPanel
   [coverflow-selector]=coverflowSelector
   [custom-widgets]=customWidgets

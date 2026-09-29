@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New iRiS theme: Lume.** Clear glass, a bare menu bar and iNstrument widgets drawn on the wallpaper in its own light.
 - **Lume on every widget.** A switch that backs every widget's text even where the wallpaper wouldn't need it.
 - **`/` in Spotlight flips iRiS settings.** Every switch, the widget design and accents and the themes, found by a few letters and switched in place.
+- **One switch for light and dark.** Dark, Ink or Light in iRiS is the system's mode, so the shell and the apps agree, and Auto says where its mode comes from: the wallpaper, a colour theme or your last choice. `inir colorMode set dark|light|toggle`, `inir colorMode get`.
 - **Choose the shape of the Island and the Dock.** Auto keeps the capsule; Round, Squircle and Square reshape them, and the open Island follows. *One shape for all* gives the Island and the Dock the bubbles' shape. Settings › Appearance › Shape, Settings › Island and Customize. `inir iris set iris.bar.shape square`.
 
 ### Changed
@@ -62,6 +63,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **The shell starts without recolouring your apps.** Every start ran the whole app theming again.
+- **A light or dark switch you make by hand stays.** It used to be undone seconds later when the wallpaper's brightness decided again. Now it turns off *Light or dark from the wallpaper*, and the shell and every themed app follow the mode you chose.
+- **Your apps wear what the shell looks like.** Under frost or Blur glass the apps take the material as it shows over your wallpaper instead of the raw paper, so a light desktop over a dark wallpaper no longer opens white apps beside grey glass. Their text and accents are solved against those surfaces, live wallpapers included.
+- **Auto picks light or dark from the wallpaper it actually shows.** PNGs with an alpha channel, opaque ones too, always read as bright and turned the shell light; 56 of 265 wallpapers here flipped. A video's first frame and a backdrop used for colours are read as well.
+- **Muted text and terminal suggestions are readable in light mode.** Secondary text in themed apps and the terminal's autosuggestion colour no longer drop under 3:1.
+- **Light mode with a backdrop wallpaper for colours** no longer generates dark colours.
 - **Transparent widgets are bare.** They no longer sit on a faint dark plate; the backing only appears with *Lume on every widget*.
 - **iRiS loads again on Ubuntu, Debian and Fedora.** Four names the Qt they ship still reserves stopped the Island, the Dock and the theme previews from loading there.
 - **Live wallpapers no longer restart** when you uncover the desktop or leave the Overview.
