@@ -62,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Transparent widgets are bare.** They no longer sit on a faint dark plate; the backing only appears with *Lume on every widget*.
 - **iRiS loads again on Ubuntu, Debian and Fedora.** Four names the Qt they ship still reserves stopped the Island, the Dock and the theme previews from loading there.
 - **Live wallpapers no longer restart** when you uncover the desktop or leave the Overview.
 - **Island bubbles no longer contact AniList** unless you placed the Airing piece.
