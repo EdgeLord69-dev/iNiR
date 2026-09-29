@@ -1079,6 +1079,12 @@ Scope {
         // Keep background behind the lock surface. Moving this to Overlay can capture input.
         WlrLayershell.layer: WlrLayer.Bottom
         WlrLayershell.namespace: "quickshell:background"
+        // Host for LiveLayer (continuous motion in a widget moves to a small surface of its own instead of
+        // repainting this whole output every frame): nothing here covers or moves a still widget outside edit.
+        readonly property bool liveCalm: !GlobalStates.widgetEditMode && !GlobalStates.shellLayoutEditMode
+            && !GlobalStates.screenLocked
+        readonly property int liveLayer: WlrLayer.Bottom
+        readonly property int liveEpoch: 0
         // Map the desktop keyboard-inert during startup, then arm OnDemand after
         // the first-frame/deferred lifecycle has settled. Niri can temporarily
         // focus a newly mapped OnDemand layer surface during shell restart, which

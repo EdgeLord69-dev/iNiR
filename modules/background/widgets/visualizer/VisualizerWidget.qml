@@ -366,94 +366,112 @@ AbstractBackgroundWidget {
     }
 
     // ── Visualizer rendering ─────────────────────────────────────
-    AudioVisualizerLayer {
-        id: visualizerLayer
+    // The field and the artwork on top of it move out together (LiveLayer): in their own surface, in their own
+    // order, so a still widget does not repaint the whole desktop every frame. The card stays in the host, below.
+    LiveLayer {
         anchors.fill: parent
-        anchors.margins: Appearance.angelEverywhere || Appearance.inirEverywhere ? 4 : 0
-        points: root.vizType === "organic"
-            ? (root._active && cavaProcess.audioSignalActive
-                ? cavaProcess.points : root._organicSilentPoints)
-            : cavaProcess.points
-        active: root.vizType === "organic"
+        live: root.motionActive && (root.vizType === "organic"
             ? root._organicPresent
-            : root._active && cavaProcess.audioSignalActive
-        animate: root.motionActive
-        visualizerType: root.vizType
-        normalizationCeiling: cavaProcess.normalizationCeiling
-        spectrumColors: root.spectrumPalette
-        spectrumColor: root.widgetAccentVisible
-        spectrumOpacity: (root.vizType === "wave"
-            ? (root.waveOpacity >= 0 ? root.waveOpacity
-                : (Config.options?.appearance?.cava?.waveOpacity ?? 30))
-            : Config.getNestedValue("background.widgets.visualizer.barOpacity", 100)) / 100
-        fillRatio: root.vizType === "organic" ? root.organicRange
-            : Config.getNestedValue("background.widgets.visualizer.fillRatio", 90) / 100
-        barCount: Config.getNestedValue("background.widgets.visualizer.barCount", 48)
-        barSpacing: Config.getNestedValue("background.widgets.visualizer.barSpacing", 2)
-        barMinHeight: Config.getNestedValue("background.widgets.visualizer.barMinHeight", 1)
-        barRadius: Config.getNestedValue("background.widgets.visualizer.barRadius", 2)
-        barsOrigin: Config.getNestedValue("background.widgets.visualizer.barsOrigin", "bottom")
-        smoothing: root.smoothing
-        waveMode: Config.getNestedValue("background.widgets.visualizer.waveMode", "fill")
-        lineWidth: Config.getNestedValue("background.widgets.visualizer.lineWidth", 2)
-        edgeInset: Config.getNestedValue("background.widgets.visualizer.edgeInset", 0)
-        edgeSoftness: Config.getNestedValue("background.widgets.visualizer.edgeSoftness", 28) / 100
-        frequencyProfile: root.frequencyProfile
-        accentStrength: root.accentStrength
-        organicSensitivity: root.organicSensitivity
-        organicPulse: root.organicPulse
-        organicCompression: root.organicCompression
-        organicMotionSpeed: root.organicMotionSpeed
-        organicIdleMotion: root.organicIdleMotion
-        organicOpacity: root.organicOpacity
-        organicGlow: root.organicGlow
-        organicOverscan: root.organicRenderOverscan
-        organicBaseRadius: root.organicBaseRadius
-        organicHollowAmount: root.organicHollowAmount
+            : root._active && cavaProcess.audioSignalActive)
+        content: vizContent
     }
 
-    Item {
-        id: organicCluster
-        anchors.fill: parent
-        anchors.margins: Math.round(4 * root.scaleFactor)
-        visible: root.vizType === "organic"
+    Component {
+        id: vizContent
+        Item {
+            id: vizDrawn
+            property bool drawing: false
 
-        ClippingRectangle {
-            id: organicArtwork
-            readonly property real span: Math.min(organicCluster.width, organicCluster.height)
-
-            width: Math.round(span * root.organicCoverSize)
-            height: width
-            anchors.centerIn: parent
-            visible: root._organicPresent
-            scale: 0.70 + root._organicReveal * 0.30
-            opacity: 0.18 + root._organicReveal * 0.82
-            radius: width * 0.36
-            color: root.widgetSemanticContainer(root.widgetSurfaceRole)
-            border.width: Math.max(1, Math.round(root.scaleFactor))
-            border.color: ColorUtils.applyAlpha(root._organicPrimary, 0.34)
-
-            Image {
+            AudioVisualizerLayer {
+                id: visualizerLayer
                 anchors.fill: parent
-                source: root._organicDisplayedArt
-                sourceSize: Qt.size(Math.max(128, Math.ceil(width * 2)),
-                    Math.max(128, Math.ceil(height * 2)))
-                fillMode: Image.PreserveAspectCrop
-                asynchronous: true
-                retainWhileLoading: true
-                cache: true
-                smooth: true
-                mipmap: true
-                visible: status === Image.Ready
+                anchors.margins: Appearance.angelEverywhere || Appearance.inirEverywhere ? 4 : 0
+                points: root.vizType === "organic"
+                    ? (root._active && cavaProcess.audioSignalActive
+                        ? cavaProcess.points : root._organicSilentPoints)
+                    : cavaProcess.points
+                active: root.vizType === "organic"
+                    ? root._organicPresent
+                    : root._active && cavaProcess.audioSignalActive
+                animate: root.motionActive && vizDrawn.drawing
+                visualizerType: root.vizType
+                normalizationCeiling: cavaProcess.normalizationCeiling
+                spectrumColors: root.spectrumPalette
+                spectrumColor: root.widgetAccentVisible
+                spectrumOpacity: (root.vizType === "wave"
+                    ? (root.waveOpacity >= 0 ? root.waveOpacity
+                        : (Config.options?.appearance?.cava?.waveOpacity ?? 30))
+                    : Config.getNestedValue("background.widgets.visualizer.barOpacity", 100)) / 100
+                fillRatio: root.vizType === "organic" ? root.organicRange
+                    : Config.getNestedValue("background.widgets.visualizer.fillRatio", 90) / 100
+                barCount: Config.getNestedValue("background.widgets.visualizer.barCount", 48)
+                barSpacing: Config.getNestedValue("background.widgets.visualizer.barSpacing", 2)
+                barMinHeight: Config.getNestedValue("background.widgets.visualizer.barMinHeight", 1)
+                barRadius: Config.getNestedValue("background.widgets.visualizer.barRadius", 2)
+                barsOrigin: Config.getNestedValue("background.widgets.visualizer.barsOrigin", "bottom")
+                smoothing: root.smoothing
+                waveMode: Config.getNestedValue("background.widgets.visualizer.waveMode", "fill")
+                lineWidth: Config.getNestedValue("background.widgets.visualizer.lineWidth", 2)
+                edgeInset: Config.getNestedValue("background.widgets.visualizer.edgeInset", 0)
+                edgeSoftness: Config.getNestedValue("background.widgets.visualizer.edgeSoftness", 28) / 100
+                frequencyProfile: root.frequencyProfile
+                accentStrength: root.accentStrength
+                organicSensitivity: root.organicSensitivity
+                organicPulse: root.organicPulse
+                organicCompression: root.organicCompression
+                organicMotionSpeed: root.organicMotionSpeed
+                organicIdleMotion: root.organicIdleMotion
+                organicOpacity: root.organicOpacity
+                organicGlow: root.organicGlow
+                organicOverscan: root.organicRenderOverscan
+                organicBaseRadius: root.organicBaseRadius
+                organicHollowAmount: root.organicHollowAmount
             }
 
-            MaterialSymbol {
-                anchors.centerIn: parent
-                visible: root._organicDisplayedArt.length === 0
-                text: "music_note"
-                fill: 1
-                iconSize: Math.round(organicArtwork.width * 0.34)
-                color: root.widgetSemanticOnContainer(root.widgetSurfaceRole)
+            Item {
+                id: organicCluster
+                anchors.fill: parent
+                anchors.margins: Math.round(4 * root.scaleFactor)
+                visible: root.vizType === "organic"
+
+                ClippingRectangle {
+                    id: organicArtwork
+                    readonly property real span: Math.min(organicCluster.width, organicCluster.height)
+
+                    width: Math.round(span * root.organicCoverSize)
+                    height: width
+                    anchors.centerIn: parent
+                    visible: root._organicPresent
+                    scale: 0.70 + root._organicReveal * 0.30
+                    opacity: 0.18 + root._organicReveal * 0.82
+                    radius: width * 0.36
+                    color: root.widgetSemanticContainer(root.widgetSurfaceRole)
+                    border.width: Math.max(1, Math.round(root.scaleFactor))
+                    border.color: ColorUtils.applyAlpha(root._organicPrimary, 0.34)
+
+                    Image {
+                        anchors.fill: parent
+                        source: root._organicDisplayedArt
+                        sourceSize: Qt.size(Math.max(128, Math.ceil(width * 2)),
+                            Math.max(128, Math.ceil(height * 2)))
+                        fillMode: Image.PreserveAspectCrop
+                        asynchronous: true
+                        retainWhileLoading: true
+                        cache: true
+                        smooth: true
+                        mipmap: true
+                        visible: status === Image.Ready
+                    }
+
+                    MaterialSymbol {
+                        anchors.centerIn: parent
+                        visible: root._organicDisplayedArt.length === 0
+                        text: "music_note"
+                        fill: 1
+                        iconSize: Math.round(organicArtwork.width * 0.34)
+                        color: root.widgetSemanticOnContainer(root.widgetSurfaceRole)
+                    }
+                }
             }
         }
     }
