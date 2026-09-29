@@ -8755,5 +8755,13 @@
   "How many parts of the sound it follows.": "Сколько частей звука он отслеживает.",
   "The artwork's own colour, the accent, the highlight or the ink.": "Цвет обложки, акцент, выделение или основной цвет текста.",
   "How what plays is drawn on the resting Island, its player page and the Visualizer bubble.": "Как играющее рисуется на Острове в покое, на его странице плеера и в пузыре «Визуализатор».",
-  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "Что играет, нарисовано так, как звучит: капсулы, эквалайзер, точки, волна или кольцо. Вид настраивается в «Сейчас играет»; открывает карточку плеера."
+  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "Что играет, нарисовано так, как звучит: капсулы, эквалайзер, точки, волна или кольцо. Вид настраивается в «Сейчас играет»; открывает карточку плеера.",
+  "Page %1 of %2": "Страница %1 из %2",
+  "Stack": "Стопка",
+  "Stack with": "Объединить в стопку с",
+  "Turn pages by themselves": "Листать страницы автоматически",
+  "%1 s": "%1 с",
+  "Split the stack": "Разъединить стопку",
+  "Take out of the stack": "Убрать из стопки",
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Нажмите на виджет, чтобы добавить его на этот экран или убрать. При расстановке бросьте один виджет на другой, чтобы собрать их в стопку. Размер, вид и положение задаются на самом виджете: выберите его при расстановке."
 }

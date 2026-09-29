@@ -8755,5 +8755,13 @@
   "How many parts of the sound it follows.": "跟随声音的多少个部分。",
   "The artwork's own colour, the accent, the highlight or the ink.": "封面的颜色、强调色、高亮色或墨色。",
   "How what plays is drawn on the resting Island, its player page and the Visualizer bubble.": "正在播放的内容在静止的灵动岛、播放器页面和可视化气泡中如何绘制。",
-  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "按声音绘制正在播放的内容：胶囊、均衡器、圆点、波形或圆环。外观在“正在播放”中设置；点按打开播放器卡片。"
+  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "按声音绘制正在播放的内容：胶囊、均衡器、圆点、波形或圆环。外观在“正在播放”中设置；点按打开播放器卡片。",
+  "Page %1 of %2": "第 %1 页，共 %2 页",
+  "Stack": "叠放",
+  "Stack with": "与其叠放",
+  "Turn pages by themselves": "自动翻页",
+  "%1 s": "%1 秒",
+  "Split the stack": "拆开叠放",
+  "Take out of the stack": "从叠放中取出",
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "点按小部件即可将其添加到此屏幕或移除。排列时，把一个小部件拖放到另一个上即可叠放。尺寸、外观和位置在小部件本身上设置：排列时选中它。"
 }

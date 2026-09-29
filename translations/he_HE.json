@@ -8755,5 +8755,13 @@
   "How many parts of the sound it follows.": "כמה חלקים של הצליל הוא עוקב אחריהם.",
   "The artwork's own colour, the accent, the highlight or the ink.": "צבע העטיפה, צבע ההדגשה, הצבע הבולט או הדיו.",
   "How what plays is drawn on the resting Island, its player page and the Visualizer bubble.": "איך מה שמתנגן מצויר באי במנוחה, בעמוד הנגן ובבועת ההמחשה.",
-  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "מה שמתנגן, מצויר כפי שהוא נשמע: קפסולות, אקולייזר, נקודות, גל או טבעת. המראה נמצא ב„מתנגן עכשיו”; פותח את כרטיס הנגן."
+  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "מה שמתנגן, מצויר כפי שהוא נשמע: קפסולות, אקולייזר, נקודות, גל או טבעת. המראה נמצא ב„מתנגן עכשיו”; פותח את כרטיס הנגן.",
+  "Page %1 of %2": "עמוד %1 מתוך %2",
+  "Stack": "ערימה",
+  "Stack with": "ערימה עם",
+  "Turn pages by themselves": "דפדוף אוטומטי בין העמודים",
+  "%1 s": "%1 שנ׳",
+  "Split the stack": "פירוק הערימה",
+  "Take out of the stack": "הוצאה מהערימה",
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "הקש על ווידג'ט כדי להוסיף אותו למסך הזה או להסיר אותו. בזמן הסידור, שחרר ווידג'ט על ווידג'ט אחר כדי לערום אותם. גודל, מראה ומיקום נקבעים על הווידג'ט עצמו: בחר אותו בזמן הסידור."
 }

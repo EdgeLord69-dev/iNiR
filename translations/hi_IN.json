@@ -8755,5 +8755,13 @@
   "How many parts of the sound it follows.": "ध्वनि के कितने हिस्सों का अनुसरण करता है।",
   "The artwork's own colour, the accent, the highlight or the ink.": "आर्टवर्क का रंग, एक्सेंट, हाइलाइट या इंक।",
   "How what plays is drawn on the resting Island, its player page and the Visualizer bubble.": "जो चल रहा है वह आराम में आइलैंड, उसके प्लेयर पेज और विज़ुअलाइज़र बबल पर कैसे बनता है।",
-  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "जो चल रहा है, जैसा सुनाई देता है वैसा बना हुआ: कैप्सूल, इक्वलाइज़र, बिंदु, तरंग या रिंग। इसका रूप 'अभी चल रहा है' में है; यह प्लेयर का कार्ड खोलता है।"
+  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "जो चल रहा है, जैसा सुनाई देता है वैसा बना हुआ: कैप्सूल, इक्वलाइज़र, बिंदु, तरंग या रिंग। इसका रूप 'अभी चल रहा है' में है; यह प्लेयर का कार्ड खोलता है।",
+  "Page %1 of %2": "पृष्ठ %1 / %2",
+  "Stack": "स्टैक",
+  "Stack with": "इसके साथ स्टैक करें",
+  "Turn pages by themselves": "पृष्ठ अपने आप बदलें",
+  "%1 s": "%1 से",
+  "Split the stack": "स्टैक अलग करें",
+  "Take out of the stack": "स्टैक से निकालें",
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "किसी विजेट को इस स्क्रीन पर जोड़ने या हटाने के लिए उस पर टैप करें। व्यवस्थित करते समय, एक विजेट को दूसरे पर छोड़ें ताकि वे स्टैक हो जाएँ। आकार, रूप और स्थिति विजेट पर ही सेट होते हैं: व्यवस्थित करते समय उसे चुनें।"
 }

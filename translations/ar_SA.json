@@ -8755,5 +8755,13 @@
   "How many parts of the sound it follows.": "عدد أجزاء الصوت التي يتبعها.",
   "The artwork's own colour, the accent, the highlight or the ink.": "لون الغلاف أو التمييز أو الإبراز أو الحبر.",
   "How what plays is drawn on the resting Island, its player page and the Visualizer bubble.": "كيف يُرسم ما يُشغَّل على الجزيرة في وضع الراحة وصفحة المشغّل وفقاعة المُصوِّر.",
-  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "ما يُشغَّل، مرسومًا كما يُسمع: كبسولات أو معادل أو نقاط أو موجة أو حلقة. مظهره في «قيد التشغيل»؛ ويفتح بطاقة المشغّل."
+  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "ما يُشغَّل، مرسومًا كما يُسمع: كبسولات أو معادل أو نقاط أو موجة أو حلقة. مظهره في «قيد التشغيل»؛ ويفتح بطاقة المشغّل.",
+  "Page %1 of %2": "صفحة %1 من %2",
+  "Stack": "تكديس",
+  "Stack with": "تكديس مع",
+  "Turn pages by themselves": "تقليب الصفحات تلقائياً",
+  "%1 s": "%1 ث",
+  "Split the stack": "فصل التكديس",
+  "Take out of the stack": "إخراج من التكديس",
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "انقر على أداة لإضافتها إلى هذه الشاشة أو إزالتها. أثناء الترتيب، أفلت أداة على أخرى لتكديسهما. الحجم والمظهر والموضع تُضبط على الأداة نفسها: حدّدها أثناء الترتيب."
 }

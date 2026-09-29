@@ -8755,5 +8755,13 @@
   "How many parts of the sound it follows.": "Wie vielen Teilen des Klangs er folgt.",
   "The artwork's own colour, the accent, the highlight or the ink.": "Die Farbe des Covers, der Akzent, die Hervorhebung oder die Tinte.",
   "How what plays is drawn on the resting Island, its player page and the Visualizer bubble.": "Wie das Gespielte auf der ruhenden Insel, ihrer Player-Seite und der Visualizer-Blase gezeichnet wird.",
-  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "Was gerade läuft, so gezeichnet, wie es klingt: Kapseln, ein Equalizer, Punkte, eine Welle oder ein Ring. Das Aussehen steht unter Wiedergabe; öffnet die Karte des Players."
+  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "Was gerade läuft, so gezeichnet, wie es klingt: Kapseln, ein Equalizer, Punkte, eine Welle oder ein Ring. Das Aussehen steht unter Wiedergabe; öffnet die Karte des Players.",
+  "Page %1 of %2": "Seite %1 von %2",
+  "Stack": "Stapel",
+  "Stack with": "Stapeln mit",
+  "Turn pages by themselves": "Seiten automatisch wechseln",
+  "%1 s": "%1 s",
+  "Split the stack": "Stapel auflösen",
+  "Take out of the stack": "Aus dem Stapel nehmen",
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Tippe auf ein Widget, um es diesem Bildschirm hinzuzufügen oder zu entfernen. Beim Anordnen kannst du ein Widget auf ein anderes ziehen, um sie zu stapeln. Größe, Aussehen und Position stellst du am Widget selbst ein: Wähle es beim Anordnen aus."
 }

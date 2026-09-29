@@ -8755,5 +8755,13 @@
   "How many parts of the sound it follows.": "音のいくつの帯域を追うか。",
   "The artwork's own colour, the accent, the highlight or the ink.": "アートワークの色、アクセント、ハイライト、またはインク。",
   "How what plays is drawn on the resting Island, its player page and the Visualizer bubble.": "再生中の音を、待機中のアイランド、プレーヤーページ、ビジュアライザーバブルでどう描くか。",
-  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "再生中の音を鳴るままに描きます：カプセル、イコライザー、ドット、波、リング。見た目は「再生中」で設定し、タップするとプレーヤーのカードが開きます。"
+  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "再生中の音を鳴るままに描きます：カプセル、イコライザー、ドット、波、リング。見た目は「再生中」で設定し、タップするとプレーヤーのカードが開きます。",
+  "Page %1 of %2": "%1 / %2 ページ",
+  "Stack": "スタック",
+  "Stack with": "重ねる相手",
+  "Turn pages by themselves": "ページを自動で切り替え",
+  "%1 s": "%1 秒",
+  "Split the stack": "スタックを解除",
+  "Take out of the stack": "スタックから外す",
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "ウィジェットをタップすると、この画面に追加したり外したりできます。配置中にウィジェットを別のウィジェットに重ねて置くと、スタックにできます。サイズ、見た目、位置はウィジェット自体で設定します：配置中に選択してください。"
 }

@@ -8755,5 +8755,13 @@
   "How many parts of the sound it follows.": "소리의 몇 부분을 따라갈지.",
   "The artwork's own colour, the accent, the highlight or the ink.": "앨범 아트의 색, 강조색, 하이라이트 또는 잉크.",
   "How what plays is drawn on the resting Island, its player page and the Visualizer bubble.": "재생 중인 소리를 쉬고 있는 아일랜드, 플레이어 페이지, 비주얼라이저 버블에 어떻게 그릴지.",
-  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "재생 중인 소리를 들리는 그대로 그립니다: 캡슐, 이퀄라이저, 점, 파형 또는 링. 모양은 지금 재생 중에서 고르며, 누르면 플레이어 카드가 열립니다."
+  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "재생 중인 소리를 들리는 그대로 그립니다: 캡슐, 이퀄라이저, 점, 파형 또는 링. 모양은 지금 재생 중에서 고르며, 누르면 플레이어 카드가 열립니다.",
+  "Page %1 of %2": "%1 / %2 페이지",
+  "Stack": "스택",
+  "Stack with": "함께 쌓기",
+  "Turn pages by themselves": "페이지 자동 넘기기",
+  "%1 s": "%1초",
+  "Split the stack": "스택 해제",
+  "Take out of the stack": "스택에서 빼기",
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "위젯을 탭해 이 화면에 추가하거나 뺍니다. 배치 중에 위젯을 다른 위젯 위에 놓으면 스택으로 쌓입니다. 크기, 모양, 위치는 위젯에서 직접 정합니다: 배치 중에 선택하세요."
 }

@@ -8755,5 +8755,13 @@
   "How many parts of the sound it follows.": "Berapa bagian suara yang diikutinya.",
   "The artwork's own colour, the accent, the highlight or the ink.": "Warna sampul, aksen, sorotan, atau tinta.",
   "How what plays is drawn on the resting Island, its player page and the Visualizer bubble.": "Cara yang diputar digambar di Pulau saat diam, halaman pemutarnya, dan gelembung Visualizer.",
-  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "Yang sedang diputar, digambar sesuai bunyinya: kapsul, equalizer, titik, gelombang, atau cincin. Tampilannya ada di Sedang Diputar; membuka kartu pemutar."
+  "What plays, drawn as it sounds: capsules, a rising equalizer, dots, a wave or a ring. Its look is in Now Playing; it opens the player's card.": "Yang sedang diputar, digambar sesuai bunyinya: kapsul, equalizer, titik, gelombang, atau cincin. Tampilannya ada di Sedang Diputar; membuka kartu pemutar.",
+  "Page %1 of %2": "Halaman %1 dari %2",
+  "Stack": "Tumpukan",
+  "Stack with": "Tumpuk dengan",
+  "Turn pages by themselves": "Ganti halaman otomatis",
+  "%1 s": "%1 dtk",
+  "Split the stack": "Pisahkan tumpukan",
+  "Take out of the stack": "Keluarkan dari tumpukan",
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Ketuk widget untuk menambahkannya ke layar ini atau menyingkirkannya. Saat menata, letakkan satu widget di atas widget lain untuk menumpuknya. Ukuran, tampilan, dan posisi diatur di widget itu sendiri: pilih saat menata."
 }
