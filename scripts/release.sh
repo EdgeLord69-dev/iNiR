@@ -341,7 +341,7 @@ check_media() {
     [[ -n "$caption" ]] || fail "$dir/$file has no caption"
     count=$((count + 1))
   done < "$dir/captions.tsv"
-  (( count % 2 == 0 )) || warn "$v shows an odd number of screenshots; the gallery reads best in pairs"
+  (( count == 1 || count % 2 == 0 )) || warn "$v shows an odd number of screenshots; the gallery reads best in pairs"
   check_private_text "$image" $(gallery_files "$v")
 }
 
@@ -423,6 +423,13 @@ gallery_html() {
   local v="$1" dir file caption cell=0 rows=""
   dir="$(media_dir "$v")"
   [[ -f "$dir/captions.tsv" ]] || return 0
+  # One screenshot stands under the hero at its full width, not in half a row beside an empty cell.
+  if [[ "$(awk -F '\t' 'NF >= 2 && $1 != "" && $2 != ""' "$dir/captions.tsv" | wc -l)" -eq 1 ]]; then
+    IFS=$'\t' read -r file caption < <(awk -F '\t' 'NF >= 2 && $1 != "" && $2 != ""' "$dir/captions.tsv")
+    printf '<p align="center"><img src="https://github.com/%s/releases/download/v%s/%s" alt="%s" width="100%%"><br><sub>%s</sub></p>' \
+      "$github_repo" "$v" "$file" "$caption" "$caption"
+    return 0
+  fi
   rows="<table>"
   while IFS=$'\t' read -r file caption; do
     [[ -n "$file" && -n "$caption" ]] || continue

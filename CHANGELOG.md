@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **iRiS 0.2**
 
-2.32.0 turns iRiS into a desktop you shape by touching it: click the Island, the Dock, a bubble or a widget and its options grow right there, widgets stack and read the wallpaper under them, the Control Center and the lock screen are yours to arrange, and the shell and your apps switch together between dark, ink and light.
+2.32.0 turns iRiS into a desktop you shape by touching it: click the Island, the Dock, a bubble or a widget and its options grow right there, widgets stack and read the wallpaper under them, the Control Center and the lock screen are yours to arrange, Orbit lays your whole session out from the Island, and the shell and your apps switch together between dark, ink and light.
 
 ### Added
 - **Customize where you look**: click the Island, the Dock, a bubble or a piece and its options grow out of it, with Themes, Look, Pieces, undo and Done on the Island and a ring that follows the shape you are editing. Prefer one panel? Studio keeps every area in a column beside the screen (Settings › Appearance › *Customize opens*). Right-click the desktop › *Customize iRiS*, or `inir iris edit`.

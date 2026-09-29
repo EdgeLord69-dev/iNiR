@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/images/iris-2.31-principal.webp" alt="iNiR iRiS desktop" width="900">
+  <img src="docs/images/iris-2.32-principal.webp" alt="iNiR iRiS desktop" width="900">
 </p>
 
 <h1 align="center">iNiR</h1>
