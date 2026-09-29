@@ -7,12 +7,12 @@ usage() {
   cat <<'EOF'
 Usage:
   scripts/release.sh notes <version> [output-file]
-  scripts/release.sh publish <version>
+  scripts/release.sh publish <version> [title]
 
 Commands:
   notes    Extract the matching CHANGELOG section and append release footer links.
   publish  Create the GitHub release for an existing local tag v<version>, attach the
-           README hero image, and sync the Wiki.
+           README hero image, and sync the Wiki. The title defaults to "iNiR <version>".
 
 EOF
 }
@@ -91,14 +91,15 @@ write_notes() {
   cat >> "$outfile" <<EOF
 ---
 
-Update: https://github.com/snowarch/iNiR?tab=readme-ov-file#update
-Fresh install: https://github.com/snowarch/iNiR?tab=readme-ov-file#install
+Update: run \`inir update\` (https://github.com/snowarch/iNiR/wiki/SETUP)
+Fresh install: https://github.com/snowarch/iNiR?tab=readme-ov-file#quick-start
 Full changelog: https://github.com/snowarch/iNiR/blob/main/CHANGELOG.md
 EOF
 }
 
 publish_release() {
   local version="$1"
+  local title="${2:-iNiR $version}"
   local tag="v$version"
   local notes_file
   local image_path
@@ -110,7 +111,7 @@ publish_release() {
 
   gh release view "$tag" >/dev/null 2>&1 && die "GitHub release $tag already exists"
   "$script_dir/wiki-sync.sh" publish "docs: sync wiki for $tag"
-  gh release create "$tag" "$image_path" --title "$tag" --notes-file "$notes_file"
+  gh release create "$tag" "$image_path" --title "$title" --notes-file "$notes_file"
   rm -f "$notes_file"
 }
 
@@ -138,7 +139,7 @@ main() {
       fi
       ;;
     publish)
-      publish_release "$version"
+      publish_release "$version" "${3:-}"
       ;;
     *)
       usage
