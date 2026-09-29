@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Toca un widget para agregarlo a esta pantalla o quitarlo. Mientras ordenas, suelta un widget sobre otro para apilarlos. El tamaño, el aspecto y la posición se ajustan en el propio widget: selecciónalo mientras ordenas.",
   "Not on the desktop": "No está en el escritorio",
   "Search widgets (Ctrl+F)": "Buscar widgets (Ctrl+F)",
-  "No widget called “%1”": "Ningún widget se llama «%1»"
+  "No widget called “%1”": "Ningún widget se llama «%1»",
+  "Icon pack": "Paquete de iconos",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "Cómo se dibuja cada placa de iRiS. El aspecto de icono de app es una placa lisa con el icono en un degradado de su propio color.",
+  "Plate": "Placa",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "La placa detrás de cada icono. Negro es el aspecto de icono de app; Blanco o Superficie se leen mejor en pantallas claras."
 }

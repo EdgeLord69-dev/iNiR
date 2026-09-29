@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Bir widget'ı bu ekrana eklemek ya da kaldırmak için ona dokunun. Düzenlerken bir widget'ı başkasının üzerine bırakarak onları üst üste yığabilirsiniz. Boyut, görünüm ve konum widget'ın kendisinde ayarlanır: düzenlerken onu seçin.",
   "Not on the desktop": "Masaüstünde değil",
   "Search widgets (Ctrl+F)": "Widget ara (Ctrl+F)",
-  "No widget called “%1”": "“%1” adlı widget yok"
+  "No widget called “%1”": "“%1” adlı widget yok",
+  "Icon pack": "Simge paketi",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "Her iRiS plakasının nasıl çizildiği. Uygulama simgesi görünümü, simgenin kendi renginin gradyanında olduğu sade bir plakadır.",
+  "Plate": "Plaka",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "Her simgenin arkasındaki plaka. Siyah, uygulama simgesi görünümüdür; Beyaz veya Yüzey parlak ekranlarda daha iyi okunur."
 }

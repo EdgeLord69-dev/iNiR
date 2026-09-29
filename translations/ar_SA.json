@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "انقر على أداة لإضافتها إلى هذه الشاشة أو إزالتها. أثناء الترتيب، أفلت أداة على أخرى لتكديسهما. الحجم والمظهر والموضع تُضبط على الأداة نفسها: حدّدها أثناء الترتيب.",
   "Not on the desktop": "ليست على سطح المكتب",
   "Search widgets (Ctrl+F)": "البحث في الأدوات (Ctrl+F)",
-  "No widget called “%1”": "لا توجد أداة باسم «%1»"
+  "No widget called “%1”": "لا توجد أداة باسم «%1»",
+  "Icon pack": "حزمة الأيقونات",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "كيف تُرسم كل لوحة في iRiS. مظهر أيقونة التطبيق لوحة بسيطة مع الأيقونة بتدرّج من لونها الخاص.",
+  "Plate": "اللوحة",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "اللوحة خلف كل أيقونة. الأسود هو مظهر أيقونة التطبيق؛ الأبيض أو السطح يُقرآن أفضل على الشاشات المضيئة."
 }

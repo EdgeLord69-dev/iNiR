@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "הקש על ווידג'ט כדי להוסיף אותו למסך הזה או להסיר אותו. בזמן הסידור, שחרר ווידג'ט על ווידג'ט אחר כדי לערום אותם. גודל, מראה ומיקום נקבעים על הווידג'ט עצמו: בחר אותו בזמן הסידור.",
   "Not on the desktop": "לא בשולחן העבודה",
   "Search widgets (Ctrl+F)": "חיפוש וידג'טים (Ctrl+F)",
-  "No widget called “%1”": "אין וידג'ט בשם “%1”"
+  "No widget called “%1”": "אין וידג'ט בשם “%1”",
+  "Icon pack": "חבילת סמלים",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "איך כל לוחית של iRiS מצוירת. מראה סמל האפליקציה הוא לוחית פשוטה עם הסמל בגרדיאנט של הצבע שלו עצמו.",
+  "Plate": "לוחית",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "הלוחית מאחורי כל סמל. שחור הוא מראה סמל האפליקציה; לבן או משטח נקראים טוב יותר על מסכים בהירים."
 }

@@ -7170,5 +7170,9 @@
   "The same edge where it does not face the light. With Blur it also smooths the stepped curves.": "Sinaa taanna qaamanermut saatinngitsumi. Blur-imik aamma titarnerit tummeqqatut ittut manngertissavai.",
   "Take only their colours": "Qalipaataat kisiisa tiguk",
   "A theme you choose brings its accent, highlight, material colour and light, and leaves your shapes, layout and motion as they are.": "Theme toqqagaq accent-imik, qaamanngorsaanermik, atortup qalipaataanik qaamanermillu aallerpoq, ilusitillu, inissitsinerit aalanerillu allanngortinnagit.",
-  "How many recent copies Spotlight lists first; scroll or keep pressing Down to go through the whole history. Type ; to open it.": "Spotlight-ip kopiit kingulliit qassit siullermik takutissanerai; oqaluttuarisaaneq tamaat takuniarlugu kaavittiguk imaluunniit Ammut tooqqaannartaruk. Ammarniarlugu ; allaguk."
+  "How many recent copies Spotlight lists first; scroll or keep pressing Down to go through the whole history. Type ; to open it.": "Spotlight-ip kopiit kingulliit qassit siullermik takutissanerai; oqaluttuarisaaneq tamaat takuniarlugu kaavittiguk imaluunniit Ammut tooqqaannartaruk. Ammarniarlugu ; allaguk.",
+  "Icon pack": "Ikonit-pakki",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.",
+  "Plate": "Plate",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens."
 }

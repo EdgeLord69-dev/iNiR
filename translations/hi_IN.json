@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "किसी विजेट को इस स्क्रीन पर जोड़ने या हटाने के लिए उस पर टैप करें। व्यवस्थित करते समय, एक विजेट को दूसरे पर छोड़ें ताकि वे स्टैक हो जाएँ। आकार, रूप और स्थिति विजेट पर ही सेट होते हैं: व्यवस्थित करते समय उसे चुनें।",
   "Not on the desktop": "डेस्कटॉप पर नहीं",
   "Search widgets (Ctrl+F)": "विजेट खोजें (Ctrl+F)",
-  "No widget called “%1”": "“%1” नाम का कोई विजेट नहीं"
+  "No widget called “%1”": "“%1” नाम का कोई विजेट नहीं",
+  "Icon pack": "आइकन पैक",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "iRiS की हर प्लेट कैसे बनती है। ऐप आइकन वाला रूप एक सादी प्लेट है जिस पर आइकन अपने ही रंग के ग्रेडिएंट में होता है।",
+  "Plate": "प्लेट",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "हर आइकन के पीछे की प्लेट। काला ऐप आइकन जैसा रूप है; सफ़ेद या सतह चमकीली स्क्रीन पर बेहतर पढ़े जाते हैं।"
 }

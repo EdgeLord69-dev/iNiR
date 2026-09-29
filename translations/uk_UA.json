@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Торкніться віджета, щоб додати його на цей екран або прибрати. Під час розстановки киньте один віджет на інший, щоб скласти їх у стос. Розмір, вигляд і положення задаються на самому віджеті: виберіть його під час розстановки.",
   "Not on the desktop": "Немає на стільниці",
   "Search widgets (Ctrl+F)": "Пошук віджетів (Ctrl+F)",
-  "No widget called “%1”": "Немає віджета «%1»"
+  "No widget called “%1”": "Немає віджета «%1»",
+  "Icon pack": "Набір іконок",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "Як малюється кожна плита iRiS. Вигляд значка застосунку — це проста плита зі значком у градієнті його власного кольору.",
+  "Plate": "Плита",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "Плита за кожним значком. Чорний — це вигляд значка застосунку; білий або поверхня краще читаються на яскравих екранах."
 }

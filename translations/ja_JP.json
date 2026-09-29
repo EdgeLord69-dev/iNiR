@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "ウィジェットをタップすると、この画面に追加したり外したりできます。配置中にウィジェットを別のウィジェットに重ねて置くと、スタックにできます。サイズ、見た目、位置はウィジェット自体で設定します：配置中に選択してください。",
   "Not on the desktop": "デスクトップにありません",
   "Search widgets (Ctrl+F)": "ウィジェットを検索 (Ctrl+F)",
-  "No widget called “%1”": "「%1」というウィジェットはありません"
+  "No widget called “%1”": "「%1」というウィジェットはありません",
+  "Icon pack": "アイコンパック",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "iRiS の各プレートの描き方。アプリのアイコンらしい見た目は、素朴なプレートにアイコンを自身の色のグラデーションで描いたものです。",
+  "Plate": "プレート",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "各アイコンの後ろのプレート。黒はアプリのアイコンらしい見た目で、白やサーフェスは明るい画面で読みやすくなります。"
 }

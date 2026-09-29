@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Нажмите на виджет, чтобы добавить его на этот экран или убрать. При расстановке бросьте один виджет на другой, чтобы собрать их в стопку. Размер, вид и положение задаются на самом виджете: выберите его при расстановке.",
   "Not on the desktop": "Нет на рабочем столе",
   "Search widgets (Ctrl+F)": "Поиск виджетов (Ctrl+F)",
-  "No widget called “%1”": "Нет виджета «%1»"
+  "No widget called “%1”": "Нет виджета «%1»",
+  "Icon pack": "Набор значков",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "Как рисуется каждая пластина iRiS. Вид значка приложения — это простая пластина со значком в градиенте его собственного цвета.",
+  "Plate": "Пластина",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "Пластина за каждым значком. Чёрный — это вид значка приложения; белый или поверхность лучше читаются на ярких экранах."
 }

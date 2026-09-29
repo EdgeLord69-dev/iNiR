@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "点按小部件即可将其添加到此屏幕或移除。排列时，把一个小部件拖放到另一个上即可叠放。尺寸、外观和位置在小部件本身上设置：排列时选中它。",
   "Not on the desktop": "不在桌面上",
   "Search widgets (Ctrl+F)": "搜索小组件 (Ctrl+F)",
-  "No widget called “%1”": "没有名为“%1”的小组件"
+  "No widget called “%1”": "没有名为“%1”的小组件",
+  "Icon pack": "图标包",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "iRiS 每个底板的绘制方式。应用图标的样子是一块朴素的底板，图标使用其自身颜色的渐变。",
+  "Plate": "底板",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "每个图标后面的底板。黑色是应用图标的样子；白色或表面在明亮屏幕上更易读。"
 }

@@ -3972,6 +3972,13 @@ Singleton {
                     property string aura: "subtle"
                     property int adaptive: 0 // how much the wallpaper's brightness, contrast and colour shape iRiS (0-100)
                     property string figureWeight: "bold" // "light", "regular" or "bold"
+                    // The pack every iRiS plate wears: "iris" (the family's tinted squircle)
+                    // or "tile" (the app-icon look: a plate with the glyph in a gradient of
+                    // its own colour). `plate` picks that plate's colour.
+                    property JsonObject icons: JsonObject {
+                        property string style: "iris"
+                        property string plate: "black" // "black", "white", "tint" or "surface"
+                    }
                     property int expandedRadius: 28
                     property int motionDuration: 220
                     property string fontFamily: "" // Empty = Inter (bundled)

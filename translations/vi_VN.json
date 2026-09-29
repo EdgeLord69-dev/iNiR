@@ -8766,5 +8766,9 @@
   "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Chạm vào một tiện ích để thêm vào màn hình này hoặc bỏ đi. Khi sắp xếp, thả tiện ích này lên tiện ích khác để xếp chồng chúng. Kích thước, giao diện và vị trí được chỉnh ngay trên tiện ích: hãy chọn nó khi sắp xếp.",
   "Not on the desktop": "Không có trên màn hình nền",
   "Search widgets (Ctrl+F)": "Tìm tiện ích (Ctrl+F)",
-  "No widget called “%1”": "Không có tiện ích nào tên “%1”"
+  "No widget called “%1”": "Không có tiện ích nào tên “%1”",
+  "Icon pack": "Bộ biểu tượng",
+  "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "Cách vẽ mỗi tấm nền của iRiS. Dáng vẻ biểu tượng ứng dụng là một tấm nền giản dị với biểu tượng trong dải màu của chính nó.",
+  "Plate": "Tấm nền",
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "Tấm nền phía sau mỗi biểu tượng. Đen là dáng vẻ biểu tượng ứng dụng; Trắng hoặc Bề mặt dễ đọc hơn trên màn hình sáng."
 }
