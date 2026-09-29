@@ -398,7 +398,7 @@ MouseArea {
 
                 // WiFi
                 Revealer {
-                    reveal: Network.wifiEnabled
+                    reveal: Network.ethernet || Network.wifiEnabled
                 Row {
                     spacing: 4
 
@@ -417,7 +417,7 @@ MouseArea {
 
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: Network.networkName ?? ""
+                        text: Network.ethernet ? Translation.tr("Ethernet") : (Network.networkName ?? "")
                         visible: text.length > 0 && text.length < 16
                         font.pixelSize: Appearance.font.pixelSize.smaller
                         font.family: Appearance.font.family.main
