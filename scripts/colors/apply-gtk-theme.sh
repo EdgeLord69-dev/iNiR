@@ -261,7 +261,7 @@ generate_kdeglobals() {
     fi
     if [[ -z "$icon_theme" ]]; then
         if [[ -d "$HOME/.local/share/icons/WhiteSur-dark" || -d "/usr/share/icons/WhiteSur-dark" ]]; then
-            icon_theme="WhiteSur-dark"
+            icon_theme=$("$SCRIPT_DIR/icon-theme-for-mode.sh" WhiteSur-dark "$THEME_MODE")
         else
             icon_theme="Adwaita"
         fi
@@ -998,7 +998,7 @@ CURRENT_ICON_THEME="$APPLIED_ICON_THEME"
 [[ -z "$CURRENT_ICON_THEME" ]] && CURRENT_ICON_THEME=$(grep '^icon_theme=' "$QT6CT_CONF" 2>/dev/null | cut -d= -f2 || true)
 if [[ -z "$CURRENT_ICON_THEME" ]]; then
     if [[ -d "$HOME/.local/share/icons/WhiteSur-dark" || -d "/usr/share/icons/WhiteSur-dark" ]]; then
-        CURRENT_ICON_THEME="WhiteSur-dark"
+        CURRENT_ICON_THEME=$("$SCRIPT_DIR/icon-theme-for-mode.sh" WhiteSur-dark "$THEME_MODE")
     else
         CURRENT_ICON_THEME="Adwaita"
     fi
