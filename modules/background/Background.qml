@@ -1529,6 +1529,13 @@ Scope {
                             : bgRoot.fillMode === "tile" ? Image.Tile
                             : bgRoot.fillMode === "center" ? Image.Pad
                             : Image.PreserveAspectCrop
+                    // Decoded at the size it is drawn, not the file's: a 6000 px wallpaper was held twice at full size
+                    // (~70 MB each) for a 1080p output. Crop and fit are then decoded at their optimal size (Qt's
+                    // Image.sourceSize); tile and center draw the image at its own size, so they keep it. The target
+                    // size, not the animated one, so a parallax resize does not decode again per frame.
+                    sourceSize: bgRoot.fillMode === "tile" || bgRoot.fillMode === "center" ? Qt.size(0, 0)
+                        : Qt.size(Math.ceil(wallpaperContainer.targetWidth * bgRoot.devicePixelRatio),
+                            Math.ceil(wallpaperContainer.targetHeight * bgRoot.devicePixelRatio))
 
                     onTransitionStarted: {
                         if (!bgRoot.dynamicParallaxRequested || !bgRoot.pauseParallaxDuringTransitions)
