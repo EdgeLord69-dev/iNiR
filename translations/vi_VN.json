@@ -8763,5 +8763,8 @@
   "%1 s": "%1 giây",
   "Split the stack": "Tách chồng",
   "Take out of the stack": "Lấy ra khỏi chồng",
-  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Chạm vào một tiện ích để thêm vào màn hình này hoặc bỏ đi. Khi sắp xếp, thả tiện ích này lên tiện ích khác để xếp chồng chúng. Kích thước, giao diện và vị trí được chỉnh ngay trên tiện ích: hãy chọn nó khi sắp xếp."
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Chạm vào một tiện ích để thêm vào màn hình này hoặc bỏ đi. Khi sắp xếp, thả tiện ích này lên tiện ích khác để xếp chồng chúng. Kích thước, giao diện và vị trí được chỉnh ngay trên tiện ích: hãy chọn nó khi sắp xếp.",
+  "Not on the desktop": "Không có trên màn hình nền",
+  "Search widgets (Ctrl+F)": "Tìm tiện ích (Ctrl+F)",
+  "No widget called “%1”": "Không có tiện ích nào tên “%1”"
 }

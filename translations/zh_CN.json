@@ -8763,5 +8763,8 @@
   "%1 s": "%1 秒",
   "Split the stack": "拆开叠放",
   "Take out of the stack": "从叠放中取出",
-  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "点按小部件即可将其添加到此屏幕或移除。排列时，把一个小部件拖放到另一个上即可叠放。尺寸、外观和位置在小部件本身上设置：排列时选中它。"
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "点按小部件即可将其添加到此屏幕或移除。排列时，把一个小部件拖放到另一个上即可叠放。尺寸、外观和位置在小部件本身上设置：排列时选中它。",
+  "Not on the desktop": "不在桌面上",
+  "Search widgets (Ctrl+F)": "搜索小组件 (Ctrl+F)",
+  "No widget called “%1”": "没有名为“%1”的小组件"
 }

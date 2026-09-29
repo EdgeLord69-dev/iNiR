@@ -8763,5 +8763,8 @@
   "%1 s": "%1 dtk",
   "Split the stack": "Pisahkan tumpukan",
   "Take out of the stack": "Keluarkan dari tumpukan",
-  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Ketuk widget untuk menambahkannya ke layar ini atau menyingkirkannya. Saat menata, letakkan satu widget di atas widget lain untuk menumpuknya. Ukuran, tampilan, dan posisi diatur di widget itu sendiri: pilih saat menata."
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Ketuk widget untuk menambahkannya ke layar ini atau menyingkirkannya. Saat menata, letakkan satu widget di atas widget lain untuk menumpuknya. Ukuran, tampilan, dan posisi diatur di widget itu sendiri: pilih saat menata.",
+  "Not on the desktop": "Tidak ada di desktop",
+  "Search widgets (Ctrl+F)": "Cari widget (Ctrl+F)",
+  "No widget called “%1”": "Tidak ada widget bernama “%1”"
 }

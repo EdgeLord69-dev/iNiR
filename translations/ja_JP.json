@@ -8763,5 +8763,8 @@
   "%1 s": "%1 秒",
   "Split the stack": "スタックを解除",
   "Take out of the stack": "スタックから外す",
-  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "ウィジェットをタップすると、この画面に追加したり外したりできます。配置中にウィジェットを別のウィジェットに重ねて置くと、スタックにできます。サイズ、見た目、位置はウィジェット自体で設定します：配置中に選択してください。"
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "ウィジェットをタップすると、この画面に追加したり外したりできます。配置中にウィジェットを別のウィジェットに重ねて置くと、スタックにできます。サイズ、見た目、位置はウィジェット自体で設定します：配置中に選択してください。",
+  "Not on the desktop": "デスクトップにありません",
+  "Search widgets (Ctrl+F)": "ウィジェットを検索 (Ctrl+F)",
+  "No widget called “%1”": "「%1」というウィジェットはありません"
 }

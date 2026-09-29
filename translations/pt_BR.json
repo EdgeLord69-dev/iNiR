@@ -8763,5 +8763,8 @@
   "%1 s": "%1 s",
   "Split the stack": "Desfazer a pilha",
   "Take out of the stack": "Tirar da pilha",
-  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Toque em um widget para adicioná-lo a esta tela ou tirá-lo. Ao organizar, solte um widget sobre outro para empilhá-los. Tamanho, aparência e posição são definidos no próprio widget: selecione-o ao organizar."
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Toque em um widget para adicioná-lo a esta tela ou tirá-lo. Ao organizar, solte um widget sobre outro para empilhá-los. Tamanho, aparência e posição são definidos no próprio widget: selecione-o ao organizar.",
+  "Not on the desktop": "Não está na área de trabalho",
+  "Search widgets (Ctrl+F)": "Pesquisar widgets (Ctrl+F)",
+  "No widget called “%1”": "Nenhum widget chamado “%1”"
 }

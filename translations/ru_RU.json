@@ -8763,5 +8763,8 @@
   "%1 s": "%1 с",
   "Split the stack": "Разъединить стопку",
   "Take out of the stack": "Убрать из стопки",
-  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Нажмите на виджет, чтобы добавить его на этот экран или убрать. При расстановке бросьте один виджет на другой, чтобы собрать их в стопку. Размер, вид и положение задаются на самом виджете: выберите его при расстановке."
+  "Tap a widget to add it to this screen or take it away. While arranging, drop one widget on another to stack them. Size, look and position are set on the widget itself: select it while arranging.": "Нажмите на виджет, чтобы добавить его на этот экран или убрать. При расстановке бросьте один виджет на другой, чтобы собрать их в стопку. Размер, вид и положение задаются на самом виджете: выберите его при расстановке.",
+  "Not on the desktop": "Нет на рабочем столе",
+  "Search widgets (Ctrl+F)": "Поиск виджетов (Ctrl+F)",
+  "No widget called “%1”": "Нет виджета «%1»"
 }
