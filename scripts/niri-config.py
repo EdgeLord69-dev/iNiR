@@ -162,7 +162,7 @@ def cmd_outputs():
 
     for name, out in data.items():
         modes = out.get("modes", [])
-        current_idx = out.get("current_mode") or 0
+        current_idx = out.get("current_mode")
         logical = out.get("logical") or {}
 
         res_map = {}
@@ -189,7 +189,7 @@ def cmd_outputs():
             elif m.get("is_preferred", False):
                 res_map[key]["preferred"] = True
 
-        current_mode = modes[current_idx] if current_idx < len(modes) else None
+        current_mode = modes[current_idx] if current_idx is not None and current_idx < len(modes) else None
         current_res = ""
         current_rate = 0.0
         current_rate_string = ""
