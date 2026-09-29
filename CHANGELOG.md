@@ -68,6 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Screen corners open on their own monitor, and Material sidebars open on the monitor you clicked.
 - A crowded Material bar no longer cuts its modules in half; the music title gives way first.
 - Transparent widgets are bare instead of sitting on a faint dark plate.
+- Bare desktop widgets on a light scheme keep light ink over a dark wallpaper instead of turning near black, and a soft shadow holds their text where the wallpaper under them is bright.
+- Icon themes follow the light or dark scheme: WhiteSur-dark's white folders no longer show up in Nautilus, Dolphin or the tray on a light scheme.
 - Live wallpapers no longer restart when you uncover the desktop, and switching families no longer shows a pixelated frame.
 - Big wallpaper folders no longer choke the shell (3736 processes became 31 for a 300-image folder), folders with spaces get thumbnails, and a file name can no longer run a command.
 - Done and the other edit-mode buttons answer the first click, locking and unlocking iRiS no longer flash, and lock-screen widgets show up.
