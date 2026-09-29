@@ -230,6 +230,7 @@ Scope {
                         lightBackdrop: widget.backdropIsLight,
                         darkInk: widget.inkOnLight,
                         plate: widget.widgetHasSurface,
+                        shadow: widget._legibleShadow ? Math.round(widget._legibleShadowOpacity * 100) / 100 : 0,
                         face: widget.irisFaced ? { lightBackdrop: widget.irisFaceView?.lightBackdrop ?? null,
                             veil: Math.round((widget.irisFaceView?.veil ?? -1) * 100) / 100,
                             material: widget.irisFaceView?.material ?? "" } : false,

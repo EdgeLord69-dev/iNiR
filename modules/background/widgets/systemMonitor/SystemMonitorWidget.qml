@@ -256,10 +256,8 @@ AbstractBackgroundWidget {
     // backdrop polarity; do not saturate or re-hue either token. This keeps the
     // labels consistent with the shell's text hierarchy while the metric arc owns
     // the accent color.
-    readonly property color _metricLightInk: Appearance.m3colors.darkmode
-        ? Appearance.colors.colOnLayer0 : Appearance.m3colors.m3inverseOnSurface
-    readonly property color _metricDarkInk: Appearance.m3colors.darkmode
-        ? Appearance.m3colors.m3inverseOnSurface : Appearance.colors.colOnLayer0
+    readonly property color _metricLightInk: root._inkLight
+    readonly property color _metricDarkInk: root._inkDark
     readonly property color _metricText: root.forceLightInk ? root._metricLightInk
         : root.forceDarkInk ? root._metricDarkInk
         : root.widgetHasSurface

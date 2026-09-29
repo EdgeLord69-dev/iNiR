@@ -539,10 +539,19 @@ AbstractWidget {
     readonly property real _pausedSaturation: root.powerActive ? 0 : -0.7  // -0.7 = mostly grayscale
     readonly property real _pausedBrightness: root.powerActive ? 0 : -0.15 // slight dim
     
-    layer.enabled: !root.powerActive && root._showPausedEffect && root.visible
+    readonly property bool _pausedLayer: !root.powerActive && root._showPausedEffect
+    layer.enabled: root.visible && (root._pausedLayer || root._legibleShadow)
     layer.effect: MultiEffect {
-        saturation: root._pausedSaturation
-        brightness: root._pausedBrightness
+        saturation: root._pausedLayer ? root._pausedSaturation : 0
+        brightness: root._pausedLayer ? root._pausedBrightness : 0
+        shadowEnabled: root._legibleShadow
+        shadowColor: root._legibleShadowColor
+        shadowOpacity: root._legibleShadowOpacity
+        shadowBlur: 0.5
+        blurMax: Math.max(8, Math.round(12 * root.scaleFactor))
+        shadowVerticalOffset: root._inkIsLight ? 1 : 0
+        shadowHorizontalOffset: 0
+        autoPaddingEnabled: true
         
         Behavior on saturation {
             enabled: Appearance.animationsEnabled
@@ -2015,7 +2024,10 @@ AbstractWidget {
     }
 
     property bool needsColText: false
-    readonly property bool _regionSampling: (root.positionColorAdaptationEnabled && root.needsColText) || root.irisReadsRegion
+    // A bare widget reads its region even with adaptation off: the ink stays put, but the Lume shadow
+    // behind it is sized from what the ink sits on.
+    readonly property bool _regionSampling: (root.needsColText && (root.positionColorAdaptationEnabled || !root.widgetHasSurface))
+        || root.irisReadsRegion
     readonly property bool positionColorAdaptationEnabled: Boolean(
         Config.getNestedValue("background.widgets.adaptColorsToWallpaperPosition", true))
     property color dominantColor: Appearance.colors.colPrimary
@@ -2077,11 +2089,14 @@ AbstractWidget {
     }
 
     readonly property color _regionBg: root._hasBrightness ? root.dominantColor : Appearance.colors.colLayer0
-    // Generated on-surface ink for dark backdrops; for light ones the generated inverse tone taken
-    // down to a near-black that keeps its hue, so text reads as ink rather than grey.
-    readonly property color _inkLight: Appearance.m3colors.darkmode
-        ? Appearance.colors.colOnLayer0 : Appearance.m3colors.m3inverseOnSurface
-    readonly property color _inkDark: Appearance.m3colors.darkmode
+    // Ink is chosen by the backdrop, never by the shell's mode: iRiS speaks its own light and dark ink;
+    // elsewhere the generated tone for each polarity, taken toward white or black while keeping its
+    // hue, since light mode's inverse tone is a mid grey and dark mode's a mid grey the other way.
+    readonly property color _inkLight: root.widgetIrisFamily ? IrisStyle.inkOnDark
+        : Appearance.m3colors.darkmode ? Appearance.colors.colOnLayer0
+        : ColorUtils.mix(Appearance.m3colors.m3inverseOnSurface, Qt.rgba(1, 1, 1, 1), 0.3)
+    readonly property color _inkDark: root.widgetIrisFamily ? IrisStyle.inkOnLight
+        : Appearance.m3colors.darkmode
         ? ColorUtils.mix(Appearance.m3colors.m3inverseOnSurface, Qt.rgba(0, 0, 0, 1), 0.55)
         : Appearance.colors.colOnLayer0
     readonly property bool forceLightInk: root.colorMode === "light"
@@ -2095,11 +2110,14 @@ AbstractWidget {
         : root._onBlurredLock ? false
         : root.positionColorAdaptationEnabled && root._hasBrightness && root.backdropIsBright
     readonly property bool _onBlurredLock: GlobalStates.screenLocked && (Config.options?.lock?.blur?.enable ?? false)
+    // With the wallpaper unread, iRiS keeps its light ink (the contract of *On bright wallpapers*
+    // off); the shell's light mode says nothing about the wallpaper under a plate-less widget.
+    readonly property bool _unreadIsLight: !root.widgetIrisFamily && !Appearance.m3colors.darkmode
     property color colText: {
         if (root.forceLightInk) return root._inkLight
         if (root.forceDarkInk) return root._inkDark
         if (root._onBlurredLock || !root.positionColorAdaptationEnabled)
-            return Appearance.colors.colOnLayer0
+            return root.widgetIrisFamily ? root._inkLight : Appearance.colors.colOnLayer0
         return root.inkOnLight ? root._inkDark : root._inkLight
     }
     Behavior on colText {
@@ -2306,10 +2324,19 @@ AbstractWidget {
                 onContainer: IrisStyle.text };
         }
         // Bare Material widgets under iRiS (iNstrument, Readout) draw with the same three accents as the faces.
-        if (root.widgetIrisFamily && !root.widgetHasSurface && !["surface", "signal", "warning", "success"].includes(role)) {
-            const seed = role === "tertiary" ? root.irisAccent3 : role === "secondary" ? root.irisAccent2 : root.irisAccent
-            const sample = root.regionBrightness < 0 ? null : { level: root.regionBrightness, spread: root.regionBrightnessSpread }
+        // Their neutral is the ink itself and their states the Island's, never the Material scheme's
+        // tones, which follow the shell's mode rather than the wallpaper. With adaptation off the
+        // accents keep their hue and the Lume shadow holds them, instead of fading toward the ink.
+        if (root.widgetIrisFamily && !root.widgetHasSurface) {
             const onLight = root.inkOnLight
+            if (role === "surface")
+                return { color: root.colText, onColor: onLight ? IrisStyle.inkOnDark : IrisStyle.inkOnLight,
+                    container: ColorUtils.mix(IrisStyle.surface, root.colText, 0.9), onContainer: IrisStyle.text };
+            const seed = role === "signal" ? IrisStyle.dangerOnMedia : role === "warning" ? IrisStyle.highlightOnMedia
+                : role === "success" ? (IrisStyle.light ? Lume.mark(IrisStyle.success, 0.35, 0, false, 3) : IrisStyle.success)
+                : role === "tertiary" ? root.irisAccent3 : role === "secondary" ? root.irisAccent2 : root.irisAccent
+            const sample = root.regionBrightness < 0 || !root.positionColorAdaptationEnabled ? null
+                : { level: root.regionBrightness, spread: root.regionBrightnessSpread }
             const shown = sample ? IrisStyle.markOn(seed, sample, onLight, 3)
                 : onLight ? IrisStyle.deepAccent(seed, IrisStyle.inkOnLight) : seed
             return { color: shown, onColor: IrisStyle.onTintFor(seed),
@@ -2382,7 +2409,7 @@ AbstractWidget {
     readonly property bool widgetHasSurface: root.widgetSurfaceEnabled
         && (root.backgroundOpacity > 0 || root.effectiveBlur)
     readonly property bool regionIsBright: root.positionColorAdaptationEnabled && root._hasBrightness
-        ? root.backdropIsLight : !Appearance.m3colors.darkmode
+        ? root.backdropIsLight : root._unreadIsLight
 
     // Surfaces use semantic containers directly. This removes the old HSL
     // wallpaper-region re-toning that could turn generated warm palettes muddy.
@@ -2435,7 +2462,7 @@ AbstractWidget {
 
     property color accentBackdrop: root.widgetHasSurface ? root.widgetPlateColor
         : root.positionColorAdaptationEnabled && root._hasBrightness ? root._regionBg
-        : Appearance.colors.colLayer0
+        : root.widgetIrisFamily ? root._inkDark : Appearance.colors.colLayer0
 
     // Pick only among existing generated semantic tokens. Movement can therefore
     // change polarity when required, but cannot manufacture a brown/gray/red hue.
@@ -2477,6 +2504,24 @@ AbstractWidget {
     readonly property bool legibleAlways: root.widgetIrisFamily && Boolean(root.irisWidgetOptions.legibleAlways ?? false)
     readonly property real _haloBusy: root.legibleAlways ? 1 : root.positionColorAdaptationEnabled
         ? Math.min(1, root.regionBrightnessSpread / 0.28) : 0
+    // The same held by the whole bare widget (Lume's third step for content with no plate): a soft dark
+    // shadow under light ink as the region's brightest part climbs toward the ink, a faint light lift
+    // under dark ink over the region's darker patches. Off where the backdrop already holds the ink,
+    // so a dark desktop pays for no layer, and in edit mode, where the layer would clip the outline.
+    readonly property bool _inkIsLight: ColorUtils.relativeLuminance(root.colText) > 0.35
+    readonly property real _legibleShadowOpacity: {
+        if (!root._hasBrightness) return root.legibleAlways ? 0.6 : 0
+        const busy = root.legibleAlways ? 0.24 : 0
+        if (root._inkIsLight) {
+            const worst = Math.min(1, root.regionBrightness + Math.max(busy, root.regionBrightnessSpread))
+            return Math.max(root.legibleAlways ? 0.6 : 0, Math.min(0.9, (worst - 0.32) / 0.4 * 0.9))
+        }
+        const darkest = Math.max(0, root.regionBrightness - Math.max(busy, root.regionBrightnessSpread))
+        return Math.max(0, Math.min(0.55, (0.62 - darkest) / 0.35 * 0.55))
+    }
+    readonly property color _legibleShadowColor: root._inkIsLight ? Qt.rgba(0, 0, 0, 1) : Qt.rgba(1, 1, 1, 1)
+    readonly property bool _legibleShadow: root.needsColText && !root.widgetHasSurface && !root.irisFaced
+        && !GlobalStates.widgetEditMode && root._legibleShadowOpacity > 0.06
     readonly property color colHalo: root.inkOnLight && !root.forceDarkInk
         ? Qt.rgba(1, 1, 1, 0.12 + 0.3 * root._haloBusy)
         : Qt.rgba(0, 0, 0, 0.35 + 0.45 * root._haloBusy)
