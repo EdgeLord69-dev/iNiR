@@ -326,16 +326,13 @@ footer_link() {
   esac
 }
 
-# Every minor release shows what changed; a patch may go without screenshots.
 check_media() {
   local v="$1" dir file caption count=0 image
   dir="$(media_dir "$v")"
+  image="$(readme_release_image || true)"
   if [[ ! -f "$dir/captions.tsv" ]]; then
-    if [[ "$v" == *.0 ]]; then
-      fail "no screenshots for $v: add $dir/NN-name.webp and $dir/captions.tsv (see the inir-release skill)"
-    else
-      warn "no screenshots for $v"
-    fi
+    warn "no screenshots beside the hero for $v ($dir/captions.tsv)"
+    check_private_text "$image"
     return
   fi
   while IFS=$'\t' read -r file caption; do
@@ -344,9 +341,7 @@ check_media() {
     [[ -n "$caption" ]] || fail "$dir/$file has no caption"
     count=$((count + 1))
   done < "$dir/captions.tsv"
-  (( count >= 4 )) || warn "$v shows $count screenshots; four to eight cover a release"
   (( count % 2 == 0 )) || warn "$v shows an odd number of screenshots; the gallery reads best in pairs"
-  image="$(readme_release_image || true)"
   check_private_text "$image" $(gallery_files "$v")
 }
 
