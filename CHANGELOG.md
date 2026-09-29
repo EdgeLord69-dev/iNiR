@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Island settings are grouped by what they change.** Layout, Shape and At rest come first, Appearance opens on Look, Material and Shape, the banner width sits with Notifications, and every surface's corners are also listed together under Appearance. Spotlight also searches setting descriptions, so a word from what a row says finds it.
 - **Live wallpapers use far less memory.** Videos play from a copy sized to your screen, and glass shares one decoder. 1.8 GB → under 700 MB with a 4K wallpaper.
 - **The desktop stops drawing when nobody can see it.** Music visuals, the system monitor and the Organic edge hold still behind windows. Idle GPU use went from 22 % to 9 %.
 - **Live wallpapers download in 4K.** MotionBgs' HD files are soft even at 1080p; the 4K one scaled to your screen is sharper. Light keeps HD.
