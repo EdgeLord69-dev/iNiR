@@ -7025,7 +7025,6 @@
   "At a glance": "概要",
   "At rest": "静止時",
   "Attach Island to edge": "アイランドを端に付ける",
-  "Attach as a notch": "ノッチとして付ける",
   "Attach to the screen edge": "画面の端に付ける",
   "Authenticate": "認証",
   "Authentication required": "認証が必要です",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "シェルで画面を囲む",
   "Close “%1”?": "「%1」を閉じますか？",
   "Cloudflare's tunnel.": "Cloudflare のトンネル。",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "クラスターのみ。サウンドとマイクはレベルを表示：スクロールで調整、クリックでミュート。",
   "Cluster splits media and controls into bubbles beside the clock.": "クラスターはメディアとコントロールを時計の横のバブルに分けます。",
   "Collapse island": "アイランドを折りたたむ",
   "Colors update automatically": "色は自動で更新されます",
@@ -7367,7 +7365,6 @@
   "Maximum height": "最大の高さ",
   "Maximum results": "最大結果数",
   "Media bubble opens": "メディアバブルで開くもの",
-  "Melts the Island into the screen edge.": "アイランドを画面の端に溶け込ませます。",
   "Melts the panel into its edge, like a notch.": "パネルをノッチのように端へ溶け込ませます。",
   "Menus": "メニュー",
   "Metadata": "メタデータ",
@@ -7650,7 +7647,6 @@
   "Slider fill": "スライダーの塗り",
   "Slim sliders side by side; pick them on the Panel page.": "細いスライダーを横に並べます。パネルページで選びます。",
   "Slow drift": "ゆっくり漂う",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "アイランド自身が持つ小さな表示を、オンにした順に。それぞれがカードを開き、スクロールでレベルを調整します。",
   "Small glass chips under the clock: the weather, what is next and the battery.": "時計の下の小さなガラスチップ：天気、次の予定、バッテリー。",
   "Snap off": "スナップ オフ",
   "Snap off: it stays where you let go": "スナップ オフ：離した場所に留まります",
@@ -8868,5 +8864,10 @@
   "Button rows": "ボタン列",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "丸いコントロールの列（Island のページ、プレーヤーの操作、サイドパネルのヘッダー）を 1 枚のプレートに載せられます。ベールは背後を暗くし、ガラスはガラスの縁をまとい、単色は読みやすいカードです。角はバブルの形に合わせます。",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "ナビゲーション行を載せるもの。自動は 見た目 › ボタン列 に従い、プレートはバブルの形に合わせ、中のボタンと同心になります。",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "すりガラスの壁紙 · 明るい壁紙の上では霜になります"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "すりガラスの壁紙 · 明るい壁紙の上では霜になります",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "Island は生まれたノッチのように画面の端に溶け込みます。オフにすると端から離れて浮かびます。",
+  "Dock notch": "Dock のノッチ",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock は Island のノッチのように画面の端に溶け込みます。オフにすると端から離れて浮かびます。",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster の Island の横のバブル。サウンドとマイクはレベルを表示し、スクロールで調整、クリックでミュートします。",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island 自身が載せる小さなフェイス。オンにした順に並びます。それぞれカードを開き、レベルはスクロールで調整できます。ここで選んだバブルはフレームから外れます。フレームに浮かべるには バブル › 追加バブル を使います。"
 }

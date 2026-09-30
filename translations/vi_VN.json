@@ -7025,7 +7025,6 @@
   "At a glance": "Xem nhanh",
   "At rest": "Khi nghỉ",
   "Attach Island to edge": "Gắn Đảo vào cạnh",
-  "Attach as a notch": "Gắn như tai thỏ",
   "Attach to the screen edge": "Gắn vào cạnh màn hình",
   "Authenticate": "Xác thực",
   "Authentication required": "Cần xác thực",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "Khép shell quanh màn hình",
   "Close “%1”?": "Đóng “%1”?",
   "Cloudflare's tunnel.": "Đường hầm của Cloudflare.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "Chỉ Cụm. Âm thanh và Micro hiển thị mức: cuộn để chỉnh, bấm để tắt tiếng.",
   "Cluster splits media and controls into bubbles beside the clock.": "Cụm tách phương tiện và điều khiển thành các bong bóng cạnh đồng hồ.",
   "Collapse island": "Thu gọn đảo",
   "Colors update automatically": "Màu tự động cập nhật",
@@ -7367,7 +7365,6 @@
   "Maximum height": "Chiều cao tối đa",
   "Maximum results": "Số kết quả tối đa",
   "Media bubble opens": "Bong bóng phương tiện mở",
-  "Melts the Island into the screen edge.": "Hòa Đảo vào cạnh màn hình.",
   "Melts the panel into its edge, like a notch.": "Hòa bảng vào cạnh của nó, như tai thỏ.",
   "Menus": "Menu",
   "Metadata": "Siêu dữ liệu",
@@ -7650,7 +7647,6 @@
   "Slider fill": "Phần tô thanh trượt",
   "Slim sliders side by side; pick them on the Panel page.": "Thanh trượt mảnh cạnh nhau; chọn chúng ở trang Bảng.",
   "Slow drift": "Trôi chậm",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "Mặt nhỏ Đảo tự mang, theo thứ tự bạn bật. Mỗi cái mở thẻ riêng, mức chỉnh khi cuộn.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "Chip kính nhỏ dưới đồng hồ: thời tiết, việc tiếp theo và pin.",
   "Snap off": "Tắt hút",
   "Snap off: it stays where you let go": "Tắt hút: nó ở nguyên chỗ bạn thả",
@@ -8868,5 +8864,10 @@
   "Button rows": "Hàng nút",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Các hàng nút tròn (các trang của Island, điều khiển trình phát, đầu các bảng bên) có thể nằm trên một tấm nền: Lớp phủ làm tối phía sau, Kính mang cạnh kính, Màu đặc là thẻ đọc. Góc theo hình bong bóng.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Thứ chứa hàng điều hướng. Tự động theo Nhìn › Hàng nút; tấm nền theo hình bong bóng, các nút bên trong đồng tâm.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "Hình nền mờ · thành lớp sương trên hình nền sáng"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Hình nền mờ · thành lớp sương trên hình nền sáng",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "Island hòa vào mép màn hình, như tai thỏ nơi nó mọc ra. Tắt, nó nổi tách khỏi mép.",
+  "Dock notch": "Tai thỏ của Dock",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock hòa vào mép màn hình như tai thỏ của Island. Tắt, nó nổi tách khỏi mép.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Bong bóng bên cạnh Island Cluster. Âm thanh và Micrô hiện mức: cuộn để chỉnh, bấm để tắt tiếng.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Những mặt nhỏ Island tự mang, theo thứ tự bạn bật. Mỗi cái mở thẻ riêng, mức được chỉnh khi cuộn. Bong bóng chọn ở đây rời khỏi khung; Bong bóng › Bong bóng thêm cho một cái nổi trên khung."
 }

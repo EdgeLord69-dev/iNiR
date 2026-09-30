@@ -7018,7 +7018,6 @@
   "At a glance": "Sekilas",
   "At rest": "Saat diam",
   "Attach Island to edge": "Tempelkan Pulau ke tepi",
-  "Attach as a notch": "Tempelkan sebagai notch",
   "Attach to the screen edge": "Tempelkan ke tepi layar",
   "Authenticate": "Autentikasi",
   "Authentication required": "Autentikasi diperlukan",
@@ -7110,7 +7109,6 @@
   "Close the shell around the screen": "Tutup shell di sekeliling layar",
   "Close “%1”?": "Tutup “%1”?",
   "Cloudflare's tunnel.": "Tunnel milik Cloudflare.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "Hanya Cluster. Suara dan Mikrofon menampilkan levelnya: gulir untuk mengatur, klik untuk membisukan.",
   "Cluster splits media and controls into bubbles beside the clock.": "Cluster memecah media dan kontrol menjadi gelembung di samping jam.",
   "Collapse island": "Ciutkan pulau",
   "Colors update automatically": "Warna diperbarui otomatis",
@@ -7360,7 +7358,6 @@
   "Maximum height": "Tinggi maksimum",
   "Maximum results": "Hasil maksimum",
   "Media bubble opens": "Gelembung media membuka",
-  "Melts the Island into the screen edge.": "Meleburkan Pulau ke tepi layar.",
   "Melts the panel into its edge, like a notch.": "Meleburkan panel ke tepinya, seperti notch.",
   "Menus": "Menu",
   "Metadata": "Metadata",
@@ -7643,7 +7640,6 @@
   "Slider fill": "Isian slider",
   "Slim sliders side by side; pick them on the Panel page.": "Slider ramping berdampingan; pilih di halaman Panel.",
   "Slow drift": "Hanyut pelan",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "Wajah kecil yang dibawa Pulau sendiri, dalam urutan Anda menyalakannya. Masing-masing membuka kartunya, dan level diatur dengan gulir.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "Chip kaca kecil di bawah jam: cuaca, yang berikutnya, dan baterai.",
   "Snap off": "Tempel mati",
   "Snap off: it stays where you let go": "Tempel mati: tetap di tempat Anda melepasnya",
@@ -8868,5 +8864,10 @@
   "Button rows": "Baris tombol",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Baris kontrol bulat (halaman Island, kontrol pemutar, header panel samping) bisa berada di satu pelat: Selubung menggelapkan latar, Kaca memakai tepi kaca, Solid adalah kartu baca. Sudutnya mengikuti bentuk gelembung.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Apa yang menampung baris navigasi. Otomatis mengikuti Tampilan › Baris tombol; pelat mengikuti bentuk gelembung, dengan tombol di dalamnya konsentris.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "Wallpaper buram · menjadi embun beku di atas wallpaper terang"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Wallpaper buram · menjadi embun beku di atas wallpaper terang",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "Island menyatu dengan tepi layar, seperti notch tempat ia tumbuh. Mati, ia melayang terpisah dari tepi.",
+  "Dock notch": "Notch Dock",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock menyatu dengan tepi layarnya seperti notch Island. Mati, ia melayang terpisah dari tepi.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Gelembung di samping Island Cluster. Suara dan Mikrofon menampilkan levelnya: gulir untuk mengatur, klik untuk membisukan.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Wajah kecil yang dibawa Island sendiri, sesuai urutan kamu menyalakannya. Masing-masing membuka kartunya, dan level diatur dengan gulir. Gelembung yang dipilih di sini meninggalkan bingkai; Gelembung › Gelembung ekstra membuat satu melayang di bingkai."
 }

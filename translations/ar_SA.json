@@ -7025,7 +7025,6 @@
   "At a glance": "لمحة سريعة",
   "At rest": "في السكون",
   "Attach Island to edge": "إلصاق الجزيرة بالحافة",
-  "Attach as a notch": "إلصاق كنتوء",
   "Attach to the screen edge": "إلصاق بحافة الشاشة",
   "Authenticate": "مصادقة",
   "Authentication required": "المصادقة مطلوبة",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "إحاطة الشاشة بالواجهة",
   "Close “%1”?": "إغلاق «%1»؟",
   "Cloudflare's tunnel.": "نفق Cloudflare.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "للعنقود فقط. يُظهر الصوت والميكروفون مستواهما: مرّر للضبط، وانقر للكتم.",
   "Cluster splits media and controls into bubbles beside the clock.": "العنقود يقسم الوسائط والتحكم إلى فقاعات بجانب الساعة.",
   "Collapse island": "طيّ الجزيرة",
   "Colors update automatically": "تتحدث الألوان تلقائيًا",
@@ -7367,7 +7365,6 @@
   "Maximum height": "أقصى ارتفاع",
   "Maximum results": "أقصى عدد للنتائج",
   "Media bubble opens": "فقاعة الوسائط تفتح",
-  "Melts the Island into the screen edge.": "يذيب الجزيرة في حافة الشاشة.",
   "Melts the panel into its edge, like a notch.": "يذيب اللوحة في حافتها، كنتوء.",
   "Menus": "القوائم",
   "Metadata": "البيانات الوصفية",
@@ -7650,7 +7647,6 @@
   "Slider fill": "تعبئة المنزلق",
   "Slim sliders side by side; pick them on the Panel page.": "منزلقات رفيعة متجاورة؛ اخترها من صفحة اللوحة.",
   "Slow drift": "انجراف بطيء",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "وجوه صغيرة تحملها الجزيرة نفسها، بترتيب تفعيلك لها. كل واحد يفتح بطاقته، وتُضبط المستويات بالتمرير.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "رقاقات زجاجية صغيرة تحت الساعة: الطقس، وما هو تالٍ، والبطارية.",
   "Snap off": "الالتقاط متوقف",
   "Snap off: it stays where you let go": "الالتقاط متوقف: تبقى حيث تتركها",
@@ -8868,5 +8864,10 @@
   "Button rows": "صفوف الأزرار",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "يمكن أن تستقر صفوف عناصر التحكم الدائرية (صفحات Island، وأدوات المشغّل، وترويسة اللوحات الجانبية) على لوحة واحدة: الحجاب يعتّم ما خلفها، والزجاج يحمل حافة الزجاج، والصلب بطاقة قراءة. تتبع زواياها شكل الفقاعات.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "ما يحمل صف التنقل. التلقائي يتبع المظهر › صفوف الأزرار؛ واللوحة تتبع شكل الفقاعات والأزرار داخلها متحدة المركز.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "خلفية مصقولة · تصبح صقيعًا فوق خلفية فاتحة"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "خلفية مصقولة · تصبح صقيعًا فوق خلفية فاتحة",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "يندمج Island في حافة الشاشة مثل الشق الذي ينمو منه. عند الإيقاف يطفو بعيدًا عن الحافة.",
+  "Dock notch": "شق Dock",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "يندمج Dock في حافة شاشته مثل شق Island. عند الإيقاف يطفو بعيدًا عن الحافة.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "الفقاعة بجانب Island بنمط Cluster. يُظهر الصوت والميكروفون مستواهما: مرّر للضبط وانقر للكتم.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "وجوه صغيرة يحملها Island بنفسه، بترتيب تشغيلها. كل منها يفتح بطاقته، وتُضبط المستويات بالتمرير. الفقاعة المختارة هنا تغادر الإطار؛ الفقاعات › فقاعات إضافية تجعل واحدة تطفو على الإطار."
 }

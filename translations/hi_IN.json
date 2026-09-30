@@ -7025,7 +7025,6 @@
   "At a glance": "एक नज़र में",
   "At rest": "आराम में",
   "Attach Island to edge": "द्वीप को किनारे से जोड़ें",
-  "Attach as a notch": "नॉच की तरह जोड़ें",
   "Attach to the screen edge": "स्क्रीन के किनारे से जोड़ें",
   "Authenticate": "प्रमाणित करें",
   "Authentication required": "प्रमाणीकरण आवश्यक",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "स्क्रीन के चारों ओर शेल बंद करें",
   "Close “%1”?": "“%1” बंद करें?",
   "Cloudflare's tunnel.": "Cloudflare की सुरंग।",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "सिर्फ़ क्लस्टर। साउंड और माइक्रोफ़ोन अपना स्तर दिखाते हैं: समायोजन के लिए स्क्रॉल करें, म्यूट के लिए क्लिक करें।",
   "Cluster splits media and controls into bubbles beside the clock.": "क्लस्टर मीडिया और कंट्रोल को घड़ी के बगल में बबल में बाँटता है।",
   "Collapse island": "द्वीप समेटें",
   "Colors update automatically": "रंग अपने आप अपडेट होते हैं",
@@ -7367,7 +7365,6 @@
   "Maximum height": "अधिकतम ऊँचाई",
   "Maximum results": "अधिकतम नतीजे",
   "Media bubble opens": "मीडिया बबल खोलता है",
-  "Melts the Island into the screen edge.": "द्वीप को स्क्रीन के किनारे में घोल देता है।",
   "Melts the panel into its edge, like a notch.": "पैनल को नॉच की तरह उसके किनारे में घोल देता है।",
   "Menus": "मेन्यू",
   "Metadata": "मेटाडेटा",
@@ -7650,7 +7647,6 @@
   "Slider fill": "स्लाइडर फ़िल",
   "Slim sliders side by side; pick them on the Panel page.": "अगल-बगल पतले स्लाइडर; उन्हें पैनल पेज पर चुनें।",
   "Slow drift": "धीमा बहाव",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "द्वीप ख़ुद जिन छोटे चेहरों को रखता है, उसी क्रम में जिसमें आप उन्हें चालू करते हैं। हर एक अपना कार्ड खोलता है, और स्क्रॉल पर स्तर बदलते हैं।",
   "Small glass chips under the clock: the weather, what is next and the battery.": "घड़ी के नीचे छोटी ग्लास चिप: मौसम, आगे क्या है और बैटरी।",
   "Snap off": "स्नैप बंद",
   "Snap off: it stays where you let go": "स्नैप बंद: जहाँ छोड़ें वहीं रहता है",
@@ -8868,5 +8864,10 @@
   "Button rows": "बटन पंक्तियाँ",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "गोल नियंत्रणों की पंक्तियाँ (Island के पेज, प्लेयर नियंत्रण, साइड पैनल का हेडर) एक प्लेट पर रह सकती हैं: परदा पीछे को गहरा करता है, ग्लास ग्लास किनारा पहनता है, ठोस पढ़ने का कार्ड है। कोने बबल के आकार का अनुसरण करते हैं।",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "नेविगेशन पंक्ति को क्या थामे। ऑटो दिखावट › बटन पंक्तियाँ का अनुसरण करता है; प्लेट बबल के आकार का अनुसरण करती है, अंदर बटन समकेंद्रित रहते हैं।",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "धुंधला वॉलपेपर · हल्के वॉलपेपर पर पाला बन जाता है"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "धुंधला वॉलपेपर · हल्के वॉलपेपर पर पाला बन जाता है",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "Island उस नॉच की तरह स्क्रीन के किनारे में घुल जाता है जिससे वह उगता है। बंद होने पर वह किनारे से अलग तैरता है।",
+  "Dock notch": "Dock नॉच",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock, Island के नॉच की तरह अपने स्क्रीन किनारे में घुल जाता है। बंद होने पर वह किनारे से अलग तैरता है।",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island के बगल का बबल। साउंड और माइक्रोफ़ोन अपना स्तर दिखाते हैं: समायोजित करने के लिए स्क्रॉल करें, म्यूट के लिए क्लिक करें।",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "छोटे चेहरे जिन्हें Island खुद रखता है, उसी क्रम में जिसमें आप उन्हें चालू करते हैं। हर एक अपना कार्ड खोलता है, और स्क्रॉल से स्तर बदलते हैं। यहाँ चुना बबल फ़्रेम छोड़ देता है; बबल › अतिरिक्त बबल एक को फ़्रेम पर तैराता है।"
 }

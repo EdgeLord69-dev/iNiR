@@ -7025,7 +7025,6 @@
   "At a glance": "Bir bakışta",
   "At rest": "Dinlenirken",
   "Attach Island to edge": "Ada'yı kenara iliştir",
-  "Attach as a notch": "Çentik olarak iliştir",
   "Attach to the screen edge": "Ekran kenarına iliştir",
   "Authenticate": "Kimlik doğrula",
   "Authentication required": "Kimlik doğrulama gerekli",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "Kabuğu ekranın etrafında kapat",
   "Close “%1”?": "“%1” kapatılsın mı?",
   "Cloudflare's tunnel.": "Cloudflare'in tüneli.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "Yalnızca Küme. Ses ve Mikrofon seviyelerini gösterir: ayarlamak için kaydırın, sessize almak için tıklayın.",
   "Cluster splits media and controls into bubbles beside the clock.": "Küme, medya ve denetimleri saatin yanında baloncuklara ayırır.",
   "Collapse island": "Adayı daralt",
   "Colors update automatically": "Renkler otomatik güncellenir",
@@ -7367,7 +7365,6 @@
   "Maximum height": "Azami yükseklik",
   "Maximum results": "Azami sonuç",
   "Media bubble opens": "Medya baloncuğu açar",
-  "Melts the Island into the screen edge.": "Ada'yı ekran kenarına eritir.",
   "Melts the panel into its edge, like a notch.": "Paneli kenarına eritir, bir çentik gibi.",
   "Menus": "Menüler",
   "Metadata": "Üst veriler",
@@ -7650,7 +7647,6 @@
   "Slider fill": "Kaydırıcı dolgusu",
   "Slim sliders side by side; pick them on the Panel page.": "Yan yana ince kaydırıcılar; onları Panel sayfasında seçin.",
   "Slow drift": "Yavaş sürüklenme",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "Ada'nın kendisinin taşıdığı küçük göstergeler, açtığınız sırayla. Her biri kendi kartını açar, seviyeler kaydırınca ayarlanır.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "Saatin altında küçük cam çipler: hava durumu, sıradaki ve pil.",
   "Snap off": "Yapışma kapalı",
   "Snap off: it stays where you let go": "Yapışma kapalı: bıraktığınız yerde kalır",
@@ -8868,5 +8864,10 @@
   "Button rows": "Düğme sıraları",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Yuvarlak kontrol sıraları (Island sayfaları, oynatıcı denetimleri, yan panellerin başlığı) bir plaka üzerinde durabilir: Perde arkayı karartır, Cam cam kenarını taşır, Düz renk bir okuma kartıdır. Köşeleri baloncukların biçimini izler.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Gezinme satırını ne taşır. Otomatik, Görünüm › Düğme sıraları'nı izler; plaka baloncukların biçimini izler, içindeki düğmeler eş merkezlidir.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "Buzlu duvar kâğıdı · açık duvar kâğıdında kırağıya döner"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Buzlu duvar kâğıdı · açık duvar kâğıdında kırağıya döner",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "Island, doğduğu çentik gibi ekran kenarıyla kaynaşır. Kapalıyken kenardan ayrı süzülür.",
+  "Dock notch": "Dock çentiği",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock, Island'ın çentiği gibi ekran kenarıyla kaynaşır. Kapalıyken kenardan ayrı süzülür.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island'ın yanındaki baloncuk. Ses ve Mikrofon seviyelerini gösterir: ayarlamak için kaydırın, susturmak için tıklayın.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island'ın kendisinin taşıdığı küçük yüzler, açtığınız sırayla. Her biri kendi kartını açar, seviyeler kaydırarak ayarlanır. Burada seçilen bir baloncuk çerçeveden ayrılır; Baloncuklar › Ek baloncuklar birini çerçevede yüzdürür."
 }

@@ -7025,7 +7025,6 @@
   "At a glance": "Num relance",
   "At rest": "Em repouso",
   "Attach Island to edge": "Prender a Ilha na borda",
-  "Attach as a notch": "Prender como notch",
   "Attach to the screen edge": "Prender na borda da tela",
   "Authenticate": "Autenticar",
   "Authentication required": "Autenticação necessária",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "Fechar o shell em volta da tela",
   "Close “%1”?": "Fechar “%1”?",
   "Cloudflare's tunnel.": "O túnel da Cloudflare.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "Só Cluster. Som e Microfone mostram o nível: role para ajustar, clique para silenciar.",
   "Cluster splits media and controls into bubbles beside the clock.": "Cluster divide mídia e controles em bolhas ao lado do relógio.",
   "Collapse island": "Recolher ilha",
   "Colors update automatically": "As cores se atualizam automaticamente",
@@ -7367,7 +7365,6 @@
   "Maximum height": "Altura máxima",
   "Maximum results": "Máximo de resultados",
   "Media bubble opens": "A bolha de mídia abre",
-  "Melts the Island into the screen edge.": "Funde a Ilha na borda da tela.",
   "Melts the panel into its edge, like a notch.": "Funde o painel na sua borda, como um notch.",
   "Menus": "Menus",
   "Metadata": "Metadados",
@@ -7650,7 +7647,6 @@
   "Slider fill": "Preenchimento do controle deslizante",
   "Slim sliders side by side; pick them on the Panel page.": "Controles deslizantes finos lado a lado; escolha-os na página Painel.",
   "Slow drift": "Deriva lenta",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "Pequenos mostradores que a própria Ilha carrega, na ordem em que você os ativa. Cada um abre seu cartão, e os níveis se ajustam ao rolar.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "Pequenos chips de vidro sob o relógio: o clima, o que vem a seguir e a bateria.",
   "Snap off": "Encaixe desligado",
   "Snap off: it stays where you let go": "Encaixe desligado: fica onde você soltar",
@@ -8868,5 +8864,10 @@
   "Button rows": "Linhas de botões",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Linhas de controles redondos (as páginas do Island, os controles do player, o cabeçalho dos painéis laterais) podem ficar sobre uma placa: Véu escurece o que está atrás, Vidro usa a borda de vidro, Sólido é um cartão de leitura. Os cantos seguem a forma das bolhas.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "O que contém a linha de navegação. Automático segue Aparência › Linhas de botões; uma placa segue a forma das bolhas, com os botões concêntricos dentro.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "Papel de parede fosco · vira gelo sobre um fundo claro"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Papel de parede fosco · vira gelo sobre um fundo claro",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "O Island se funde com a borda da tela, como o entalhe de onde nasce. Desligado, flutua afastado da borda.",
+  "Dock notch": "Entalhe do Dock",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "O Dock se funde com a borda da tela como o entalhe do Island. Desligado, flutua afastado da borda.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "A bolha ao lado de um Island em Cluster. Som e Microfone mostram o nível: role para ajustar, clique para silenciar.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Pequenas faces que o Island carrega, na ordem em que você as liga. Cada uma abre seu cartão, e os níveis se ajustam ao rolar. Uma bolha escolhida aqui sai da moldura; Bolhas › Bolhas extras faz uma flutuar na moldura."
 }

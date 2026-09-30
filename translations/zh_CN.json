@@ -7025,7 +7025,6 @@
   "At a glance": "一览",
   "At rest": "静止时",
   "Attach Island to edge": "将岛屿贴附到边缘",
-  "Attach as a notch": "作为刘海贴附",
   "Attach to the screen edge": "贴附到屏幕边缘",
   "Authenticate": "认证",
   "Authentication required": "需要认证",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "用 Shell 环绕屏幕",
   "Close “%1”?": "关闭“%1”？",
   "Cloudflare's tunnel.": "Cloudflare 的隧道。",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "仅限“簇”。声音和麦克风显示电平：滚动调节，点击静音。",
   "Cluster splits media and controls into bubbles beside the clock.": "“簇”把媒体和控制拆成时钟旁的气泡。",
   "Collapse island": "收起岛屿",
   "Colors update automatically": "颜色自动更新",
@@ -7367,7 +7365,6 @@
   "Maximum height": "最大高度",
   "Maximum results": "最大结果数",
   "Media bubble opens": "媒体气泡打开",
-  "Melts the Island into the screen edge.": "让岛屿融入屏幕边缘。",
   "Melts the panel into its edge, like a notch.": "让面板像刘海一样融入其边缘。",
   "Menus": "菜单",
   "Metadata": "元数据",
@@ -7650,7 +7647,6 @@
   "Slider fill": "滑块填充",
   "Slim sliders side by side; pick them on the Panel page.": "并排的纤细滑块；在“面板”页面中选择。",
   "Slow drift": "缓慢漂移",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "岛屿自带的小表盘，按你开启的顺序排列。每个都会打开自己的卡片，滚动即可调节电平。",
   "Small glass chips under the clock: the weather, what is next and the battery.": "时钟下方的小玻璃标签：天气、接下来的事和电池。",
   "Snap off": "吸附关闭",
   "Snap off: it stays where you let go": "吸附关闭：停在你松手的位置",
@@ -8868,5 +8864,10 @@
   "Button rows": "按钮行",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "圆形控件行（Island 的页面、播放器控制、侧面板标题）可放在同一块底板上：遮罩让背后变暗，玻璃带有玻璃边缘，纯色是阅读卡片。底板的圆角跟随气泡形状。",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "承载导航行的底板。自动跟随 外观 › 按钮行；底板跟随气泡形状，内部按钮与其同心。",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "磨砂壁纸 · 在明亮壁纸上变为霜面"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "磨砂壁纸 · 在明亮壁纸上变为霜面",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "Island 像它生长出来的刘海一样融入屏幕边缘。关闭后，它会离开边缘悬浮。",
+  "Dock notch": "Dock 刘海",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock 像 Island 的刘海一样融入屏幕边缘。关闭后，它会离开边缘悬浮。",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island 旁的气泡。声音和麦克风显示电平：滚动调节，点击静音。",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island 自己携带的小面孔，按开启顺序排列。每个都会打开自己的卡片，滚动可调节电平。在这里选中的气泡会离开边框；要让气泡在边框上悬浮，请使用 气泡 › 额外气泡。"
 }

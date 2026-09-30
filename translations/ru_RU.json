@@ -7025,7 +7025,6 @@
   "At a glance": "Кратко",
   "At rest": "В покое",
   "Attach Island to edge": "Прикрепить Остров к краю",
-  "Attach as a notch": "Прикрепить как вырез",
   "Attach to the screen edge": "Прикрепить к краю экрана",
   "Authenticate": "Аутентифицировать",
   "Authentication required": "Требуется аутентификация",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "Замкнуть оболочку вокруг экрана",
   "Close “%1”?": "Закрыть «%1»?",
   "Cloudflare's tunnel.": "Туннель Cloudflare.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "Только Cluster. Звук и микрофон показывают уровень: прокрутите для регулировки, нажмите для отключения.",
   "Cluster splits media and controls into bubbles beside the clock.": "Cluster разделяет медиа и управление на пузыри рядом с часами.",
   "Collapse island": "Свернуть остров",
   "Colors update automatically": "Цвета обновляются автоматически",
@@ -7367,7 +7365,6 @@
   "Maximum height": "Максимальная высота",
   "Maximum results": "Максимум результатов",
   "Media bubble opens": "Пузырь медиа открывает",
-  "Melts the Island into the screen edge.": "Вплавляет Остров в край экрана.",
   "Melts the panel into its edge, like a notch.": "Вплавляет панель в её край, как вырез.",
   "Menus": "Меню",
   "Metadata": "Метаданные",
@@ -7650,7 +7647,6 @@
   "Slider fill": "Заливка ползунка",
   "Slim sliders side by side; pick them on the Panel page.": "Тонкие ползунки рядом; выберите их на странице «Панель».",
   "Slow drift": "Медленный дрейф",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "Маленькие индикаторы, которые Остров несёт сам, в порядке включения. Каждый открывает свою карточку, уровни регулируются прокруткой.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "Маленькие стеклянные плашки под часами: погода, что дальше и батарея.",
   "Snap off": "Притяжение выключено",
   "Snap off: it stays where you let go": "Притяжение выключено: остаётся там, где вы отпустили",
@@ -8868,5 +8864,10 @@
   "Button rows": "Ряды кнопок",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Ряды круглых элементов (страницы Island, управление плеером, заголовок боковых панелей) могут лежать на пластине: Вуаль затемняет фон, Стекло несёт стеклянный край, Сплошной — карточка для чтения. Углы повторяют форму пузырей.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Что держит строку навигации. Авто следует Вид › Ряды кнопок; пластина повторяет форму пузырей, кнопки внутри концентричны.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "Матовые обои · на светлых обоях становятся инеем"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Матовые обои · на светлых обоях становятся инеем",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "Island сливается с краем экрана, как вырез, из которого он растёт. Выключено — парит отдельно от края.",
+  "Dock notch": "Вырез Dock",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock сливается со своим краем экрана, как вырез Island. Выключено — парит отдельно от края.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Пузырь рядом с Island в режиме Cluster. Звук и Микрофон показывают уровень: прокрутка меняет, щелчок выключает.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Маленькие значки, которые Island несёт сам, в порядке включения. Каждый открывает свою карточку, уровни меняются прокруткой. Выбранный здесь пузырь покидает рамку; Пузыри › Дополнительные пузыри размещают его на рамке."
 }

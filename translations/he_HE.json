@@ -7025,7 +7025,6 @@
   "At a glance": "במבט חטוף",
   "At rest": "במנוחה",
   "Attach Island to edge": "הצמדת האיילנד לקצה",
-  "Attach as a notch": "הצמדה כמגרעת",
   "Attach to the screen edge": "הצמדה לקצה המסך",
   "Authenticate": "אימות",
   "Authentication required": "נדרש אימות",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "סגירת המעטפת סביב המסך",
   "Close “%1”?": "לסגור את „%1”?",
   "Cloudflare's tunnel.": "המנהרה של Cloudflare.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "אשכול בלבד. צליל ומיקרופון מציגים את העוצמה: גלול לכוונון, לחץ להשתקה.",
   "Cluster splits media and controls into bubbles beside the clock.": "אשכול מפצל מדיה ובקרות לבועות ליד השעון.",
   "Collapse island": "כיווץ האיילנד",
   "Colors update automatically": "הצבעים מתעדכנים אוטומטית",
@@ -7367,7 +7365,6 @@
   "Maximum height": "גובה מרבי",
   "Maximum results": "מספר תוצאות מרבי",
   "Media bubble opens": "בועת המדיה פותחת",
-  "Melts the Island into the screen edge.": "ממיס את האיילנד לתוך קצה המסך.",
   "Melts the panel into its edge, like a notch.": "ממיס את הלוח לתוך הקצה שלו, כמו מגרעת.",
   "Menus": "תפריטים",
   "Metadata": "מטא־נתונים",
@@ -7650,7 +7647,6 @@
   "Slider fill": "מילוי המחוון",
   "Slim sliders side by side; pick them on the Panel page.": "מחוונים דקים זה לצד זה; בחר אותם בעמוד הלוח.",
   "Slow drift": "סחיפה איטית",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "חוגות קטנות שהאיילנד נושא בעצמו, בסדר שבו הפעלת אותן. כל אחת פותחת את הכרטיס שלה, והעוצמות מכווננות בגלילה.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "שבבי זכוכית קטנים מתחת לשעון: מזג האוויר, מה הבא בתור והסוללה.",
   "Snap off": "הצמדה כבויה",
   "Snap off: it stays where you let go": "הצמדה כבויה: היא נשארת היכן ששחררת",
@@ -8868,5 +8864,10 @@
   "Button rows": "שורות כפתורים",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "שורות של פקדים עגולים (עמודי ה-Island, פקדי הנגן, הכותרת של הלוחות הצדדיים) יכולות לשבת על לוח אחד: צעיף מחשיך את מה שמאחור, זכוכית נושאת את קצה הזכוכית, אחיד הוא כרטיס קריאה. הפינות עוקבות אחר צורת הבועות.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "מה שמחזיק את שורת הניווט. אוטומטי עוקב אחר מראה › שורות כפתורים; לוח עוקב אחר צורת הבועות, והכפתורים בתוכו קונצנטריים.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "טפט חלבי · הופך לכפור מעל טפט בהיר"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "טפט חלבי · הופך לכפור מעל טפט בהיר",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "ה-Island נמזג אל קצה המסך, כמו הנוץ' שממנו הוא צומח. כבוי, הוא מרחף בנפרד מהקצה.",
+  "Dock notch": "נוץ' של ה-Dock",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "ה-Dock נמזג אל קצה המסך שלו כמו הנוץ' של ה-Island. כבוי, הוא מרחף בנפרד מהקצה.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "הבועה לצד Island במצב Cluster. צליל ומיקרופון מציגים את הרמה: גללו לכוונון, לחצו להשתקה.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "פרצופים קטנים שה-Island נושא בעצמו, בסדר שבו הפעלתם אותם. כל אחד פותח את הכרטיס שלו, והרמות מכווננות בגלילה. בועה שנבחרה כאן עוזבת את המסגרת; בועות › בועות נוספות משייטות אחת על המסגרת."
 }

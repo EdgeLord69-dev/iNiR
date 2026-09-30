@@ -7025,7 +7025,6 @@
   "At a glance": "Коротко",
   "At rest": "У спокої",
   "Attach Island to edge": "Прикріпити Острів до краю",
-  "Attach as a notch": "Прикріпити як виріз",
   "Attach to the screen edge": "Прикріпити до краю екрана",
   "Authenticate": "Автентифікувати",
   "Authentication required": "Потрібна автентифікація",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "Замкнути оболонку навколо екрана",
   "Close “%1”?": "Закрити «%1»?",
   "Cloudflare's tunnel.": "Тунель Cloudflare.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "Лише Cluster. Звук і мікрофон показують рівень: прокрутіть для регулювання, натисніть, щоб вимкнути.",
   "Cluster splits media and controls into bubbles beside the clock.": "Cluster розділяє медіа й керування на бульбашки поруч із годинником.",
   "Collapse island": "Згорнути острів",
   "Colors update automatically": "Кольори оновлюються автоматично",
@@ -7367,7 +7365,6 @@
   "Maximum height": "Максимальна висота",
   "Maximum results": "Максимум результатів",
   "Media bubble opens": "Бульбашка медіа відкриває",
-  "Melts the Island into the screen edge.": "Вплавляє Острів у край екрана.",
   "Melts the panel into its edge, like a notch.": "Вплавляє панель у її край, як виріз.",
   "Menus": "Меню",
   "Metadata": "Метадані",
@@ -7650,7 +7647,6 @@
   "Slider fill": "Заливка повзунка",
   "Slim sliders side by side; pick them on the Panel page.": "Тонкі повзунки поруч; виберіть їх на сторінці «Панель».",
   "Slow drift": "Повільний дрейф",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "Маленькі індикатори, які Острів несе сам, у порядку ввімкнення. Кожен відкриває свою картку, рівні регулюються прокручуванням.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "Маленькі скляні плашки під годинником: погода, що далі й батарея.",
   "Snap off": "Притягання вимкнено",
   "Snap off: it stays where you let go": "Притягання вимкнено: лишається там, де ви відпустили",
@@ -8868,5 +8864,10 @@
   "Button rows": "Ряди кнопок",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Ряди круглих елементів (сторінки Island, керування плеєром, заголовок бічних панелей) можуть лежати на пластині: Вуаль затемнює фон, Скло має скляний край, Суцільний — картка для читання. Кути повторюють форму бульбашок.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Що тримає рядок навігації. Авто слідує Вигляд › Ряди кнопок; пластина повторює форму бульбашок, кнопки всередині концентричні.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "Матові шпалери · на світлих шпалерах стають інеєм"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Матові шпалери · на світлих шпалерах стають інеєм",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "Island зливається з краєм екрана, як виріз, з якого він росте. Вимкнено — ширяє окремо від краю.",
+  "Dock notch": "Виріз Dock",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock зливається зі своїм краєм екрана, як виріз Island. Вимкнено — ширяє окремо від краю.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Бульбашка поруч з Island у режимі Cluster. Звук і Мікрофон показують рівень: прокрутка змінює, клацання вимикає.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Маленькі значки, які Island несе сам, у порядку ввімкнення. Кожен відкриває свою картку, рівні змінюються прокруткою. Вибрана тут бульбашка залишає рамку; Бульбашки › Додаткові бульбашки розміщують її на рамці."
 }

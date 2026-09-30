@@ -7025,7 +7025,6 @@
   "At a glance": "한눈에",
   "At rest": "대기 중",
   "Attach Island to edge": "아일랜드를 가장자리에 붙이기",
-  "Attach as a notch": "노치로 붙이기",
   "Attach to the screen edge": "화면 가장자리에 붙이기",
   "Authenticate": "인증",
   "Authentication required": "인증 필요",
@@ -7117,7 +7116,6 @@
   "Close the shell around the screen": "셸로 화면 둘러싸기",
   "Close “%1”?": "“%1”을(를) 닫을까요?",
   "Cloudflare's tunnel.": "Cloudflare의 터널.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "클러스터 전용. 소리와 마이크는 레벨을 표시합니다: 스크롤해 조절, 클릭해 음소거.",
   "Cluster splits media and controls into bubbles beside the clock.": "클러스터는 미디어와 제어를 시계 옆의 버블로 나눕니다.",
   "Collapse island": "아일랜드 접기",
   "Colors update automatically": "색상이 자동으로 업데이트됩니다",
@@ -7367,7 +7365,6 @@
   "Maximum height": "최대 높이",
   "Maximum results": "최대 결과 수",
   "Media bubble opens": "미디어 버블이 여는 것",
-  "Melts the Island into the screen edge.": "아일랜드를 화면 가장자리에 녹여 넣습니다.",
   "Melts the panel into its edge, like a notch.": "패널을 노치처럼 가장자리에 녹여 넣습니다.",
   "Menus": "메뉴",
   "Metadata": "메타데이터",
@@ -7650,7 +7647,6 @@
   "Slider fill": "슬라이더 채우기",
   "Slim sliders side by side; pick them on the Panel page.": "얇은 슬라이더를 나란히. 패널 페이지에서 고르세요.",
   "Slow drift": "느린 흐름",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "아일랜드가 직접 지니는 작은 표시를 켠 순서대로. 각각 카드를 열고, 레벨은 스크롤로 조절합니다.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "시계 아래 작은 유리 칩: 날씨, 다음 일정, 배터리.",
   "Snap off": "스냅 끔",
   "Snap off: it stays where you let go": "스냅 끔: 놓은 곳에 그대로",
@@ -8868,5 +8864,10 @@
   "Button rows": "버튼 줄",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "둥근 컨트롤 줄(Island 페이지, 플레이어 조작, 사이드 패널 헤더)을 한 판 위에 올릴 수 있습니다. 베일은 뒤를 어둡게, 글래스는 글래스 가장자리를, 단색은 읽기 카드입니다. 모서리는 버블 모양을 따릅니다.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "탐색 줄을 담는 것. 자동은 룩 › 버튼 줄을 따르고, 판은 버블 모양을 따르며 안의 버튼과 동심을 이룹니다.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "서리 낀 배경화면 · 밝은 배경화면 위에서는 서리로 바뀝니다"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "서리 낀 배경화면 · 밝은 배경화면 위에서는 서리로 바뀝니다",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "Island가 자라난 노치처럼 화면 가장자리에 녹아듭니다. 끄면 가장자리에서 떨어져 떠 있습니다.",
+  "Dock notch": "Dock 노치",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock이 Island의 노치처럼 화면 가장자리에 녹아듭니다. 끄면 가장자리에서 떨어져 떠 있습니다.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island 옆의 버블. 사운드와 마이크는 레벨을 보여 주며, 스크롤로 조절하고 클릭하면 음소거됩니다.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island가 직접 지니는 작은 얼굴들로, 켠 순서대로 놓입니다. 각각 카드를 열고 스크롤로 레벨을 조절합니다. 여기서 고른 버블은 프레임을 떠나며, 프레임에 띄우려면 버블 › 추가 버블을 쓰세요."
 }

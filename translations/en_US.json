@@ -7020,7 +7020,6 @@
   "At a glance": "At a glance",
   "At rest": "At rest",
   "Attach Island to edge": "Attach Island to edge",
-  "Attach as a notch": "Attach as a notch",
   "Attach to the screen edge": "Attach to the screen edge",
   "Authenticate": "Authenticate",
   "Authentication required": "Authentication required",
@@ -7112,7 +7111,6 @@
   "Close the shell around the screen": "Close the shell around the screen",
   "Close “%1”?": "Close “%1”?",
   "Cloudflare's tunnel.": "Cloudflare's tunnel.",
-  "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster only. Sound and Microphone show their level: scroll to adjust, click to mute.",
   "Cluster splits media and controls into bubbles beside the clock.": "Cluster splits media and controls into bubbles beside the clock.",
   "Collapse island": "Collapse island",
   "Colors update automatically": "Colors update automatically",
@@ -7362,7 +7360,6 @@
   "Maximum height": "Maximum height",
   "Maximum results": "Maximum results",
   "Media bubble opens": "Media bubble opens",
-  "Melts the Island into the screen edge.": "Melts the Island into the screen edge.",
   "Melts the panel into its edge, like a notch.": "Melts the panel into its edge, like a notch.",
   "Menus": "Menus",
   "Metadata": "Metadata",
@@ -7646,7 +7643,6 @@
   "Slider fill": "Slider fill",
   "Slim sliders side by side; pick them on the Panel page.": "Slim sliders side by side; pick them on the Panel page.",
   "Slow drift": "Slow drift",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.": "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll.",
   "Small glass chips under the clock: the weather, what is next and the battery.": "Small glass chips under the clock: the weather, what is next and the battery.",
   "Snap off": "Snap off",
   "Snap off: it stays where you let go": "Snap off: it stays where you let go",
@@ -8868,5 +8864,10 @@
   "Button rows": "Button rows",
   "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.",
   "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.",
-  "Frosted wallpaper · turns to frost over a bright wallpaper": "Frosted wallpaper · turns to frost over a bright wallpaper"
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Frosted wallpaper · turns to frost over a bright wallpaper",
+  "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.": "The Island melts into the screen edge, like the notch it grows from. Off, it floats clear of the edge.",
+  "Dock notch": "Dock notch",
+  "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.",
+  "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.",
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead."
 }
