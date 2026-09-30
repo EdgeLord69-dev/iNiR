@@ -8846,5 +8846,8 @@
   "Every": "כל",
   "Colours follow": "הצבעים עוקבים",
   "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "כל טפט חדש צובע מחדש את המעטפת והאפליקציות שלך. כבוי שומר על הצבעים הנוכחיים.",
-  "Every palette, with previews; app icon theme": "כל פלטה, עם תצוגה מקדימה; ערכת סמלים לאפליקציות"
+  "Every palette, with previews; app icon theme": "כל פלטה, עם תצוגה מקדימה; ערכת סמלים לאפליקציות",
+  "Other font…": "גופן אחר…",
+  "Search installed fonts": "חיפוש בגופנים המותקנים",
+  "No installed font matches": "אין גופן מותקן שמתאים"
 }

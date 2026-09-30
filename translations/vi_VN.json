@@ -8846,5 +8846,8 @@
   "Every": "Mỗi",
   "Colours follow": "Màu theo",
   "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "Mỗi hình nền mới tô lại màu shell và ứng dụng của bạn. Tắt giữ màu hiện tại.",
-  "Every palette, with previews; app icon theme": "Mọi bảng màu, có xem trước; chủ đề biểu tượng ứng dụng"
+  "Every palette, with previews; app icon theme": "Mọi bảng màu, có xem trước; chủ đề biểu tượng ứng dụng",
+  "Other font…": "Phông chữ khác…",
+  "Search installed fonts": "Tìm phông chữ đã cài",
+  "No installed font matches": "Không có phông chữ đã cài nào khớp"
 }

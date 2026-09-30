@@ -8846,5 +8846,8 @@
   "Every": "A cada",
   "Colours follow": "As cores acompanham",
   "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "Cada papel de parede novo recolore o shell e seus apps. Desligado mantém as cores atuais.",
-  "Every palette, with previews; app icon theme": "Cada paleta, com prévias; tema de ícones dos apps"
+  "Every palette, with previews; app icon theme": "Cada paleta, com prévias; tema de ícones dos apps",
+  "Other font…": "Outra fonte…",
+  "Search installed fonts": "Buscar fontes instaladas",
+  "No installed font matches": "Nenhuma fonte instalada corresponde"
 }

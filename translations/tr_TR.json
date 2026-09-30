@@ -8846,5 +8846,8 @@
   "Every": "Her",
   "Colours follow": "Renkler uyar",
   "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "Her yeni duvar kâğıdı kabuğu ve uygulamalarınızı yeniden renklendirir. Kapalıyken mevcut renkler kalır.",
-  "Every palette, with previews; app icon theme": "Tüm paletler, önizlemeli; uygulama simge teması"
+  "Every palette, with previews; app icon theme": "Tüm paletler, önizlemeli; uygulama simge teması",
+  "Other font…": "Başka yazı tipi…",
+  "Search installed fonts": "Yüklü yazı tiplerinde ara",
+  "No installed font matches": "Eşleşen yüklü yazı tipi yok"
 }

@@ -8846,5 +8846,8 @@
   "Every": "間隔",
   "Colours follow": "色も合わせる",
   "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "新しい壁紙ごとにシェルとアプリを配色し直します。オフでは現在の色のままです。",
-  "Every palette, with previews; app icon theme": "すべてのパレットとプレビュー、アプリのアイコンテーマ"
+  "Every palette, with previews; app icon theme": "すべてのパレットとプレビュー、アプリのアイコンテーマ",
+  "Other font…": "ほかのフォント…",
+  "Search installed fonts": "インストール済みのフォントを検索",
+  "No installed font matches": "一致するフォントがありません"
 }

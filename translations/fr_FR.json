@@ -8846,5 +8846,8 @@
   "Every": "Toutes les",
   "Colours follow": "Les couleurs suivent",
   "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "Chaque nouveau fond d'écran recolore le shell et vos apps. Désactivé garde les couleurs actuelles.",
-  "Every palette, with previews; app icon theme": "Chaque palette, avec aperçus ; thème d'icônes des apps"
+  "Every palette, with previews; app icon theme": "Chaque palette, avec aperçus ; thème d'icônes des apps",
+  "Other font…": "Autre police…",
+  "Search installed fonts": "Rechercher les polices installées",
+  "No installed font matches": "Aucune police installée ne correspond"
 }
