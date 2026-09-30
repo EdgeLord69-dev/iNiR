@@ -119,9 +119,12 @@ Item { // Bar content region
         + (root.isIslands
             ? root.islandOuterInset + root.islandPad * 2
             : Appearance.rounding.screenRounding * 2)
-    readonly property real leftCenterDemand: leftCenterGroup.empty ? 0 : leftCenterGroup.contentWidth
-    readonly property real rightCenterDemand: rightCenterGroupPill.empty ? 0 : rightCenterGroupPill.contentWidth
-    readonly property real centerDemand: middleCenterGroup.empty ? 0 : middleCenterGroup.contentWidth
+    // Demand is what a zone needs at its narrowest: an elastic module (media) gives way inside its group
+    // first, so hosts are compressed (and clipped) only when even that does not fit. Natural widths here
+    // compressed the whole bar, clock and all, as soon as a long song no longer fitted at full width.
+    readonly property real leftCenterDemand: leftCenterGroup.empty ? 0 : leftCenterGroup.minimumContentWidth
+    readonly property real rightCenterDemand: rightCenterGroupPill.empty ? 0 : rightCenterGroupPill.minimumContentWidth
+    readonly property real centerDemand: middleCenterGroup.empty ? 0 : middleCenterGroup.minimumContentWidth
     readonly property real leftSideDemand: root.leftEdgeDemand + root.leftCenterDemand
         + ((root.leftEdgeDemand > 0 && root.leftCenterDemand > 0) ? root.hostGap : 0)
     readonly property real rightSideDemand: root.rightEdgeDemand + root.rightCenterDemand
@@ -147,7 +150,9 @@ Item { // Bar content region
     readonly property real centerSideMaxWidth: {
         const total = root.width
         if (!(total > 0)) return root.baseCenterSideModuleWidth
+        // Islands: an edge section's capsule reaches `islandPad` past its row, and islands keep `hostGap` of air.
         const edge = Math.max(barLeftSideMouseArea.implicitWidth, barRightSideMouseArea.implicitWidth)
+            + (root.isIslands ? root.islandPad + root.hostGap : 0)
         const wsHalf = middleCenterGroup.width / 2
         return Math.max(0, total / 2 - edge - wsHalf - 12)
     }
