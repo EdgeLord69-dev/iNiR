@@ -2625,6 +2625,9 @@ Singleton {
                     property int pillEdgeFade: 92 // Fade toward screen edges, 0-100
                 }
                 property bool verbose: true
+                property JsonObject media: JsonObject {
+                    property int maxWidth: 220 // Widest the song title gets in the bar; the window title gives way
+                }
                 property bool vertical: false
                 property JsonObject clock: JsonObject {
                     property string timeFontFamily: ""

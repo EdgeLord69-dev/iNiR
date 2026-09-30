@@ -7191,5 +7191,7 @@
   "Every palette, with previews; app icon theme": "Every palette, with previews; app icon theme",
   "Other font…": "Other font…",
   "Search installed fonts": "Search installed fonts",
-  "No installed font matches": "No installed font matches"
+  "No installed font matches": "No installed font matches",
+  "Music width (px)": "Music width (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first."
 }

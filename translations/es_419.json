@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "Cada paleta, con vistas previas; tema de iconos de apps",
   "Other font…": "Otra fuente…",
   "Search installed fonts": "Buscar fuentes instaladas",
-  "No installed font matches": "Ninguna fuente instalada coincide"
+  "No installed font matches": "Ninguna fuente instalada coincide",
+  "Music width (px)": "Ancho de la música (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "Qué tan ancho se ve el título de la canción. El título de la ventana cede; si la barra está llena, la música se achica primero."
 }

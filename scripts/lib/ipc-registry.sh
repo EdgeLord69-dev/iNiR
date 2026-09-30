@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 9ce7fb64e94a999c
+# IPC.md hash: aa091cd15a7c6fdc
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -158,7 +158,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [audio]="volumeUp volumeDown mute playEvent micMute"
   [autostart]="status addCommand addApp removeLast reload"
   [background]="widgetDesign widgetSearch toggleEditMode toggleWidgetManager setEditMode editState applyOrganicEdgePreset applyOrganicEdgeComposition applyOrganicEdgeMaterial applyOrganicEdgeResponse organicEdgeState setOrganicEdgeEnabled quickControlsPage quickControlsGeometry legibilityState desktopItemsState focusWidget promoteWidget resetLayerOrder setWidgetEnabled clockDebugState clockDebugSetMode clockDebugSetRegion clockDebugSetLayout clockDebugRestore"
-  [bar]="toggle close open"
+  [bar]="mediaWidth toggle close open"
   [brightness]="increment decrement sleepBegin restoreAfterWake"
   [cheatsheet]="toggle close open"
   [clipboard]="open close toggle"
@@ -277,6 +277,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["background:clockDebugSetRegion"]="Inject a temporary wallpaper-region sample"
   ["background:clockDebugSetLayout"]="Probe quick-control geometry at a hypothetical clock position without moving the widget"
   ["background:clockDebugRestore"]="Restore the config captured by clock diagnostics"
+  ["bar:mediaWidth"]="How wide the song title gets in Material's bar, 120 to 640 px (the window title gives way); empty to read it"
   ["bar:toggle"]="Show/hide bar"
   ["bar:close"]="Hide bar"
   ["bar:open"]="Show bar"
@@ -652,6 +653,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["background:clockDebugSetMode"]="<style> <adaptToWallpaper>"
   ["background:clockDebugSetRegion"]="<color> <brightness> <spread>"
   ["background:clockDebugSetLayout"]="<x> <y> <quickControlsOpen>"
+  ["bar:mediaWidth"]="<px>"
   ["closeConfirm:triggerWindow"]="<windowId> <appId>"
   ["colorMode:set"]="<mode>"
   ["connections:sample"]="<kind>"

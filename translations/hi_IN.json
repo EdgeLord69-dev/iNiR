@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "हर पैलेट, प्रीव्यू के साथ; ऐप आइकन थीम",
   "Other font…": "दूसरा फ़ॉन्ट…",
   "Search installed fonts": "इंस्टॉल किए गए फ़ॉन्ट खोजें",
-  "No installed font matches": "कोई इंस्टॉल किया गया फ़ॉन्ट मेल नहीं खाता"
+  "No installed font matches": "कोई इंस्टॉल किया गया फ़ॉन्ट मेल नहीं खाता",
+  "Music width (px)": "म्यूज़िक की चौड़ाई (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "गाने का शीर्षक कितना चौड़ा होगा। विंडो शीर्षक जगह छोड़ता है; भरी हुई बार में म्यूज़िक पहले सिकुड़ता है।"
 }

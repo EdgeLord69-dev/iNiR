@@ -1290,6 +1290,9 @@
             "screenCastOutput": "HDMI-A-1"
         },
         "verbose": true,
+        "media": {
+            "maxWidth": 220
+        },
         "vertical": false,
         "weather": {
             "city": "",

@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "Mọi bảng màu, có xem trước; chủ đề biểu tượng ứng dụng",
   "Other font…": "Phông chữ khác…",
   "Search installed fonts": "Tìm phông chữ đã cài",
-  "No installed font matches": "Không có phông chữ đã cài nào khớp"
+  "No installed font matches": "Không có phông chữ đã cài nào khớp",
+  "Music width (px)": "Độ rộng nhạc (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "Tên bài hát rộng đến đâu. Tiêu đề cửa sổ nhường chỗ; khi thanh chật, phần nhạc thu hẹp trước."
 }

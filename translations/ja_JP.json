@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "すべてのパレットとプレビュー、アプリのアイコンテーマ",
   "Other font…": "ほかのフォント…",
   "Search installed fonts": "インストール済みのフォントを検索",
-  "No installed font matches": "一致するフォントがありません"
+  "No installed font matches": "一致するフォントがありません",
+  "Music width (px)": "音楽の幅 (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "曲名の最大幅。ウィンドウタイトルが譲ります。バーが混み合うと音楽が先に縮みます。"
 }

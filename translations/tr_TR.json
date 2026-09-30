@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "Tüm paletler, önizlemeli; uygulama simge teması",
   "Other font…": "Başka yazı tipi…",
   "Search installed fonts": "Yüklü yazı tiplerinde ara",
-  "No installed font matches": "Eşleşen yüklü yazı tipi yok"
+  "No installed font matches": "Eşleşen yüklü yazı tipi yok",
+  "Music width (px)": "Müzik genişliği (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "Şarkı adının ne kadar geniş olacağı. Pencere başlığı yer açar; dolu bir çubukta önce müzik daralır."
 }

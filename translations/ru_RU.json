@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "Все палитры с превью; тема значков приложений",
   "Other font…": "Другой шрифт…",
   "Search installed fonts": "Поиск установленных шрифтов",
-  "No installed font matches": "Нет подходящих установленных шрифтов"
+  "No installed font matches": "Нет подходящих установленных шрифтов",
+  "Music width (px)": "Ширина музыки (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "Насколько широким будет название трека. Заголовок окна уступает место; в заполненной панели сначала сужается музыка."
 }

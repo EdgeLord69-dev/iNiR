@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "כל פלטה, עם תצוגה מקדימה; ערכת סמלים לאפליקציות",
   "Other font…": "גופן אחר…",
   "Search installed fonts": "חיפוש בגופנים המותקנים",
-  "No installed font matches": "אין גופן מותקן שמתאים"
+  "No installed font matches": "אין גופן מותקן שמתאים",
+  "Music width (px)": "רוחב המוזיקה (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "כמה רחב יהיה שם השיר. כותרת החלון מפנה מקום; בסרגל צפוף המוזיקה מצטמצמת קודם."
 }

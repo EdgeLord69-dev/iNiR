@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "كل لوحة ألوان مع معاينة؛ سمة أيقونات التطبيقات",
   "Other font…": "خط آخر…",
   "Search installed fonts": "ابحث في الخطوط المثبتة",
-  "No installed font matches": "لا يوجد خط مثبت مطابق"
+  "No installed font matches": "لا يوجد خط مثبت مطابق",
+  "Music width (px)": "عرض الموسيقى (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "مدى عرض عنوان الأغنية. يتنازل عنوان النافذة عن المساحة؛ وفي الشريط المزدحم تتقلص الموسيقى أولًا."
 }

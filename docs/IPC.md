@@ -478,6 +478,7 @@ Top bar visibility.
 | `toggle` | Show/hide bar |
 | `open` | Show bar |
 | `close` | Hide bar |
+| `mediaWidth <px>` | How wide the song title gets in Material's bar, 120 to 640 px (the window title gives way); empty to read it |
 
 ---
 

@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "모든 팔레트와 미리보기, 앱 아이콘 테마",
   "Other font…": "다른 글꼴…",
   "Search installed fonts": "설치된 글꼴 검색",
-  "No installed font matches": "일치하는 설치된 글꼴이 없습니다"
+  "No installed font matches": "일치하는 설치된 글꼴이 없습니다",
+  "Music width (px)": "음악 너비 (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "곡 제목이 차지하는 최대 너비입니다. 창 제목이 양보하며, 바가 꽉 차면 음악이 먼저 줄어듭니다."
 }

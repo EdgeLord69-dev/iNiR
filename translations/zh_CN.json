@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "所有调色板及预览；应用图标主题",
   "Other font…": "其他字体…",
   "Search installed fonts": "搜索已安装的字体",
-  "No installed font matches": "没有匹配的已安装字体"
+  "No installed font matches": "没有匹配的已安装字体",
+  "Music width (px)": "音乐宽度 (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "歌曲标题最多占多宽。窗口标题会让出空间；栏位拥挤时音乐先缩小。"
 }

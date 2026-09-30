@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "Усі палітри з прев'ю; тема значків застосунків",
   "Other font…": "Інший шрифт…",
   "Search installed fonts": "Пошук встановлених шрифтів",
-  "No installed font matches": "Немає відповідних встановлених шрифтів"
+  "No installed font matches": "Немає відповідних встановлених шрифтів",
+  "Music width (px)": "Ширина музики (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "Наскільки широкою буде назва треку. Заголовок вікна поступається місцем; у заповненій панелі спершу звужується музика."
 }

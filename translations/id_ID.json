@@ -8849,5 +8849,7 @@
   "Every palette, with previews; app icon theme": "Setiap palet, dengan pratinjau; tema ikon aplikasi",
   "Other font…": "Font lain…",
   "Search installed fonts": "Cari font terpasang",
-  "No installed font matches": "Tidak ada font terpasang yang cocok"
+  "No installed font matches": "Tidak ada font terpasang yang cocok",
+  "Music width (px)": "Lebar musik (px)",
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "Seberapa lebar judul lagu. Judul jendela mengalah; di bilah yang penuh, musik menyusut lebih dulu."
 }

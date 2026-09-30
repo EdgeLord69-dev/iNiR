@@ -816,6 +816,13 @@ Singleton {
         },
         {
             pageIndex: 2, pageName: root.pages[2].name,
+            section: Translation.tr("Modules"),
+            label: Translation.tr("Music width (px)"),
+            description: Translation.tr("How wide the song title gets. The window title gives way; a crowded bar still shrinks music first."),
+            keywords: ["music", "media", "song", "title", "width", "cut", "cut off", "truncated", "window title", "active window", "bar"]
+        },
+        {
+            pageIndex: 2, pageName: root.pages[2].name,
             section: Translation.tr("Bar module layout"),
             label: Translation.tr("Bar module layout"),
             description: Translation.tr("Reorder modules in horizontal Stock, Islands, Scenic and Frame bars"),
