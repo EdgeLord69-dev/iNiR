@@ -1855,7 +1855,7 @@ AbstractWidget {
                 spacing: Math.round(14 * semanticQuickRoot.d)
 
                 WidgetQuickSection {
-                    visible: root.widgetIrisFamily && (root.irisFace !== null || DesktopWidgetDesign.supports(root.configEntryName))
+                    visible: root.designChoices.length > 1
                     title: Translation.tr("Design")
                     detail: root.widgetDesignShared ? Translation.tr("Same as every widget") : Translation.tr("This widget only")
                     WidgetQuickChoices {
@@ -1869,19 +1869,6 @@ AbstractWidget {
                         iconName: "select_all"
                         label: Translation.tr("Use on every widget")
                         onClicked: root.useDesignEverywhere()
-                    }
-                }
-
-                WidgetQuickSection {
-                    visible: !root.widgetIrisFamily && DesktopWidgetDesign.supports(root.configEntryName)
-                        && DesktopWidgetDesign.shared !== "individual"
-                    title: Translation.tr("Design")
-                    WidgetQuickToggle {
-                        Layout.fillWidth: true
-                        iconName: "widgets"
-                        label: Translation.tr("Follow global design")
-                        checked: root.widgetSharedDesign === DesktopWidgetDesign.shared
-                        onToggled: root._setOutputValue("design", checked ? "individual" : "auto")
                     }
                 }
 
@@ -2216,8 +2203,10 @@ AbstractWidget {
     property bool irisOnly: false
     readonly property var designChoices: {
         const list = []
-        if (root.irisFace !== null) list.push({ value: "iris", icon: "auto_awesome", label: Translation.tr("iRiS") })
-        if (!root.irisOnly) list.push({ value: "material", icon: "widgets", label: Translation.tr("Material") })
+        const family = Config.options?.panelFamily ?? "ii"
+        if (family !== "iris" && family !== "ii") return list
+        if (family === "iris" && root.irisFace !== null) list.push({ value: "iris", icon: "auto_awesome", label: Translation.tr("iRiS") })
+        if (family === "ii" || !root.irisOnly) list.push({ value: "material", icon: "widgets", label: Translation.tr("Material") })
         if (DesktopWidgetDesign.supports(root.configEntryName)) {
             list.push({ value: "instrument", icon: "avg_pace", label: Translation.tr("iNstrument") })
             list.push({ value: "readout", icon: "view_agenda", label: Translation.tr("Readout") })
@@ -2235,6 +2224,11 @@ AbstractWidget {
     function pickDesign(value: string): void {
         if (root.stacked)
             return
+        if (!root.widgetIrisFamily) {
+            root._setOutputValue("design", value === DesktopWidgetDesign.current ? "auto"
+                : value === "material" ? "individual" : value)
+            return
+        }
         root._setOutputValue("iris.design", value === DesktopWidgetDesign.current ? "auto" : value)
     }
     property var irisSizes: ["small"]
