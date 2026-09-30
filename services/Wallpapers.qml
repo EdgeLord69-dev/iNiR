@@ -1299,7 +1299,8 @@ Singleton {
     Timer {
         id: autoWallpaperTimer
         interval: root.autoWallpaperInterval * 60 * 1000
-        running: root.autoWallpaperEnabled && !GlobalStates.screenLocked
+        // Not under a game: a new wallpaper regenerates every colour, mid-match, for nobody to see.
+        running: root.autoWallpaperEnabled && !GlobalStates.screenLocked && !GameMode.active
         repeat: true
         onTriggered: root._cycleAutoWallpaper()
     }
