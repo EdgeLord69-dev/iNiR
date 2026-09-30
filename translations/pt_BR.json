@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "O iRiS define o design, o material e as cores de cada widget nas próprias Configurações. As opções de cada widget abaixo valem enquanto ele usa o design Material, iNstrument ou Readout.",
   "Open iRiS widget settings": "Abrir as configurações de widgets do iRiS",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "Quanta luz o topo de cada borda de vidro recebe, como o corte de um vidro. É o que deixa o vidro visível sobre uma área de trabalho escura. Widgets de vidro usam a mesma borda.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Quanto o papel de parede fica desfocado atrás do vidro, no iRiS e nos widgets de vidro."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Quanto o papel de parede fica desfocado atrás do vidro, no iRiS e nos widgets de vidro.",
+  "Header fade": "Degradê do cabeçalho",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Quanto o papel de parede se funde com o Island abaixo da hora. Menos deixa aparecer mais dele.",
+  "Header top": "Topo do cabeçalho",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Como o papel de parede se funde com o Island no topo, sob os botões. Menos o deixa chegar à borda.",
+  "Header veil": "Véu do cabeçalho",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Quanto o papel de parede escurece atrás da hora. Abaixo de 100 % a hora pode ficar mais difícil de ler em fundos claros.",
+  "Header blur": "Desfoque do cabeçalho",
+  "Softens the wallpaper behind the time.": "Suaviza o papel de parede atrás da hora.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "A borda dos widgets de vidro, a mesma do vidro do Island e do Dock."
 }

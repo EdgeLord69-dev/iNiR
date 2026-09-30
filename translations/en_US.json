@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.",
   "Open iRiS widget settings": "Open iRiS widget settings",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.",
+  "Header fade": "Header fade",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.",
+  "Header top": "Header top",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.",
+  "Header veil": "Header veil",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.",
+  "Header blur": "Header blur",
+  "Softens the wallpaper behind the time.": "Softens the wallpaper behind the time.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "The edge of glass widgets, the same as the Island's and the Dock's glass."
 }

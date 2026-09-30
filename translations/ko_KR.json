@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS는 모든 위젯의 디자인, 재질, 색을 자체 설정에서 정합니다. 아래 위젯별 옵션은 위젯이 Material, iNstrument 또는 Readout 디자인일 때 적용됩니다.",
   "Open iRiS widget settings": "iRiS 위젯 설정 열기",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "각 유리 가장자리 윗부분이 받는 빛의 양으로, 유리의 단면처럼 빛납니다. 어두운 바탕 화면에서도 유리가 보이게 해 줍니다. 글래스 위젯도 같은 가장자리를 씁니다.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "글래스 뒤 배경화면이 흐려지는 정도. iRiS와 글래스 위젯에 적용됩니다."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "글래스 뒤 배경화면이 흐려지는 정도. iRiS와 글래스 위젯에 적용됩니다.",
+  "Header fade": "헤더 그라데이션",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "시간 아래에서 배경화면이 Island에 녹아드는 정도. 낮출수록 더 많이 보입니다.",
+  "Header top": "헤더 위쪽",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "위쪽 버튼 아래에서 배경화면이 Island에 녹아드는 정도. 낮추면 가장자리까지 닿습니다.",
+  "Header veil": "헤더 베일",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "시간 뒤 배경화면을 어둡게 하는 정도. 100 % 미만이면 밝은 배경에서 시간이 덜 읽힐 수 있습니다.",
+  "Header blur": "헤더 흐림",
+  "Softens the wallpaper behind the time.": "시간 뒤 배경화면을 부드럽게 합니다.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "글래스 위젯의 가장자리로, Island와 Dock 글래스와 같습니다."
 }

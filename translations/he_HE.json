@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS קובע את העיצוב, החומר והצבעים של כל ווידג'ט בהגדרות שלו. האפשרויות של כל ווידג'ט למטה חלות כל עוד הוא בעיצוב Material, iNstrument או Readout.",
   "Open iRiS widget settings": "פתיחת הגדרות הווידג'טים של iRiS",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "כמה אור קולט החלק העליון של כל שפת זכוכית, כמו חתך של זכוכית. זה מה שמאפשר לזכוכית להיראות מעל שולחן עבודה כהה. ווידג'טים מזכוכית מקבלים את אותו קצה.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "כמה הטפט מטושטש מאחורי הזכוכית, ב-iRiS ובווידג'טים מזכוכית."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "כמה הטפט מטושטש מאחורי הזכוכית, ב-iRiS ובווידג'טים מזכוכית.",
+  "Header fade": "מעבר הכותרת",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "כמה הטפט נמזג אל ה-Island מתחת לשעה. פחות מראה יותר ממנו.",
+  "Header top": "חלק עליון של הכותרת",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "איך הטפט נמזג אל ה-Island למעלה, מתחת לכפתורים. פחות מאפשר לו להגיע לקצה.",
+  "Header veil": "צעיף הכותרת",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "כמה הטפט מוחשך מאחורי השעה. מתחת ל-100 % השעה עלולה להיקרא פחות טוב על טפטים בהירים.",
+  "Header blur": "טשטוש הכותרת",
+  "Softens the wallpaper behind the time.": "מרכך את הטפט מאחורי השעה.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "הקצה של ווידג'טים מזכוכית, זהה לזכוכית של ה-Island וה-Dock."
 }

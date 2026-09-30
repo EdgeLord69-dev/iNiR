@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS her widget'ın tasarımını, malzemesini ve renklerini kendi Ayarlar'ında belirler. Aşağıdaki widget seçenekleri, widget Material, iNstrument ya da Readout tasarımındayken geçerlidir.",
   "Open iRiS widget settings": "iRiS widget ayarlarını aç",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "Her cam kenarının üst kısmının ne kadar ışık yakaladığı, camın kesik kenarı gibi. Camın koyu bir masaüstünde görünmesini sağlayan budur. Cam widget'lar aynı kenarı taşır.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Camın arkasındaki duvar kâğıdının ne kadar bulanık olduğu; iRiS'te ve cam widget'larda."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Camın arkasındaki duvar kâğıdının ne kadar bulanık olduğu; iRiS'te ve cam widget'larda.",
+  "Header fade": "Başlık geçişi",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Duvar kâğıdının saatin altında Island'a ne kadar karıştığı. Daha azı daha çoğunu gösterir.",
+  "Header top": "Başlığın üstü",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Duvar kâğıdının üstte, düğmelerin altında Island'a nasıl karıştığı. Daha azı kenara kadar uzanmasını sağlar.",
+  "Header veil": "Başlık perdesi",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Saatin arkasındaki duvar kâğıdının ne kadar karartıldığı. %100'ün altında açık duvar kâğıtlarında saat daha zor okunabilir.",
+  "Header blur": "Başlık bulanıklığı",
+  "Softens the wallpaper behind the time.": "Saatin arkasındaki duvar kâğıdını yumuşatır.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Cam widget'ların kenarı; Island ve Dock camınınkiyle aynı."
 }

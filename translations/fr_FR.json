@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS règle le design, la matière et les couleurs de chaque widget dans ses propres Paramètres. Les options de chaque widget ci-dessous s'appliquent tant qu'il porte le design Material, iNstrument ou Readout.",
   "Open iRiS widget settings": "Ouvrir les réglages des widgets iRiS",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "Quantité de lumière captée par le haut de chaque bord de verre, comme la tranche d'un verre. C'est ce qui rend le verre lisible sur un bureau sombre. Les widgets en verre portent le même bord.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "À quel point le fond d'écran est flou derrière le verre, dans iRiS et sur les widgets en verre."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "À quel point le fond d'écran est flou derrière le verre, dans iRiS et sur les widgets en verre.",
+  "Header fade": "Fondu de l'en-tête",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Jusqu'où le fond d'écran se fond dans l'Island sous l'heure. Moins en laisse voir davantage.",
+  "Header top": "Haut de l'en-tête",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Comment le fond d'écran se fond dans l'Island en haut, sous ses boutons. Moins le laisse atteindre le bord.",
+  "Header veil": "Voile de l'en-tête",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "À quel point le fond d'écran est assombri derrière l'heure. Sous 100 %, l'heure peut être moins lisible sur un fond clair.",
+  "Header blur": "Flou de l'en-tête",
+  "Softens the wallpaper behind the time.": "Adoucit le fond d'écran derrière l'heure.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Le bord des widgets en verre, le même que celui du verre de l'Island et du Dock."
 }

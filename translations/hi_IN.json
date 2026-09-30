@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS हर विजेट का डिज़ाइन, सामग्री और रंग अपनी सेटिंग्स में तय करता है। नीचे हर विजेट के विकल्प तभी लागू होते हैं जब वह Material, iNstrument या Readout डिज़ाइन में हो।",
   "Open iRiS widget settings": "iRiS विजेट सेटिंग्स खोलें",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "हर काँच के किनारे का ऊपरी हिस्सा कितनी रोशनी पकड़ता है, जैसे काँच का कटा किनारा। इसी से काँच गहरे डेस्कटॉप पर भी दिखता है। ग्लास विजेट भी यही किनारा पहनते हैं।",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "ग्लास के पीछे वॉलपेपर कितना धुंधला है, iRiS में और ग्लास विजेट पर।"
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "ग्लास के पीछे वॉलपेपर कितना धुंधला है, iRiS में और ग्लास विजेट पर।",
+  "Header fade": "हेडर ग्रेडिएंट",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "समय के नीचे वॉलपेपर Island में कितना घुलता है। कम करने पर ज़्यादा दिखता है।",
+  "Header top": "हेडर का ऊपरी भाग",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "ऊपर, बटनों के नीचे वॉलपेपर Island में कैसे घुलता है। कम करने पर यह किनारे तक पहुँचता है।",
+  "Header veil": "हेडर परदा",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "समय के पीछे वॉलपेपर कितना गहरा होता है। 100 % से कम पर हल्के वॉलपेपर पर समय पढ़ना कठिन हो सकता है।",
+  "Header blur": "हेडर धुंधलापन",
+  "Softens the wallpaper behind the time.": "समय के पीछे के वॉलपेपर को नरम करता है।",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "ग्लास विजेट का किनारा, Island और Dock के ग्लास जैसा ही।"
 }

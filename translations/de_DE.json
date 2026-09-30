@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS legt Design, Material und Farben jedes Widgets in seinen eigenen Einstellungen fest. Die Optionen der Widgets unten gelten, solange sie das Design Material, iNstrument oder Readout tragen.",
   "Open iRiS widget settings": "iRiS-Widget-Einstellungen öffnen",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "Wie viel Licht die Oberkante jedes Glasrands einfängt, wie die Schnittkante von Glas. Dadurch bleibt Glas auf einem dunklen Desktop sichtbar. Glas-Widgets tragen dieselbe Kante.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Wie stark das Hintergrundbild hinter dem Glas verschwimmt, in iRiS und bei Glas-Widgets."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Wie stark das Hintergrundbild hinter dem Glas verschwimmt, in iRiS und bei Glas-Widgets.",
+  "Header fade": "Verlauf der Kopfzeile",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Wie weit das Hintergrundbild unter der Uhrzeit in die Island übergeht. Weniger zeigt mehr davon.",
+  "Header top": "Oberkante der Kopfzeile",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Wie das Hintergrundbild oben, unter den Tasten, in die Island übergeht. Weniger lässt es bis zum Rand reichen.",
+  "Header veil": "Schleier der Kopfzeile",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Wie stark das Hintergrundbild hinter der Uhrzeit abgedunkelt wird. Unter 100 % ist die Uhrzeit auf hellen Hintergründen schwerer lesbar.",
+  "Header blur": "Unschärfe der Kopfzeile",
+  "Softens the wallpaper behind the time.": "Macht das Hintergrundbild hinter der Uhrzeit weicher.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Die Kante der Glas-Widgets, dieselbe wie beim Glas der Island und des Docks."
 }

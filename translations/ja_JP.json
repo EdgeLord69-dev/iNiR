@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS では各ウィジェットのデザイン・素材・色を iRiS の設定で決めます。下の各ウィジェットのオプションは、Material・iNstrument・Readout デザインのときに適用されます。",
   "Open iRiS widget settings": "iRiS のウィジェット設定を開く",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "ガラスの各縁の上部が受ける光の量。ガラスの切り口のように光り、暗いデスクトップでもガラスが見えるようになります。ガラスのウィジェットも同じ縁になります。",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "ガラスの後ろの壁紙のぼかし具合。iRiS とガラスのウィジェットに適用されます。"
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "ガラスの後ろの壁紙のぼかし具合。iRiS とガラスのウィジェットに適用されます。",
+  "Header fade": "ヘッダーのグラデーション",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "時刻の下で壁紙が Island に溶け込む範囲。下げるほど壁紙が多く見えます。",
+  "Header top": "ヘッダー上部",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "上部のボタンの下で壁紙が Island に溶け込む度合い。下げると端まで届きます。",
+  "Header veil": "ヘッダーのベール",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "時刻の後ろの壁紙を暗くする度合い。100 % 未満だと明るい壁紙で時刻が読みにくくなることがあります。",
+  "Header blur": "ヘッダーのぼかし",
+  "Softens the wallpaper behind the time.": "時刻の後ろの壁紙をやわらげます。",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "ガラスのウィジェットの縁。Island と Dock のガラスと同じです。"
 }

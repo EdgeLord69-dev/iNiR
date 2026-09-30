@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS đặt thiết kế, chất liệu và màu của mọi widget trong Cài đặt riêng. Các tùy chọn của từng widget bên dưới áp dụng khi widget dùng thiết kế Material, iNstrument hoặc Readout.",
   "Open iRiS widget settings": "Mở cài đặt widget của iRiS",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "Lượng ánh sáng mà phần trên của mỗi mép kính bắt được, như mép cắt của kính. Nhờ vậy kính vẫn hiện rõ trên màn hình nền tối. Widget kính dùng cùng cạnh này.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Mức làm mờ hình nền sau lớp kính, trong iRiS và trên widget kính."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Mức làm mờ hình nền sau lớp kính, trong iRiS và trên widget kính.",
+  "Header fade": "Chuyển màu phần đầu",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Mức hình nền hòa vào Island bên dưới giờ. Thấp hơn để lộ nhiều hơn.",
+  "Header top": "Phía trên phần đầu",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Cách hình nền hòa vào Island ở phía trên, dưới các nút. Thấp hơn để nó chạm tới mép.",
+  "Header veil": "Lớp phủ phần đầu",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Mức làm tối hình nền sau giờ. Dưới 100 % giờ có thể khó đọc hơn trên hình nền sáng.",
+  "Header blur": "Làm mờ phần đầu",
+  "Softens the wallpaper behind the time.": "Làm dịu hình nền sau giờ.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Cạnh của widget kính, giống kính của Island và Dock."
 }

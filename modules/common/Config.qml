@@ -4097,6 +4097,10 @@ Singleton {
                     property string blockStyle: "plain" // desktop page blocks: "plain" on the Island's black or "grouped" on quiet plates
                     property string scrollAction: "volume" // "volume", "brightness" or "none"
                     property string desktopBanner: "wallpaper" // Island Desktop page header: "wallpaper" or "none"
+                    property int desktopBannerFade: 100 // % of the fade into the Island's body (100 = to solid at the bottom)
+                    property int desktopBannerTop: 100 // % of the fade into the Island's body at the top, under its buttons
+                    property int desktopBannerVeil: 100 // % of the legibility veil over the header wallpaper
+                    property int desktopBannerBlur: 0 // % blur of the header wallpaper
                     // Island Desktop page blocks under the hero, in order:
                     // "profile", "context", "vitals", "modules".
                     property list<string> desktopBlocks: ["profile", "context", "forecast", "agenda", "modules"]

@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS 在自己的设置中决定每个小组件的设计、材质和颜色。下方各小组件的选项在其使用 Material、iNstrument 或 Readout 设计时生效。",
   "Open iRiS widget settings": "打开 iRiS 小组件设置",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "每条玻璃边缘顶部接收的光量，就像玻璃的切面。正是它让玻璃在深色桌面上依然可见。玻璃小组件也使用同样的边缘。",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "玻璃后壁纸的模糊程度，作用于 iRiS 和玻璃小组件。"
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "玻璃后壁纸的模糊程度，作用于 iRiS 和玻璃小组件。",
+  "Header fade": "页头渐变",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "时间下方壁纸融入 Island 的程度。调低会露出更多壁纸。",
+  "Header top": "页头顶部",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "顶部按钮下方壁纸融入 Island 的方式。调低会让壁纸延伸到边缘。",
+  "Header veil": "页头遮罩",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "时间后方壁纸的变暗程度。低于 100 % 时，在明亮壁纸上时间可能更难看清。",
+  "Header blur": "页头模糊",
+  "Softens the wallpaper behind the time.": "柔化时间后方的壁纸。",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "玻璃小组件的边缘，与 Island 和 Dock 的玻璃相同。"
 }

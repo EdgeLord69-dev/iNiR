@@ -2594,6 +2594,10 @@
             "blockStyle": "plain",
             "scrollAction": "volume",
             "desktopBanner": "wallpaper",
+            "desktopBannerFade": 100,
+            "desktopBannerTop": 100,
+            "desktopBannerVeil": 100,
+            "desktopBannerBlur": 0,
             "desktopBlocks": ["profile", "context", "forecast", "agenda", "modules"],
             "mediaBlocks": [
                 "player",

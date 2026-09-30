@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "يحدد iRiS تصميم كل أداة ومادتها وألوانها في إعداداته الخاصة. تنطبق خيارات كل أداة أدناه ما دامت تستخدم تصميم Material أو iNstrument أو Readout.",
   "Open iRiS widget settings": "فتح إعدادات أدوات iRiS",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "مقدار الضوء الذي يلتقطه أعلى كل حافة زجاجية، مثل حافة الزجاج المقطوعة. هو ما يجعل الزجاج مرئيًا فوق سطح مكتب داكن. تحمل الأدوات الزجاجية الحافة نفسها.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "مدى ضبابية الخلفية خلف الزجاج، في iRiS وفي الأدوات الزجاجية."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "مدى ضبابية الخلفية خلف الزجاج، في iRiS وفي الأدوات الزجاجية.",
+  "Header fade": "تدرّج الترويسة",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "مدى اندماج الخلفية مع Island تحت الوقت. الأقل يُظهر المزيد منها.",
+  "Header top": "أعلى الترويسة",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "كيف تندمج الخلفية مع Island في الأعلى، تحت أزراره. الأقل يجعلها تصل إلى الحافة.",
+  "Header veil": "حجاب الترويسة",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "مقدار تعتيم الخلفية خلف الوقت. تحت 100 % قد يصعب قراءة الوقت على الخلفيات الفاتحة.",
+  "Header blur": "تمويه الترويسة",
+  "Softens the wallpaper behind the time.": "يليّن الخلفية خلف الوقت.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "حافة الأدوات الزجاجية، مثل زجاج Island وDock."
 }

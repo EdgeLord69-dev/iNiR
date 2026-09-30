@@ -8853,5 +8853,14 @@
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS задаёт дизайн, материал и цвета каждого виджета в своих Настройках. Параметры виджетов ниже действуют, пока виджет в дизайне Material, iNstrument или Readout.",
   "Open iRiS widget settings": "Открыть настройки виджетов iRiS",
   "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "Сколько света ловит верх каждого края стекла, как срез стекла. Благодаря этому стекло видно на тёмном рабочем столе. Стеклянные виджеты получают тот же край.",
-  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Насколько размыты обои за стеклом, в iRiS и на стеклянных виджетах."
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Насколько размыты обои за стеклом, в iRiS и на стеклянных виджетах.",
+  "Header fade": "Переход заголовка",
+  "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Насколько обои растворяются в Island под временем. Меньше — видно больше обоев.",
+  "Header top": "Верх заголовка",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Как обои растворяются в Island сверху, под кнопками. Меньше — обои доходят до края.",
+  "Header veil": "Вуаль заголовка",
+  "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Насколько затемняются обои за временем. Ниже 100 % время хуже читается на светлых обоях.",
+  "Header blur": "Размытие заголовка",
+  "Softens the wallpaper behind the time.": "Смягчает обои за временем.",
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Край стеклянных виджетов — тот же, что у стекла Island и Dock."
 }
