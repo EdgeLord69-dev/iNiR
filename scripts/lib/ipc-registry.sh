@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: e94b50ee6e94191a
+# IPC.md hash: 9ce7fb64e94a999c
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -213,7 +213,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [wactionCenter]="toggle close open"
   [waffleAltSwitcher]="open close toggle next previous"
   [wallpaperLauncher]="next previous applyCurrent status"
-  [wallpaperSelector]="toggle open close openLauncher toggleOnMonitor random set preview cancelPreview browse kind status"
+  [wallpaperSelector]="toggle open close openLauncher toggleOnMonitor random shuffle set preview cancelPreview browse kind status"
   [wbar]="toggle close open"
   [widgetStacks]="status create add remove dissolve page move rotate interval"
   [widgetpower]="status"
@@ -589,6 +589,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["wallpaperSelector:openLauncher"]="Open the compact launcher in \`static\` or \`animated\` mode"
   ["wallpaperSelector:toggleOnMonitor"]="Open wallpaper selector on a specific monitor"
   ["wallpaperSelector:random"]="Pick a random wallpaper from the current folder"
+  ["wallpaperSelector:shuffle"]="A new wallpaper from the folder every few minutes: \`on\`, \`off\`, a number of minutes (turns it on) or \`status\`"
   ["wallpaperSelector:set"]="Apply a wallpaper (picture, GIF or video) by path, the same way the picker does"
   ["wallpaperSelector:preview"]="Show a wallpaper on the desktop without applying it: no config write, no recoloring"
   ["wallpaperSelector:cancelPreview"]="Drop the preview and go back to the applied wallpaper"
@@ -751,6 +752,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["vpn:add"]="<kind>"
   ["wallpaperSelector:openLauncher"]="<mode>"
   ["wallpaperSelector:toggleOnMonitor"]="<monitorName>"
+  ["wallpaperSelector:shuffle"]="<value>"
   ["wallpaperSelector:set"]="<path>"
   ["wallpaperSelector:preview"]="<path>"
   ["wallpaperSelector:browse"]="<source> <query>"
@@ -829,6 +831,7 @@ declare -gA IPC_FUNCTION_VALUES=(
   ["vpn:details"]="on off toggle"
   ["vpn:add"]="wireguard vpn nmtui"
   ["wallpaperSelector:openLauncher"]="static animated"
+  ["wallpaperSelector:shuffle"]="on off status"
   ["wallpaperSelector:browse"]="library wallhaven live"
   ["wallpaperSelector:kind"]="all still live gif"
   ["widgetStacks:create"]="weather+monthCalendar"

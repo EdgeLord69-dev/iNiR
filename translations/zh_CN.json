@@ -8840,5 +8840,10 @@
   "Niri's Recent Windows or the iNiR switcher": "Niri 最近窗口或 iNiR 切换器",
   "Niri's Recent Windows, or this switcher with the style below": "Niri 最近窗口，或下方样式的此切换器",
   "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Alt+Tab 打开哪个窗口切换器。Niri 的会实时预览每个窗口；iNiR 的跟随你的面板样式。",
-  "iNiR switcher": "iNiR 切换器"
+  "iNiR switcher": "iNiR 切换器",
+  "Wallpaper shuffle": "随机壁纸",
+  "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "每隔几分钟从你的文件夹换一张新壁纸。桌面菜单里的“下一张壁纸”只换一次。",
+  "Every": "每隔",
+  "Colours follow": "颜色跟随",
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "每张新壁纸都会为 shell 和你的应用重新配色。关闭则保留当前颜色。"
 }

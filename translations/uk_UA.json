@@ -8840,5 +8840,10 @@
   "Niri's Recent Windows or the iNiR switcher": "Недавні вікна Niri або перемикач iNiR",
   "Niri's Recent Windows, or this switcher with the style below": "Недавні вікна Niri або цей перемикач у стилі нижче",
   "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Який перемикач вікон відкриває Alt+Tab. Niri показує живі прев'ю всіх вікон; перемикач iNiR дотримується стилю ваших панелей.",
-  "iNiR switcher": "Перемикач iNiR"
+  "iNiR switcher": "Перемикач iNiR",
+  "Wallpaper shuffle": "Випадкові шпалери",
+  "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "Нові шпалери з вашої теки кожні кілька хвилин. «Наступна шпалерина» в меню стільниці робить це один раз.",
+  "Every": "Кожні",
+  "Colours follow": "Кольори слідують",
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "Кожні нові шпалери перефарбовують оболонку та ваші застосунки. Вимкнено зберігає поточні кольори."
 }

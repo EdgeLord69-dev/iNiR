@@ -7182,5 +7182,10 @@
   "Niri's Recent Windows or the iNiR switcher": "Niri's Recent Windows or the iNiR switcher",
   "Niri's Recent Windows, or this switcher with the style below": "Niri's Recent Windows, or this switcher with the style below",
   "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.",
-  "iNiR switcher": "iNiR switcher"
+  "iNiR switcher": "iNiR switcher",
+  "Wallpaper shuffle": "Wallpaper shuffle",
+  "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.",
+  "Every": "Every",
+  "Colours follow": "Colours follow",
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "Each new wallpaper recolours the shell and your apps. Off keeps the current colours."
 }

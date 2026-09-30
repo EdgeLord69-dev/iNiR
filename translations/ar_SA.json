@@ -8840,5 +8840,10 @@
   "Niri's Recent Windows or the iNiR switcher": "النوافذ الأخيرة في Niri أو مبدّل iNiR",
   "Niri's Recent Windows, or this switcher with the style below": "النوافذ الأخيرة في Niri، أو هذا المبدّل بالنمط أدناه",
   "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "أي مبدّل نوافذ يفتحه Alt+Tab. مبدّل Niri يعرض معاينة حية لكل نافذة؛ ومبدّل iNiR يتبع نمط لوحاتك.",
-  "iNiR switcher": "مبدّل iNiR"
+  "iNiR switcher": "مبدّل iNiR",
+  "Wallpaper shuffle": "خلفيات عشوائية",
+  "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "خلفية جديدة من مجلدك كل بضع دقائق. «الخلفية التالية» في قائمة سطح المكتب تفعل ذلك مرة واحدة.",
+  "Every": "كل",
+  "Colours follow": "الألوان تتبع",
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "كل خلفية جديدة تعيد تلوين الواجهة وتطبيقاتك. الإيقاف يُبقي الألوان الحالية."
 }

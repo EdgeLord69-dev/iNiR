@@ -8840,5 +8840,10 @@
   "Niri's Recent Windows or the iNiR switcher": "החלונות האחרונים של Niri או המחליף של iNiR",
   "Niri's Recent Windows, or this switcher with the style below": "החלונות האחרונים של Niri, או המחליף הזה בסגנון שלמטה",
   "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "איזה מחליף חלונות Alt+Tab פותח. של Niri מציג תצוגה חיה של כל חלון; של iNiR עוקב אחר סגנון הלוחות שלך.",
-  "iNiR switcher": "המחליף של iNiR"
+  "iNiR switcher": "המחליף של iNiR",
+  "Wallpaper shuffle": "טפטים אקראיים",
+  "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "טפט חדש מהתיקייה שלך כל כמה דקות. „הרקע הבא” בתפריט שולחן העבודה עושה זאת פעם אחת.",
+  "Every": "כל",
+  "Colours follow": "הצבעים עוקבים",
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "כל טפט חדש צובע מחדש את המעטפת והאפליקציות שלך. כבוי שומר על הצבעים הנוכחיים."
 }

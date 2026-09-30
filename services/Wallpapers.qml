@@ -1304,63 +1304,45 @@ Singleton {
         onTriggered: root._cycleAutoWallpaper()
     }
 
+    // The shuffle reads its own listing: files only (a folder is never a wallpaper), no search filter, and the
+    // picker keeps the folder it is showing even when the shuffle uses a folder of its own.
+    FolderListModel {
+        id: shuffleModel
+        folder: root.autoWallpaperEnabled
+            ? Qt.resolvedUrl(root.autoWallpaperFolder.length > 0 ? root.autoWallpaperFolder : root.effectiveDirectory)
+            : ""
+        nameFilters: root.extensions.map(ext => `*.${ext}`)
+        caseSensitive: false
+        showDirs: false
+        showDotAndDotDot: false
+        showOnlyReadable: true
+    }
+
     function _cycleAutoWallpaper() {
-        // Use custom folder or current folder
-        const customFolder = root.autoWallpaperFolder
-        if (customFolder && customFolder.length > 0) {
-            // Switch to custom folder temporarily, pick random, then switch back
-            const previousFolder = root.effectiveDirectory
-            _autoPickProc._previousFolder = previousFolder
-            _autoPickProc._targetFolder = customFolder
-            _autoPickProc.command = ["test", "-d", customFolder]
-            _autoPickProc.running = true
-            return
-        }
-        // Use current folder
-        if (folderModel.count === 0) return
         _pickRandomAndApply()
     }
 
     function _pickRandomAndApply() {
-        if (folderModel.count === 0) return
+        if (shuffleModel.count === 0) return
         const currentPath = Config.options?.background?.wallpaperPath ?? ""
         let attempts = 0
         let randomIndex, filePath
         // Try to pick a different wallpaper than the current one
         do {
-            randomIndex = Math.floor(Math.random() * folderModel.count)
-            filePath = folderModel.get(randomIndex, "filePath")
+            randomIndex = Math.floor(Math.random() * shuffleModel.count)
+            filePath = shuffleModel.get(randomIndex, "filePath")
             attempts++
-        } while (filePath === currentPath && attempts < 5 && folderModel.count > 1)
+        } while (filePath === currentPath && attempts < 5 && shuffleModel.count > 1)
 
         if (!filePath) return
 
         if (root.autoWallpaperGenerateColors) {
-            root.apply(filePath, Appearance.m3colors.darkmode)
+            // The same path as "Next wallpaper": the selection target (Waffle's own, the overview's) is kept.
+            root.select(filePath, Appearance.m3colors.darkmode)
         } else {
             // Just change wallpaper path without running color generation
             Config.setNestedValue("background.wallpaperPath", filePath)
         }
-    }
-
-    Process {
-        id: _autoPickProc
-        property string _previousFolder: ""
-        property string _targetFolder: ""
-        onExited: (exitCode) => {
-            if (exitCode === 0) {
-                // Folder exists, temporarily set it and pick random
-                root._setFolderModelDirectory(Qt.resolvedUrl(_autoPickProc._targetFolder))
-                // Wait for folder model to update before picking
-                _autoPickFolderDelay.restart()
-            }
-        }
-    }
-
-    Timer {
-        id: _autoPickFolderDelay
-        interval: 500
-        onTriggered: root._pickRandomAndApply()
     }
     // ── End auto wallpaper cycling ──────────────────────────────────────
 }

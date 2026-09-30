@@ -608,6 +608,8 @@ complete -c inir -n '__inir_at_function wallpaperSelector wallpaper-selector' -a
 complete -c inir -n '__inir_at_value 1 openLauncher wallpaperSelector wallpaper-selector' -a 'static animated'
 complete -c inir -n '__inir_at_function wallpaperSelector wallpaper-selector' -a toggleOnMonitor -d 'Open wallpaper selector on a specific monitor'
 complete -c inir -n '__inir_at_function wallpaperSelector wallpaper-selector' -a random -d 'Pick a random wallpaper from the current folder'
+complete -c inir -n '__inir_at_function wallpaperSelector wallpaper-selector' -a shuffle -d 'A new wallpaper from the folder every few minutes: on, off,…'
+complete -c inir -n '__inir_at_value 1 shuffle wallpaperSelector wallpaper-selector' -a 'on off status'
 complete -c inir -n '__inir_at_function wallpaperSelector wallpaper-selector' -a set -d 'Apply a wallpaper (picture, GIF or video) by path, the same…'
 complete -c inir -n '__inir_at_function wallpaperSelector wallpaper-selector' -a preview -d 'Show a wallpaper on the desktop without applying it: no con…'
 complete -c inir -n '__inir_at_function wallpaperSelector wallpaper-selector' -a cancelPreview -d 'Drop the preview and go back to the applied wallpaper'

@@ -8840,5 +8840,10 @@
   "Niri's Recent Windows or the iNiR switcher": "Janelas recentes do Niri ou o alternador do iNiR",
   "Niri's Recent Windows, or this switcher with the style below": "Janelas recentes do Niri, ou este alternador com o estilo abaixo",
   "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Qual alternador de janelas o Alt+Tab abre. O do Niri mostra prévias ao vivo de cada janela; o do iNiR segue o estilo dos seus painéis.",
-  "iNiR switcher": "Alternador do iNiR"
+  "iNiR switcher": "Alternador do iNiR",
+  "Wallpaper shuffle": "Papéis de parede sorteados",
+  "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "Um papel de parede novo da sua pasta a cada poucos minutos. Próximo papel de parede, no menu da área de trabalho, faz isso uma vez.",
+  "Every": "A cada",
+  "Colours follow": "As cores acompanham",
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "Cada papel de parede novo recolore o shell e seus apps. Desligado mantém as cores atuais."
 }

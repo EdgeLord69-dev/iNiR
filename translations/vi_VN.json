@@ -8840,5 +8840,10 @@
   "Niri's Recent Windows or the iNiR switcher": "Cửa sổ gần đây của Niri hoặc trình chuyển đổi iNiR",
   "Niri's Recent Windows, or this switcher with the style below": "Cửa sổ gần đây của Niri, hoặc trình chuyển đổi này với kiểu bên dưới",
   "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Trình chuyển đổi cửa sổ mà Alt+Tab mở. Của Niri hiển thị bản xem trước trực tiếp của mọi cửa sổ; của iNiR theo kiểu bảng điều khiển của bạn.",
-  "iNiR switcher": "Trình chuyển đổi iNiR"
+  "iNiR switcher": "Trình chuyển đổi iNiR",
+  "Wallpaper shuffle": "Hình nền ngẫu nhiên",
+  "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "Một hình nền mới từ thư mục của bạn sau mỗi vài phút. Hình nền kế tiếp trong menu màn hình làm việc này một lần.",
+  "Every": "Mỗi",
+  "Colours follow": "Màu theo",
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "Mỗi hình nền mới tô lại màu shell và ứng dụng của bạn. Tắt giữ màu hiện tại."
 }

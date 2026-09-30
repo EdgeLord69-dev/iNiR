@@ -8840,5 +8840,10 @@
   "Niri's Recent Windows or the iNiR switcher": "Jendela Terbaru Niri atau pengalih iNiR",
   "Niri's Recent Windows, or this switcher with the style below": "Jendela Terbaru Niri, atau pengalih ini dengan gaya di bawah",
   "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Pengalih jendela yang dibuka Alt+Tab. Milik Niri menampilkan pratinjau langsung setiap jendela; milik iNiR mengikuti gaya panel Anda.",
-  "iNiR switcher": "Pengalih iNiR"
+  "iNiR switcher": "Pengalih iNiR",
+  "Wallpaper shuffle": "Wallpaper acak",
+  "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "Wallpaper baru dari folder Anda setiap beberapa menit. Wallpaper berikutnya di menu desktop melakukannya sekali.",
+  "Every": "Setiap",
+  "Colours follow": "Warna mengikuti",
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "Setiap wallpaper baru mewarnai ulang shell dan aplikasi Anda. Mati mempertahankan warna saat ini."
 }

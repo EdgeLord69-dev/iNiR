@@ -513,6 +513,7 @@ Wallpaper picker with grid, coverflow and compact launcher styles.
 | `openLauncher <mode>` | Open the compact launcher in `static` or `animated` mode |
 | `toggleOnMonitor <name>` | Open wallpaper selector on a specific monitor |
 | `random` | Pick a random wallpaper from the current folder |
+| `shuffle <value>` | A new wallpaper from the folder every few minutes: `on`, `off`, a number of minutes (turns it on) or `status` |
 | `set <path>` | Apply a wallpaper (picture, GIF or video) by path, the same way the picker does |
 | `preview <path>` | Show a wallpaper on the desktop without applying it: no config write, no recoloring |
 | `cancelPreview` | Drop the preview and go back to the applied wallpaper |
