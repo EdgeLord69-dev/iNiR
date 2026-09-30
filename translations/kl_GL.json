@@ -7166,7 +7166,6 @@
   "Clipboard history · %1": "Clipboard-ip oqaluttuarisaanera · %1",
   "Colours only": "Qalipaatit kisimik",
   "Took the colours of %1": "%1-p qalipaataa tiguneqarput",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop.": "Igalaap sinaavisa qulaatungaata qaamasoq qanoq amerlatigisoq tigusarigaa, igalaap sinaa kipisaq assigalugu. Taamaammat igalaaq qarasaasiap saavani taartumi takuneqarsinnaavoq.",
   "The same edge where it does not face the light. With Blur it also smooths the stepped curves.": "Sinaa taanna qaamanermut saatinngitsumi. Blur-imik aamma titarnerit tummeqqatut ittut manngertissavai.",
   "Take only their colours": "Qalipaataat kisiisa tiguk",
   "A theme you choose brings its accent, highlight, material colour and light, and leaves your shapes, layout and motion as they are.": "Theme toqqagaq accent-imik, qaamanngorsaanermik, atortup qalipaataanik qaamanermillu aallerpoq, ilusitillu, inissitsinerit aalanerillu allanngortinnagit.",
@@ -7193,5 +7192,13 @@
   "Search installed fonts": "Search installed fonts",
   "No installed font matches": "No installed font matches",
   "Music width (px)": "Music width (px)",
-  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first."
+  "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.": "How wide the song title gets. The window title gives way; a crowded bar still shrinks music first.",
+  "The line around each widget. Auto follows the shell's outline on Glass, Solid and Tinted and leaves Transparent bare. While arranging it always shows.": "The line around each widget. Auto follows the shell's outline on Glass, Solid and Tinted and leaves Transparent bare. While arranging it always shows.",
+  "Widgets with their own material": "Widgets with their own material",
+  "They chose a material or surface opacity in their Look controls, so the rows above don't reach them. Match puts them on these.": "They chose a material or surface opacity in their Look controls, so the rows above don't reach them. Match puts them on these.",
+  "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.",
+  "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.",
+  "Open iRiS widget settings": "Open iRiS widget settings",
+  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "Igalaap sinaavisa qulaatungaata qaamasoq qanoq amerlatigisoq tigusarigaa, igalaap sinaa kipisaq assigalugu. Taamaammat igalaaq qarasaasiap saavani taartumi takuneqarsinnaavoq.",
+  "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets."
 }

@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: aa091cd15a7c6fdc
+# IPC.md hash: 3c10a0189fd0c4fd
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -157,7 +157,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [appCatalog]="refresh search install list"
   [audio]="volumeUp volumeDown mute playEvent micMute"
   [autostart]="status addCommand addApp removeLast reload"
-  [background]="widgetDesign widgetSearch toggleEditMode toggleWidgetManager setEditMode editState applyOrganicEdgePreset applyOrganicEdgeComposition applyOrganicEdgeMaterial applyOrganicEdgeResponse organicEdgeState setOrganicEdgeEnabled quickControlsPage quickControlsGeometry legibilityState desktopItemsState focusWidget promoteWidget resetLayerOrder setWidgetEnabled clockDebugState clockDebugSetMode clockDebugSetRegion clockDebugSetLayout clockDebugRestore"
+  [background]="widgetDesign widgetMaterial widgetSearch toggleEditMode toggleWidgetManager setEditMode editState applyOrganicEdgePreset applyOrganicEdgeComposition applyOrganicEdgeMaterial applyOrganicEdgeResponse organicEdgeState setOrganicEdgeEnabled quickControlsPage quickControlsGeometry widgetSnapshot legibilityState desktopItemsState focusWidget promoteWidget resetLayerOrder setWidgetEnabled clockDebugState clockDebugSetMode clockDebugSetRegion clockDebugSetLayout clockDebugRestore"
   [bar]="mediaWidth toggle close open"
   [brightness]="increment decrement sleepBegin restoreAfterWake"
   [cheatsheet]="toggle close open"
@@ -253,6 +253,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["autostart:removeLast"]="Remove the last managed entry"
   ["autostart:reload"]="Force re-read the startup file"
   ["background:widgetDesign"]="Put every desktop widget on \`iris\`, \`material\`, \`individual\`, \`instrument\` or \`readout\`; \`undo\` brings back the design and each widget's own look from before; \`status\` reports the design, how many widgets keep their own look and whether an undo is available."
+  ["background:widgetMaterial"]="iRiS: \`status\` reports the shared widget material and how many widgets chose their own material or surface opacity in Look; \`match\` puts them back on the shared ones."
   ["background:widgetSearch"]="While arranging (iRiS), find a widget from the bar: the words to look for, \`open\` for an empty field, \`next\`/\`previous\` to move the selection, \`take\` to add or show the selected widget, \`close\`. Ctrl+F opens it"
   ["background:toggleEditMode"]="Toggle widget edit mode (drag, resize, configure desktop widgets)"
   ["background:toggleWidgetManager"]="Enter edit mode if needed and toggle the widget manager on the focused output"
@@ -266,6 +267,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["background:setOrganicEdgeEnabled"]="Enable or disable the independent Organic Edge screen field"
   ["background:quickControlsPage"]="Show a page of the selected widget's quick controls: widget, look or arrange (and stack, for a widget in a stack)"
   ["background:quickControlsGeometry"]="Report where the selected widget's toolbar and quick-controls sheet sit, as JSON"
+  ["background:widgetSnapshot"]="Save one desktop widget, as it renders now, to a PNG (offscreen: works while windows cover the desktop)."
   ["background:legibilityState"]="Report what each desktop widget reads under itself (brightness, spread, light or dark backdrop) and the ink and accent it chose"
   ["background:desktopItemsState"]="Report desktop-item persistence, availability, item count, validation errors and undo state"
   ["background:focusWidget"]="Select a desktop widget and optionally open its quick controls"
@@ -639,6 +641,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["autostart:addCommand"]="<cmd>"
   ["autostart:addApp"]="<desktopId>"
   ["background:widgetDesign"]="<name>"
+  ["background:widgetMaterial"]="<action>"
   ["background:widgetSearch"]="<query>"
   ["background:setEditMode"]="<enabled>"
   ["background:applyOrganicEdgePreset"]="<name>"
@@ -647,6 +650,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["background:applyOrganicEdgeResponse"]="<name>"
   ["background:setOrganicEdgeEnabled"]="<enabled>"
   ["background:quickControlsPage"]="<page>"
+  ["background:widgetSnapshot"]="<widgetName> <path>"
   ["background:focusWidget"]="<widgetName> <openControls>"
   ["background:promoteWidget"]="<widgetName>"
   ["background:setWidgetEnabled"]="<widgetName> <enabled>"
@@ -774,6 +778,7 @@ declare -gA IPC_FUNCTION_VALUES=(
   ["audio:playEvent"]="batteryLow timerDone"
   ["autostart:addCommand"]="spawn-sh-at-startup"
   ["background:widgetDesign"]="iris material individual instrument readout undo status"
+  ["background:widgetMaterial"]="status match"
   ["background:widgetSearch"]="open next previous take close"
   ["colorMode:set"]="dark light toggle"
   ["connections:sample"]="network internet bluetooth usb power audio displays drives"

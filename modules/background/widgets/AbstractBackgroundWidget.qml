@@ -2012,12 +2012,14 @@ AbstractWidget {
     }
 
     property bool needsColText: false
-    // A bare widget reads its region even with adaptation off: the ink stays put, but the Lume shadow
-    // behind it is sized from what the ink sits on.
-    readonly property bool _regionSampling: (root.needsColText && (root.positionColorAdaptationEnabled || !root.widgetHasSurface))
-        || root.irisReadsRegion
-    readonly property bool positionColorAdaptationEnabled: Boolean(
-        Config.getNestedValue("background.widgets.adaptColorsToWallpaperPosition", true))
+    // A bare iRiS widget reads its region even with adaptation off: the ink stays put, but the Lume
+    // shadow behind it is sized from what the ink sits on. Material has no such shadow.
+    readonly property bool _regionSampling: (root.needsColText && (root.positionColorAdaptationEnabled
+        || (root.widgetIrisFamily && !root.widgetHasSurface))) || root.irisReadsRegion
+    // Each family keeps its own switch: iRiS's *On bright wallpapers*, Material's wallpaper-position adaptation.
+    readonly property bool positionColorAdaptationEnabled: Boolean(root.widgetIrisFamily
+        ? Config.getNestedValue("iris.widgets.brightWallpapers", false)
+        : Config.getNestedValue("background.widgets.adaptColorsToWallpaperPosition", true))
     property color dominantColor: Appearance.colors.colPrimary
     // Wallpaper region brightness (0-1, gamma-encoded luma). -1 = not yet analyzed.
     property real regionBrightness: -1
@@ -2181,6 +2183,10 @@ AbstractWidget {
     // plate can carry a trace of the same hue. Greyscale seeds keep iRiS blue.
     readonly property var irisWidgetOptions: Config.options?.iris?.widgets ?? ({})
     readonly property bool irisRim: Boolean(root.irisWidgetOptions.rim ?? false)
+    readonly property string irisOutline: {
+        const value = String(root.irisWidgetOptions.outline ?? "auto")
+        return ["auto", "always", "none"].includes(value) ? value : "auto"
+    }
     readonly property real irisSurfaceOpacity: {
         const own = Number(root._readConfigKey("iris.opacity") ?? -1)
         const value = own >= 20 ? own : Number(root.irisWidgetOptions.opacity ?? 100)
@@ -2515,7 +2521,8 @@ AbstractWidget {
         return Math.max(0, Math.min(0.55, (0.62 - darkest) / 0.35 * 0.55))
     }
     readonly property color _legibleShadowColor: root._inkIsLight ? Qt.rgba(0, 0, 0, 1) : Qt.rgba(1, 1, 1, 1)
-    readonly property bool _legibleShadow: root.needsColText && !root.widgetHasSurface && !root.irisFaced
+    // iRiS only: Material widgets keep their own text halo and never carry a shadow under the whole body.
+    readonly property bool _legibleShadow: root.widgetIrisFamily && root.needsColText && !root.widgetHasSurface && !root.irisFaced
         && !GlobalStates.widgetEditMode && root._legibleShadowOpacity > 0.06
     readonly property color colHalo: root.inkOnLight && !root.forceDarkInk
         ? Qt.rgba(1, 1, 1, 0.12 + 0.3 * root._haloBusy)

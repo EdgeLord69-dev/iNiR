@@ -3920,7 +3920,9 @@ Singleton {
                     property string design: "iris" // "iris" faces, "material" (each widget's own style), "instrument" or "readout"
                     property string material: "glass" // "glass", "clear", "solid" or "tinted"
                     property string weight: "regular" // "light", "regular" or "bold"
-                    property bool rim: false // Hairline around Transparent widgets
+                    property bool rim: false // Legacy: hairline around Transparent widgets, read by outline "auto"
+                    property string outline: "auto" // "auto" (the shell's outline; Transparent bare), "always" or "none"
+                    property bool brightWallpapers: false // Over a light region a widget turns to frost with dark ink
                 }
                 property JsonObject desktopMenu: JsonObject {
                     property bool wallpaper: true // The wallpaper at the head of the right-click menu

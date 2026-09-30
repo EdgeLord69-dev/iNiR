@@ -1164,6 +1164,7 @@ Desktop background and widget controls.
 | Function | Description |
 |----------|-------------|
 | `widgetDesign name` | Put every desktop widget on `iris`, `material`, `individual`, `instrument` or `readout`; `undo` brings back the design and each widget's own look from before; `status` reports the design, how many widgets keep their own look and whether an undo is available. |
+| `widgetMaterial action` | iRiS: `status` reports the shared widget material and how many widgets chose their own material or surface opacity in Look; `match` puts them back on the shared ones. |
 | `widgetSearch text` | While arranging (iRiS), find a widget from the bar: the words to look for, `open` for an empty field, `next`/`previous` to move the selection, `take` to add or show the selected widget, `close`. Ctrl+F opens it |
 | `toggleEditMode` | Toggle widget edit mode (drag, resize, configure desktop widgets) |
 | `toggleWidgetManager` | Enter edit mode if needed and toggle the widget manager on the focused output |
@@ -1172,6 +1173,7 @@ Desktop background and widget controls.
 | `desktopItemsState` | Report desktop-item persistence, availability, item count, validation errors and undo state |
 | `quickControlsPage page` | Show a page of the selected widget's quick controls: widget, look or arrange (and stack, for a widget in a stack) |
 | `quickControlsGeometry` | Report where the selected widget's toolbar and quick-controls sheet sit, as JSON |
+| `widgetSnapshot widgetName path` | Save one desktop widget, as it renders now, to a PNG (offscreen: works while windows cover the desktop). |
 | `legibilityState` | Report what each desktop widget reads under itself (brightness, spread, light or dark backdrop) and the ink and accent it chose |
 | `focusWidget widgetName openControls` | Select a desktop widget and optionally open its quick controls |
 | `promoteWidget widgetName` | Move a desktop widget to the top of the persistent layer order |
