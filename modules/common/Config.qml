@@ -3951,6 +3951,7 @@ Singleton {
                     property string scheme: "auto" // "auto" (follows the system), "dark", "ink" or "light"
                     property bool followTheme: true // with a colour theme chosen, the shell wears its accent, highlight and material
                     property bool materialForApps: true // with the wallpaper colour theme, terminals and apps sit on the shell's material
+                    property string controlPlate: "none" // rows of round controls: "none", "veil", "glass" or "solid" (IrisControlPlate)
                     // Per scheme: tone lifts or dims the material (-30..30), colour is how strong accents read (0..100 %),
                     // widgets is how colourful the desktop widgets read (40..160 %), lume makes bodies frost the wallpaper
                     // shows through instead of solid.
@@ -4101,7 +4102,7 @@ Singleton {
                     property int desktopBannerTop: 100 // % of the fade into the Island's body at the top, under its buttons
                     property int desktopBannerVeil: 100 // % of the legibility veil over the header wallpaper
                     property int desktopBannerBlur: 0 // % blur of the header wallpaper
-                    property string navFrame: "none" // the open Island's page buttons: "none", "veil", "glass" or "solid"
+                    property string navFrame: "auto" // the open Island's page buttons: "auto" (Appearance › Button rows), "none", "veil", "glass" or "solid"
                     // Island Desktop page blocks under the hero, in order:
                     // "profile", "context", "vitals", "modules".
                     property list<string> desktopBlocks: ["profile", "context", "forecast", "agenda", "modules"]

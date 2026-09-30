@@ -8864,6 +8864,9 @@
   "The edge of glass widgets, the same as the Island's and the Dock's glass.": "ग्लास विजेट का किनारा, Island और Dock के ग्लास जैसा ही।",
   "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "ऊपर, बटनों के नीचे वॉलपेपर Island में कैसे घुलता है। कम करने पर यह ऊपर उठता है, जहाँ Island किनारे से मिलता है वहाँ तक।",
   "Page buttons": "पेज बटन",
-  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "नेविगेशन पंक्ति को क्या थामे। प्लेट बबल के आकार का अनुसरण करती है, अंदर बटन समकेंद्रित रहते हैं।",
-  "Veil": "परदा"
+  "Veil": "परदा",
+  "Button rows": "बटन पंक्तियाँ",
+  "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "गोल नियंत्रणों की पंक्तियाँ (Island के पेज, प्लेयर नियंत्रण, साइड पैनल का हेडर) एक प्लेट पर रह सकती हैं: परदा पीछे को गहरा करता है, ग्लास ग्लास किनारा पहनता है, ठोस पढ़ने का कार्ड है। कोने बबल के आकार का अनुसरण करते हैं।",
+  "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "नेविगेशन पंक्ति को क्या थामे। ऑटो दिखावट › बटन पंक्तियाँ का अनुसरण करता है; प्लेट बबल के आकार का अनुसरण करती है, अंदर बटन समकेंद्रित रहते हैं।",
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "धुंधला वॉलपेपर · हल्के वॉलपेपर पर पाला बन जाता है"
 }

@@ -8864,6 +8864,9 @@
   "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Cạnh của widget kính, giống kính của Island và Dock.",
   "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Cách hình nền hòa vào Island ở phía trên, dưới các nút. Thấp hơn để nó lên cao hơn, tới chỗ Island gặp mép.",
   "Page buttons": "Nút trang",
-  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Thứ chứa hàng điều hướng. Tấm nền theo hình bong bóng, các nút bên trong đồng tâm.",
-  "Veil": "Lớp phủ"
+  "Veil": "Lớp phủ",
+  "Button rows": "Hàng nút",
+  "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Các hàng nút tròn (các trang của Island, điều khiển trình phát, đầu các bảng bên) có thể nằm trên một tấm nền: Lớp phủ làm tối phía sau, Kính mang cạnh kính, Màu đặc là thẻ đọc. Góc theo hình bong bóng.",
+  "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Thứ chứa hàng điều hướng. Tự động theo Nhìn › Hàng nút; tấm nền theo hình bong bóng, các nút bên trong đồng tâm.",
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Hình nền mờ · thành lớp sương trên hình nền sáng"
 }

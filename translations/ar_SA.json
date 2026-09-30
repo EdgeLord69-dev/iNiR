@@ -8864,6 +8864,9 @@
   "The edge of glass widgets, the same as the Island's and the Dock's glass.": "حافة الأدوات الزجاجية، مثل زجاج Island وDock.",
   "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "كيف تندمج الخلفية مع Island في الأعلى، تحت أزراره. الأقل يجعلها ترتفع أكثر، حتى حيث يلتقي Island بالحافة.",
   "Page buttons": "أزرار الصفحات",
-  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "ما يحمل صف التنقل. تتبع اللوحة شكل الفقاعات، والأزرار داخلها متحدة المركز.",
-  "Veil": "حجاب"
+  "Veil": "حجاب",
+  "Button rows": "صفوف الأزرار",
+  "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "يمكن أن تستقر صفوف عناصر التحكم الدائرية (صفحات Island، وأدوات المشغّل، وترويسة اللوحات الجانبية) على لوحة واحدة: الحجاب يعتّم ما خلفها، والزجاج يحمل حافة الزجاج، والصلب بطاقة قراءة. تتبع زواياها شكل الفقاعات.",
+  "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "ما يحمل صف التنقل. التلقائي يتبع المظهر › صفوف الأزرار؛ واللوحة تتبع شكل الفقاعات والأزرار داخلها متحدة المركز.",
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "خلفية مصقولة · تصبح صقيعًا فوق خلفية فاتحة"
 }

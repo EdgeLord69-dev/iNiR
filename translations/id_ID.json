@@ -8864,6 +8864,9 @@
   "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Tepi widget kaca, sama dengan kaca Island dan Dock.",
   "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Cara wallpaper menyatu dengan Island di atas, di bawah tombolnya. Lebih rendah membiarkannya naik lebih tinggi, sampai tempat Island bertemu tepi.",
   "Page buttons": "Tombol halaman",
-  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Apa yang menampung baris navigasi. Pelat mengikuti bentuk gelembung, dengan tombol di dalamnya konsentris.",
-  "Veil": "Selubung"
+  "Veil": "Selubung",
+  "Button rows": "Baris tombol",
+  "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Baris kontrol bulat (halaman Island, kontrol pemutar, header panel samping) bisa berada di satu pelat: Selubung menggelapkan latar, Kaca memakai tepi kaca, Solid adalah kartu baca. Sudutnya mengikuti bentuk gelembung.",
+  "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Apa yang menampung baris navigasi. Otomatis mengikuti Tampilan › Baris tombol; pelat mengikuti bentuk gelembung, dengan tombol di dalamnya konsentris.",
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Wallpaper buram · menjadi embun beku di atas wallpaper terang"
 }

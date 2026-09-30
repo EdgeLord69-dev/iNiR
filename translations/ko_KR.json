@@ -8864,6 +8864,9 @@
   "The edge of glass widgets, the same as the Island's and the Dock's glass.": "글래스 위젯의 가장자리로, Island와 Dock 글래스와 같습니다.",
   "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "위쪽 버튼 아래에서 배경화면이 Island에 녹아드는 정도. 낮추면 Island가 가장자리와 만나는 곳까지 더 높이 올라갑니다.",
   "Page buttons": "페이지 버튼",
-  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "탐색 줄을 담는 것. 판이 버블 모양을 따르고 안의 버튼과 동심을 이룹니다.",
-  "Veil": "베일"
+  "Veil": "베일",
+  "Button rows": "버튼 줄",
+  "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "둥근 컨트롤 줄(Island 페이지, 플레이어 조작, 사이드 패널 헤더)을 한 판 위에 올릴 수 있습니다. 베일은 뒤를 어둡게, 글래스는 글래스 가장자리를, 단색은 읽기 카드입니다. 모서리는 버블 모양을 따릅니다.",
+  "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "탐색 줄을 담는 것. 자동은 룩 › 버튼 줄을 따르고, 판은 버블 모양을 따르며 안의 버튼과 동심을 이룹니다.",
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "서리 낀 배경화면 · 밝은 배경화면 위에서는 서리로 바뀝니다"
 }

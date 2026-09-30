@@ -8864,6 +8864,9 @@
   "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Die Kante der Glas-Widgets, dieselbe wie beim Glas der Island und des Docks.",
   "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Wie das Hintergrundbild oben, unter den Tasten, in die Island übergeht. Weniger lässt es höher steigen, bis dorthin, wo die Island auf den Rand trifft.",
   "Page buttons": "Seitentasten",
-  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Was die Navigationszeile hält. Eine Platte folgt der Form der Blasen, die Tasten darin konzentrisch.",
-  "Veil": "Schleier"
+  "Veil": "Schleier",
+  "Button rows": "Tastenreihen",
+  "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Reihen runder Bedienelemente (die Seiten der Island, die Wiedergabesteuerung, die Kopfzeile der Seitenleisten) können auf einer Platte liegen: Schleier dunkelt ab, Glas trägt die Glaskante, Einfarbig ist eine Lesekarte. Die Ecken folgen der Form der Blasen.",
+  "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Was die Navigationszeile hält. Automatisch folgt Aussehen › Tastenreihen; eine Platte folgt der Form der Blasen, die Tasten darin konzentrisch.",
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Mattiertes Hintergrundbild · wird über hellem Hintergrund zu Frost"
 }

@@ -8864,6 +8864,9 @@
   "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Край скляних віджетів — той самий, що у скла Island і Dock.",
   "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Як шпалери розчиняються в Island зверху, під кнопками. Менше — шпалери піднімаються вище, до місця, де Island зустрічається з краєм.",
   "Page buttons": "Кнопки сторінок",
-  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Що тримає рядок навігації. Пластина повторює форму бульбашок, кнопки всередині концентричні.",
-  "Veil": "Вуаль"
+  "Veil": "Вуаль",
+  "Button rows": "Ряди кнопок",
+  "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Ряди круглих елементів (сторінки Island, керування плеєром, заголовок бічних панелей) можуть лежати на пластині: Вуаль затемнює фон, Скло має скляний край, Суцільний — картка для читання. Кути повторюють форму бульбашок.",
+  "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Що тримає рядок навігації. Авто слідує Вигляд › Ряди кнопок; пластина повторює форму бульбашок, кнопки всередині концентричні.",
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Матові шпалери · на світлих шпалерах стають інеєм"
 }

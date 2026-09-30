@@ -8864,6 +8864,9 @@
   "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Il bordo dei widget in vetro, lo stesso del vetro dell'Island e del Dock.",
   "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Come lo sfondo si fonde con l'Island in alto, sotto i pulsanti. Meno lo lascia salire di più, fino a dove l'Island incontra il bordo.",
   "Page buttons": "Pulsanti di pagina",
-  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Cosa contiene la riga di navigazione. Una lastra segue la forma delle bolle, con i pulsanti concentrici all'interno.",
-  "Veil": "Velo"
+  "Veil": "Velo",
+  "Button rows": "Righe di pulsanti",
+  "Rows of round controls (the Island's pages, the player's transport, the side panels' header) can sit on one plate: Veil darkens what is behind, Glass wears the glass edge, Solid is a reading card. Its corners follow the bubbles' shape.": "Le righe di controlli rotondi (le pagine dell'Island, i controlli del lettore, l'intestazione dei pannelli laterali) possono stare su una lastra: Velo scurisce ciò che sta dietro, Vetro ha il bordo di vetro, Tinta piena è una scheda di lettura. Gli angoli seguono la forma delle bolle.",
+  "What holds the navigation row. Auto follows Appearance › Button rows; a plate follows the bubbles' shape, with the buttons inside it concentric.": "Cosa contiene la riga di navigazione. Automatico segue Aspetto › Righe di pulsanti; una lastra segue la forma delle bolle, con i pulsanti concentrici all'interno.",
+  "Frosted wallpaper · turns to frost over a bright wallpaper": "Sfondo smerigliato · diventa brina su uno sfondo chiaro"
 }

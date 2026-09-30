@@ -2404,6 +2404,7 @@
             "position": "auto"
         },
         "appearance": {
+        "controlPlate": "none",
             "fontFamily": "",
             "titleFontFamily": "",
             "highlight": "orange",
@@ -2598,7 +2599,7 @@
             "desktopBannerTop": 100,
             "desktopBannerVeil": 100,
             "desktopBannerBlur": 0,
-            "navFrame": "none",
+            "navFrame": "auto",
             "desktopBlocks": ["profile", "context", "forecast", "agenda", "modules"],
             "mediaBlocks": [
                 "player",
