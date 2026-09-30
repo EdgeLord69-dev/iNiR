@@ -33,8 +33,9 @@ Change them. Break them. Make them yours. We won't judge.
 | `Mod+Shift+X` | Region OCR |
 | `Mod+Shift+A` | Region image search |
 | `Mod+Shift+R` | Region screen recording (with audio) |
-| `Print` | Full screenshot (Niri native) |
+| `Print` | Niri's screenshot tool: pick an area, a screen or a window |
 | `Ctrl+Print` | Screenshot current screen |
+| `Mod+Print` | Screenshot current screen (the Windows and GNOME key) |
 | `Alt+Print` | Screenshot current window |
 
 ---
