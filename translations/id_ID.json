@@ -8857,10 +8857,13 @@
   "Header fade": "Gradasi header",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Seberapa jauh wallpaper menyatu dengan Island di bawah jam. Lebih rendah menampilkan lebih banyak.",
   "Header top": "Bagian atas header",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Cara wallpaper menyatu dengan Island di atas, di bawah tombolnya. Lebih rendah membiarkannya mencapai tepi.",
   "Header veil": "Selubung header",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Seberapa gelap wallpaper di balik jam. Di bawah 100 % jam bisa lebih sulit dibaca pada wallpaper terang.",
   "Header blur": "Blur header",
   "Softens the wallpaper behind the time.": "Melembutkan wallpaper di balik jam.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Tepi widget kaca, sama dengan kaca Island dan Dock."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Tepi widget kaca, sama dengan kaca Island dan Dock.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Cara wallpaper menyatu dengan Island di atas, di bawah tombolnya. Lebih rendah membiarkannya naik lebih tinggi, sampai tempat Island bertemu tepi.",
+  "Page buttons": "Tombol halaman",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Apa yang menampung baris navigasi. Pelat mengikuti bentuk gelembung, dengan tombol di dalamnya konsentris.",
+  "Veil": "Selubung"
 }

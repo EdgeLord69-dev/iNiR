@@ -7204,10 +7204,13 @@
   "Header fade": "Header fade",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.",
   "Header top": "Header top",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.",
   "Header veil": "Header veil",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.",
   "Header blur": "Header blur",
   "Softens the wallpaper behind the time.": "Softens the wallpaper behind the time.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "The edge of glass widgets, the same as the Island's and the Dock's glass."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "The edge of glass widgets, the same as the Island's and the Dock's glass.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.",
+  "Page buttons": "Page buttons",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.",
+  "Veil": "Veil"
 }

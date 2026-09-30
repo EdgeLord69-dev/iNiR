@@ -8857,10 +8857,13 @@
   "Header fade": "Degradê do cabeçalho",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Quanto o papel de parede se funde com o Island abaixo da hora. Menos deixa aparecer mais dele.",
   "Header top": "Topo do cabeçalho",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Como o papel de parede se funde com o Island no topo, sob os botões. Menos o deixa chegar à borda.",
   "Header veil": "Véu do cabeçalho",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Quanto o papel de parede escurece atrás da hora. Abaixo de 100 % a hora pode ficar mais difícil de ler em fundos claros.",
   "Header blur": "Desfoque do cabeçalho",
   "Softens the wallpaper behind the time.": "Suaviza o papel de parede atrás da hora.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "A borda dos widgets de vidro, a mesma do vidro do Island e do Dock."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "A borda dos widgets de vidro, a mesma do vidro do Island e do Dock.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Como o papel de parede se funde com o Island no topo, sob os botões. Menos o deixa subir mais, até onde o Island encontra a borda.",
+  "Page buttons": "Botões de página",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "O que contém a linha de navegação. Uma placa segue a forma das bolhas, com os botões concêntricos dentro.",
+  "Veil": "Véu"
 }

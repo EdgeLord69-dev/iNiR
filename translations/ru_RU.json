@@ -8857,10 +8857,13 @@
   "Header fade": "Переход заголовка",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Насколько обои растворяются в Island под временем. Меньше — видно больше обоев.",
   "Header top": "Верх заголовка",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Как обои растворяются в Island сверху, под кнопками. Меньше — обои доходят до края.",
   "Header veil": "Вуаль заголовка",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Насколько затемняются обои за временем. Ниже 100 % время хуже читается на светлых обоях.",
   "Header blur": "Размытие заголовка",
   "Softens the wallpaper behind the time.": "Смягчает обои за временем.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Край стеклянных виджетов — тот же, что у стекла Island и Dock."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Край стеклянных виджетов — тот же, что у стекла Island и Dock.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Как обои растворяются в Island сверху, под кнопками. Меньше — обои поднимаются выше, до места, где Island встречается с краем.",
+  "Page buttons": "Кнопки страниц",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Что держит строку навигации. Пластина повторяет форму пузырей, кнопки внутри концентричны.",
+  "Veil": "Вуаль"
 }

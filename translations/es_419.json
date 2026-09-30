@@ -8857,10 +8857,13 @@
   "Header fade": "Degradado del encabezado",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Cuánto se funde el fondo con el Island debajo de la hora. Menos deja ver más fondo.",
   "Header top": "Parte superior del encabezado",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Cómo se funde el fondo con el Island arriba, debajo de sus botones. Menos lo deja llegar al borde.",
   "Header veil": "Velo del encabezado",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Cuánto se oscurece el fondo detrás de la hora. Por debajo de 100 % la hora puede leerse peor sobre fondos claros.",
   "Header blur": "Desenfoque del encabezado",
   "Softens the wallpaper behind the time.": "Suaviza el fondo detrás de la hora.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "El borde de los widgets de cristal, el mismo que el del cristal del Island y del Dock."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "El borde de los widgets de cristal, el mismo que el del cristal del Island y del Dock.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Cómo se funde el fondo con el Island arriba, debajo de sus botones. Menos lo deja subir más, hasta donde el Island se une al borde.",
+  "Page buttons": "Botones de página",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Qué contiene la fila de navegación. Una placa sigue la forma de las burbujas, con los botones concéntricos dentro.",
+  "Veil": "Velo"
 }

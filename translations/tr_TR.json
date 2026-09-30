@@ -8857,10 +8857,13 @@
   "Header fade": "Başlık geçişi",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Duvar kâğıdının saatin altında Island'a ne kadar karıştığı. Daha azı daha çoğunu gösterir.",
   "Header top": "Başlığın üstü",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Duvar kâğıdının üstte, düğmelerin altında Island'a nasıl karıştığı. Daha azı kenara kadar uzanmasını sağlar.",
   "Header veil": "Başlık perdesi",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Saatin arkasındaki duvar kâğıdının ne kadar karartıldığı. %100'ün altında açık duvar kâğıtlarında saat daha zor okunabilir.",
   "Header blur": "Başlık bulanıklığı",
   "Softens the wallpaper behind the time.": "Saatin arkasındaki duvar kâğıdını yumuşatır.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Cam widget'ların kenarı; Island ve Dock camınınkiyle aynı."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Cam widget'ların kenarı; Island ve Dock camınınkiyle aynı.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Duvar kâğıdının üstte, düğmelerin altında Island'a nasıl karıştığı. Daha azı, Island'ın kenarla birleştiği yere kadar daha yükseğe çıkmasını sağlar.",
+  "Page buttons": "Sayfa düğmeleri",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Gezinme satırını ne taşır. Bir plaka baloncukların biçimini izler, içindeki düğmeler eş merkezlidir.",
+  "Veil": "Perde"
 }

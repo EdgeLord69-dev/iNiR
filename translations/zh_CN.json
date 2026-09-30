@@ -8857,10 +8857,13 @@
   "Header fade": "页头渐变",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "时间下方壁纸融入 Island 的程度。调低会露出更多壁纸。",
   "Header top": "页头顶部",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "顶部按钮下方壁纸融入 Island 的方式。调低会让壁纸延伸到边缘。",
   "Header veil": "页头遮罩",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "时间后方壁纸的变暗程度。低于 100 % 时，在明亮壁纸上时间可能更难看清。",
   "Header blur": "页头模糊",
   "Softens the wallpaper behind the time.": "柔化时间后方的壁纸。",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "玻璃小组件的边缘，与 Island 和 Dock 的玻璃相同。"
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "玻璃小组件的边缘，与 Island 和 Dock 的玻璃相同。",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "顶部按钮下方壁纸融入 Island 的方式。调低会让壁纸升得更高，直到 Island 与边缘相接处。",
+  "Page buttons": "页面按钮",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "承载导航行的底板。底板跟随气泡的形状，内部按钮与其同心。",
+  "Veil": "遮罩"
 }

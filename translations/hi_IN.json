@@ -8857,10 +8857,13 @@
   "Header fade": "हेडर ग्रेडिएंट",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "समय के नीचे वॉलपेपर Island में कितना घुलता है। कम करने पर ज़्यादा दिखता है।",
   "Header top": "हेडर का ऊपरी भाग",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "ऊपर, बटनों के नीचे वॉलपेपर Island में कैसे घुलता है। कम करने पर यह किनारे तक पहुँचता है।",
   "Header veil": "हेडर परदा",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "समय के पीछे वॉलपेपर कितना गहरा होता है। 100 % से कम पर हल्के वॉलपेपर पर समय पढ़ना कठिन हो सकता है।",
   "Header blur": "हेडर धुंधलापन",
   "Softens the wallpaper behind the time.": "समय के पीछे के वॉलपेपर को नरम करता है।",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "ग्लास विजेट का किनारा, Island और Dock के ग्लास जैसा ही।"
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "ग्लास विजेट का किनारा, Island और Dock के ग्लास जैसा ही।",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "ऊपर, बटनों के नीचे वॉलपेपर Island में कैसे घुलता है। कम करने पर यह ऊपर उठता है, जहाँ Island किनारे से मिलता है वहाँ तक।",
+  "Page buttons": "पेज बटन",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "नेविगेशन पंक्ति को क्या थामे। प्लेट बबल के आकार का अनुसरण करती है, अंदर बटन समकेंद्रित रहते हैं।",
+  "Veil": "परदा"
 }

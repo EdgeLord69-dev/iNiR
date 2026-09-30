@@ -8857,10 +8857,13 @@
   "Header fade": "Fondu de l'en-tête",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Jusqu'où le fond d'écran se fond dans l'Island sous l'heure. Moins en laisse voir davantage.",
   "Header top": "Haut de l'en-tête",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Comment le fond d'écran se fond dans l'Island en haut, sous ses boutons. Moins le laisse atteindre le bord.",
   "Header veil": "Voile de l'en-tête",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "À quel point le fond d'écran est assombri derrière l'heure. Sous 100 %, l'heure peut être moins lisible sur un fond clair.",
   "Header blur": "Flou de l'en-tête",
   "Softens the wallpaper behind the time.": "Adoucit le fond d'écran derrière l'heure.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Le bord des widgets en verre, le même que celui du verre de l'Island et du Dock."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Le bord des widgets en verre, le même que celui du verre de l'Island et du Dock.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Comment le fond d'écran se fond dans l'Island en haut, sous ses boutons. Moins le laisse monter plus haut, jusqu'à la jonction de l'Island avec le bord.",
+  "Page buttons": "Boutons de page",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Ce qui porte la rangée de navigation. Une plaque suit la forme des bulles, avec les boutons concentriques à l'intérieur.",
+  "Veil": "Voile"
 }

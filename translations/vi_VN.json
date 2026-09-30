@@ -8857,10 +8857,13 @@
   "Header fade": "Chuyển màu phần đầu",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Mức hình nền hòa vào Island bên dưới giờ. Thấp hơn để lộ nhiều hơn.",
   "Header top": "Phía trên phần đầu",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Cách hình nền hòa vào Island ở phía trên, dưới các nút. Thấp hơn để nó chạm tới mép.",
   "Header veil": "Lớp phủ phần đầu",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Mức làm tối hình nền sau giờ. Dưới 100 % giờ có thể khó đọc hơn trên hình nền sáng.",
   "Header blur": "Làm mờ phần đầu",
   "Softens the wallpaper behind the time.": "Làm dịu hình nền sau giờ.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Cạnh của widget kính, giống kính của Island và Dock."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Cạnh của widget kính, giống kính của Island và Dock.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Cách hình nền hòa vào Island ở phía trên, dưới các nút. Thấp hơn để nó lên cao hơn, tới chỗ Island gặp mép.",
+  "Page buttons": "Nút trang",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Thứ chứa hàng điều hướng. Tấm nền theo hình bong bóng, các nút bên trong đồng tâm.",
+  "Veil": "Lớp phủ"
 }

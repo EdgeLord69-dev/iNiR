@@ -8857,10 +8857,13 @@
   "Header fade": "ヘッダーのグラデーション",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "時刻の下で壁紙が Island に溶け込む範囲。下げるほど壁紙が多く見えます。",
   "Header top": "ヘッダー上部",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "上部のボタンの下で壁紙が Island に溶け込む度合い。下げると端まで届きます。",
   "Header veil": "ヘッダーのベール",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "時刻の後ろの壁紙を暗くする度合い。100 % 未満だと明るい壁紙で時刻が読みにくくなることがあります。",
   "Header blur": "ヘッダーのぼかし",
   "Softens the wallpaper behind the time.": "時刻の後ろの壁紙をやわらげます。",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "ガラスのウィジェットの縁。Island と Dock のガラスと同じです。"
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "ガラスのウィジェットの縁。Island と Dock のガラスと同じです。",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "上部のボタンの下で壁紙が Island に溶け込む度合い。下げると、Island が端とつながる位置まで高く上がります。",
+  "Page buttons": "ページボタン",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "ナビゲーション行を載せるもの。プレートはバブルの形に合わせ、中のボタンと同心になります。",
+  "Veil": "ベール"
 }

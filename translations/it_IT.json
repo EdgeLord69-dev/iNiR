@@ -8857,10 +8857,13 @@
   "Header fade": "Sfumatura dell'intestazione",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Quanto lo sfondo si fonde con l'Island sotto l'ora. Meno ne lascia vedere di più.",
   "Header top": "Parte alta dell'intestazione",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "Come lo sfondo si fonde con l'Island in alto, sotto i pulsanti. Meno lo lascia arrivare al bordo.",
   "Header veil": "Velo dell'intestazione",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "Quanto lo sfondo è scurito dietro l'ora. Sotto il 100 % l'ora può leggersi peggio su sfondi chiari.",
   "Header blur": "Sfocatura dell'intestazione",
   "Softens the wallpaper behind the time.": "Ammorbidisce lo sfondo dietro l'ora.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Il bordo dei widget in vetro, lo stesso del vetro dell'Island e del Dock."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "Il bordo dei widget in vetro, lo stesso del vetro dell'Island e del Dock.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "Come lo sfondo si fonde con l'Island in alto, sotto i pulsanti. Meno lo lascia salire di più, fino a dove l'Island incontra il bordo.",
+  "Page buttons": "Pulsanti di pagina",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "Cosa contiene la riga di navigazione. Una lastra segue la forma delle bolle, con i pulsanti concentrici all'interno.",
+  "Veil": "Velo"
 }

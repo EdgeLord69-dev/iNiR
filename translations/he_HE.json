@@ -8857,10 +8857,13 @@
   "Header fade": "מעבר הכותרת",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "כמה הטפט נמזג אל ה-Island מתחת לשעה. פחות מראה יותר ממנו.",
   "Header top": "חלק עליון של הכותרת",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "איך הטפט נמזג אל ה-Island למעלה, מתחת לכפתורים. פחות מאפשר לו להגיע לקצה.",
   "Header veil": "צעיף הכותרת",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "כמה הטפט מוחשך מאחורי השעה. מתחת ל-100 % השעה עלולה להיקרא פחות טוב על טפטים בהירים.",
   "Header blur": "טשטוש הכותרת",
   "Softens the wallpaper behind the time.": "מרכך את הטפט מאחורי השעה.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "הקצה של ווידג'טים מזכוכית, זהה לזכוכית של ה-Island וה-Dock."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "הקצה של ווידג'טים מזכוכית, זהה לזכוכית של ה-Island וה-Dock.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "איך הטפט נמזג אל ה-Island למעלה, מתחת לכפתורים. פחות מאפשר לו לעלות גבוה יותר, עד המקום שבו ה-Island פוגש את הקצה.",
+  "Page buttons": "כפתורי עמודים",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "מה שמחזיק את שורת הניווט. לוח עוקב אחר צורת הבועות, והכפתורים בתוכו קונצנטריים.",
+  "Veil": "צעיף"
 }

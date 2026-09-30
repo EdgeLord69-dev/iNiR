@@ -2598,6 +2598,7 @@
             "desktopBannerTop": 100,
             "desktopBannerVeil": 100,
             "desktopBannerBlur": 0,
+            "navFrame": "none",
             "desktopBlocks": ["profile", "context", "forecast", "agenda", "modules"],
             "mediaBlocks": [
                 "player",

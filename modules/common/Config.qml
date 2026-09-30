@@ -4101,6 +4101,7 @@ Singleton {
                     property int desktopBannerTop: 100 // % of the fade into the Island's body at the top, under its buttons
                     property int desktopBannerVeil: 100 // % of the legibility veil over the header wallpaper
                     property int desktopBannerBlur: 0 // % blur of the header wallpaper
+                    property string navFrame: "none" // the open Island's page buttons: "none", "veil", "glass" or "solid"
                     // Island Desktop page blocks under the hero, in order:
                     // "profile", "context", "vitals", "modules".
                     property list<string> desktopBlocks: ["profile", "context", "forecast", "agenda", "modules"]

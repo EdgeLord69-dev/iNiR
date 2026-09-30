@@ -8857,10 +8857,13 @@
   "Header fade": "تدرّج الترويسة",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "مدى اندماج الخلفية مع Island تحت الوقت. الأقل يُظهر المزيد منها.",
   "Header top": "أعلى الترويسة",
-  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it reach the edge.": "كيف تندمج الخلفية مع Island في الأعلى، تحت أزراره. الأقل يجعلها تصل إلى الحافة.",
   "Header veil": "حجاب الترويسة",
   "How much the wallpaper is dimmed behind the time. Below 100 % the time can be harder to read on bright wallpapers.": "مقدار تعتيم الخلفية خلف الوقت. تحت 100 % قد يصعب قراءة الوقت على الخلفيات الفاتحة.",
   "Header blur": "تمويه الترويسة",
   "Softens the wallpaper behind the time.": "يليّن الخلفية خلف الوقت.",
-  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "حافة الأدوات الزجاجية، مثل زجاج Island وDock."
+  "The edge of glass widgets, the same as the Island's and the Dock's glass.": "حافة الأدوات الزجاجية، مثل زجاج Island وDock.",
+  "How the wallpaper melts into the Island at the top, under its buttons. Lower lets it rise higher, up to where the Island meets the edge.": "كيف تندمج الخلفية مع Island في الأعلى، تحت أزراره. الأقل يجعلها ترتفع أكثر، حتى حيث يلتقي Island بالحافة.",
+  "Page buttons": "أزرار الصفحات",
+  "What holds the navigation row. A plate follows the bubbles' shape, with the buttons inside it concentric.": "ما يحمل صف التنقل. تتبع اللوحة شكل الفقاعات، والأزرار داخلها متحدة المركز.",
+  "Veil": "حجاب"
 }
