@@ -8845,5 +8845,6 @@
   "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "数分ごとにフォルダーから新しい壁紙に替えます。デスクトップメニューの「次の壁紙」は一度だけ替えます。",
   "Every": "間隔",
   "Colours follow": "色も合わせる",
-  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "新しい壁紙ごとにシェルとアプリを配色し直します。オフでは現在の色のままです。"
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "新しい壁紙ごとにシェルとアプリを配色し直します。オフでは現在の色のままです。",
+  "Every palette, with previews; app icon theme": "すべてのパレットとプレビュー、アプリのアイコンテーマ"
 }

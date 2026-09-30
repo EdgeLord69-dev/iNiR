@@ -8845,5 +8845,6 @@
   "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "몇 분마다 폴더에서 새 배경화면으로 바꿉니다. 데스크톱 메뉴의 다음 배경화면은 한 번만 바꿉니다.",
   "Every": "간격",
   "Colours follow": "색상도 따라가기",
-  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "새 배경화면마다 셸과 앱의 색을 다시 입힙니다. 끄면 현재 색을 유지합니다."
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "새 배경화면마다 셸과 앱의 색을 다시 입힙니다. 끄면 현재 색을 유지합니다.",
+  "Every palette, with previews; app icon theme": "모든 팔레트와 미리보기, 앱 아이콘 테마"
 }

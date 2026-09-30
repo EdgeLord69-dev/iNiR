@@ -8845,5 +8845,6 @@
   "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "每隔几分钟从你的文件夹换一张新壁纸。桌面菜单里的“下一张壁纸”只换一次。",
   "Every": "每隔",
   "Colours follow": "颜色跟随",
-  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "每张新壁纸都会为 shell 和你的应用重新配色。关闭则保留当前颜色。"
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "每张新壁纸都会为 shell 和你的应用重新配色。关闭则保留当前颜色。",
+  "Every palette, with previews; app icon theme": "所有调色板及预览；应用图标主题"
 }

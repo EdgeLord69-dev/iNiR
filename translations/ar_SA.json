@@ -8845,5 +8845,6 @@
   "A new wallpaper from your folder every few minutes. Next wallpaper in the desktop menu does it once.": "خلفية جديدة من مجلدك كل بضع دقائق. «الخلفية التالية» في قائمة سطح المكتب تفعل ذلك مرة واحدة.",
   "Every": "كل",
   "Colours follow": "الألوان تتبع",
-  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "كل خلفية جديدة تعيد تلوين الواجهة وتطبيقاتك. الإيقاف يُبقي الألوان الحالية."
+  "Each new wallpaper recolours the shell and your apps. Off keeps the current colours.": "كل خلفية جديدة تعيد تلوين الواجهة وتطبيقاتك. الإيقاف يُبقي الألوان الحالية.",
+  "Every palette, with previews; app icon theme": "كل لوحة ألوان مع معاينة؛ سمة أيقونات التطبيقات"
 }
