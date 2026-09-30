@@ -530,8 +530,9 @@ AbstractWidget {
     // every frame it draws repaints the whole desktop window and makes Niri recompose the output.
     readonly property bool motionActive: root.powerActive && Wallpapers.videoMotionAllowedOn(root.outputName)
 
-    // Effective animation state: animations enabled AND power active
-    readonly property bool animationsActive: (root.widgetIris ? IrisStyle.motionEnabled : Appearance.animationsEnabled) && root.powerActive
+    // Eased transitions follow motionActive: behind windows a value snaps instead. Every animation that starts
+    // makes Qt's threaded loop request a frame from every shell window (QSGThreadedRenderLoop::animationStarted).
+    readonly property bool animationsActive: (root.widgetIris ? IrisStyle.motionEnabled : Appearance.animationsEnabled) && root.motionActive
 
     // Visual feedback when paused - desaturation + slight dim
     // Config option to disable visual effect if user only wants GPU savings
