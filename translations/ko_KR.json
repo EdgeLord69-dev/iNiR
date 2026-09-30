@@ -8848,7 +8848,7 @@
   "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "위젯이 지닌 재질의 양. 100 %에서 글래스는 글자에 필요한 만큼 짙고, 낮출수록 배경화면이 더 비칩니다. 모든 위젯에 Lume을 켜면 읽기 쉬움을 유지합니다.",
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS는 모든 위젯의 디자인, 재질, 색을 자체 설정에서 정합니다. 아래 위젯별 옵션은 위젯이 Material, iNstrument 또는 Readout 디자인일 때 적용됩니다.",
   "Open iRiS widget settings": "iRiS 위젯 설정 열기",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "각 유리 가장자리 윗부분이 받는 빛의 양으로, 유리의 단면처럼 빛납니다. 어두운 바탕 화면에서도 유리가 보이게 해 줍니다. 글래스 위젯도 같은 가장자리를 씁니다.",
+  "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.": "각 가장자리 윗부분이 받는 빛의 양으로, 유리의 잘린 단면 같습니다. 유리에서는 어두운 바탕화면 위에서도 보이게 해 줍니다.",
   "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "글래스 뒤 배경화면이 흐려지는 정도. iRiS와 글래스 위젯에 적용됩니다.",
   "Header fade": "헤더 그라데이션",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "시간 아래에서 배경화면이 Island에 녹아드는 정도. 낮출수록 더 많이 보입니다.",
@@ -8869,5 +8869,7 @@
   "Dock notch": "Dock 노치",
   "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock이 Island의 노치처럼 화면 가장자리에 녹아듭니다. 끄면 가장자리에서 떨어져 떠 있습니다.",
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island 옆의 버블. 사운드와 마이크는 레벨을 보여 주며, 스크롤로 조절하고 클릭하면 음소거됩니다.",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island가 직접 지니는 작은 얼굴들로, 켠 순서대로 놓입니다. 각각 카드를 열고 스크롤로 레벨을 조절합니다. 여기서 고른 버블은 프레임을 떠나며, 프레임에 띄우려면 버블 › 추가 버블을 쓰세요."
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island가 직접 지니는 작은 얼굴들로, 켠 순서대로 놓입니다. 각각 카드를 열고 스크롤로 레벨을 조절합니다. 여기서 고른 버블은 프레임을 떠나며, 프레임에 띄우려면 버블 › 추가 버블을 쓰세요.",
+  "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "모든 표면이 두르는 가장자리로, 모든 재질에 적용됩니다. 선은 고른 헤어라인이고, 광채는 위쪽에서 빛을 받아 옆으로 옅어지는 유리 가장자리 같은 표현입니다. 유리는 어느 쪽이든 빛나는 가장자리를 유지합니다.",
+  "Lit": "광채"
 }

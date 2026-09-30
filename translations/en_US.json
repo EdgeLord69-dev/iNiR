@@ -8848,7 +8848,7 @@
   "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.",
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.",
   "Open iRiS widget settings": "Open iRiS widget settings",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.",
+  "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.": "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.",
   "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.",
   "Header fade": "Header fade",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.",
@@ -8869,5 +8869,7 @@
   "Dock notch": "Dock notch",
   "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.",
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead."
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.",
+  "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.",
+  "Lit": "Lit"
 }

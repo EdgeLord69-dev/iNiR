@@ -8848,7 +8848,7 @@
   "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "مقدار المادة التي تحملها الأداة. عند 100 % يكون الزجاج بالكثافة التي يحتاجها النص؛ الأقل يُظهر المزيد من الخلفية. Lume على كل الأدوات يحافظ على وضوح القراءة.",
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "يحدد iRiS تصميم كل أداة ومادتها وألوانها في إعداداته الخاصة. تنطبق خيارات كل أداة أدناه ما دامت تستخدم تصميم Material أو iNstrument أو Readout.",
   "Open iRiS widget settings": "فتح إعدادات أدوات iRiS",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "مقدار الضوء الذي يلتقطه أعلى كل حافة زجاجية، مثل حافة الزجاج المقطوعة. هو ما يجعل الزجاج مرئيًا فوق سطح مكتب داكن. تحمل الأدوات الزجاجية الحافة نفسها.",
+  "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.": "مقدار الضوء الذي يلتقطه أعلى كل حافة، مثل حافة الزجاج المقطوعة. على الزجاج هو ما يبقيه ظاهرًا فوق سطح مكتب داكن.",
   "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "مدى ضبابية الخلفية خلف الزجاج، في iRiS وفي الأدوات الزجاجية.",
   "Header fade": "تدرّج الترويسة",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "مدى اندماج الخلفية مع Island تحت الوقت. الأقل يُظهر المزيد منها.",
@@ -8869,5 +8869,7 @@
   "Dock notch": "شق Dock",
   "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "يندمج Dock في حافة شاشته مثل شق Island. عند الإيقاف يطفو بعيدًا عن الحافة.",
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "الفقاعة بجانب Island بنمط Cluster. يُظهر الصوت والميكروفون مستواهما: مرّر للضبط وانقر للكتم.",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "وجوه صغيرة يحملها Island بنفسه، بترتيب تشغيلها. كل منها يفتح بطاقته، وتُضبط المستويات بالتمرير. الفقاعة المختارة هنا تغادر الإطار؛ الفقاعات › فقاعات إضافية تجعل واحدة تطفو على الإطار."
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "وجوه صغيرة يحملها Island بنفسه، بترتيب تشغيلها. كل منها يفتح بطاقته، وتُضبط المستويات بالتمرير. الفقاعة المختارة هنا تغادر الإطار؛ الفقاعات › فقاعات إضافية تجعل واحدة تطفو على الإطار.",
+  "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "الحافة التي يرتديها كل سطح، على كل خامة. «خط» خط رفيع متساوٍ؛ «مضيء» يلتقط الضوء في الأعلى ويتلاشى على الجانبين، مثل حافة الزجاج. يحتفظ الزجاج بحافته المضيئة في الحالتين.",
+  "Lit": "مضيء"
 }

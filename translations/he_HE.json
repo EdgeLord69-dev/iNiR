@@ -8848,7 +8848,7 @@
   "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "כמה חומר נושא ווידג'ט. ב-100 % הזכוכית עבה כפי שהטקסט צריך; פחות מראה יותר מהטפט. Lume בכל הווידג'טים שומר על קריאות.",
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS קובע את העיצוב, החומר והצבעים של כל ווידג'ט בהגדרות שלו. האפשרויות של כל ווידג'ט למטה חלות כל עוד הוא בעיצוב Material, iNstrument או Readout.",
   "Open iRiS widget settings": "פתיחת הגדרות הווידג'טים של iRiS",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "כמה אור קולט החלק העליון של כל שפת זכוכית, כמו חתך של זכוכית. זה מה שמאפשר לזכוכית להיראות מעל שולחן עבודה כהה. ווידג'טים מזכוכית מקבלים את אותו קצה.",
+  "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.": "כמה אור קולט החלק העליון של כל קצה, כמו קצה חתוך של זכוכית. בזכוכית זה מה ששומר עליה גלויה מעל שולחן עבודה כהה.",
   "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "כמה הטפט מטושטש מאחורי הזכוכית, ב-iRiS ובווידג'טים מזכוכית.",
   "Header fade": "מעבר הכותרת",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "כמה הטפט נמזג אל ה-Island מתחת לשעה. פחות מראה יותר ממנו.",
@@ -8869,5 +8869,7 @@
   "Dock notch": "נוץ' של ה-Dock",
   "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "ה-Dock נמזג אל קצה המסך שלו כמו הנוץ' של ה-Island. כבוי, הוא מרחף בנפרד מהקצה.",
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "הבועה לצד Island במצב Cluster. צליל ומיקרופון מציגים את הרמה: גללו לכוונון, לחצו להשתקה.",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "פרצופים קטנים שה-Island נושא בעצמו, בסדר שבו הפעלתם אותם. כל אחד פותח את הכרטיס שלו, והרמות מכווננות בגלילה. בועה שנבחרה כאן עוזבת את המסגרת; בועות › בועות נוספות משייטות אחת על המסגרת."
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "פרצופים קטנים שה-Island נושא בעצמו, בסדר שבו הפעלתם אותם. כל אחד פותח את הכרטיס שלו, והרמות מכווננות בגלילה. בועה שנבחרה כאן עוזבת את המסגרת; בועות › בועות נוספות משייטות אחת על המסגרת.",
+  "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "הקצה של כל משטח, בכל חומר. «קו» הוא קו דק אחיד; «מואר» תופס את האור למעלה ודועך בצדדים, כמו קצה של זכוכית. הזכוכית שומרת על הקצה המואר שלה בכל מקרה.",
+  "Lit": "מואר"
 }

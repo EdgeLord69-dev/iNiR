@@ -8848,7 +8848,7 @@
   "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "ウィジェットが持つ素材の量。100 % ではガラスは文字に必要なだけの濃さになり、下げるほど壁紙が透けます。すべてのウィジェットに Lume をオンにすると読みやすさを保ちます。",
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS では各ウィジェットのデザイン・素材・色を iRiS の設定で決めます。下の各ウィジェットのオプションは、Material・iNstrument・Readout デザインのときに適用されます。",
   "Open iRiS widget settings": "iRiS のウィジェット設定を開く",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "ガラスの各縁の上部が受ける光の量。ガラスの切り口のように光り、暗いデスクトップでもガラスが見えるようになります。ガラスのウィジェットも同じ縁になります。",
+  "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.": "各縁の上端が受ける光の量。ガラスの切り口のように光ります。ガラスでは、暗いデスクトップの上でも見えるようにします。",
   "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "ガラスの後ろの壁紙のぼかし具合。iRiS とガラスのウィジェットに適用されます。",
   "Header fade": "ヘッダーのグラデーション",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "時刻の下で壁紙が Island に溶け込む範囲。下げるほど壁紙が多く見えます。",
@@ -8869,5 +8869,7 @@
   "Dock notch": "Dock のノッチ",
   "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock は Island のノッチのように画面の端に溶け込みます。オフにすると端から離れて浮かびます。",
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster の Island の横のバブル。サウンドとマイクはレベルを表示し、スクロールで調整、クリックでミュートします。",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island 自身が載せる小さなフェイス。オンにした順に並びます。それぞれカードを開き、レベルはスクロールで調整できます。ここで選んだバブルはフレームから外れます。フレームに浮かべるには バブル › 追加バブル を使います。"
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island 自身が載せる小さなフェイス。オンにした順に並びます。それぞれカードを開き、レベルはスクロールで調整できます。ここで選んだバブルはフレームから外れます。フレームに浮かべるには バブル › 追加バブル を使います。",
+  "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "すべての面がまとう縁。どの素材でも有効です。ラインは均一な細線、光彩は上端で光を受けて両側へ薄れていくガラスの縁のような表現です。ガラスはどちらでも光る縁を保ちます。",
+  "Lit": "光彩"
 }

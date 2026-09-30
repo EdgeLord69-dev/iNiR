@@ -8848,7 +8848,7 @@
   "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "Lượng chất liệu một widget mang. Ở 100 % Kính dày đúng mức chữ cần; thấp hơn để lộ nhiều hình nền hơn. Lume trên mọi widget giữ cho dễ đọc.",
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS đặt thiết kế, chất liệu và màu của mọi widget trong Cài đặt riêng. Các tùy chọn của từng widget bên dưới áp dụng khi widget dùng thiết kế Material, iNstrument hoặc Readout.",
   "Open iRiS widget settings": "Mở cài đặt widget của iRiS",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "Lượng ánh sáng mà phần trên của mỗi mép kính bắt được, như mép cắt của kính. Nhờ vậy kính vẫn hiện rõ trên màn hình nền tối. Widget kính dùng cùng cạnh này.",
+  "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.": "Mức ánh sáng mà phần trên của mỗi viền bắt được, như cạnh cắt của kính. Trên kính, đây là thứ giữ cho nó nổi bật trên màn hình nền tối.",
   "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Mức làm mờ hình nền sau lớp kính, trong iRiS và trên widget kính.",
   "Header fade": "Chuyển màu phần đầu",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Mức hình nền hòa vào Island bên dưới giờ. Thấp hơn để lộ nhiều hơn.",
@@ -8869,5 +8869,7 @@
   "Dock notch": "Tai thỏ của Dock",
   "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock hòa vào mép màn hình như tai thỏ của Island. Tắt, nó nổi tách khỏi mép.",
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Bong bóng bên cạnh Island Cluster. Âm thanh và Micrô hiện mức: cuộn để chỉnh, bấm để tắt tiếng.",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Những mặt nhỏ Island tự mang, theo thứ tự bạn bật. Mỗi cái mở thẻ riêng, mức được chỉnh khi cuộn. Bong bóng chọn ở đây rời khỏi khung; Bong bóng › Bong bóng thêm cho một cái nổi trên khung."
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Những mặt nhỏ Island tự mang, theo thứ tự bạn bật. Mỗi cái mở thẻ riêng, mức được chỉnh khi cuộn. Bong bóng chọn ở đây rời khỏi khung; Bong bóng › Bong bóng thêm cho một cái nổi trên khung.",
+  "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "Viền mà mọi bề mặt mang, trên mọi chất liệu. Đường là một nét mảnh đều; Ánh sáng bắt sáng ở phía trên và mờ dần xuống hai bên, như cạnh của kính. Kính luôn giữ viền sáng của nó.",
+  "Lit": "Ánh sáng"
 }

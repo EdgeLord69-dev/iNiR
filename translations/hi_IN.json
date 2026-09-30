@@ -8848,7 +8848,7 @@
   "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "विजेट कितनी सामग्री रखता है। 100 % पर ग्लास उतना ही गाढ़ा होता है जितना टेक्स्ट को चाहिए; कम करने पर वॉलपेपर ज़्यादा दिखता है। हर विजेट पर Lume इसे पढ़ने योग्य रखता है।",
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS हर विजेट का डिज़ाइन, सामग्री और रंग अपनी सेटिंग्स में तय करता है। नीचे हर विजेट के विकल्प तभी लागू होते हैं जब वह Material, iNstrument या Readout डिज़ाइन में हो।",
   "Open iRiS widget settings": "iRiS विजेट सेटिंग्स खोलें",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "हर काँच के किनारे का ऊपरी हिस्सा कितनी रोशनी पकड़ता है, जैसे काँच का कटा किनारा। इसी से काँच गहरे डेस्कटॉप पर भी दिखता है। ग्लास विजेट भी यही किनारा पहनते हैं।",
+  "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.": "हर किनारे का ऊपरी हिस्सा कितनी रोशनी पकड़ता है, जैसे काँच का कटा किनारा। काँच पर यही उसे गहरे डेस्कटॉप पर दिखाई देता रखता है।",
   "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "ग्लास के पीछे वॉलपेपर कितना धुंधला है, iRiS में और ग्लास विजेट पर।",
   "Header fade": "हेडर ग्रेडिएंट",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "समय के नीचे वॉलपेपर Island में कितना घुलता है। कम करने पर ज़्यादा दिखता है।",
@@ -8869,5 +8869,7 @@
   "Dock notch": "Dock नॉच",
   "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock, Island के नॉच की तरह अपने स्क्रीन किनारे में घुल जाता है। बंद होने पर वह किनारे से अलग तैरता है।",
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island के बगल का बबल। साउंड और माइक्रोफ़ोन अपना स्तर दिखाते हैं: समायोजित करने के लिए स्क्रॉल करें, म्यूट के लिए क्लिक करें।",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "छोटे चेहरे जिन्हें Island खुद रखता है, उसी क्रम में जिसमें आप उन्हें चालू करते हैं। हर एक अपना कार्ड खोलता है, और स्क्रॉल से स्तर बदलते हैं। यहाँ चुना बबल फ़्रेम छोड़ देता है; बबल › अतिरिक्त बबल एक को फ़्रेम पर तैराता है।"
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "छोटे चेहरे जिन्हें Island खुद रखता है, उसी क्रम में जिसमें आप उन्हें चालू करते हैं। हर एक अपना कार्ड खोलता है, और स्क्रॉल से स्तर बदलते हैं। यहाँ चुना बबल फ़्रेम छोड़ देता है; बबल › अतिरिक्त बबल एक को फ़्रेम पर तैराता है।",
+  "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "हर सतह का किनारा, हर मटीरियल पर। लाइन एक समान पतली रेखा है; प्रकाशित ऊपर रोशनी पकड़ता है और किनारों की ओर फीका होता है, जैसे काँच का किनारा। काँच दोनों में अपना चमकता किनारा रखता है।",
+  "Lit": "प्रकाशित"
 }

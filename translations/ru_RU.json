@@ -8848,7 +8848,7 @@
   "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "Сколько материала несёт виджет. При 100 % Стекло настолько плотное, насколько нужно тексту; меньше пропускает больше обоев. Lume на всех виджетах сохраняет читаемость.",
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS задаёт дизайн, материал и цвета каждого виджета в своих Настройках. Параметры виджетов ниже действуют, пока виджет в дизайне Material, iNstrument или Readout.",
   "Open iRiS widget settings": "Открыть настройки виджетов iRiS",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "Сколько света ловит верх каждого края стекла, как срез стекла. Благодаря этому стекло видно на тёмном рабочем столе. Стеклянные виджеты получают тот же край.",
+  "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.": "Сколько света ловит верх каждого края, как срез стекла. На стекле именно это делает его заметным на тёмном рабочем столе.",
   "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "Насколько размыты обои за стеклом, в iRiS и на стеклянных виджетах.",
   "Header fade": "Переход заголовка",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "Насколько обои растворяются в Island под временем. Меньше — видно больше обоев.",
@@ -8869,5 +8869,7 @@
   "Dock notch": "Вырез Dock",
   "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock сливается со своим краем экрана, как вырез Island. Выключено — парит отдельно от края.",
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Пузырь рядом с Island в режиме Cluster. Звук и Микрофон показывают уровень: прокрутка меняет, щелчок выключает.",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Маленькие значки, которые Island несёт сам, в порядке включения. Каждый открывает свою карточку, уровни меняются прокруткой. Выбранный здесь пузырь покидает рамку; Пузыри › Дополнительные пузыри размещают его на рамке."
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Маленькие значки, которые Island несёт сам, в порядке включения. Каждый открывает свою карточку, уровни меняются прокруткой. Выбранный здесь пузырь покидает рамку; Пузыри › Дополнительные пузыри размещают его на рамке.",
+  "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "Край каждой поверхности на любом материале. Линия — ровный тонкий контур; Подсветка ловит свет сверху и растворяется по бокам, как край стекла. Стекло в любом случае сохраняет свой светящийся край.",
+  "Lit": "Подсветка"
 }

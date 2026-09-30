@@ -8848,7 +8848,7 @@
   "How much material a widget carries. At 100 % Glass is as thick as its text needs; lower lets more wallpaper through. Lume on every widget keeps it readable.": "小组件承载的材质多少。100 % 时玻璃的浓度正好满足文字阅读；调低会透出更多壁纸。所有小组件启用 Lume 会保持可读。",
   "iRiS sets the design, material and colours of every widget in its own Settings. The options on each widget below apply while it wears the Material, iNstrument or Readout design.": "iRiS 在自己的设置中决定每个小组件的设计、材质和颜色。下方各小组件的选项在其使用 Material、iNstrument 或 Readout 设计时生效。",
   "Open iRiS widget settings": "打开 iRiS 小组件设置",
-  "How much light the top of each glass edge catches, like the cut edge of glass. It is what lets glass read over a dark desktop. Glass widgets wear the same edge.": "每条玻璃边缘顶部接收的光量，就像玻璃的切面。正是它让玻璃在深色桌面上依然可见。玻璃小组件也使用同样的边缘。",
+  "How much light the top of each edge catches, like the cut edge of glass. On glass it is what keeps it visible over a dark desktop.": "每条边缘顶部接收的光量，如同玻璃的切面。在玻璃上，它让玻璃在深色桌面上依然清晰可见。",
   "How blurred the wallpaper is behind the glass, on iRiS and on glass widgets.": "玻璃后壁纸的模糊程度，作用于 iRiS 和玻璃小组件。",
   "Header fade": "页头渐变",
   "How far the wallpaper melts into the Island under the time. Lower keeps more of it showing.": "时间下方壁纸融入 Island 的程度。调低会露出更多壁纸。",
@@ -8869,5 +8869,7 @@
   "Dock notch": "Dock 刘海",
   "The Dock melts into its screen edge like the Island's notch. Off, it floats clear of the edge.": "Dock 像 Island 的刘海一样融入屏幕边缘。关闭后，它会离开边缘悬浮。",
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island 旁的气泡。声音和麦克风显示电平：滚动调节，点击静音。",
-  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island 自己携带的小面孔，按开启顺序排列。每个都会打开自己的卡片，滚动可调节电平。在这里选中的气泡会离开边框；要让气泡在边框上悬浮，请使用 气泡 › 额外气泡。"
+  "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island 自己携带的小面孔，按开启顺序排列。每个都会打开自己的卡片，滚动可调节电平。在这里选中的气泡会离开边框；要让气泡在边框上悬浮，请使用 气泡 › 额外气泡。",
+  "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "每个表面的边缘，适用于所有材质。线条是均匀的细线；光边在顶部受光并向两侧渐隐，如同玻璃的边缘。玻璃无论哪种都保留其发光边缘。",
+  "Lit": "光边"
 }

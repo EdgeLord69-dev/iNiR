@@ -2457,6 +2457,7 @@
                 "text": 100,
                 "weight": "regular",
                 "rim": true,
+                "edges": "line",
                 "rimTint": "neutral",
                 "rimWidth": 1,
                 "glow": 0,
