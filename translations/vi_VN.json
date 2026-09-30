@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "Chuyển động trên màn hình khóa",
   "Plays while the lock screen's blur is off.": "Phát khi hiệu ứng mờ của màn hình khóa đang tắt.",
   "Same wallpaper as the desktop": "Cùng hình nền với màn hình nền",
+  "Only the backdrop on the desktop": "Chỉ hiển thị phông nền trên màn hình",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Ẩn hình nền màn hình: màn hình hiển thị phông nền với độ mờ và độ tối của nó, và kính cũng theo đó.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Tắt giữ hình nền riêng của màn tổng quan; chọn nó trong thư viện với đích là Tổng quan.",
   "Animate in the overview": "Chuyển động trong màn tổng quan",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Hình nền động chuyển động sau các không gian làm việc, chỉ khi màn tổng quan đang mở.",

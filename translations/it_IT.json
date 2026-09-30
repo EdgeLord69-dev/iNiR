@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "Anima sulla schermata di blocco",
   "Plays while the lock screen's blur is off.": "Si riproduce finché la sfocatura della schermata di blocco è disattivata.",
   "Same wallpaper as the desktop": "Stesso sfondo del desktop",
+  "Only the backdrop on the desktop": "Solo lo sfondo della panoramica sul desktop",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Nasconde lo sfondo del desktop: il desktop mostra lo sfondo della panoramica con la sua sfocatura e il suo oscuramento, e il vetro lo segue.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Disattivato mantiene lo sfondo proprio della panoramica; sceglilo nella galleria con Panoramica come destinazione.",
   "Animate in the overview": "Anima nella panoramica",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Uno sfondo animato si muove dietro gli spazi di lavoro, solo mentre la panoramica è aperta.",

@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "Анімувати на екрані блокування",
   "Plays while the lock screen's blur is off.": "Грає, поки розмиття екрана блокування вимкнене.",
   "Same wallpaper as the desktop": "Ті самі шпалери, що й на робочому столі",
+  "Only the backdrop on the desktop": "Лише тло огляду на робочому столі",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Приховує шпалери робочого столу: робочий стіл показує тло огляду з його розмиттям і затемненням, і скло слідує за ним.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Вимкнено лишає власні шпалери огляду; виберіть їх у галереї з ціллю «Огляд».",
   "Animate in the overview": "Анімувати в огляді",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Живі шпалери рухаються за робочими просторами, лише поки відкрито огляд.",

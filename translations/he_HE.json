@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "הנפשה במסך הנעילה",
   "Plays while the lock screen's blur is off.": "מתנגן כל עוד טשטוש מסך הנעילה כבוי.",
   "Same wallpaper as the desktop": "אותו טפט כמו בשולחן העבודה",
+  "Only the backdrop on the desktop": "רק הרקע של הסקירה בשולחן העבודה",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "מסתיר את טפט שולחן העבודה: שולחן העבודה מציג את רקע הסקירה עם הטשטוש וההחשכה שלו, והזכוכית עוקבת אחריו.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "כבוי שומר את הטפט של הסקירה עצמה; בחר אותו בגלריה עם הסקירה כיעד.",
   "Animate in the overview": "הנפשה בסקירה",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "טפט חי זז מאחורי סביבות העבודה, רק כשהסקירה פתוחה.",

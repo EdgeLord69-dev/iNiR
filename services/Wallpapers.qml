@@ -621,6 +621,21 @@ Singleton {
         return (waffleBackground.useMainWallpaper ?? true) ? mainPath : (waffleBackground.wallpaperPath || mainPath)
     }
 
+    // The image the desktop actually shows on an output: the backdrop's when it replaces the wallpaper
+    // ("show only the backdrop", ii and iRiS), the main wallpaper otherwise. Glass and Lume read this one,
+    // or they sample a wallpaper nobody sees.
+    readonly property bool desktopShowsBackdrop: !root.isWaffleFamily && root.useBackdropWallpaper
+    // How Backdrop.qml draws it over the desktop: a black dim, then saturation and contrast (0 when it does not).
+    readonly property real desktopDim: root.desktopShowsBackdrop
+        ? Math.max(0, Math.min(1, Number(Config.options?.background?.backdrop?.dim ?? 35) / 100)) : 0
+    readonly property real desktopSaturation: root.desktopShowsBackdrop ? Number(Config.options?.background?.backdrop?.saturation ?? 0) : 0
+    readonly property real desktopContrast: root.desktopShowsBackdrop ? Number(Config.options?.background?.backdrop?.contrast ?? 0) : 0
+    function desktopWallpaperPath(monitorName = ""): string {
+        if (root.desktopShowsBackdrop)
+            return currentWallpaperPathForTarget("backdrop", monitorName)
+        return currentMainWallpaperPath(monitorName)
+    }
+
     function currentWallpaperPathForTarget(target = "main", monitorName = ""): string {
         const normalizedTarget = target && target.length > 0 ? target : "main"
         const mainPath = currentMainWallpaperPath(monitorName)

@@ -6933,6 +6933,8 @@
   "Animate on the lock screen": "Animasikan di layar kunci",
   "Plays while the lock screen's blur is off.": "Diputar saat blur layar kunci mati.",
   "Same wallpaper as the desktop": "Wallpaper yang sama dengan desktop",
+  "Only the backdrop on the desktop": "Hanya latar ikhtisar di desktop",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Menyembunyikan wallpaper desktop: desktop menampilkan latar ikhtisar dengan blur dan peredupannya, dan kaca mengikutinya.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Mati mempertahankan wallpaper ikhtisar sendiri; pilih di galeri dengan Ikhtisar sebagai target.",
   "Animate in the overview": "Animasikan di ikhtisar",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Wallpaper animasi bergerak di belakang ruang kerja, hanya saat ikhtisar terbuka.",

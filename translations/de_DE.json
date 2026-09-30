@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "Auf dem Sperrbildschirm animieren",
   "Plays while the lock screen's blur is off.": "Spielt, solange die Unschärfe des Sperrbildschirms aus ist.",
   "Same wallpaper as the desktop": "Gleiches Hintergrundbild wie der Desktop",
+  "Only the backdrop on the desktop": "Nur der Hintergrund auf dem Desktop",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Blendet das Desktop-Hintergrundbild aus: Der Desktop zeigt den Übersichtshintergrund mit Unschärfe und Abdunklung, und das Glas folgt ihm.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Aus behält das eigene Hintergrundbild der Übersicht; wähle es in der Galerie mit Übersicht als Ziel.",
   "Animate in the overview": "In der Übersicht animieren",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Ein Live-Hintergrundbild bewegt sich hinter den Arbeitsbereichen, nur solange die Übersicht offen ist.",

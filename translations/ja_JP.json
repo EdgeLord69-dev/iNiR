@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "ロック画面でアニメーション",
   "Plays while the lock screen's blur is off.": "ロック画面のぼかしがオフの間に再生します。",
   "Same wallpaper as the desktop": "デスクトップと同じ壁紙",
+  "Only the backdrop on the desktop": "デスクトップにはバックドロップのみ",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "デスクトップの壁紙を隠し、ぼかしと暗さを適用したバックドロップを表示します。ガラスもそれに合わせます。",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "オフではオーバービュー専用の壁紙を保ちます。ギャラリーで対象を「オーバービュー」にして選んでください。",
   "Animate in the overview": "オーバービューでアニメーション",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "ライブ壁紙がワークスペースの背後で動きます。オーバービューを開いている間だけです。",

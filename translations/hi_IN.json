@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "लॉक स्क्रीन पर एनिमेट करें",
   "Plays while the lock screen's blur is off.": "जब तक लॉक स्क्रीन का ब्लर बंद है तब तक चलता है।",
   "Same wallpaper as the desktop": "डेस्कटॉप वाला ही वॉलपेपर",
+  "Only the backdrop on the desktop": "डेस्कटॉप पर केवल बैकड्रॉप",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "डेस्कटॉप वॉलपेपर छिपाता है: डेस्कटॉप धुंधलापन और मंदता के साथ बैकड्रॉप दिखाता है, और ग्लास उसी का अनुसरण करता है।",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "बंद होने पर ओवरव्यू का अपना वॉलपेपर रहता है; उसे गैलरी में ओवरव्यू को लक्ष्य बनाकर चुनें।",
   "Animate in the overview": "ओवरव्यू में एनिमेट करें",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "लाइव वॉलपेपर वर्कस्पेस के पीछे चलता है, सिर्फ़ जब ओवरव्यू खुला हो।",

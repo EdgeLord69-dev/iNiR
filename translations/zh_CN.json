@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "在锁屏上播放动画",
   "Plays while the lock screen's blur is off.": "锁屏模糊关闭时播放。",
   "Same wallpaper as the desktop": "与桌面相同的壁纸",
+  "Only the backdrop on the desktop": "桌面只显示背景幕",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "隐藏桌面壁纸：桌面显示带模糊和变暗效果的背景幕，玻璃也随之变化。",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "关闭则保留概览自己的壁纸；在图库中以“概览”为目标选择它。",
   "Animate in the overview": "在概览中播放动画",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "动态壁纸在工作区后面运动，仅在概览打开时。",

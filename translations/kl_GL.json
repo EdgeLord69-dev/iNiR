@@ -7223,5 +7223,7 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.",
-  "Lit": "Lit"
+  "Lit": "Lit",
+  "Only the backdrop on the desktop": "Only the backdrop on the desktop",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it."
 }

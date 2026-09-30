@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "Kilit ekranında canlandır",
   "Plays while the lock screen's blur is off.": "Kilit ekranının bulanıklığı kapalıyken oynar.",
   "Same wallpaper as the desktop": "Masaüstüyle aynı duvar kağıdı",
+  "Only the backdrop on the desktop": "Masaüstünde yalnızca genel bakış arka planı",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Masaüstü duvar kağıdını gizler: masaüstü, genel bakış arka planını bulanıklığı ve karartmasıyla gösterir ve cam onu izler.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Kapalı, genel bakışın kendi duvar kağıdını tutar; onu galeride hedef olarak Genel bakış ile seçin.",
   "Animate in the overview": "Genel bakışta canlandır",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Canlı bir duvar kağıdı, yalnızca genel bakış açıkken çalışma alanlarının arkasında hareket eder.",

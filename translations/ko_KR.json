@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "잠금 화면에서 움직이기",
   "Plays while the lock screen's blur is off.": "잠금 화면 흐림이 꺼져 있는 동안 재생됩니다.",
   "Same wallpaper as the desktop": "데스크톱과 같은 배경화면",
+  "Only the backdrop on the desktop": "데스크톱에 백드롭만 표시",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "데스크톱 배경화면을 숨기고 흐림과 어둡게 한 백드롭을 보여 줍니다. 유리도 이를 따릅니다.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "끄면 개요 전용 배경화면을 유지합니다. 갤러리에서 대상을 개요로 두고 고르세요.",
   "Animate in the overview": "개요에서 움직이기",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "라이브 배경화면이 작업 공간 뒤에서 움직입니다. 개요가 열려 있을 때만입니다.",

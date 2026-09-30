@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "Animar na tela de bloqueio",
   "Plays while the lock screen's blur is off.": "Toca enquanto o desfoque da tela de bloqueio está desligado.",
   "Same wallpaper as the desktop": "Mesmo papel de parede da área de trabalho",
+  "Only the backdrop on the desktop": "Só o fundo da visão geral na área de trabalho",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Oculta o papel de parede da área de trabalho: ela mostra o fundo da visão geral com seu desfoque e escurecimento, e o vidro acompanha.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Desligado mantém o papel de parede próprio da visão geral; escolha-o na galeria com Visão geral como destino.",
   "Animate in the overview": "Animar na visão geral",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Um papel de parede animado se move atrás dos espaços de trabalho, só enquanto a visão geral está aberta.",

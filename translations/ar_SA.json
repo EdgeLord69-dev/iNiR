@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "التحريك على شاشة القفل",
   "Plays while the lock screen's blur is off.": "تعمل ما دامت ضبابية شاشة القفل متوقفة.",
   "Same wallpaper as the desktop": "نفس خلفية سطح المكتب",
+  "Only the backdrop on the desktop": "الخلفية العامة فقط على سطح المكتب",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "يخفي خلفية سطح المكتب: يعرض سطح المكتب خلفية النظرة العامة بتمويهها وتعتيمها، ويتبعها الزجاج.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "الإيقاف يبقي خلفية النظرة العامة الخاصة؛ اخترها في المعرض مع النظرة العامة كهدف.",
   "Animate in the overview": "التحريك في النظرة العامة",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "تتحرك الخلفية الحية خلف مساحات العمل، فقط أثناء فتح النظرة العامة.",

@@ -6935,6 +6935,8 @@
   "Animate on the lock screen": "Animate on the lock screen",
   "Plays while the lock screen's blur is off.": "Plays while the lock screen's blur is off.",
   "Same wallpaper as the desktop": "Same wallpaper as the desktop",
+  "Only the backdrop on the desktop": "Only the backdrop on the desktop",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.",
   "Animate in the overview": "Animate in the overview",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "A live wallpaper moves behind the workspaces, only while the overview is open.",

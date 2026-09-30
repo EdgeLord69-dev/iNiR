@@ -6914,6 +6914,8 @@
   "Animate on the lock screen": "Animar en la pantalla de bloqueo",
   "Plays while the lock screen's blur is off.": "Se reproduce mientras el desenfoque del bloqueo está apagado.",
   "Same wallpaper as the desktop": "Mismo fondo que el escritorio",
+  "Only the backdrop on the desktop": "Solo el fondo de la vista general en el escritorio",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Oculta el fondo del escritorio: el escritorio muestra el de la vista general, con su desenfoque y oscurecido, y el vidrio lo sigue.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Apagado usa un fondo propio para la vista general; elígelo en la galería con Vista general como destino.",
   "Animate in the overview": "Animar en la vista general",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Un fondo animado se mueve detrás de los espacios de trabajo, solo mientras la vista general está abierta.",

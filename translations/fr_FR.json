@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "Animer sur l'écran de verrouillage",
   "Plays while the lock screen's blur is off.": "Joué tant que le flou de l'écran de verrouillage est désactivé.",
   "Same wallpaper as the desktop": "Même fond d'écran que le bureau",
+  "Only the backdrop on the desktop": "Seulement l'arrière-plan sur le bureau",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Masque le fond d'écran du bureau : le bureau affiche l'arrière-plan avec son flou et son assombrissement, et le verre le suit.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Désactivé garde le fond d'écran propre à la vue d'ensemble ; choisissez-le dans la galerie avec Vue d'ensemble comme cible.",
   "Animate in the overview": "Animer dans la vue d'ensemble",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Un fond d'écran animé bouge derrière les espaces de travail, seulement quand la vue d'ensemble est ouverte.",

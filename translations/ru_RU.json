@@ -6940,6 +6940,8 @@
   "Animate on the lock screen": "Анимировать на экране блокировки",
   "Plays while the lock screen's blur is off.": "Играет, пока размытие экрана блокировки выключено.",
   "Same wallpaper as the desktop": "Те же обои, что и на рабочем столе",
+  "Only the backdrop on the desktop": "Только фон обзора на рабочем столе",
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Скрывает обои рабочего стола: рабочий стол показывает фон обзора с его размытием и затемнением, и стекло следует за ним.",
   "Off keeps the overview's own wallpaper; choose it in the gallery with Overview as the target.": "Выключено оставляет собственные обои обзора; выберите их в галерее с целью «Обзор».",
   "Animate in the overview": "Анимировать в обзоре",
   "A live wallpaper moves behind the workspaces, only while the overview is open.": "Живые обои двигаются за рабочими пространствами, только пока открыт обзор.",
