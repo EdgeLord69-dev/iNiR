@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "पॉइंटर को स्क्रीन के किसी कोने में रोकें और Orbit खुल जाता है। गेम, लॉक स्क्रीन और विजेट संपादन इसे बंद कर देते हैं।",
   "Wait before opening": "खुलने से पहले प्रतीक्षा",
   "At once": "तुरंत",
-  "You are here": "आप यहाँ हैं"
+  "You are here": "आप यहाँ हैं",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab आपके अपने Niri शॉर्टकट में सेट है। यहाँ चुनने से यह उसकी जगह ले लेगा; आपकी लाइन जैसी है वैसी रहेगी।",
+  "Alt+Tab opens": "Alt+Tab खोलता है",
+  "Niri's Recent Windows": "Niri की हाल की विंडो",
+  "Niri's Recent Windows or the iNiR switcher": "Niri की हाल की विंडो या iNiR स्विचर",
+  "Niri's Recent Windows, or this switcher with the style below": "Niri की हाल की विंडो, या नीचे की शैली वाला यह स्विचर",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Alt+Tab कौन सा विंडो स्विचर खोलता है। Niri का हर विंडो का लाइव प्रीव्यू दिखाता है; iNiR का आपके पैनल की शैली अपनाता है।",
+  "iNiR switcher": "iNiR स्विचर"
 }

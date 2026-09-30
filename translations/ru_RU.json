@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "Задержите указатель в углу экрана, и откроется Orbit. Игра, заблокированный экран и правка виджетов его отключают.",
   "Wait before opening": "Задержка перед открытием",
   "At once": "Сразу",
-  "You are here": "Вы здесь"
+  "You are here": "Вы здесь",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab назначен в ваших собственных сочетаниях Niri. Выбор здесь перехватит его; ваша строка останется как есть.",
+  "Alt+Tab opens": "Alt+Tab открывает",
+  "Niri's Recent Windows": "Недавние окна Niri",
+  "Niri's Recent Windows or the iNiR switcher": "Недавние окна Niri или переключатель iNiR",
+  "Niri's Recent Windows, or this switcher with the style below": "Недавние окна Niri или этот переключатель в стиле ниже",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Какой переключатель окон открывает Alt+Tab. Niri показывает живые превью всех окон; переключатель iNiR следует стилю ваших панелей.",
+  "iNiR switcher": "Переключатель iNiR"
 }

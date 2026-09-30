@@ -102,6 +102,8 @@ complete -c inir -n '__inir_at_function ai' -a run -d 'Send a message or compati
 complete -c inir -n '__inir_at_function ai' -a runGet -d 'Run an AI command and return the last response'
 complete -c inir -n '__inir_at_target' -a altSwitcher -d 'Alt+Tab window switcher'
 complete -c inir -n '__inir_at_target' -a alt-switcher -d 'Alt+Tab window switcher'
+complete -c inir -n '__inir_at_function altSwitcher alt-switcher' -a opens -d 'Which switcher Alt+Tab opens: inir, niri (Niri\'s own Recent…'
+complete -c inir -n '__inir_at_value 1 opens altSwitcher alt-switcher' -a 'inir niri status'
 complete -c inir -n '__inir_at_function altSwitcher alt-switcher' -a open -d 'Open switcher'
 complete -c inir -n '__inir_at_function altSwitcher alt-switcher' -a close -d 'Close switcher'
 complete -c inir -n '__inir_at_function altSwitcher alt-switcher' -a toggle -d 'Toggle switcher'

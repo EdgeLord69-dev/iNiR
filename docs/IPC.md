@@ -204,6 +204,11 @@ Alt+Tab window switcher. Works across workspaces, unlike some other implementati
 | `close` | Close switcher |
 | `next` | Focus next window |
 | `previous` | Focus previous window |
+| `opens <which>` | Which switcher Alt+Tab opens: `inir`, `niri` (Niri's own Recent Windows) or `status` |
+
+Fresh installs give Alt+Tab to Niri's Recent Windows. `inir altSwitcher opens inir` hands it to iNiR's switcher
+with a marked block at the end of `~/.config/niri/config.d/90-user-extra.kdl`; `opens niri` removes that block.
+Your own binds are left as they are. The same choice is in Settings, next to the switcher's options.
 
 ```kdl
 Alt+Tab { spawn "inir" "altSwitcher" "next"; }

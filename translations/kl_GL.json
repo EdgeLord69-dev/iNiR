@@ -7174,5 +7174,13 @@
   "Icon pack": "Ikonit-pakki",
   "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.": "How every iRiS plate is drawn. The app-icon look is a plain plate with the icon in a gradient of its own colour.",
   "Plate": "Plate",
-  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens."
+  "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.": "The plate behind each icon. Black is the app-icon look; White or Surface read better on bright screens.",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.",
+  "Alt+Tab opens": "Alt+Tab opens",
+  "Niri's Recent Windows": "Niri's Recent Windows",
+  "Niri's Recent Windows or the iNiR switcher": "Niri's Recent Windows or the iNiR switcher",
+  "Niri's Recent Windows, or this switcher with the style below": "Niri's Recent Windows, or this switcher with the style below",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.",
+  "iNiR switcher": "iNiR switcher"
 }

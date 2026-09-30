@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "İmleci ekranın bir köşesinde beklet, Orbit açılır. Oyun, kilitli ekran ve widget düzenleme bunu kapatır.",
   "Wait before opening": "Açılmadan önce bekleme",
   "At once": "Hemen",
-  "You are here": "Buradasınız"
+  "You are here": "Buradasınız",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab kendi Niri kısayollarınızda atanmış. Buradan seçmek onu devralır; sizin satırınız olduğu gibi kalır.",
+  "Alt+Tab opens": "Alt+Tab açar",
+  "Niri's Recent Windows": "Niri'nin Son Pencereleri",
+  "Niri's Recent Windows or the iNiR switcher": "Niri'nin Son Pencereleri veya iNiR değiştiricisi",
+  "Niri's Recent Windows, or this switcher with the style below": "Niri'nin Son Pencereleri veya aşağıdaki stille bu değiştirici",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Alt+Tab'ın hangi pencere değiştiriciyi açacağı. Niri'ninki her pencerenin canlı önizlemesini gösterir; iNiR'inki panel stilinizi izler.",
+  "iNiR switcher": "iNiR değiştiricisi"
 }

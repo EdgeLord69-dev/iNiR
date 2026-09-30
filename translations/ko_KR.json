@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "포인터를 화면 모서리에 두면 Orbit이 열립니다. 게임, 잠금 화면, 위젯 편집 중에는 꺼집니다.",
   "Wait before opening": "열기 전 대기 시간",
   "At once": "즉시",
-  "You are here": "현재 위치"
+  "You are here": "현재 위치",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab이 직접 설정한 Niri 단축키에 지정되어 있습니다. 여기서 선택하면 대신 사용되며, 기존 줄은 그대로 유지됩니다.",
+  "Alt+Tab opens": "Alt+Tab으로 열기",
+  "Niri's Recent Windows": "Niri 최근 창",
+  "Niri's Recent Windows or the iNiR switcher": "Niri 최근 창 또는 iNiR 전환기",
+  "Niri's Recent Windows, or this switcher with the style below": "Niri 최근 창, 또는 아래 스타일의 이 전환기",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Alt+Tab이 여는 창 전환기입니다. Niri는 모든 창의 실시간 미리보기를 보여 주고, iNiR은 패널 스타일을 따릅니다.",
+  "iNiR switcher": "iNiR 전환기"
 }

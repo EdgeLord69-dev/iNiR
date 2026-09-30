@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "ポインターを画面の角に置くと Orbit が開きます。ゲーム、ロック画面、ウィジェットの編集中は無効になります。",
   "Wait before opening": "開くまでの待ち時間",
   "At once": "すぐ",
-  "You are here": "現在地"
+  "You are here": "現在地",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab はあなた自身の Niri キーバインドで割り当てられています。ここで選ぶと置き換わります。あなたの行はそのまま残ります。",
+  "Alt+Tab opens": "Alt+Tab で開く",
+  "Niri's Recent Windows": "Niri の最近のウィンドウ",
+  "Niri's Recent Windows or the iNiR switcher": "Niri の最近のウィンドウ または iNiR スイッチャー",
+  "Niri's Recent Windows, or this switcher with the style below": "Niri の最近のウィンドウ、または下のスタイルのこのスイッチャー",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Alt+Tab で開くウィンドウスイッチャー。Niri のものはすべてのウィンドウをライブプレビューし、iNiR のものはパネルのスタイルに合わせます。",
+  "iNiR switcher": "iNiR スイッチャー"
 }

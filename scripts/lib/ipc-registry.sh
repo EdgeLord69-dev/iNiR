@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: f6c95a51f7a265b6
+# IPC.md hash: e94b50ee6e94191a
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -153,7 +153,7 @@ declare -gA IPC_TARGET_FAMILY=(
 
 declare -gA IPC_TARGET_FUNCTIONS=(
   [ai]="ensureInitialized diagnose refreshCatalog catalog providers run runGet"
-  [altSwitcher]="open close toggle next previous"
+  [altSwitcher]="opens open close toggle next previous"
   [appCatalog]="refresh search install list"
   [audio]="volumeUp volumeDown mute playEvent micMute"
   [autostart]="status addCommand addApp removeLast reload"
@@ -232,6 +232,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["ai:providers"]="Return provider health, key state and live model counts"
   ["ai:run"]="Send a message or compatibility \`/command\` to AI chat"
   ["ai:runGet"]="Run an AI command and return the last response"
+  ["altSwitcher:opens"]="Which switcher Alt+Tab opens: \`inir\`, \`niri\` (Niri's own Recent Windows) or \`status\`"
   ["altSwitcher:open"]="Open switcher"
   ["altSwitcher:close"]="Close switcher"
   ["altSwitcher:toggle"]="Toggle switcher"
@@ -629,6 +630,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["ai:catalog"]="<query>"
   ["ai:run"]="<inputText>"
   ["ai:runGet"]="<inputText>"
+  ["altSwitcher:opens"]="<which>"
   ["appCatalog:search"]="<query>"
   ["appCatalog:install"]="<id>"
   ["audio:playEvent"]="<event>"
@@ -764,6 +766,7 @@ declare -gA IPC_FUNCTION_ARGS=(
 )
 
 declare -gA IPC_FUNCTION_VALUES=(
+  ["altSwitcher:opens"]="inir niri status"
   ["audio:playEvent"]="batteryLow timerDone"
   ["autostart:addCommand"]="spawn-sh-at-startup"
   ["background:widgetDesign"]="iris material individual instrument readout undo status"

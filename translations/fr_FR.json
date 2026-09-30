@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "Posez le pointeur dans un coin de l'écran et Orbit s'ouvre. Un jeu, l'écran verrouillé et l'édition des widgets le désactivent.",
   "Wait before opening": "Attente avant l'ouverture",
   "At once": "Tout de suite",
-  "You are here": "Vous êtes ici"
+  "You are here": "Vous êtes ici",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab est défini dans vos propres raccourcis Niri. Choisir ici prend le relais ; votre ligne reste telle quelle.",
+  "Alt+Tab opens": "Alt+Tab ouvre",
+  "Niri's Recent Windows": "Fenêtres récentes de Niri",
+  "Niri's Recent Windows or the iNiR switcher": "Fenêtres récentes de Niri ou le sélecteur iNiR",
+  "Niri's Recent Windows, or this switcher with the style below": "Fenêtres récentes de Niri, ou ce sélecteur avec le style ci-dessous",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Le sélecteur de fenêtres qu'ouvre Alt+Tab. Celui de Niri affiche un aperçu en direct de chaque fenêtre ; celui d'iNiR suit le style de vos panneaux.",
+  "iNiR switcher": "Sélecteur iNiR"
 }

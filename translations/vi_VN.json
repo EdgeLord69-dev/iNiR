@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "Đặt con trỏ ở một góc màn hình và Orbit mở ra. Trò chơi, màn hình khóa và chỉnh sửa widget sẽ tắt nó.",
   "Wait before opening": "Chờ trước khi mở",
   "At once": "Ngay lập tức",
-  "You are here": "Bạn đang ở đây"
+  "You are here": "Bạn đang ở đây",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab đã được gán trong phím tắt Niri của bạn. Chọn ở đây sẽ tiếp quản nó; dòng của bạn vẫn giữ nguyên.",
+  "Alt+Tab opens": "Alt+Tab mở",
+  "Niri's Recent Windows": "Cửa sổ gần đây của Niri",
+  "Niri's Recent Windows or the iNiR switcher": "Cửa sổ gần đây của Niri hoặc trình chuyển đổi iNiR",
+  "Niri's Recent Windows, or this switcher with the style below": "Cửa sổ gần đây của Niri, hoặc trình chuyển đổi này với kiểu bên dưới",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Trình chuyển đổi cửa sổ mà Alt+Tab mở. Của Niri hiển thị bản xem trước trực tiếp của mọi cửa sổ; của iNiR theo kiểu bảng điều khiển của bạn.",
+  "iNiR switcher": "Trình chuyển đổi iNiR"
 }

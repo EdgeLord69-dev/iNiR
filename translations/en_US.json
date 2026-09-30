@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.",
   "Wait before opening": "Wait before opening",
   "At once": "At once",
-  "You are here": "You are here"
+  "You are here": "You are here",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.",
+  "Alt+Tab opens": "Alt+Tab opens",
+  "Niri's Recent Windows": "Niri's Recent Windows",
+  "Niri's Recent Windows or the iNiR switcher": "Niri's Recent Windows or the iNiR switcher",
+  "Niri's Recent Windows, or this switcher with the style below": "Niri's Recent Windows, or this switcher with the style below",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.",
+  "iNiR switcher": "iNiR switcher"
 }

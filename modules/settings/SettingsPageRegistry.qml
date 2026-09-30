@@ -1053,6 +1053,13 @@ Singleton {
         },
         {
             pageIndex: 5, pageName: root.pages[5].name,
+            section: Translation.tr("Alt+Tab"),
+            label: Translation.tr("Alt+Tab opens"),
+            description: Translation.tr("Niri's Recent Windows or the iNiR switcher"),
+            keywords: ["alt", "tab", "alt+tab", "switcher", "window", "windows", "recent", "niri", "inir", "switch", "cycle", "keybind", "shortcut"]
+        },
+        {
+            pageIndex: 5, pageName: root.pages[5].name,
             section: Translation.tr("Alt-Tab switcher (Material ii)"),
             label: Translation.tr("Alt+Tab Switcher"),
             description: Translation.tr("Window switcher preset and behavior"),

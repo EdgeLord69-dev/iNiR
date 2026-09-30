@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "השאר את המצביע בפינה של המסך ו-Orbit ייפתח. משחק, מסך נעול ועריכת ווידג'טים מכבים אותו.",
   "Wait before opening": "המתנה לפני פתיחה",
   "At once": "מיד",
-  "You are here": "את/ה כאן"
+  "You are here": "את/ה כאן",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab מוגדר בקיצורי Niri שלך. בחירה כאן תשתלט עליו; השורה שלך נשארת כמו שהיא.",
+  "Alt+Tab opens": "Alt+Tab פותח",
+  "Niri's Recent Windows": "החלונות האחרונים של Niri",
+  "Niri's Recent Windows or the iNiR switcher": "החלונות האחרונים של Niri או המחליף של iNiR",
+  "Niri's Recent Windows, or this switcher with the style below": "החלונות האחרונים של Niri, או המחליף הזה בסגנון שלמטה",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "איזה מחליף חלונות Alt+Tab פותח. של Niri מציג תצוגה חיה של כל חלון; של iNiR עוקב אחר סגנון הלוחות שלך.",
+  "iNiR switcher": "המחליף של iNiR"
 }

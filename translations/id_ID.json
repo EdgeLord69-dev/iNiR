@@ -8832,5 +8832,13 @@
   "Rest the pointer in a corner of the screen and Orbit opens. A game, a locked screen and widget editing turn it off.": "Diamkan penunjuk di sudut layar dan Orbit terbuka. Game, layar terkunci, dan pengeditan widget mematikannya.",
   "Wait before opening": "Tunggu sebelum membuka",
   "At once": "Langsung",
-  "You are here": "Anda di sini"
+  "You are here": "Anda di sini",
+  "Alt+Tab": "Alt+Tab",
+  "Alt+Tab is bound in your own Niri binds. Choosing here takes it over; your line stays as it is.": "Alt+Tab sudah diatur di pintasan Niri Anda sendiri. Memilih di sini akan mengambil alih; baris Anda tetap seperti semula.",
+  "Alt+Tab opens": "Alt+Tab membuka",
+  "Niri's Recent Windows": "Jendela Terbaru Niri",
+  "Niri's Recent Windows or the iNiR switcher": "Jendela Terbaru Niri atau pengalih iNiR",
+  "Niri's Recent Windows, or this switcher with the style below": "Jendela Terbaru Niri, atau pengalih ini dengan gaya di bawah",
+  "Which window switcher Alt+Tab opens. Niri's shows live previews of every window; iNiR's follows your panel style.": "Pengalih jendela yang dibuka Alt+Tab. Milik Niri menampilkan pratinjau langsung setiap jendela; milik iNiR mengikuti gaya panel Anda.",
+  "iNiR switcher": "Pengalih iNiR"
 }
