@@ -20,7 +20,13 @@ Singleton {
     }
 
     // Track the current font from config
-    readonly property string mainFont: Config.options?.appearance?.typography?.mainFont ?? "Roboto Flex"
+    // The face the shell shows: iRiS and Waffle draw with their own (iRiS's are bundled with iNiR and made
+    // available to apps by sync-system-fonts.sh); Material with the typography setting.
+    readonly property string family: Config.options?.panelFamily ?? "ii"
+    readonly property string mainFont: root.family === "iris"
+        ? (String(Config.options?.iris?.appearance?.fontFamily ?? "") || "Inter")
+        : root.family === "waffle" ? (Config.options?.waffles?.theming?.font?.family ?? "Noto Sans")
+        : (Config.options?.appearance?.typography?.mainFont ?? "Roboto Flex")
     readonly property string monoFont: Config.options?.appearance?.typography?.monospaceFont ?? "JetBrainsMono Nerd Font"
     readonly property real sizeScale: Config.options?.appearance?.typography?.sizeScale ?? 1.0
 

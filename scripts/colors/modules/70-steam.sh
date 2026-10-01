@@ -98,15 +98,6 @@ EOCSS
   steam_refinements_css
 }
 
-# The shell's interface font, as GTK has it (sync-system-fonts.sh writes it there).
-shell_font_family() {
-  local line
-  line="$(grep -s '^gtk-font-name=' "$XDG_CONFIG_HOME/gtk-3.0/settings.ini" | head -n1)"
-  line="${line#gtk-font-name=}"
-  line="$(sed -E 's/[[:space:]]+[0-9]+(\.[0-9]+)?$//' <<<"$line")"
-  printf '%s' "${line//\"/}"
-}
-
 # iNiR's finish on Material-Theme. It rides in this file because Material-Theme re-reads it every 1.5 s in
 # every Steam window, so it follows the palette live without touching Millennium's options or reloading Steam.
 # Selectors are Material-Theme's own (css/main/restyle/recolor.css), doubled to outrank them.

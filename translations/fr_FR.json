@@ -8877,5 +8877,7 @@
   "LiMusic": "LiMusic",
   "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic suit les couleurs de votre fond d'écran dès sa prochaine ouverture",
   "Follows the wallpaper, from the next time LiMusic opens.": "Suit le fond d'écran dès la prochaine ouverture de LiMusic.",
-  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)",
+  "Apps use this font": "Les applis utilisent cette police",
+  "Your apps' text follows the font the shell shows.": "Le texte de vos applis suit la police affichée par le shell."
 }

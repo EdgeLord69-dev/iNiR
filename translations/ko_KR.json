@@ -8877,5 +8877,7 @@
   "LiMusic": "LiMusic",
   "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic은 다음에 열 때부터 배경화면 색상을 따릅니다",
   "Follows the wallpaper, from the next time LiMusic opens.": "다음에 LiMusic을 열 때부터 배경화면을 따릅니다.",
-  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)",
+  "Apps use this font": "앱에서도 이 글꼴 사용",
+  "Your apps' text follows the font the shell shows.": "앱의 텍스트가 셸에 표시되는 글꼴을 따릅니다."
 }

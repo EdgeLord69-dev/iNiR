@@ -8877,5 +8877,7 @@
   "LiMusic": "LiMusic",
   "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic 从下次打开起跟随壁纸颜色",
   "Follows the wallpaper, from the next time LiMusic opens.": "从下次打开 LiMusic 起跟随壁纸。",
-  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)",
+  "Apps use this font": "应用使用此字体",
+  "Your apps' text follows the font the shell shows.": "应用的文字跟随外壳显示的字体。"
 }

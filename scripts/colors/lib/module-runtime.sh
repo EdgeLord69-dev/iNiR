@@ -84,6 +84,16 @@ append_line_once() {
   printf '%s\n' "$line" >> "$path"
 }
 
+# The face the shell shows, as the system has it: FontSyncService writes the active family's font into GTK's
+# settings (and links iNiR's bundled faces into fontconfig), so app themes that set a font read it from there.
+shell_font_family() {
+  local line
+  line="$(grep -s '^gtk-font-name=' "$XDG_CONFIG_HOME/gtk-3.0/settings.ini" | head -n1)"
+  line="${line#gtk-font-name=}"
+  line="$(sed -E 's/[[:space:]]+[0-9]+(\.[0-9]+)?$//' <<<"$line")"
+  printf '%s' "${line//\"/}"
+}
+
 # Write stdin to a path only when the bytes differ (a running app reloads on any write).
 # Returns 0 when the file changed, 1 when it was already identical.
 write_if_changed() {

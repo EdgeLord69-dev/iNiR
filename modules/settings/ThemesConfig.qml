@@ -1913,6 +1913,14 @@ ContentPage {
                         }
                     }
                 }
+
+                ConfigSwitch {
+                    buttonIcon: "apps"
+                    text: Translation.tr("Apps use this font")
+                    checked: Config.options?.appearance?.typography?.syncWithSystem ?? true
+                    onCheckedChanged: Config.setNestedValue("appearance.typography.syncWithSystem", checked)
+                    StyledToolTip { text: Translation.tr("Your apps' text follows the font the shell shows.") }
+                }
             }
 
             // Size Scale
