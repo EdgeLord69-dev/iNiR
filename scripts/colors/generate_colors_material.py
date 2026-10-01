@@ -503,6 +503,23 @@ def build_app_palette(base_palette: dict[str, str]) -> dict[str, str]:
     selection_hover = mix_hex(primary_container, layer3, 0.88)
     on_selection = readable_hex(on_layer3, selection, 4.5)
 
+    # Status colours that mean what they say (green, amber, red) in the palette's light: each hue leans up to 15
+    # degrees toward the accent, sits at the accent's tone and is solved for text on the background. KDE's
+    # Positive/Neutral were Material's secondary and tertiary (a grey lavender and a pink on a purple palette).
+    is_dark = Hct.from_int(hex_to_argb(layer0)).tone < 50
+    accent_hue = Hct.from_int(hex_to_argb(primary)).hue
+
+    def status(hue: float, chroma: float) -> str:
+        delta = ((accent_hue - hue + 180.0) % 360.0) - 180.0
+        hue = (hue + max(-15.0, min(15.0, delta * 0.25))) % 360.0
+        seed = Hct.from_hct(hue, chroma, 80.0 if is_dark else 40.0).to_int()
+        return argb_to_hex(ensure_contrast(seed, hex_to_argb(layer0), 4.5, is_dark))
+
+    success = status(145.0, 48.0)
+    warning = status(75.0, 56.0)
+    error = readable_hex(base_palette.get("error") or status(25.0, 60.0), layer0, 4.5)
+    on_status = layer0
+
     app = dict(base_palette)
     app.update(
         {
@@ -543,6 +560,10 @@ def build_app_palette(base_palette: dict[str, str]) -> dict[str, str]:
             "app_selection": selection,
             "app_selection_hover": selection_hover,
             "app_on_selection": on_selection,
+            "app_success": success,
+            "app_warning": warning,
+            "app_error": error,
+            "app_on_status": on_status,
             "app_window_bg": layer0,
             "app_view_bg": layer0,
             "app_headerbar_bg": layer0,

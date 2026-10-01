@@ -105,6 +105,9 @@ APP_SURFACE_POPUP_ACTIVE=$(jq -r '.app_surface_popup_active // empty' "$COLOR_SO
 APP_SELECTION=$(jq -r '.app_selection // empty' "$COLOR_SOURCE" 2>/dev/null)
 APP_SELECTION_HOVER=$(jq -r '.app_selection_hover // empty' "$COLOR_SOURCE" 2>/dev/null)
 APP_ON_SELECTION=$(jq -r '.app_on_selection // empty' "$COLOR_SOURCE" 2>/dev/null)
+APP_SUCCESS=$(jq -r '.app_success // empty' "$COLOR_SOURCE" 2>/dev/null)
+APP_WARNING=$(jq -r '.app_warning // empty' "$COLOR_SOURCE" 2>/dev/null)
+APP_ERROR=$(jq -r '.app_error // empty' "$COLOR_SOURCE" 2>/dev/null)
 
 # Semantic colors from Material tokens
 ERROR_COLOR=$(jq -r '.error // empty' "$COLOR_SOURCE" 2>/dev/null)
@@ -199,10 +202,10 @@ write_if_changed() {
 [[ -z "$SECONDARY" ]]   && SECONDARY="#69db7c"
 [[ -z "$SECONDARY_CONTAINER" ]] && SECONDARY_CONTAINER=$(adjust_color "$PRIMARY_CONTAINER" 8)
 
-# Map to KDE semantic names
-FG_NEGATIVE="$ERROR_COLOR"
-FG_NEUTRAL="$TERTIARY"
-FG_POSITIVE="$SECONDARY"
+# Map to KDE semantic names: the palette's status colours, which mean what they say
+FG_NEGATIVE="${APP_ERROR:-$ERROR_COLOR}"
+FG_NEUTRAL="${APP_WARNING:-$TERTIARY}"
+FG_POSITIVE="${APP_SUCCESS:-$SECONDARY}"
 
 avg_brightness() {
     local hex="${1#\#}"
@@ -311,13 +314,13 @@ BackgroundNormal=${KDE_SELECTION_BG}
 DecorationFocus=${KDE_DECORATION_FOCUS}
 DecorationHover=${KDE_DECORATION_HOVER}
 ForegroundActive=${KDE_SELECTION_FG}
-ForegroundInactive=${FG_INACTIVE}
-ForegroundLink=${PRIMARY}
+ForegroundInactive=${KDE_SELECTION_FG_INACTIVE}
+ForegroundLink=${KDE_SELECTION_FG}
 ForegroundNegative=${FG_NEGATIVE}
 ForegroundNeutral=${FG_NEUTRAL}
 ForegroundNormal=${KDE_SELECTION_FG}
 ForegroundPositive=${FG_POSITIVE}
-ForegroundVisited=${PRIMARY}
+ForegroundVisited=${KDE_SELECTION_FG}
 
 [Colors:Tooltip]
 BackgroundAlternate=${KDE_TOOLTIP_ALT}
@@ -511,13 +514,17 @@ KDE_COMPLEMENTARY_ALT="$APP_SURFACE_POPUP_ACTIVE"
 # used for item selection. Give Highlight a modest visibility lift so disk
 # usage/progress bars remain readable without turning selections into raw
 # accent blocks.
-KDE_SELECTION_BG=$(blend_hex_percent "$ROW_ACTIVE_BG" "$PRIMARY" 15)
-KDE_SELECTION_ALT=$(blend_hex_percent "$ROW_ACTIVE_HOVER_BG" "$PRIMARY" 12)
-KDE_SELECTION_FG="$ROW_SELECTED_FG"
-# Darkly paints DecorationHover/Focus prominently (menu fills and focus
-# indicators). Use subtle state-container tones instead of the raw accent.
-KDE_DECORATION_HOVER="$ROW_ACTIVE_BG"
-KDE_DECORATION_FOCUS="$ROW_ACTIVE_HOVER_BG"
+# Highlight is the palette's selection (the accent's container), the same token GTK, YouTube Music and Steam
+# select with; it is visible enough for Darkly's capacity bars.
+KDE_SELECTION_BG="${APP_SELECTION:-$(blend_hex_percent "$ROW_ACTIVE_BG" "$PRIMARY" 15)}"
+KDE_SELECTION_ALT="${APP_SELECTION_HOVER:-$(blend_hex_percent "$ROW_ACTIVE_HOVER_BG" "$PRIMARY" 12)}"
+KDE_SELECTION_FG="${APP_ON_SELECTION:-$ROW_SELECTED_FG}"
+# Secondary text on a selected row (Dolphin's columns): the row's text, a little quieter (subtext measured 1.9:1).
+KDE_SELECTION_FG_INACTIVE=$(blend_hex_percent "$KDE_SELECTION_FG" "$KDE_SELECTION_BG" 18)
+# Darkly fills the chosen menu item and the active tab with DecorationFocus under the window's text, so it stays a
+# container tone (the raw accent would put light text on a light fill), from the same family as the selection.
+KDE_DECORATION_HOVER="${APP_SELECTION:-$ROW_ACTIVE_BG}"
+KDE_DECORATION_FOCUS="${APP_SELECTION_HOVER:-$ROW_ACTIVE_HOVER_BG}"
 KDE_ACTIVE_FG="$PRIMARY"
 
 # Generate Darkly.colors for Qt style override
@@ -605,8 +612,8 @@ BackgroundNormal=${selection_bg_rgb}
 DecorationFocus=${decoration_focus_rgb}
 DecorationHover=${decoration_hover_rgb}
 ForegroundActive=${selection_fg_rgb}
-ForegroundInactive=${fg_inactive_rgb}
-ForegroundLink=${primary_rgb}
+ForegroundInactive=$(hex_to_rgb "$KDE_SELECTION_FG_INACTIVE")
+ForegroundLink=${selection_fg_rgb}
 ForegroundNegative=${error_rgb}
 ForegroundNeutral=${neutral_rgb}
 ForegroundNormal=${selection_fg_rgb}
@@ -639,7 +646,7 @@ ForegroundNegative=${error_rgb}
 ForegroundNeutral=${neutral_rgb}
 ForegroundNormal=${fg_rgb}
 ForegroundPositive=${positive_rgb}
-ForegroundVisited=${primary_rgb}
+ForegroundVisited=${selection_fg_rgb}
 
 [Colors:Tooltip]
 BackgroundAlternate=${tooltip_alt_rgb}
@@ -757,6 +764,19 @@ if write_if_changed "$GTK3_CSS" << EOF
 
 @define-color card_bg_color ${APP_CARD_BG};
 @define-color card_fg_color ${ON_SURFACE};
+
+@define-color success_color ${FG_POSITIVE};
+@define-color warning_color ${FG_NEUTRAL};
+@define-color error_color ${FG_NEGATIVE};
+@define-color destructive_color ${FG_NEGATIVE};
+@define-color success_bg_color ${FG_POSITIVE};
+@define-color warning_bg_color ${FG_NEUTRAL};
+@define-color error_bg_color ${FG_NEGATIVE};
+@define-color destructive_bg_color ${FG_NEGATIVE};
+@define-color success_fg_color ${BG};
+@define-color warning_fg_color ${BG};
+@define-color error_fg_color ${BG};
+@define-color destructive_fg_color ${BG};
 
 @define-color sidebar_bg_color ${APP_SIDEBAR_BG};
 @define-color sidebar_fg_color ${FG};
@@ -949,6 +969,20 @@ if write_if_changed "$GTK4_CSS" << EOF
     /* Thumbnail */
     --thumbnail-bg-color: ${SURFACE_CONTAINER_HIGHEST};
     --thumbnail-fg-color: ${ON_SURFACE};
+
+    /* Status: the palette's own green, amber and red, the same KDE uses */
+    --success-color: ${FG_POSITIVE};
+    --success-bg-color: ${FG_POSITIVE};
+    --success-fg-color: ${BG};
+    --warning-color: ${FG_NEUTRAL};
+    --warning-bg-color: ${FG_NEUTRAL};
+    --warning-fg-color: ${BG};
+    --error-color: ${FG_NEGATIVE};
+    --error-bg-color: ${FG_NEGATIVE};
+    --error-fg-color: ${BG};
+    --destructive-color: ${FG_NEGATIVE};
+    --destructive-bg-color: ${FG_NEGATIVE};
+    --destructive-fg-color: ${BG};
 
     /* Misc */
     --shade-color: rgba(0, 0, 0, 0.25);
