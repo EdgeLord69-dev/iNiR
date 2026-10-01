@@ -2248,9 +2248,12 @@ Scope {
                                 outputName, item.configEntryName, outputWidth, outputHeight) : null
                         remembered[item.configEntryName] = spot
                         if (spot?.x !== undefined) {
+                            // Kept where it was arranged on this size, held only by the output's edges: the
+                            // work area can be narrower than where it was placed (over the Dock's band), and
+                            // clamping to it moved a widget 34 px on the way back (2026-10-01).
                             restored[item.configEntryName] = {
-                                x: Math.round(Math.max(left, Math.min(Math.max(left, right - item.width), spot.x))),
-                                y: Math.round(Math.max(top, Math.min(Math.max(top, bottom - item.height), spot.y)))
+                                x: Math.round(Math.max(0, Math.min(Math.max(0, outputWidth - item.width), spot.x))),
+                                y: Math.round(Math.max(0, Math.min(Math.max(0, outputHeight - item.height), spot.y)))
                             }
                             placed.push({ x: restored[item.configEntryName].x,
                                 y: restored[item.configEntryName].y, width: item.width, height: item.height })
