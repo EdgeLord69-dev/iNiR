@@ -325,10 +325,31 @@ Singleton {
                 root._ddcNext = []
         }
         onExited: {
-            if (root._ddcNext.length > 0)
+            const found = root._ddcNext.length > 0
+            if (found)
                 root.ddcMonitors = root._ddcNext
             root._ddcNext = []
             root.ddcMonitorsChanged()
+            // A busy I2C bus (another ddcutil, a login race) makes detect see no monitor at all; an output
+            // left with no control is detected again rather than left without brightness for the session.
+            const uncontrolled = root.monitors.some(m => !m.isDdc && root.backlightDevice.length === 0)
+            if (!found && uncontrolled && root._detectAttempts < 5) {
+                ddcDetectRetry.interval = Math.min(8000, 1000 * Math.pow(2, root._detectAttempts))
+                root._detectAttempts++
+                ddcDetectRetry.restart()
+            } else if (found) {
+                root._detectAttempts = 0
+            }
+        }
+    }
+
+    property int _detectAttempts: 0
+    Timer {
+        id: ddcDetectRetry
+        onTriggered: {
+            if (root.asleep || ddcProc.running)
+                return
+            ddcProc.running = true
         }
     }
 
@@ -451,14 +472,17 @@ Singleton {
                     monitor._initAttempts = 0
                     return
                 }
-                // A DDC read can fail while the bus is busy right after login
-                // or a hotplug; settling here would leave the slider at 0 over
-                // a lit monitor.
-                if (monitor.isDdc && monitor._initAttempts < 3) {
+                // A DDC read can fail while the bus is busy right after login, a
+                // hotplug or a second `ddcutil detect`; settling here leaves the
+                // slider disabled over a lit monitor. Back off up to ~23 s.
+                if (monitor.isDdc && monitor._initAttempts < 5) {
+                    initRetryTimer.interval = Math.min(8000, 1000 * Math.pow(2, monitor._initAttempts))
                     monitor._initAttempts++
                     initRetryTimer.restart()
                     return
                 }
+                if (monitor.isDdc)
+                    console.warn(`[Brightness] ${monitor.screen?.name ?? "?"}: could not read the level over DDC (bus ${monitor.busNum}); opening a brightness panel retries`)
                 monitor._initAttempts = 0
                 const screenName = monitor.screen?.name ?? ""
                 const value = BrightnessPolicy.pickRestoreValue(
