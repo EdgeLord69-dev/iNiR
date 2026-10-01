@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island 旁的气泡。声音和麦克风显示电平：滚动调节，点击静音。",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island 自己携带的小面孔，按开启顺序排列。每个都会打开自己的卡片，滚动可调节电平。在这里选中的气泡会离开边框；要让气泡在边框上悬浮，请使用 气泡 › 额外气泡。",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "每个表面的边缘，适用于所有材质。线条是均匀的细线；光边在顶部受光并向两侧渐隐，如同玻璃的边缘。玻璃无论哪种都保留其发光边缘。",
-  "Lit": "光边"
+  "Lit": "光边",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic 从下次打开起跟随壁纸颜色",
+  "Follows the wallpaper, from the next time LiMusic opens.": "从下次打开 LiMusic 起跟随壁纸。",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

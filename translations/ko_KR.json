@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island 옆의 버블. 사운드와 마이크는 레벨을 보여 주며, 스크롤로 조절하고 클릭하면 음소거됩니다.",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island가 직접 지니는 작은 얼굴들로, 켠 순서대로 놓입니다. 각각 카드를 열고 스크롤로 레벨을 조절합니다. 여기서 고른 버블은 프레임을 떠나며, 프레임에 띄우려면 버블 › 추가 버블을 쓰세요.",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "모든 표면이 두르는 가장자리로, 모든 재질에 적용됩니다. 선은 고른 헤어라인이고, 광채는 위쪽에서 빛을 받아 옆으로 옅어지는 유리 가장자리 같은 표현입니다. 유리는 어느 쪽이든 빛나는 가장자리를 유지합니다.",
-  "Lit": "광채"
+  "Lit": "광채",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic은 다음에 열 때부터 배경화면 색상을 따릅니다",
+  "Follows the wallpaper, from the next time LiMusic opens.": "다음에 LiMusic을 열 때부터 배경화면을 따릅니다.",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

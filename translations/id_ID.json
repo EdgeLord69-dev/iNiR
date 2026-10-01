@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Gelembung di samping Island Cluster. Suara dan Mikrofon menampilkan levelnya: gulir untuk mengatur, klik untuk membisukan.",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Wajah kecil yang dibawa Island sendiri, sesuai urutan kamu menyalakannya. Masing-masing membuka kartunya, dan level diatur dengan gulir. Gelembung yang dipilih di sini meninggalkan bingkai; Gelembung › Gelembung ekstra membuat satu melayang di bingkai.",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "Tepi yang dikenakan setiap permukaan, pada setiap material. Garis adalah garis tipis yang rata; Berkilau menangkap cahaya di atas dan memudar ke sisi, seperti tepi kaca. Kaca tetap memakai tepi terangnya.",
-  "Lit": "Berkilau"
+  "Lit": "Berkilau",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic mengikuti warna wallpaper Anda mulai saat dibuka berikutnya",
+  "Follows the wallpaper, from the next time LiMusic opens.": "Mengikuti wallpaper mulai saat LiMusic dibuka berikutnya.",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

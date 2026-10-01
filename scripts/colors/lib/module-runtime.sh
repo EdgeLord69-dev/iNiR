@@ -65,6 +65,40 @@ config_json() {
   fi
 }
 
+# The polarity the palette was generated for ("light" or "dark"), from theme-meta.json.
+theme_mode() {
+  local meta="$STATE_DIR/user/generated/theme-meta.json" mode=""
+  if [[ -f "$meta" ]] && command -v jq >/dev/null 2>&1; then
+    mode="$(jq -r '.mode // empty' "$meta" 2>/dev/null || true)"
+  fi
+  [[ "$mode" == "light" ]] && printf 'light\n' || printf 'dark\n'
+}
+
+# Add a whole line to a flags file once, on a line of its own even when the file ends without a newline.
+# Returns 0 when it was added, 1 when it was already there.
+append_line_once() {
+  local path="$1" line="$2"
+  grep -qsxF -- "$line" "$path" && return 1
+  mkdir -p "$(dirname "$path")"
+  [[ -s "$path" && -n "$(tail -c1 "$path")" ]] && printf '\n' >> "$path"
+  printf '%s\n' "$line" >> "$path"
+}
+
+# Write stdin to a path only when the bytes differ (a running app reloads on any write).
+# Returns 0 when the file changed, 1 when it was already identical.
+write_if_changed() {
+  local path="$1" tmp
+  tmp="$(mktemp "${path}.XXXXXX")"
+  cat > "$tmp"
+  if [[ -f "$path" ]] && cmp -s "$tmp" "$path"; then
+    rm -f "$tmp"
+    return 1
+  fi
+  chmod 644 "$tmp"
+  mv -f "$tmp" "$path"
+  return 0
+}
+
 venv_python() {
   local venv_path
   if [[ -n "${INIR_VENV:-}" ]]; then

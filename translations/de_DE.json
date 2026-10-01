@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Die Blase neben einer Cluster-Island. Ton und Mikrofon zeigen ihren Pegel: scrollen zum Einstellen, klicken zum Stummschalten.",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Kleine Gesichter, die die Island selbst trägt, in der Reihenfolge des Einschaltens. Jedes öffnet seine Karte, Pegel ändern sich beim Scrollen. Eine hier gewählte Blase verlässt den Rahmen; Blasen › Zusätzliche Blasen lässt eine im Rahmen schweben.",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "Die Kante jeder Fläche, auf jedem Material. Linie ist eine gleichmäßige Haarlinie; Beleuchtet fängt oben das Licht ein und läuft zu den Seiten aus, wie die Kante von Glas. Glas behält seine beleuchtete Kante in jedem Fall.",
-  "Lit": "Beleuchtet"
+  "Lit": "Beleuchtet",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic übernimmt die Farben deines Hintergrundbilds ab dem nächsten Start",
+  "Follows the wallpaper, from the next time LiMusic opens.": "Folgt dem Hintergrundbild ab dem nächsten Start von LiMusic.",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

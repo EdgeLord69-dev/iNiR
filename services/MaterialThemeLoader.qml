@@ -384,6 +384,31 @@ Singleton {
         }
     }
 
+    // Switching an app's theming on or off (or Spotify's layout) applies at once, from any family's Settings or the
+    // config file. applycolor.sh runs only what changed: modules write a target only when its bytes differ, and a
+    // module switched off takes its theme back where it can (LiMusic).
+    readonly property string _appTargetsKey: {
+        const t = Config.options?.appearance?.wallpaperTheming
+        if (!t) return ""
+        return [t.enableTerminal, t.enableVesktop, t.enableZed, t.enableVSCode, t.enableChrome, t.enableSpicetify,
+                t.spicetifyTheme, t.enableSteam, t.enablePearDesktop, t.enableLimusic, t.enableOpenCode,
+                t.enableNeovim, t.enableCava].join("|")
+    }
+    // What the config held once loaded: the load itself sets these one by one and must not apply anything.
+    property string _appliedAppTargetsKey: ""
+    Connections {
+        target: Config
+        function onReadyChanged() {
+            if (Config.ready) root._appliedAppTargetsKey = root._appTargetsKey
+        }
+    }
+    Component.onCompleted: if (Config.ready) root._appliedAppTargetsKey = root._appTargetsKey
+    on_AppTargetsKeyChanged: {
+        if (!Config.ready || root._appliedAppTargetsKey === root._appTargetsKey) return
+        root._appliedAppTargetsKey = root._appTargetsKey
+        root.requestExternalApply()
+    }
+
     // Apps are not restyled under a game: Spotify, Steam and the terminals reload their theme on every
     // run, mid-match. The shell's own colours still follow; the apps catch up once, when Game mode ends.
     property bool _externalApplyHeld: false

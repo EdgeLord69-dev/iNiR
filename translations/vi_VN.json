@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Bong bóng bên cạnh Island Cluster. Âm thanh và Micrô hiện mức: cuộn để chỉnh, bấm để tắt tiếng.",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Những mặt nhỏ Island tự mang, theo thứ tự bạn bật. Mỗi cái mở thẻ riêng, mức được chỉnh khi cuộn. Bong bóng chọn ở đây rời khỏi khung; Bong bóng › Bong bóng thêm cho một cái nổi trên khung.",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "Viền mà mọi bề mặt mang, trên mọi chất liệu. Đường là một nét mảnh đều; Ánh sáng bắt sáng ở phía trên và mờ dần xuống hai bên, như cạnh của kính. Kính luôn giữ viền sáng của nó.",
-  "Lit": "Ánh sáng"
+  "Lit": "Ánh sáng",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic theo màu hình nền của bạn từ lần mở tiếp theo",
+  "Follows the wallpaper, from the next time LiMusic opens.": "Theo hình nền từ lần mở LiMusic tiếp theo.",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

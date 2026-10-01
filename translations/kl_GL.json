@@ -7225,5 +7225,9 @@
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.",
   "Lit": "Lit",
   "Only the backdrop on the desktop": "Only the backdrop on the desktop",
-  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it."
+  "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.": "Hides the desktop wallpaper: the desktop shows the backdrop with its blur and dim, and glass follows it.",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic-ip tunngaviup assiliartaata qalipaatai tulliani ammarneqarnerminiit malittarai",
+  "Follows the wallpaper, from the next time LiMusic opens.": "Tunngaviup assiliartaa LiMusic tulliani ammarneqarneraniit malittarpaa.",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

@@ -176,6 +176,18 @@ ContentPage {
                 }
             }
             SettingsSwitch {
+                buttonIcon: "music_note"
+                text: Translation.tr("LiMusic")
+                checked: Config.options?.appearance?.wallpaperTheming?.enableLimusic ?? false
+                onCheckedChanged: {
+                    Config.setNestedValue("appearance.wallpaperTheming.enableLimusic", checked);
+                    colorRegenTimer.restart();
+                }
+                StyledToolTip {
+                    text: Translation.tr("LiMusic follows your wallpaper colours, from the next time it opens")
+                }
+            }
+            SettingsSwitch {
                 buttonIcon: "code"
                 text: Translation.tr("Zed editor")
                 checked: Config.options?.appearance?.wallpaperTheming?.enableZed ?? true

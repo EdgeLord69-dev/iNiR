@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island'ın yanındaki baloncuk. Ses ve Mikrofon seviyelerini gösterir: ayarlamak için kaydırın, susturmak için tıklayın.",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Island'ın kendisinin taşıdığı küçük yüzler, açtığınız sırayla. Her biri kendi kartını açar, seviyeler kaydırarak ayarlanır. Burada seçilen bir baloncuk çerçeveden ayrılır; Baloncuklar › Ek baloncuklar birini çerçevede yüzdürür.",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "Her yüzeyin taşıdığı kenar, her malzemede. Çizgi eşit ince bir hattır; Işıklı üstte ışığı yakalar ve yanlara doğru söner, camın kenarı gibi. Cam her durumda ışıklı kenarını korur.",
-  "Lit": "Işıklı"
+  "Lit": "Işıklı",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic, bir sonraki açılışından itibaren duvar kağıdınızın renklerini izler",
+  "Follows the wallpaper, from the next time LiMusic opens.": "LiMusic'in bir sonraki açılışından itibaren duvar kağıdını izler.",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

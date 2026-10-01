@@ -656,8 +656,21 @@ PYEOF
 
 CDP_PORT=8976
 
-ensure_spotify_desktop_override() {
-  # Create a .desktop override that launches Spotify with CDP enabled for live reload.
+# Live updates need Spotify's DevTools port. The Arch wrapper appends ~/.config/spotify-flags.conf to every
+# launch (menu, tray, autostart, terminal); elsewhere a user .desktop override carries it from the menu.
+ensure_spotify_cdp_flag() {
+  local flag="--remote-debugging-port=$CDP_PORT" launcher flags_file="$XDG_CONFIG_HOME/spotify-flags.conf"
+  launcher="$(command -v spotify 2>/dev/null || true)"
+  if [[ -n "$launcher" ]] && grep -qs 'spotify-flags.conf' "$launcher"; then
+    if ! grep -qsxF -- "$flag" "$flags_file"; then
+      mkdir -p "$(dirname "$flags_file")"
+      # On a line of its own even when the file ends without a newline
+      [[ -s "$flags_file" && -n "$(tail -c1 "$flags_file")" ]] && printf '\n' >> "$flags_file"
+      printf '%s\n' "$flag" >> "$flags_file"
+      log "Added $flag to $flags_file"
+    fi
+  fi
+
   local user_apps="$HOME/.local/share/applications"
   local override="$user_apps/spotify.desktop"
   local system_desktop="/usr/share/applications/spotify.desktop"
@@ -670,11 +683,22 @@ ensure_spotify_desktop_override() {
   [[ -f "$system_desktop" ]] || return 0
   mkdir -p "$user_apps" 2>/dev/null || return 0
 
-  sed "s|^Exec=spotify|Exec=spotify --remote-debugging-port=$CDP_PORT|" \
-    "$system_desktop" > "$override"
-  # TryExec must remain just the binary name
-  sed -i 's|^TryExec=.*|TryExec=spotify|' "$override"
+  sed -e "s|^Exec=spotify|Exec=spotify --remote-debugging-port=$CDP_PORT|" \
+    -e 's|^TryExec=.*|TryExec=spotify|' "$system_desktop" > "$override"
   log "Created Spotify desktop override with CDP port $CDP_PORT"
+}
+
+# Spicetify rewrites its config on every `config` call: only when a value differs.
+spicetify_config_set() {
+  local config_file="$1"; shift
+  local key value current changed=()
+  while [[ $# -ge 2 ]]; do
+    key="$1" value="$2"; shift 2
+    current="$(awk -F'= *' -v k="$key" '$1 ~ "^"k"[[:space:]]*$" {print $2; exit}' "$config_file" 2>/dev/null | xargs)"
+    [[ "$current" == "$value" ]] || changed+=("$key" "$value")
+  done
+  [[ ${#changed[@]} -eq 0 ]] && return 0
+  spicetify config "${changed[@]}" >> "$LOG_FILE" 2>&1 || true
 }
 
 configure_spicetify() {
@@ -705,8 +729,8 @@ configure_spicetify() {
   regenerate_tui_overrides "$tui_user_css"
   generate_tui_color_ini "$tui_color_file" || return 1
 
-  spicetify config inject_css 1 replace_colors 1 >> "$LOG_FILE" 2>&1 || true
-  spicetify config current_theme "$active_theme" color_scheme "$SCHEME_NAME" >> "$LOG_FILE" 2>&1 || true
+  spicetify_config_set "$(get_spicetify_config_path)" inject_css 1 replace_colors 1 \
+    current_theme "$active_theme" color_scheme "$SCHEME_NAME"
 }
 
 apply_spicetify_theme() {
@@ -821,7 +845,7 @@ main() {
   }
 
   # Ensure Spotify launches with CDP for live reload on next start
-  ensure_spotify_desktop_override
+  ensure_spotify_cdp_flag
 
   local spotify_running=false
   is_process_running "spotify" && spotify_running=true

@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Cluster Island के बगल का बबल। साउंड और माइक्रोफ़ोन अपना स्तर दिखाते हैं: समायोजित करने के लिए स्क्रॉल करें, म्यूट के लिए क्लिक करें।",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "छोटे चेहरे जिन्हें Island खुद रखता है, उसी क्रम में जिसमें आप उन्हें चालू करते हैं। हर एक अपना कार्ड खोलता है, और स्क्रॉल से स्तर बदलते हैं। यहाँ चुना बबल फ़्रेम छोड़ देता है; बबल › अतिरिक्त बबल एक को फ़्रेम पर तैराता है।",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "हर सतह का किनारा, हर मटीरियल पर। लाइन एक समान पतली रेखा है; प्रकाशित ऊपर रोशनी पकड़ता है और किनारों की ओर फीका होता है, जैसे काँच का किनारा। काँच दोनों में अपना चमकता किनारा रखता है।",
-  "Lit": "प्रकाशित"
+  "Lit": "प्रकाशित",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic अगली बार खुलने से आपके वॉलपेपर के रंगों का अनुसरण करता है",
+  "Follows the wallpaper, from the next time LiMusic opens.": "LiMusic के अगली बार खुलने से वॉलपेपर का अनुसरण करता है।",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

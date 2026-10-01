@@ -8,7 +8,6 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
 GENERATED_MILLENNIUM_CSS="$STATE_DIR/user/generated/steam-millennium-material.css"
-MILLENNIUM_TEMPLATE="$SCRIPT_DIR/../../defaults/matugen/templates/steam/millennium-material.css"
 COLORS_JSON="$STATE_DIR/user/generated/app-palette.json"
 [[ -f "$COLORS_JSON" ]] || COLORS_JSON="$STATE_DIR/user/generated/palette.json"
 [[ -f "$COLORS_JSON" ]] || COLORS_JSON="$STATE_DIR/user/generated/colors.json"
@@ -96,6 +95,99 @@ generate_millennium_css_from_colors_json() {
     --md-sys-color-source-color: rgb($(read_token source_color "$(read_token app_accent "$(read_token primary)")"));
 }
 EOCSS
+  steam_refinements_css
+}
+
+# The shell's interface font, as GTK has it (sync-system-fonts.sh writes it there).
+shell_font_family() {
+  local line
+  line="$(grep -s '^gtk-font-name=' "$XDG_CONFIG_HOME/gtk-3.0/settings.ini" | head -n1)"
+  line="${line#gtk-font-name=}"
+  line="$(sed -E 's/[[:space:]]+[0-9]+(\.[0-9]+)?$//' <<<"$line")"
+  printf '%s' "${line//\"/}"
+}
+
+# iNiR's finish on Material-Theme. It rides in this file because Material-Theme re-reads it every 1.5 s in
+# every Steam window, so it follows the palette live without touching Millennium's options or reloading Steam.
+# Selectors are Material-Theme's own (css/main/restyle/recolor.css), doubled to outrank them.
+steam_refinements_css() {
+  local font
+  font="$(shell_font_family)"
+  cat <<'EOCSS'
+
+/* iNiR: a selection is a tonal fill; the accent is kept for actions (Play, Install, progress) */
+._3pSPluBgf0NeR1kkCLWMhR._3pSPluBgf0NeR1kkCLWMhR.eNLOx4LVceeMwRvTVWh3 {
+    background-color: var(--md-sys-color-secondary-container) !important;
+}
+._3pSPluBgf0NeR1kkCLWMhR._3pSPluBgf0NeR1kkCLWMhR.eNLOx4LVceeMwRvTVWh3:hover {
+    background-color: color-mix(in srgb, var(--md-sys-color-secondary-container), var(--md-sys-color-on-secondary-container) 8%) !important;
+}
+.eNLOx4LVceeMwRvTVWh3.eNLOx4LVceeMwRvTVWh3 ._3O48LaKWcabKx07xdrt1TH,
+._3pSPluBgf0NeR1kkCLWMhR.eNLOx4LVceeMwRvTVWh3:hover ._3O48LaKWcabKx07xdrt1TH {
+    color: var(--md-sys-color-on-secondary-container) !important;
+}
+._3pSPluBgf0NeR1kkCLWMhR._3pSPluBgf0NeR1kkCLWMhR:not(.eNLOx4LVceeMwRvTVWh3):hover ._3O48LaKWcabKx07xdrt1TH {
+    color: var(--md-sys-color-on-surface) !important;
+}
+
+/* Dropdowns read as fields, not buttons */
+body .DialogDropDown.DialogDropDown, ._3few7361SOf4k_YuKCmM62 .DialogDropDown.DialogDropDown,
+._2J170P0ckFcUIlsDU13MLS ._DialogInputContainer._DialogInputContainer,
+._3_7wzN0kdchWheVyim6nmo .DialogDropDown.DialogDropDown, ._1UeO0R_NRSTMbWLI02pecg .DialogDropDown.DialogDropDown {
+    color: var(--md-sys-color-on-surface) !important;
+    background: var(--md-sys-color-surface-container-highest) !important;
+}
+body .DialogDropDown.DialogDropDown:hover, ._3few7361SOf4k_YuKCmM62 .DialogDropDown.DialogDropDown:hover,
+._2J170P0ckFcUIlsDU13MLS ._DialogInputContainer._DialogInputContainer:hover,
+._3_7wzN0kdchWheVyim6nmo .DialogDropDown.DialogDropDown:hover, ._1UeO0R_NRSTMbWLI02pecg .DialogDropDown.DialogDropDown:hover {
+    color: var(--md-sys-color-on-surface) !important;
+    background: color-mix(in srgb, var(--md-sys-color-surface-container-highest), var(--md-sys-color-on-surface) 8%) !important;
+}
+body .DialogDropDown_CurrentDisplay.DialogDropDown_CurrentDisplay { color: var(--md-sys-color-on-surface) !important; }
+body .DialogDropDown_Arrow .SVGIcon_DownArrowContextMenu.SVGIcon_DownArrowContextMenu,
+._2J170P0ckFcUIlsDU13MLS ._DialogInputContainer .DialogDropDown_Arrow svg {
+    color: var(--md-sys-color-on-surface-variant) !important;
+    fill: var(--md-sys-color-on-surface-variant) !important;
+}
+
+/* The library's type picker (Games, Software, ...) */
+._1ZS_xta5HMXzR8JgxDH6n7._1ZS_xta5HMXzR8JgxDH6n7 ._2PF_m-I5yte3WnQhpcz8RC {
+    background: var(--md-sys-color-surface-container-highest) !important;
+}
+._1ZS_xta5HMXzR8JgxDH6n7._1ZS_xta5HMXzR8JgxDH6n7 ._2PF_m-I5yte3WnQhpcz8RC:hover {
+    background: color-mix(in srgb, var(--md-sys-color-surface-container-highest), var(--md-sys-color-on-surface) 8%) !important;
+}
+._1ZS_xta5HMXzR8JgxDH6n7._1ZS_xta5HMXzR8JgxDH6n7 ._2PF_m-I5yte3WnQhpcz8RC,
+._1ZS_xta5HMXzR8JgxDH6n7._1ZS_xta5HMXzR8JgxDH6n7 ._2PF_m-I5yte3WnQhpcz8RC * {
+    color: var(--md-sys-color-on-surface) !important;
+}
+._1ZS_xta5HMXzR8JgxDH6n7._1ZS_xta5HMXzR8JgxDH6n7 ._2PF_m-I5yte3WnQhpcz8RC svg,
+._1ZS_xta5HMXzR8JgxDH6n7._1ZS_xta5HMXzR8JgxDH6n7 ._2PF_m-I5yte3WnQhpcz8RC svg polygon {
+    color: var(--md-sys-color-on-surface-variant) !important;
+    fill: var(--md-sys-color-on-surface-variant) !important;
+}
+
+/* Library section headers are labels, not bars */
+._2sYIghGVXJr6tsQVvcryy8._2sYIghGVXJr6tsQVvcryy8 {
+    background: transparent !important;
+    color: var(--md-sys-color-on-surface-variant) !important;
+}
+._2sYIghGVXJr6tsQVvcryy8._2sYIghGVXJr6tsQVvcryy8:hover,
+._2sYIghGVXJr6tsQVvcryy8._2sYIghGVXJr6tsQVvcryy8._1dcGFHhye9BeEOg7CkFNQG,
+._2sYIghGVXJr6tsQVvcryy8._2sYIghGVXJr6tsQVvcryy8.sXMOsx8OIRalBMxO9yFY5 {
+    background: color-mix(in srgb, transparent, var(--md-sys-color-on-surface) 6%) !important;
+}
+._2sYIghGVXJr6tsQVvcryy8._2sYIghGVXJr6tsQVvcryy8 ._3cV3O8FnPQqpJO5kIMUlLX { color: var(--md-sys-color-on-surface-variant) !important; }
+EOCSS
+  if [[ -n "$font" ]]; then
+    cat <<EOCSS
+
+/* The shell's interface font */
+:root *:not(.SVGIcon_Button):not([class*="Icon"]):not(code):not(pre) {
+    font-family: "${font}", "Open Sans", sans-serif !important;
+}
+EOCSS
+  fi
 }
 
 millennium_runtime_available() {
@@ -178,13 +270,7 @@ resolve_millennium_material_loopback_skin_dir() {
 }
 
 millennium_material_appearance() {
-  local mode
-  if [[ -f "$STATE_DIR/user/generated/theme-meta.json" ]] && command -v jq >/dev/null 2>&1; then
-    mode="$(jq -r '.mode // "dark"' "$STATE_DIR/user/generated/theme-meta.json" 2>/dev/null || printf dark)"
-  else
-    mode="dark"
-  fi
-  if [[ "$mode" == "light" ]]; then
+  if [[ "$(theme_mode)" == "light" ]]; then
     printf Light
   else
     printf Dark
@@ -212,9 +298,10 @@ import sys
 path, tmp, active_theme, condition_theme, appearance = sys.argv[1:6]
 try:
     with open(path) as f:
-        data = json.load(f)
+        before = f.read()
+    data = json.loads(before)
 except Exception:
-    data = {}
+    before, data = None, {}
 
 general = data.setdefault("general", {})
 general["injectCSS"] = True
@@ -229,10 +316,13 @@ theme_conditions = conditions.setdefault(condition_theme, {})
 theme_conditions["Color"] = "Matugen"
 theme_conditions["Appearance"] = appearance
 
+after = json.dumps(data, indent=2) + "\n"
+# Millennium owns this file too and reacts to writes: touch it only when a value changed.
+if before is not None and json.loads(before) == data:
+    sys.exit(0)
 os.makedirs(os.path.dirname(path), exist_ok=True)
 with open(tmp, "w") as f:
-    json.dump(data, f, indent=2)
-    f.write("\n")
+    f.write(after)
 os.replace(tmp, path)
 PYCFG
 }
@@ -254,11 +344,7 @@ deploy_millennium_material() {
   fi
   command -v jq &>/dev/null || { log_module "jq not installed — cannot generate Steam Matugen CSS"; return 1; }
 
-  if [[ ! -f "$css_file" ||
-        ( -f "$COLORS_JSON" && "$COLORS_JSON" -nt "$css_file" ) ||
-        ( -f "$MILLENNIUM_TEMPLATE" && "$MILLENNIUM_TEMPLATE" -nt "$css_file" ) ]]; then
-    generate_millennium_css_from_colors_json > "$css_file"
-  fi
+  generate_millennium_css_from_colors_json | write_if_changed "$css_file" || true
 
   for theme_dir in "${theme_dirs[@]}"; do
     [[ -n "$theme_dir" ]] || continue

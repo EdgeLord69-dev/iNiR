@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "الفقاعة بجانب Island بنمط Cluster. يُظهر الصوت والميكروفون مستواهما: مرّر للضبط وانقر للكتم.",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "وجوه صغيرة يحملها Island بنفسه، بترتيب تشغيلها. كل منها يفتح بطاقته، وتُضبط المستويات بالتمرير. الفقاعة المختارة هنا تغادر الإطار؛ الفقاعات › فقاعات إضافية تجعل واحدة تطفو على الإطار.",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "الحافة التي يرتديها كل سطح، على كل خامة. «خط» خط رفيع متساوٍ؛ «مضيء» يلتقط الضوء في الأعلى ويتلاشى على الجانبين، مثل حافة الزجاج. يحتفظ الزجاج بحافته المضيئة في الحالتين.",
-  "Lit": "مضيء"
+  "Lit": "مضيء",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "يتبع LiMusic ألوان خلفيتك بدءًا من المرة القادمة التي يُفتح فيها",
+  "Follows the wallpaper, from the next time LiMusic opens.": "يتبع الخلفية بدءًا من المرة القادمة التي يُفتح فيها LiMusic.",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "Бульбашка поруч з Island у режимі Cluster. Звук і Мікрофон показують рівень: прокрутка змінює, клацання вимикає.",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Маленькі значки, які Island несе сам, у порядку ввімкнення. Кожен відкриває свою картку, рівні змінюються прокруткою. Вибрана тут бульбашка залишає рамку; Бульбашки › Додаткові бульбашки розміщують її на рамці.",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "Край кожної поверхні на будь-якому матеріалі. Лінія — рівний тонкий контур; Підсвітка ловить світло згори й розчиняється по боках, як край скла. Скло в будь-якому разі зберігає свій світлий край.",
-  "Lit": "Підсвітка"
+  "Lit": "Підсвітка",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic підхоплює кольори шпалер під час наступного запуску",
+  "Follows the wallpaper, from the next time LiMusic opens.": "Слідує за шпалерами з наступного запуску LiMusic.",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }

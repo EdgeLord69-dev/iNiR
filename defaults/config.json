@@ -253,6 +253,7 @@
             "spicetifyTheme": "Inir",
             "enableSteam": false,
             "enablePearDesktop": true,
+            "enableLimusic": false,
             "enableNeovim": false,
             "colorStrength": 1.0,
             "useBackdropForColors": false,

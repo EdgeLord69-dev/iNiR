@@ -8873,5 +8873,9 @@
   "The bubble beside a Cluster Island. Sound and Microphone show their level: scroll to adjust, click to mute.": "La burbuja junto a un Island en modo Cluster. Sonido y Micrófono muestran su nivel: desplaza para ajustar, haz clic para silenciar.",
   "Small faces the Island carries itself, in the order you switch them on. Each one opens its card, and levels adjust on scroll. A bubble picked here leaves the frame; Bubbles › Extra bubbles floats one on the frame instead.": "Caras pequeñas que el Island lleva consigo, en el orden en que las activas. Cada una abre su tarjeta, y los niveles se ajustan al desplazar. Una burbuja elegida aquí deja el marco; Burbujas › Burbujas extra hace flotar una en el marco.",
   "The edge every surface wears, on every material. Line is an even hairline; Lit catches the light at the top and fades down the sides, like the edge of glass. Glass keeps its lit edge either way.": "El borde que lleva cada superficie, en cualquier material. Línea es un trazo fino y parejo; Iluminado toma la luz arriba y se desvanece por los costados, como el borde de un vidrio. El vidrio conserva su borde iluminado en ambos casos.",
-  "Lit": "Iluminado"
+  "Lit": "Iluminado",
+  "LiMusic": "LiMusic",
+  "LiMusic follows your wallpaper colours, from the next time it opens": "LiMusic sigue los colores de tu fondo desde la próxima vez que se abra",
+  "Follows the wallpaper, from the next time LiMusic opens.": "Sigue el fondo desde la próxima vez que se abra LiMusic.",
+  "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)"
 }
