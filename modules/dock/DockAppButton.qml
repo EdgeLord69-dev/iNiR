@@ -574,14 +574,7 @@ DockButton {
                 iconName: appToplevel.pinned ? "keep_off" : "keep",
                 text: appToplevel.pinned ? Translation.tr("Unpin from dock") : Translation.tr("Pin to dock"),
                 monochromeIcon: true,
-                action: () => {
-                    const appId = appToplevel.originalAppId ?? appToplevel.appId;
-                    if (Config.options?.dock?.pinnedApps?.indexOf(appId) !== -1) {
-                        Config.setNestedValue("dock.pinnedApps", (Config.options?.dock?.pinnedApps ?? []).filter(id => id !== appId))
-                    } else {
-                        Config.setNestedValue("dock.pinnedApps", (Config.options?.dock?.pinnedApps ?? []).concat([appId]))
-                    }
-                }
+                action: () => TaskbarApps.togglePin(appToplevel.originalAppId ?? appToplevel.appId)
             },
             // Close window(s) - only if has windows
             ...(root.hasWindows ? [

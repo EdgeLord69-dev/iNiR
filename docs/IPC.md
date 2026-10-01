@@ -844,7 +844,7 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `settings` | Open iRiS Settings on a section: `general`, `appearance`, `motion`, `bar`, `bubbles`, `dock`, `desktop`, `windows`, `sidebars`, `controlCenter`, `spotlight`, `orbit`, `notifications`, `sound`, `capture`, `display`, `keyboard`, `battery`, `gaming`, `lock`, `player`, `anime`, `sources` or `system`; add `/<group>` to open that group, e.g. `bubbles/behaviour` or `lock/security`. It also takes `next`, `prev`, `back`, `forward` (the history), `search:<words>` and `open` (the first result) |
 | `bubble` | Place an Island bubble (`left`, `right`, `utility`) or an extra bubble (`weather`, `notifications`, `controls`, `sound`, `mic`, `tools`, `media`, `visualizer`, `tray`): a zone (`top-left`, `top-right`, `left`, `right`, `bottom-left`, `bottom-right`), `edge:<top|bottom|left|right>` with an optional `:<fraction>` along that edge (e.g. `edge:top:0.3`), `x,y` fractions of the output, `island` (slots) or `off` (extras) |
 | `dock` | `reveal`, `hide` or `toggle` the iRiS Dock (revealed stays until hidden or an app is chosen) |
-| `dockApp` | Open a Dock app's `windows` or `menu` by app id (e.g. `kitty windows`), or `<any> close` |
+| `dockApp` | Open a Dock app's `windows` or `menu` by app id (e.g. `kitty windows`), `pin` to keep it in the Dock or unpin it (prints which), or `<any> close` |
 | `appBubble` | Carry a Dock app out as a bubble of its own (e.g. `kitty right`): a zone, `x,y` fractions of the output, or `dock` to send it back |
 | `focus` | `open`, `close` or `toggle` the Focus panel (the left one), and say whether it is open |
 | `today` | `open`, `close` or `toggle` the Today panel (the right one), and say whether it is open |

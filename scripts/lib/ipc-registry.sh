@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: b2cd8e940eff9eda
+# IPC.md hash: 8134fc12be4d7efa
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -357,7 +357,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:settings"]="Open iRiS Settings on a section: \`general\`, \`appearance\`, \`motion\`, \`bar\`, \`bubbles\`, \`dock\`, \`desktop\`, \`windows\`, \`sidebars\`, \`controlCenter\`, \`spotlight\`, \`orbit\`, \`notifications\`, \`sound\`, \`capture\`, \`display\`, \`keyboard\`, \`battery\`, \`gaming\`, \`lock\`, \`player\`, \`anime\`, \`sources\` or \`system\`; add \`/<group>\` to open that group, e.g. \`bubbles/behaviour\` or \`lock/security\`. It also takes \`next\`, \`prev\`, \`back\`, \`forward\` (the history), \`search:<words>\` and \`open\` (the first result)"
   ["iris:bubble"]="Place an Island bubble (\`left\`, \`right\`, \`utility\`) or an extra bubble (\`weather\`, \`notifications\`, \`controls\`, \`sound\`, \`mic\`, \`tools\`, \`media\`, \`visualizer\`, \`tray\`): a zone (\`top-left\`, \`top-right\`, \`left\`, \`right\`, \`bottom-left\`, \`bottom-right\`), \`edge:<top"
   ["iris:dock"]="\`reveal\`, \`hide\` or \`toggle\` the iRiS Dock (revealed stays until hidden or an app is chosen)"
-  ["iris:dockApp"]="Open a Dock app's \`windows\` or \`menu\` by app id (e.g. \`kitty windows\`), or \`<any> close\`"
+  ["iris:dockApp"]="Open a Dock app's \`windows\` or \`menu\` by app id (e.g. \`kitty windows\`), \`pin\` to keep it in the Dock or unpin it (prints which), or \`<any> close\`"
   ["iris:appBubble"]="Carry a Dock app out as a bubble of its own (e.g. \`kitty right\`): a zone, \`x,y\` fractions of the output, or \`dock\` to send it back"
   ["iris:focus"]="\`open\`, \`close\` or \`toggle\` the Focus panel (the left one), and say whether it is open"
   ["iris:today"]="\`open\`, \`close\` or \`toggle\` the Today panel (the right one), and say whether it is open"
@@ -793,7 +793,7 @@ declare -gA IPC_FUNCTION_VALUES=(
   ["iris:settings"]="general appearance motion bar bubbles dock desktop windows sidebars controlCenter spotlight orbit notifications sound capture display keyboard battery gaming lock player anime sources system lock/security next prev back forward search: open"
   ["iris:bubble"]="left right utility weather notifications controls sound mic tools media visualizer tray top-left top-right bottom-left bottom-right"
   ["iris:dock"]="reveal hide toggle"
-  ["iris:dockApp"]="windows menu"
+  ["iris:dockApp"]="windows menu pin"
   ["iris:appBubble"]="dock"
   ["iris:focus"]="open close toggle"
   ["iris:today"]="open close toggle"

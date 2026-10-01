@@ -274,7 +274,7 @@ complete -c inir -n '__inir_at_value 2 bubble iris' -a 'left right utility weath
 complete -c inir -n '__inir_at_function iris' -a dock -d 'reveal, hide or toggle the iRiS Dock (revealed stays until…'
 complete -c inir -n '__inir_at_value 1 dock iris' -a 'reveal hide toggle'
 complete -c inir -n '__inir_at_function iris' -a dockApp -d 'Open a Dock app\'s windows or menu by app id (e.g'
-complete -c inir -n '__inir_at_value 2 dockApp iris' -a 'windows menu'
+complete -c inir -n '__inir_at_value 2 dockApp iris' -a 'windows menu pin'
 complete -c inir -n '__inir_at_function iris' -a appBubble -d 'Carry a Dock app out as a bubble of its own (e.g'
 complete -c inir -n '__inir_at_value 2 appBubble iris' -a 'dock'
 complete -c inir -n '__inir_at_function iris' -a focus -d 'open, close or toggle the Focus panel (the left one), and s…'
