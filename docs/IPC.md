@@ -51,6 +51,7 @@ returned as JSON by `list`.
 | `open` | Open a destination by semantic identifier |
 | `close` | Close development-opened surfaces and clear the request |
 | `current` | Return the current destination or `closed` |
+| `reload` | Reload the shell's QML the way an edit does (soft: windows are kept). In a git checkout `scripts/daemon/dev_hot_reload.py` calls it for the files Quickshell does not watch itself |
 | `meter` | Measure frame gaps for the given milliseconds (250–20000, default 2500) |
 | `metered` | Return the last measurement as JSON: frames, mean, p95, worst, frames over 20 and 50 ms |
 | `dragSim` | Simulate carrying an iRiS bubble (slot id, default `extra-clock`) around the focused output for 2.5 s, publishing the given number of moves per frame (1–16); never writes the config |

@@ -225,6 +225,7 @@ complete -c inir -n '__inir_at_target' -a dev -d 'Development navigation for loa
 complete -c inir -n '__inir_at_function dev' -a list -d 'Return the destination inventory as JSON'
 complete -c inir -n '__inir_at_function dev' -a open -d 'Open a destination by semantic identifier'
 complete -c inir -n '__inir_at_function dev' -a close -d 'Close development-opened surfaces and clear the request'
+complete -c inir -n '__inir_at_function dev' -a reload -d 'Reload the shell\'s QML the way an edit does (soft: windows…'
 complete -c inir -n '__inir_at_function dev' -a current -d 'Return the current destination or closed'
 complete -c inir -n '__inir_at_function dev' -a meter -d 'Measure frame gaps for the given milliseconds (250–20000, d…'
 complete -c inir -n '__inir_at_function dev' -a metered -d 'Return the last measurement as JSON: frames, mean, p95, wor…'

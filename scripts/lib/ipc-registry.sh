@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 1dc77c115424bf20
+# IPC.md hash: 93618548d3a5c053
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -170,7 +170,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [coverflowSelector]="toggle open close"
   [customWidgets]="reload list create remove"
   [dashboard]="toggle close open"
-  [dev]="list open close current meter metered dragSim"
+  [dev]="list open close reload current meter metered dragSim"
   [equalizer]="toggle close open refresh ensure status setBand preset configure"
   [gamemode]="toggle activate deactivate status"
   [globalActions]="run runWithArgs list search open"
@@ -323,6 +323,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["dev:list"]="Return the destination inventory as JSON"
   ["dev:open"]="Open a destination by semantic identifier"
   ["dev:close"]="Close development-opened surfaces and clear the request"
+  ["dev:reload"]="Reload the shell's QML the way an edit does (soft: windows are kept). In a git checkout \`scripts/daemon/dev_hot_reload.py\` calls it for the files Quickshell does not watch itself"
   ["dev:current"]="Return the current destination or \`closed\`"
   ["dev:meter"]="Measure frame gaps for the given milliseconds (250–20000, default 2500)"
   ["dev:metered"]="Return the last measurement as JSON: frames, mean, p95, worst, frames over 20 and 50 ms"
