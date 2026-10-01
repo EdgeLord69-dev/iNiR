@@ -57,6 +57,17 @@ ytmusic-miniplayer {
   top: 0 !important; transform: none !important; padding: 4px 0 !important;
 }
 .ytMusicMiniPlayerProgressBar { border-radius: 3px !important; }
+/* The older player's slider is centred on the top edge the same way (left -16 px, lifted 16 px) */
+ytmusic-player-bar #progress-bar.ytmusic-player-bar {
+  left: 0 !important; width: calc(100% - 32px) !important; top: -11px !important; transform: none !important;
+}
+ytmusic-player-bar #progress-bar #progressContainer, ytmusic-player-bar #progress-bar #primaryProgress,
+ytmusic-player-bar #progress-bar #secondaryProgress { border-radius: 2px !important; }
+/* The mini video above the player is a tile of the same family */
+ytmusic-player[player-ui-state="MINIPLAYER"] {
+  border-radius: var(--inir-r-tile) !important; overflow: hidden !important; right: 12px !important;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.38) !important;
+}
 .ytMusicMiniPlayerProgressBar::-webkit-slider-thumb { background-color: var(--inir-accent) !important; }
 .ytmusicTrackInfoThumbnailWrapper, .ytmusicTrackInfoThumbnail, ytmusic-player-bar .image.ytmusic-player-bar {
   border-radius: var(--inir-r-tile) !important; overflow: hidden !important;
