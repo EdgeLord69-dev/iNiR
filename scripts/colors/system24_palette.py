@@ -97,7 +97,7 @@ THEME_TEMPLATE = """/**
  * @description Material Design Discord theme with Material You colors.
  * @author refact0r (system24 base), iNiR (Material adaptation)
  * @version 2.2.0
- * @source https://github.com/end-4/iNiR
+ * @source https://github.com/snowarch/iNiR
  */
 
 /*
@@ -216,7 +216,7 @@ MIDNIGHT_THEME_TEMPLATE = """/**
  * @description iNiR Midnight Discord theme with Material You colors.
  * @author iNiR (Material palette injection)
  * @version 2.2.0
- * @source https://github.com/end-4/iNiR
+ * @source https://github.com/snowarch/iNiR
  */
 
 /*
