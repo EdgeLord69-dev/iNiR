@@ -290,9 +290,15 @@ func syntaxColor(termColors map[string]string, primary, bg string, termIdx int) 
 	raw := pick(termColors, fmt.Sprintf("term%d", termIdx), "#888888")
 	dark := hexToHSL(bg).l < 0.5
 	if dark {
-		boosted := saturateColor(raw, 2.1, 0.50)
-		blended := blendColors(boosted, primary, 0.28)
-		return withContrast(adjustLightness(blended, 0.50, 0.88), bg, 4.5, true)
+		// Pastel, like the best dark schemes (Catppuccin Mocha sits at s 0.5-0.6, l 0.75-0.85): a 2.1x boost
+		// turned the terminal's green into a neon (hsl 83, 77 %, 64 %) that fought every warm palette.
+		tuned := saturateColor(raw, 1.0, 0.42)
+		if c := hexToHSL(tuned); c.s > 0.62 {
+			c.s = 0.62
+			tuned = hslToHex(c)
+		}
+		blended := blendColors(tuned, primary, 0.25)
+		return withContrast(adjustLightness(blended, 0.72, 0.86), bg, 4.5, true)
 	}
 	boosted := saturateColor(raw, 1.2, 0.45)
 	blended := blendColors(boosted, primary, 0.2)
