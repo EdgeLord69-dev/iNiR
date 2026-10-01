@@ -74,6 +74,7 @@ if [[ -n "$CHOSEN_ICON_THEME" ]]; then
     if [[ "$(gsettings get org.gnome.desktop.interface icon-theme 2>/dev/null | tr -d "'")" != "$APPLIED_ICON_THEME" ]]; then
         gsettings set org.gnome.desktop.interface icon-theme "$APPLIED_ICON_THEME" 2>/dev/null || true
     fi
+    "$SCRIPT_DIR/icon-theme-polarity.sh" "$APPLIED_ICON_THEME" 2>/dev/null || true
 fi
 
 BG=$(jq -r '.app_background // .background // empty' "$COLOR_SOURCE" 2>/dev/null || echo "#1e1e2e")
