@@ -20,6 +20,7 @@ PEAR_CONFIG_FILE="$PEAR_CONFIG_DIR/config.json"
 
 GENERATED_CSS="$STATE_DIR/user/generated/pear-desktop-theme.css"
 PEAR_LITERALS_CSS="$SCRIPT_DIR/templates/pear-desktop-literals.css"
+PEAR_FINISH_CSS="$SCRIPT_DIR/templates/pear-desktop-finish.css"
 COLORS_JSON="$STATE_DIR/user/generated/app-palette.json"
 [[ -f "$COLORS_JSON" ]] || COLORS_JSON="$STATE_DIR/user/generated/palette.json"
 [[ -f "$COLORS_JSON" ]] || COLORS_JSON="$STATE_DIR/user/generated/colors.json"
@@ -403,6 +404,11 @@ ytmusic-chip-cloud-chip-renderer[chip-style="STYLE_SECONDARY"]:not([is-selected]
   --icon-color: var(--inir-bg) !important;
 }
 EOCHIPS
+  # The shell's shapes, surfaces and face on top of the colours.
+  local font
+  font="$(shell_font_family)"
+  printf '\n:root { --inir-font: "%s"; }\n' "${font:-Roboto}"
+  [[ -f "$PEAR_FINISH_CSS" ]] && cat "$PEAR_FINISH_CSS"
   return 0
 }
 
