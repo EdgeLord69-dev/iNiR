@@ -51,8 +51,11 @@ Item {
     function _activePlayer(): var { return root.activeSlot === 0 ? playerA : playerB }
     function _inactivePlayer(): var { return root.activeSlot === 0 ? playerB : playerA }
 
-    onPlaybackSourceChanged: root._applySource()
-    Component.onCompleted: root._applySource()
+    // Deferred: on creation the decode height settles a moment after the source (0, "play the file", then the
+    // real height), and applying each step opened the full video only to cancel it ("Immediate exit requested",
+    // "moov atom not found" on every start). Qt.callLater runs it once with the settled value.
+    onPlaybackSourceChanged: Qt.callLater(root._applySource)
+    Component.onCompleted: Qt.callLater(root._applySource)
     onShouldPlayChanged: root._syncPlayback()
 
     // An in-flight load must be abandoned whenever the requested source changes,
