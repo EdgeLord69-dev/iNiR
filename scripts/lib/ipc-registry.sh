@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 3c10a0189fd0c4fd
+# IPC.md hash: b2cd8e940eff9eda
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -159,7 +159,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [autostart]="status addCommand addApp removeLast reload"
   [background]="widgetDesign widgetMaterial widgetSearch toggleEditMode toggleWidgetManager setEditMode editState applyOrganicEdgePreset applyOrganicEdgeComposition applyOrganicEdgeMaterial applyOrganicEdgeResponse organicEdgeState setOrganicEdgeEnabled quickControlsPage quickControlsGeometry widgetSnapshot legibilityState desktopItemsState focusWidget promoteWidget resetLayerOrder setWidgetEnabled clockDebugState clockDebugSetMode clockDebugSetRegion clockDebugSetLayout clockDebugRestore"
   [bar]="mediaWidth toggle close open"
-  [brightness]="increment decrement sleepBegin restoreAfterWake"
+  [brightness]="increment decrement refresh set status sleepBegin restoreAfterWake"
   [cheatsheet]="toggle close open"
   [clipboard]="open close toggle"
   [cliphistService]="update"
@@ -285,6 +285,9 @@ declare -gA IPC_FUNCTION_DESC=(
   ["bar:open"]="Show bar"
   ["brightness:increment"]="Increase brightness"
   ["brightness:decrement"]="Decrease brightness"
+  ["brightness:refresh"]="Re-read every output's level from the hardware (after the monitor's own buttons moved it)"
+  ["brightness:set"]="Set the focused output's brightness, the same path as the sliders; prints the result"
+  ["brightness:status"]="Each output: how it is driven (DDC bus or backlight), the shell's level and the last hardware level written (\`-1\` until the first write)"
   ["brightness:sleepBegin"]=""
   ["brightness:restoreAfterWake"]=""
   ["cheatsheet:toggle"]="Open/close cheatsheet"
@@ -658,6 +661,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["background:clockDebugSetRegion"]="<color> <brightness> <spread>"
   ["background:clockDebugSetLayout"]="<x> <y> <quickControlsOpen>"
   ["bar:mediaWidth"]="<px>"
+  ["brightness:set"]="<percent>"
   ["closeConfirm:triggerWindow"]="<windowId> <appId>"
   ["colorMode:set"]="<mode>"
   ["connections:sample"]="<kind>"

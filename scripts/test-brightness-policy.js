@@ -77,4 +77,15 @@ assert(!brightnessQml.includes("disabledExternalOutputNames"), "wake must not ad
 assert(!brightnessQml.includes("_knownExternals"), "wake ownership is limited to outputs pinned by this sleep cycle")
 assert(!brightnessQml.includes("sleepPowerOff"), "ddc/backlight sleep path is gone")
 
+assert(ctx.rawLevel(0, 100, true) === 0, "ddc slider at 0 reaches the monitor minimum")
+assert(ctx.rawLevel(0, 255, false) === 1, "backlight never writes 0 (panel off)")
+assert(ctx.rawLevel(1, 100, true) === 100, "slider at 1 reaches the top")
+assert(ctx.rawLevel(0.29, 100, true) === 29, "levels round instead of truncating")
+assert(ctx.rawLevel(Number.NaN, 100, true) === -1, "unknown level writes nothing")
+assert(ctx.resolveHardwareBrightness(0, 100, undefined, true).value === 0, "ddc 0 is a real level")
+assert(Number.isNaN(ctx.resolveHardwareBrightness(0, 100, undefined, false).value), "backlight 0 is the off state")
+assert(ctx.ddcFlags("--noverify --skip-ddc-checks", true).join(" ") === "--skip-ddc-checks --noverify", "fast write flags when ddcutil has them")
+assert(ctx.ddcFlags("--noverify", false).length === 0, "reads never skip verify, old ddcutil gets no unknown flags")
+assert(!brightnessQml.includes("execDetached([\"ddcutil\""), "ddc writes go through the serialized writer")
+
 console.log("ok")

@@ -22,6 +22,8 @@ PanelSurface {
 
     property var screen: root.QsWindow.window?.screen ?? null
     property var brightnessMonitor: screen ? Brightness.getMonitorForScreen(screen) : null
+    // The monitor's own buttons may have moved the level since the shell wrote it.
+    onVisibleChanged: if (visible) root.brightnessMonitor?.refresh()
 
     elevation: 1
     radiusOverride: islandSkin ? -1

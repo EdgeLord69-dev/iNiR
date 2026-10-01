@@ -224,6 +224,17 @@ Singleton {
         return monitors.find(m => m.screen === screen);
     }
 
+    function _focusedMonitor(): var {
+        const focusedName = CompositorService.isNiri ? NiriService.currentOutput : Hyprland.focusedMonitor?.name;
+        return monitors.find(m => focusedName === m.screen?.name) ?? null;
+    }
+
+    function describe(m): string {
+        const how = m.isDdc ? `ddc bus ${m.busNum}` : (root.backlightDevice || "no control")
+        const level = Number.isFinite(m.brightness) ? `${Math.round(m.brightness * 100)}%` : "unknown"
+        return `${m.screen?.name ?? "?"} ${how}: ${level}, hardware ${m._writtenRaw}/${m.rawMaxBrightness}${m.ready ? "" : " (reading)"}`
+    }
+
     function increaseBrightness(): void {
         const focusedName = CompositorService.isNiri ? NiriService.currentOutput : Hyprland.focusedMonitor?.name;
         if (!focusedName) return;
@@ -243,6 +254,16 @@ Singleton {
     reloadableId: "brightness"
 
     property var _ddcNext: []
+    property string _ddcHelp: ""
+
+    Process {
+        id: ddcHelpProc
+        running: true
+        command: ["ddcutil", "--help"]
+        stdout: StdioCollector {
+            onStreamFinished: root._ddcHelp = text
+        }
+    }
 
     onMonitorsChanged: {
         if (root.asleep)
@@ -370,15 +391,17 @@ Singleton {
             monitor.ready = false
             monitor.brightness = value
             monitor.ready = true
+            // The monitor may have reset its level while asleep.
+            monitor._writtenRaw = -1
             syncBrightness()
-            if (monitor.isDdc)
-                ddcRetryTimer.restart()
         }
 
         function initialize() {
             monitor.ready = false;
+            monitor._writtenRaw = -1
             if (isDdc) {
-                initProc.command = ["ddcutil", "-b", busNum, "getvcp", "10", "--brief"]
+                initProc.command = ["ddcutil", "-b", busNum].concat(
+                    BrightnessPolicy.ddcFlags(root._ddcHelp, false), ["getvcp", "10", "--brief"])
             } else if (!root.backlightDetectionReady) {
                 return
             } else if (root.backlightDevice.length > 0) {
@@ -408,10 +431,12 @@ Singleton {
                     const max = Number(parts[parts.length - 1])
                     const screenName = monitor.screen?.name ?? ""
                     const lastGood = root.lastValidBrightness[screenName]
-                    const resolved = BrightnessPolicy.resolveHardwareBrightness(current, max, lastGood)
+                    const resolved = BrightnessPolicy.resolveHardwareBrightness(current, max, lastGood, monitor.isDdc)
                     if (Number.isFinite(resolved.rawMax))
                         monitor.rawMaxBrightness = resolved.rawMax
                     if (Number.isFinite(resolved.value)) {
+                        if (!resolved.restore)
+                            monitor._writtenRaw = current
                         monitor.brightness = resolved.value
                         if (screenName && resolved.value >= 0.01)
                             root.lastValidBrightness[screenName] = resolved.value
@@ -422,8 +447,19 @@ Singleton {
                 }
             }
             onExited: {
-                if (monitor.ready)
+                if (monitor.ready) {
+                    monitor._initAttempts = 0
                     return
+                }
+                // A DDC read can fail while the bus is busy right after login
+                // or a hotplug; settling here would leave the slider at 0 over
+                // a lit monitor.
+                if (monitor.isDdc && monitor._initAttempts < 3) {
+                    monitor._initAttempts++
+                    initRetryTimer.restart()
+                    return
+                }
+                monitor._initAttempts = 0
                 const screenName = monitor.screen?.name ?? ""
                 const value = BrightnessPolicy.pickRestoreValue(
                     root.lastValidBrightness[screenName],
@@ -441,17 +477,26 @@ Singleton {
             }
         }
 
+        property int _initAttempts: 0
+        property var initRetryTimer: Timer {
+            interval: 1000
+            onTriggered: monitor.initialize()
+        }
+
+        property int _writeFailures: 0
         property var ddcRetryTimer: Timer {
             interval: 800
             onTriggered: monitor.syncBrightness()
         }
 
-        // Coalesce animation frames. DDC needs a longer debounce; backlight
-        // devices are capped near 30 writes/second so high-range AMD devices do
-        // not spawn a process for every QML animation frame. Fixes #188.
+        // Coalesce animation frames to ~30 writes a second (#188), then hand
+        // the level to one writer per monitor. Detached ddcutil calls queue on
+        // the bus lock and finish out of order, so the monitor could end on a
+        // level older than the slider's; the writer runs one call at a time and
+        // always ends on the newest level.
         property var setTimer: Timer {
             id: setTimer
-            interval: monitor.isDdc ? 300 : 32
+            interval: 32
             onTriggered: {
                 if (!monitor.writePending) return
                 monitor.writePending = false
@@ -459,18 +504,98 @@ Singleton {
             }
         }
 
+        property int _wantedRaw: -1
+        property int _writingRaw: -1
+        property int _writtenRaw: -1
+
         function syncBrightness() {
-            const brightnessValue = monitor.multipliedBrightness
-            if (!Number.isFinite(brightnessValue) || brightnessValue < 0.01)
+            const raw = BrightnessPolicy.rawLevel(monitor.multipliedBrightness, monitor.rawMaxBrightness, monitor.isDdc)
+            if (raw < 0)
                 return
-            const rawValueRounded = Math.max(Math.floor(brightnessValue * monitor.rawMaxBrightness), 1);
-            if (isDdc) {
-                if (!busNum)
+            if (monitor.isDdc ? !busNum : root.backlightDevice.length === 0)
+                return
+            monitor._wantedRaw = raw
+            monitor._writeNext()
+        }
+
+        function _writeNext(): void {
+            if (writeProc.running || monitor._wantedRaw < 0 || monitor._wantedRaw === monitor._writtenRaw)
+                return
+            const raw = monitor._wantedRaw
+            monitor._writingRaw = raw
+            writeProc.command = monitor.isDdc
+                ? ["ddcutil", "-b", busNum].concat(BrightnessPolicy.ddcFlags(root._ddcHelp, true), ["setvcp", "10", `${raw}`])
+                : ["brightnessctl", "-d", root.backlightDevice, "s", `${raw}`, "--quiet"]
+            writeProc.running = true
+        }
+
+        readonly property Process writeProc: Process {
+            onExited: (exitCode, exitStatus) => {
+                if (exitCode !== 0) {
+                    monitor._writtenRaw = -1
+                    // A wake or hotplug can leave the bus busy for a moment;
+                    // retry a few times, then wait for the next change.
+                    if (++monitor._writeFailures <= 3)
+                        ddcRetryTimer.restart()
+                    else
+                        console.warn(`[Brightness] ${monitor.screen?.name ?? "?"}: could not set level ${monitor._writingRaw} (exit ${exitCode})`)
                     return
-                Quickshell.execDetached(["ddcutil", "-b", busNum, "setvcp", "10", `${rawValueRounded}`]);
-            } else if (root.backlightDevice.length > 0) {
-                Quickshell.execDetached(["brightnessctl", "-d", root.backlightDevice,
-                    "s", `${rawValueRounded}`, "--quiet"]);
+                }
+                monitor._writeFailures = 0
+                monitor._writtenRaw = monitor._writingRaw
+                if (monitor._wantedRaw !== monitor._writtenRaw)
+                    monitor._writeNext()
+                else if (monitor.isDdc)
+                    readbackTimer.restart()
+            }
+        }
+
+        // Writes skip ddcutil's verify, so once the slider settles read the
+        // monitor once: a monitor that clamps or ignores a level must move the
+        // slider to what it really shows instead of disagreeing silently.
+        property var readbackTimer: Timer {
+            interval: 1500
+            onTriggered: {
+                if (!writeProc.running && !monitor.writePending)
+                    readbackProc.running = true
+            }
+        }
+
+        // Re-read the level without writing: the monitor's own buttons or
+        // another tool may have moved it since the shell last wrote it.
+        function refresh(): void {
+            if (!monitor.ready || writeProc.running || monitor.writePending || readbackProc.running)
+                return
+            if (monitor.isDdc ? !busNum : root.backlightDevice.length === 0)
+                return
+            readbackProc.running = true
+        }
+
+        readonly property Process readbackProc: Process {
+            command: monitor.isDdc
+                ? ["ddcutil", "-b", monitor.busNum].concat(BrightnessPolicy.ddcFlags(root._ddcHelp, false), ["getvcp", "10", "--brief"])
+                : ["/bin/sh", "-c", "printf '%s %s\\n' \"$(brightnessctl -d \"$1\" g)\" \"$(brightnessctl -d \"$1\" m)\"", "_", root.backlightDevice]
+            stdout: StdioCollector {
+                onStreamFinished: {
+                    const parts = text.trim().split(/\s+/)
+                    const current = Number(parts[parts.length - 2])
+                    const max = Number(parts[parts.length - 1])
+                    if (!Number.isFinite(current) || !Number.isFinite(max) || max <= 0)
+                        return
+                    // A backlight at 0 is a panel that is off, not a level.
+                    if (!monitor.isDdc && current <= 0)
+                        return
+                    if (writeProc.running || monitor.writePending || monitor._wantedRaw !== monitor._writtenRaw)
+                        return
+                    monitor.rawMaxBrightness = max
+                    monitor._writtenRaw = current
+                    monitor._wantedRaw = current
+                    if (BrightnessPolicy.rawLevel(monitor.brightness, max, monitor.isDdc) === current)
+                        return
+                    monitor.ready = false
+                    monitor.brightness = current / max
+                    monitor.ready = true
+                }
             }
         }
 
@@ -587,6 +712,26 @@ Singleton {
 
         function decrement(): void {
             root.decreaseBrightness();
+        }
+
+        // Re-read every output's level from the hardware, then report it.
+        function refresh(): void {
+            root.monitors.forEach(m => m.refresh())
+        }
+
+        // Level 0-100 on the focused output, the same path the sliders take.
+        function set(percent: string): string {
+            const value = Number(percent)
+            const monitor = root._focusedMonitor()
+            if (!monitor || !Number.isFinite(value))
+                return "no focused output or bad level"
+            monitor.setBrightness(value / 100)
+            return root.describe(monitor)
+        }
+
+        // Per output: the level the shell holds and the last hardware level written.
+        function status(): string {
+            return root.monitors.map(m => root.describe(m)).join("\n")
         }
 
         function sleepBegin(): void {
