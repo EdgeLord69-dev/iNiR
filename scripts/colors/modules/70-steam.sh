@@ -182,6 +182,19 @@ body .DialogDropDown_Arrow .SVGIcon_DownArrowContextMenu.SVGIcon_DownArrowContex
 /* Shelf headers are labels, not rules */
 ._2W0O30CG0Q1UtW0Oq2-p6N._2W0O30CG0Q1UtW0Oq2-p6N { background: transparent !important; }
 
+/* Menus are windows of their own with no alpha: a rounded plate showed black in its corners. The window is the
+   plate, square and in the menu's colour; the items keep their rounded fill inside it. */
+html.MillenniumWindow_ContextMenu, body.ContextMenuPopupBody.ContextMenuPopupBody {
+    background: var(--md-sys-color-surface-container) !important;
+    box-shadow: none !important;
+}
+body.ContextMenuPopupBody .PP7LM0Ow1K5qkR8WElLpt.PP7LM0Ow1K5qkR8WElLpt,
+body.ContextMenuPopupBody ._2yAm5LY_eu-Vg_52l0HFlM._2yAm5LY_eu-Vg_52l0HFlM {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+body.ContextMenuPopupBody ._1n7Wloe5jZ6fSuvV18NNWI.contextMenuItem.contextMenuItem { border-radius: 8px !important; }
+
 /* What's New titles clamp at two lines but clip at their padding, where the top of a third line showed */
 .DVBcpUzJ0x6kaRMfug0OJ.DVBcpUzJ0x6kaRMfug0OJ { overflow: clip !important; overflow-clip-margin: content-box !important; }
 EOCSS
