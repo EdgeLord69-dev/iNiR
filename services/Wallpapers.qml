@@ -1022,14 +1022,23 @@ Singleton {
     }
 
     function select(filePath, darkMode = Appearance.m3colors.darkmode, monitorName = "", target = "") {
-        selectProc.select(filePath, darkMode, monitorName, target)
+        // An output only means something with a wallpaper per monitor. Without it, the choice went to that unused
+        // list: nothing changed on screen, and it resurfaced the day the per-monitor mode was turned on.
+        const perMonitor = (Config.options?.background?.multiMonitor?.enable ?? false) ? monitorName : ""
+        selectProc.select(filePath, darkMode, perMonitor, target)
     }
 
     function randomFromCurrentFolder(darkMode = Appearance.m3colors.darkmode, monitorName = "", target = "") {
-        if (folderModel.count === 0) return
-        const randomIndex = Math.floor(Math.random() * folderModel.count)
-        const filePath = folderModel.get(randomIndex, "filePath")
-        root.select(filePath, darkMode, monitorName, target)
+        // The picker lists folders too: drawing one applied nothing.
+        const currentPath = Config.options?.background?.wallpaperPath ?? ""
+        const files = []
+        for (let i = 0; i < folderModel.count; ++i) {
+            if (folderModel.get(i, "fileIsDir")) continue
+            const path = folderModel.get(i, "filePath")
+            if (path && path !== currentPath) files.push(path)
+        }
+        if (files.length === 0) return
+        root.select(files[Math.floor(Math.random() * files.length)], darkMode, monitorName, target)
     }
 
     // Detect workspace range for a monitor (Niri-specific)
@@ -1310,6 +1319,15 @@ Singleton {
     readonly property int autoWallpaperInterval: Config.options?.background?.autoWallpaper?.intervalMinutes ?? 30
     readonly property bool autoWallpaperGenerateColors: Config.options?.background?.autoWallpaper?.generateColors ?? true
     readonly property string autoWallpaperFolder: Config.options?.background?.autoWallpaper?.folder ?? ""
+    // With no folder of its own the shuffle draws from the current wallpaper's folder. The picker's open folder
+    // went back to the default on every start, so a shuffle set up from another folder drifted to the default.
+    readonly property int shuffleCount: shuffleModel.count
+    readonly property string shuffleFolder: {
+        const own = FileUtils.trimFileProtocol(root.autoWallpaperFolder).replace(/^~(?=\/|$)/, Directories.homePath)
+        if (own.length > 0) return own
+        const current = FileUtils.trimFileProtocol(Config.options?.background?.wallpaperPath ?? "")
+        return current.length > 0 ? FileUtils.parentDirectory(current) : root.effectiveDirectory
+    }
 
     Timer {
         id: autoWallpaperTimer
@@ -1320,13 +1338,12 @@ Singleton {
         onTriggered: root._cycleAutoWallpaper()
     }
 
-    // The shuffle reads its own listing: files only (a folder is never a wallpaper), no search filter, and the
-    // picker keeps the folder it is showing even when the shuffle uses a folder of its own.
+    // The shuffle and Next wallpaper read their own listing: files only (a folder is never a wallpaper), no search
+    // filter, and the picker keeps the folder it is showing. Next wallpaper once drew from the picker's folder, which
+    // is ~/Pictures/Wallpapers after every start, and did nothing when that folder was missing or elsewhere.
     FolderListModel {
         id: shuffleModel
-        folder: root.autoWallpaperEnabled
-            ? Qt.resolvedUrl(root.autoWallpaperFolder.length > 0 ? root.autoWallpaperFolder : root.effectiveDirectory)
-            : ""
+        folder: Qt.resolvedUrl(root.shuffleFolder)
         nameFilters: root.extensions.map(ext => `*.${ext}`)
         caseSensitive: false
         showDirs: false
@@ -1338,18 +1355,28 @@ Singleton {
         _pickRandomAndApply()
     }
 
-    function _pickRandomAndApply() {
-        if (shuffleModel.count === 0) return
+    // Next wallpaper (desktop menu, `inir wallpaperSelector next`): one step of the shuffle, now.
+    function nextWallpaper(darkMode = Appearance.m3colors.darkmode, monitorName = ""): string {
+        const filePath = root._pickShuffleFile()
+        if (!filePath) return ""
+        root.select(filePath, darkMode, monitorName)
+        return filePath
+    }
+
+    function _pickShuffleFile(): string {
+        if (shuffleModel.count === 0) return ""
         const currentPath = Config.options?.background?.wallpaperPath ?? ""
         let attempts = 0
-        let randomIndex, filePath
-        // Try to pick a different wallpaper than the current one
+        let filePath
         do {
-            randomIndex = Math.floor(Math.random() * shuffleModel.count)
-            filePath = shuffleModel.get(randomIndex, "filePath")
+            filePath = shuffleModel.get(Math.floor(Math.random() * shuffleModel.count), "filePath")
             attempts++
         } while (filePath === currentPath && attempts < 5 && shuffleModel.count > 1)
+        return filePath ?? ""
+    }
 
+    function _pickRandomAndApply() {
+        const filePath = root._pickShuffleFile()
         if (!filePath) return
 
         if (root.autoWallpaperGenerateColors) {

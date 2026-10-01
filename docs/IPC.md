@@ -514,6 +514,7 @@ Wallpaper picker with grid, coverflow and compact launcher styles.
 | `openLauncher <mode>` | Open the compact launcher in `static` or `animated` mode |
 | `toggleOnMonitor <name>` | Open wallpaper selector on a specific monitor |
 | `random` | Pick a random wallpaper from the current folder |
+| `next` | Next wallpaper as the desktop menu does it: from the current wallpaper's folder, or the shuffle's own folder; prints the file |
 | `shuffle <value>` | A new wallpaper from the folder every few minutes: `on`, `off`, a number of minutes (turns it on) or `status` |
 | `set <path>` | Apply a wallpaper (picture, GIF or video) by path, the same way the picker does |
 | `preview <path>` | Show a wallpaper on the desktop without applying it: no config write, no recoloring |
@@ -886,6 +887,7 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `icon <piece> <glyph>` | Choose the glyph a piece wears: `controls`, `tools`, `focus`, `notifications`, `bluetooth`, `updates`, `anime` or `watching`, then a Material Symbol name (e.g. `inir iris icon controls settings`) or `reset` to go back to its own face |
 | `utility` | Set the utility satellite: `tray`, `tools`, `sound`, `mic` or `none` |
 | `desktopMenu <x> <y>` | Open the desktop menu on the focused output at that point, in pixels; no point opens it in the middle |
+| `desktopAction <id>` | Run a desktop menu entry on the focused output as a click would: `wallpaper`, `wallpaperNext` (the round button on the wallpaper) or an action id such as `nextWallpaper`, `terminal`, `screenshot` |
 | `menuClose` | Close whichever iRiS or shell context menu is open |
 | `watch` | What the Continue bubble has in progress, or resume one of them: no argument lists them numbered with the episode and saved position, a number or part of a title resumes that show. Anything that matches nothing in progress starts a search instead. Only ani-cli can be pointed at one show; jerry and curd run their own picker |
 | `watchPick` | Answer whatever the Continue bubble is asking (which show, which episode, what next once one ends, which quality): no argument lists the options, a number or part of a label chooses one, `cancel` stops the run |

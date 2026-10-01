@@ -196,6 +196,8 @@ Scope {
             root.toggle()
         }
         function random(): void { Wallpapers.randomFromCurrentFolder() }
+        // Next wallpaper as the desktop menu does it: from the current wallpaper's folder (or the shuffle's own).
+        function next(): string { return Wallpapers.nextWallpaper() || "no wallpaper in " + Wallpapers.shuffleFolder }
         // A new wallpaper every few minutes: `on`, `off`, a number of minutes (turns it on) or `status`.
         function shuffle(value: string): string {
             const minutes = parseInt(value)
@@ -207,7 +209,7 @@ Scope {
                 return "Use on, off, a number of minutes (1-1440) or status"
             const enabled = value === "on" || minutes >= 1 || (value !== "off" && Wallpapers.autoWallpaperEnabled)
             const every = minutes >= 1 ? minutes : Wallpapers.autoWallpaperInterval
-            return enabled ? "on, every " + every + " min" : "off"
+            return enabled ? `on, every ${every} min, from ${Wallpapers.shuffleFolder} (${Wallpapers.shuffleCount} wallpapers)` : "off"
         }
         function set(path: string): void { Wallpapers.select(path) }
         function preview(path: string): void { Wallpapers.previewWallpaper(path, "") }
@@ -237,9 +239,19 @@ Scope {
                 focusedMonitor: root.focusedMonitorName,
                 selectionTarget: Wallpapers.currentSelectionTarget(),
                 multiMonitor: Config.options?.background?.multiMonitor?.enable ?? false,
-                kind: GlobalStates.wallpaperSelectorKindActive
+                kind: GlobalStates.wallpaperSelectorKindActive,
+                // What each output shows now.
+                shown: root.shownWallpapers()
             })
         }
+    }
+
+    function shownWallpapers(): var {
+        const out = {}
+        const map = WallpaperListener.effectivePerMonitor ?? {}
+        for (const name in map)
+            out[name] = map[name]?.path ?? ""
+        return out
     }
 
     IpcHandler {

@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 8134fc12be4d7efa
+# IPC.md hash: 1dc77c115424bf20
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -175,7 +175,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [gamemode]="toggle activate deactivate status"
   [globalActions]="run runWithArgs list search open"
   [globalStyle]="set get list"
-  [iris]="open page close toggle card theme settings bubble dock dockApp appBubble focus today controlCenter pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource orbit orbitCorner orbitClose spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive palette preset icon control lock utility watch watchPick desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
+  [iris]="open page close toggle card theme settings bubble dock dockApp appBubble focus today controlCenter pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource orbit orbitCorner orbitClose spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive palette preset icon control lock utility watch watchPick desktopAction desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
   [keyboard]="switchLayout switchLayoutPrevious getCurrentLayout getLayouts"
   [lock]="activate prepareSleep deactivate status focus"
   [mascot]="poke status setVoice romp chase hideSeek tidy appear appearContextual appearWithLine hide snooze"
@@ -213,7 +213,7 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [wactionCenter]="toggle close open"
   [waffleAltSwitcher]="open close toggle next previous"
   [wallpaperLauncher]="next previous applyCurrent status"
-  [wallpaperSelector]="toggle open close openLauncher toggleOnMonitor random shuffle set preview cancelPreview browse kind status"
+  [wallpaperSelector]="toggle open close openLauncher toggleOnMonitor random next shuffle set preview cancelPreview browse kind status"
   [wbar]="toggle close open"
   [widgetStacks]="status create add remove dissolve page move rotate interval"
   [widgetpower]="status"
@@ -397,6 +397,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:utility"]="Set the utility satellite: \`tray\`, \`tools\`, \`sound\`, \`mic\` or \`none\`"
   ["iris:watch"]="What the Continue bubble has in progress, or resume one of them: no argument lists them numbered with the episode and saved position, a number or part of a title resumes that show. Anything that matches nothing in progress starts a search instead. Only ani-cli can be pointed at one show; jerry and curd run their own picker"
   ["iris:watchPick"]="Answer whatever the Continue bubble is asking (which show, which episode, what next once one ends, which quality): no argument lists the options, a number or part of a label chooses one, \`cancel\` stops the run"
+  ["iris:desktopAction"]="Run a desktop menu entry on the focused output as a click would: \`wallpaper\`, \`wallpaperNext\` (the round button on the wallpaper) or an action id such as \`nextWallpaper\`, \`terminal\`, \`screenshot\`"
   ["iris:desktopMenu"]="Open the desktop menu on the focused output at that point, in pixels; no point opens it in the middle"
   ["iris:menuClose"]="Close whichever iRiS or shell context menu is open"
   ["iris:watchSubs"]="Subtitles of the episode that is playing: \`size+\`, \`size-\` (kept for every episode), \`delay+\`, \`delay-\`, \`delay0\` (this episode), \`off\`, \`track:<id>\`, \`file:<path>\` to load one. No argument lists the tracks"
@@ -595,6 +596,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["wallpaperSelector:openLauncher"]="Open the compact launcher in \`static\` or \`animated\` mode"
   ["wallpaperSelector:toggleOnMonitor"]="Open wallpaper selector on a specific monitor"
   ["wallpaperSelector:random"]="Pick a random wallpaper from the current folder"
+  ["wallpaperSelector:next"]="Next wallpaper as the desktop menu does it: from the current wallpaper's folder, or the shuffle's own folder; prints the file"
   ["wallpaperSelector:shuffle"]="A new wallpaper from the folder every few minutes: \`on\`, \`off\`, a number of minutes (turns it on) or \`status\`"
   ["wallpaperSelector:set"]="Apply a wallpaper (picture, GIF or video) by path, the same way the picker does"
   ["wallpaperSelector:preview"]="Show a wallpaper on the desktop without applying it: no config write, no recoloring"
@@ -719,6 +721,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["iris:utility"]="<name>"
   ["iris:watch"]="<which>"
   ["iris:watchPick"]="<value>"
+  ["iris:desktopAction"]="<id>"
   ["iris:desktopMenu"]="<x> <y>"
   ["iris:watchSubs"]="<command>"
   ["iris:watchSeek"]="<seconds>"
@@ -824,6 +827,7 @@ declare -gA IPC_FUNCTION_VALUES=(
   ["iris:lock"]="edit done toggle page: layouts scene type clock widgets widget: weather monthCalendar select: iris centered corner minimal"
   ["iris:utility"]="tray tools sound mic none"
   ["iris:watchPick"]="cancel"
+  ["iris:desktopAction"]="wallpaper wallpaperNext nextWallpaper terminal screenshot"
   ["iris:watchSubs"]="size+ size- delay+ delay- delay0 off track: file:"
   ["iris:watchSkip"]="next previous"
   ["iris:motion"]="spotlight orbit gallery settings focus today motioned"
