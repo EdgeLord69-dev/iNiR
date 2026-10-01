@@ -2,6 +2,8 @@
 /* Appended by apply-spicetify-theme.sh after the line that defines --inir-mono (the shell's monospace face). */
 :root {
   --border-radius: 10px;
+  /* Resting panes are quiet lines; the pane under the pointer takes the accent */
+  --spice-border-inactive: color-mix(in srgb, var(--spice-text) 22%, var(--spice-main));
   --font-family: var(--inir-mono), "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
 }
 .Root__globalNav::before, .Root__main-view::before, .main-nowPlayingBar-container::before,

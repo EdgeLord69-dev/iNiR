@@ -24,6 +24,14 @@ ytmusic-player-queue-item, ytmusic-responsive-list-item-renderer { border-bottom
 ytmusic-search-box { background: var(--inir-fg-10) !important; border: 0 !important; border-radius: var(--inir-r-row) !important; }
 ytmusic-search-box[opened] { background: var(--inir-popup) !important; }
 
+/* Where you are is the accent's container, as in every themed app */
+ytmusic-guide-entry-renderer[active] tp-yt-paper-item {
+  background: var(--inir-accent-container) !important; color: var(--inir-on-accent-container) !important;
+}
+ytmusic-guide-entry-renderer[active] yt-icon, ytmusic-guide-entry-renderer[active] .title {
+  color: var(--inir-on-accent-container) !important; --iron-icon-fill-color: var(--inir-on-accent-container) !important;
+}
+
 /* Shapes on the shell's ladder: tiles 14, rows 10, chips 7 */
 ytmusic-two-row-item-renderer ytmusic-thumbnail-renderer, ytmusic-two-row-item-renderer .image-wrapper,
 ytmusic-two-row-item-renderer #thumbnail, ytmusic-two-row-item-renderer img { border-radius: var(--inir-r-tile) !important; }

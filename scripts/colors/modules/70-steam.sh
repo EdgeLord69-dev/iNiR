@@ -106,16 +106,16 @@ steam_refinements_css() {
   font="$(shell_font_family)"
   cat <<'EOCSS'
 
-/* iNiR: a selection is a tonal fill; the accent is kept for actions (Play, Install, progress) */
+/* iNiR: a selection is the accent's container, as in every themed app; the accent itself is kept for actions */
 ._3pSPluBgf0NeR1kkCLWMhR._3pSPluBgf0NeR1kkCLWMhR.eNLOx4LVceeMwRvTVWh3 {
-    background-color: var(--md-sys-color-secondary-container) !important;
+    background-color: var(--md-sys-color-primary-container) !important;
 }
 ._3pSPluBgf0NeR1kkCLWMhR._3pSPluBgf0NeR1kkCLWMhR.eNLOx4LVceeMwRvTVWh3:hover {
-    background-color: color-mix(in srgb, var(--md-sys-color-secondary-container), var(--md-sys-color-on-secondary-container) 8%) !important;
+    background-color: color-mix(in srgb, var(--md-sys-color-primary-container), var(--md-sys-color-on-primary-container) 8%) !important;
 }
 .eNLOx4LVceeMwRvTVWh3.eNLOx4LVceeMwRvTVWh3 ._3O48LaKWcabKx07xdrt1TH,
 ._3pSPluBgf0NeR1kkCLWMhR.eNLOx4LVceeMwRvTVWh3:hover ._3O48LaKWcabKx07xdrt1TH {
-    color: var(--md-sys-color-on-secondary-container) !important;
+    color: var(--md-sys-color-on-primary-container) !important;
 }
 ._3pSPluBgf0NeR1kkCLWMhR._3pSPluBgf0NeR1kkCLWMhR:not(.eNLOx4LVceeMwRvTVWh3):hover ._3O48LaKWcabKx07xdrt1TH {
     color: var(--md-sys-color-on-surface) !important;
