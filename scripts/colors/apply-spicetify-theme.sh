@@ -35,9 +35,11 @@ LOG_FILE="$STATE_DIR/user/generated/spicetify_theme.log"
 THEME_NAME="Inir"
 TUI_THEME_NAME="InirTUI"
 SCHEME_NAME="matugen"
-SLEEK_CSS_URL="https://raw.githubusercontent.com/spicetify/spicetify-themes/master/Sleek/user.css"
 TEXT_CSS_URL="https://raw.githubusercontent.com/spicetify/spicetify-themes/master/text/user.css"
 REQUESTED_THEME=""
+INIR_FINISH_CSS="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/templates/spotify-finish.css"
+TUI_FINISH_CSS="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/templates/spotify-tui-finish.css"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/lib/config-path.sh"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -211,7 +213,8 @@ def receive(wanted_id):
 # Swap the theme stylesheet in place: a page reload flashes the whole client and can raise its window.
 swap = """(() => {
   const links = [...document.querySelectorAll('link.userCSS, link[href^="user.css"]')];
-  links.forEach(link => { link.href = 'user.css?inir=' + Date.now(); });
+  // Each link keeps its own file: colors.css is a userCSS link too, and pointing it at user.css dropped the scheme.
+  links.forEach(link => { link.href = new URL(link.href, location.href).pathname.split('/').pop() + '?inir=' + Date.now(); });
   return links.length;
 })()"""
 send({"id": 1, "method": "Runtime.evaluate", "params": {"expression": swap, "returnByValue": True}})
@@ -300,6 +303,9 @@ button             = $(strip_hash "${SPICE_COLORS[accent]}")
 button-active      = $(strip_hash "${SPICE_COLORS[selection_hover]}")
 button-disabled    = $(strip_hash "${SPICE_COLORS[disabled]}")
 tab-active         = $(strip_hash "${SPICE_COLORS[popup]}")
+highlight          = $(strip_hash "${SPICE_COLORS[card]}")
+highlight-elevated = $(strip_hash "${SPICE_COLORS[popup]}")
+main-elevated      = $(strip_hash "${SPICE_COLORS[card]}")
 notification       = $(strip_hash "${SPICE_COLORS[notification]}")
 notification-error = $(strip_hash "${SPICE_COLORS[error]}")
 misc               = $(strip_hash "${SPICE_COLORS[border]}")
@@ -319,6 +325,8 @@ border-active      = $(strip_hash "${SPICE_COLORS[accent]}")
 border-inactive    = $(strip_hash "${SPICE_COLORS[border]}")
 header             = $(strip_hash "${SPICE_COLORS[subtext]}")
 highlight          = $(strip_hash "${SPICE_COLORS[card]}")
+highlight-elevated = $(strip_hash "${SPICE_COLORS[popup]}")
+main-elevated      = $(strip_hash "${SPICE_COLORS[card]}")
 main               = $(strip_hash "${SPICE_COLORS[main]}")
 notification       = $(strip_hash "${SPICE_COLORS[notification]}")
 notification-error = $(strip_hash "${SPICE_COLORS[error]}")
@@ -330,7 +338,7 @@ EOF
 regenerate_user_css_bridge() {
   local css_file="$1"
 
-  # user.css must already exist (downloaded by download_sleek_css)
+  # user.css must already exist (written by write_inir_user_css)
   [[ -f "$css_file" ]] || return 0
 
   # ── Derive bridge values from matugen palette ─────────────────────────────
@@ -370,7 +378,7 @@ regenerate_user_css_bridge() {
   --spice-notification-error:  #$(strip_hash "${COLORS[error]}");
   --spice-misc:                #$(strip_hash "${COLORS[outline]}");
 
-  /* Aliases for variables used by Sleek CSS but not in color.ini */
+  /* Tones color.ini does not carry */
   --spice-main-secondary:      #$(strip_hash "$main_secondary");
   --spice-main-elevated:       #$(strip_hash "$main_elevated");
   --spice-highlight:           #$(strip_hash "$highlight");
@@ -409,7 +417,7 @@ regenerate_user_css_bridge() {
   # Use python3 for reliable multi-line regex replace without temp file races.
   # The regex removes ALL occurrences (handles stale duplicate blocks from
   # previous buggy runs) and appends a single fresh block at the end so these
-  # vars win over any later Sleek defaults/redefinitions.
+  # vars win over any earlier definition.
   python3 - "$css_file" "$bridge_block" <<'PYEOF'
 import sys, re, pathlib
 css_path = pathlib.Path(sys.argv[1])
@@ -489,27 +497,19 @@ PYEOF
   log "Playback controls fix regenerated from current palette"
 }
 
-patch_existing_user_css() {
-  local css_file="$1"
-
-  [[ -f "$css_file" ]] || return 0
-
-  sed -i 's/rgba(var(--spice-rgb-selected-row),.7)/var(--spice-subtext)/g' "$css_file"
-}
-download_sleek_css() {
-  local css_file="$1"
-  if [[ ! -f "$css_file" ]]; then
-    log "Downloading base CSS from Sleek theme..."
-    if curl -L --create-dirs -o "$css_file" "$SLEEK_CSS_URL" 2>/dev/null; then
-      log "Downloaded base CSS"
-      # Fix hard-to-read right-side playback controls (queue, connect, volume).
-      # Sleek bases these on selected-row (which is a dark background in Matugen).
-      # Change it to use the subtext color instead so they are visible.
-      sed -i 's/rgba(var(--spice-rgb-selected-row),.7)/var(--spice-subtext)/g' "$css_file"
-    else
-      log "Warning: Failed to download base CSS"
-    fi
-  fi
+# Inir is iNiR's own theme: Spotify's layout in the shell's palette, face and shapes (templates/spotify-finish.css).
+# It replaces the Sleek download it was built on, whose gradients and 50 px shadows read as blocks on the palette.
+write_inir_user_css() {
+  local css_file="$1" font
+  font="$(grep -s '^gtk-font-name=' "$XDG_CONFIG_HOME/gtk-3.0/settings.ini" | head -n1)"
+  font="${font#gtk-font-name=}"
+  font="$(sed -E 's/[[:space:]]+[0-9]+(\.[0-9]+)?$//' <<<"$font")"
+  font="${font//\"/}"
+  {
+    printf '/* iNiR for Spotify. Generated from the shell; edits are overwritten. */\n'
+    printf ':root { --inir-font: "%s"; }\n' "${font:-Inter}"
+    cat "$INIR_FINISH_CSS"
+  } > "$css_file"
 }
 
 download_text_css() {
@@ -542,6 +542,8 @@ regenerate_tui_color_bridge() {
   --spice-border-inactive:    #$(strip_hash "${SPICE_COLORS[border]}");
   --spice-header:             #$(strip_hash "${SPICE_COLORS[subtext]}");
   --spice-highlight:          #$(strip_hash "${SPICE_COLORS[card]}");
+  --spice-highlight-elevated: #$(strip_hash "${SPICE_COLORS[popup]}");
+  --spice-main-elevated:      #$(strip_hash "${SPICE_COLORS[card]}");
   --spice-main:               #$(strip_hash "${SPICE_COLORS[main]}");
   --spice-notification:       #$(strip_hash "${SPICE_COLORS[notification]}");
   --spice-notification-error: #$(strip_hash "${SPICE_COLORS[error]}");
@@ -588,13 +590,15 @@ regenerate_tui_overrides() {
   local css_file="$1"
   [[ -f "$css_file" ]] || return 0
 
-  # Keep upstream text responsible for layout. iNiR supplies the local font and
-  # raises playback control contrast so generated palettes remain readable.
+  # Upstream text keeps the layout; iNiR adds the shell's mono face, its rounded panes
+  # (templates/spotify-tui-finish.css) and playback control contrast.
+  local mono_font
+  mono_font=$(jq -r '.appearance.typography.monospaceFont // empty' "$(inir_config_dir)/config.json" 2>/dev/null) || true
+  mono_font="${mono_font:-JetBrainsMono Nerd Font}"
   local tui_block
   tui_block="/* === iNiR TUI overrides - auto-generated === */
-:root {
-  --font-family: 'JetBrainsMono Nerd Font', 'JetBrains Mono', monospace;
-}
+:root { --inir-mono: \"${mono_font}\"; }
+$(cat "$TUI_FINISH_CSS" 2>/dev/null)
 
 .player-controls__buttons,
 .main-nowPlayingBar-extraControls {
@@ -716,8 +720,7 @@ configure_spicetify() {
   read_colors || return 1
   derive_spicetify_colors
 
-  download_sleek_css "$user_css"
-  patch_existing_user_css "$user_css"
+  write_inir_user_css "$user_css"
   # Write user.css bridge FIRST so the live xpui sync always ships the full
   # variable set in a single file copy.
   regenerate_user_css_bridge "$user_css"

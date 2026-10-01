@@ -146,7 +146,7 @@ ContentPage {
                         colorRegenTimer.restart()
                     }
                     options: [
-                        { displayName: Translation.tr("Sleek"), value: "Inir" },
+                        { displayName: "iNiR", value: "Inir" },
                         { displayName: Translation.tr("Text (TUI)"), value: "InirTUI" }
                     ]
                 }
