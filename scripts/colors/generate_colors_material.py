@@ -497,8 +497,10 @@ def build_app_palette(base_palette: dict[str, str]) -> dict[str, str]:
     layer2_active = mix_hex(layer2, on_layer2, 0.80)
     layer3_hover = mix_hex(layer3, on_layer3, 0.90)
     layer3_active = mix_hex(layer3, on_layer3, 0.80)
-    selection = mix_hex(layer3, primary, 0.82)
-    selection_hover = mix_hex(layer3, primary, 0.74)
+    # Where you are is the accent's quiet sibling, the same in every app: the container over the popup layer.
+    # 18 % of the accent on grey read as no colour at all.
+    selection = mix_hex(primary_container, layer3, 0.75)
+    selection_hover = mix_hex(primary_container, layer3, 0.88)
     on_selection = readable_hex(on_layer3, selection, 4.5)
 
     app = dict(base_palette)
@@ -645,6 +647,42 @@ for color in vars(MaterialDynamicColors).keys():
         rgba = generated_hct.to_rgba()
         material_colors[color] = rgba_to_hex(rgba)
 
+# Accents live in Material's band (tone 80 on dark, 40 on light). Fidelity and content schemes copy the seed's
+# tone, so a pale wallpaper gave a dark theme a primary at tone 97 (#E9FAFF): white, and every app and the shell
+# lost their colour. Out of band, an accent is read from its own palette at the standard tone, keeping its chroma.
+if args.scheme != "scheme-monochrome":
+    for key, palette_name in (("primary", "primary_palette"), ("secondary", "secondary_palette"), ("tertiary", "tertiary_palette")):
+        palette = getattr(scheme, palette_name, None)
+        if palette is None or key not in material_colors:
+            continue
+        tone = Hct.from_int(hex_to_argb(material_colors[key])).tone
+        if darkmode and not 70.0 <= tone <= 85.0:
+            material_colors[key] = argb_to_hex(palette.tone(80))
+        elif not darkmode and not 25.0 <= tone <= 50.0:
+            material_colors[key] = argb_to_hex(palette.tone(40))
+        # Its container is the quiet sibling (tone 30 / 90): the same copy of the seed made it the accent's twin.
+        container, on_container = key + "Container", "on" + key[0].upper() + key[1:] + "Container"
+        if container in material_colors:
+            ctone = Hct.from_int(hex_to_argb(material_colors[container])).tone
+            if darkmode and not 20.0 <= ctone <= 40.0:
+                material_colors[container] = argb_to_hex(palette.tone(30))
+                material_colors[on_container] = argb_to_hex(palette.tone(90))
+            elif not darkmode and not 80.0 <= ctone <= 95.0:
+                material_colors[container] = argb_to_hex(palette.tone(90))
+                material_colors[on_container] = argb_to_hex(palette.tone(10))
+        # A near-grey wallpaper still has a hue: the accent carries it at a chroma people read as colour, so no
+        # wallpaper leaves the shell and its apps without one (a night wallpaper gave a grey #C2C7CE).
+        # And a ceiling: a vivid green wallpaper gave #05E600 (chroma 102), a neon no text or fill sits well on.
+        hct = Hct.from_int(hex_to_argb(material_colors[key]))
+        if hct.chroma > 60.0:
+            material_colors[key] = argb_to_hex(Hct.from_hct(hct.hue, 60.0, hct.tone).to_int())
+        if key == "primary":
+            for role, floor in ((key, 36.0), (container, 24.0)):
+                if role in material_colors:
+                    hct = Hct.from_int(hex_to_argb(material_colors[role]))
+                    if 4.0 <= hct.chroma < floor:
+                        material_colors[role] = argb_to_hex(Hct.from_hct(hct.hue, floor, hct.tone).to_int())
+
 # Extended material
 if darkmode == True:
     material_colors["success"] = "#B5CCBA"
@@ -685,8 +723,7 @@ if args.surface_seed and re.fullmatch(r"#?[0-9A-Fa-f]{6}", args.surface_seed.str
         ramp = [hex_to_argb(material_colors[key]) for key in SURFACE_RAMP if key in material_colors]
         worst = (min if not darkmode else max)(ramp, key=lambda argb: Hct.from_int(argb).tone)
         for key, ratio in (
-            ("onSurface", 7.0), ("onBackground", 7.0), ("onSurfaceVariant", 4.5),
-            ("primary", 4.5), ("secondary", 4.5), ("tertiary", 4.5), ("error", 4.5), ("outline", 3.0),
+            ("onSurface", 7.0), ("onBackground", 7.0), ("onSurfaceVariant", 4.5), ("error", 4.5), ("outline", 3.0),
         ):
             if key in material_colors:
                 material_colors[key] = argb_to_hex(
@@ -694,6 +731,15 @@ if args.surface_seed and re.fullmatch(r"#?[0-9A-Fa-f]{6}", args.surface_seed.str
                         hex_to_argb(material_colors[key]), worst, ratio, bool(darkmode), 94.0 if darkmode else 8.0
                     )
                 )
+        # Accents are fills and marks first (buttons, progress, selection): 3:1 against the farthest surface, as
+        # WCAG asks of non-text, and 4.5:1 against the background, where they also set text. Solving them for text
+        # on the farthest surface pushed a dark theme's cyan to tone 94 (#E9FAFF) and every app lost its colour.
+        background = hex_to_argb(material_colors.get("background", material_colors.get("surface")))
+        for key in ("primary", "secondary", "tertiary"):
+            if key in material_colors:
+                argb = ensure_contrast(hex_to_argb(material_colors[key]), worst, 3.0, bool(darkmode), 94.0 if darkmode else 8.0)
+                argb = ensure_contrast(argb, background, 4.5, bool(darkmode), 94.0 if darkmode else 8.0)
+                material_colors[key] = argb_to_hex(argb)
 
 # Terminal Colors
 if args.termscheme is not None:
@@ -841,6 +887,16 @@ if args.termscheme is not None:
                 fg_argb = hex_to_argb(term_colors[color])
                 adjusted = ensure_contrast(fg_argb, bg_argb, 4.5, darkmode)
                 term_colors[color] = argb_to_hex(adjusted)
+
+        # The greys (term7 text, term8 suggestions and comments) are neutrals of the terminal's own hue, like
+        # Material's: they came from the base scheme as a warm yellow-grey (hue ~100) on every palette, and
+        # term7 was never checked (3.5:1 on a light blue).
+        bg_hct = Hct.from_int(bg_argb)
+        grey_chroma = min(bg_hct.chroma, 10.0)
+        for color, start_tone, ratio in (("term7", 75.0 if darkmode else 35.0, 4.5), ("term8", 60.0 if darkmode else 50.0, 3.5)):
+            if color in term_colors:
+                grey = Hct.from_hct(bg_hct.hue, grey_chroma, start_tone).to_int()
+                term_colors[color] = argb_to_hex(ensure_contrast(grey, bg_argb, ratio, darkmode))
 
         # Bright semantic colors: lighter contrast requirement (3.5:1) to preserve vibrancy
         bright_colors = ["term9", "term10", "term11", "term12", "term13", "term14"]
