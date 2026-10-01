@@ -58,9 +58,24 @@ def load_generator_colors(scss_path, palette_json_path, terminal_json_path):
     # Selection is a tint of the accent under the text, not the foreground inverted into a full-strength block;
     # inactive tabs sit on the background (term8 under term7 measured 1.1:1).
     term0, term15 = colors.get("term0", "#282828"), colors.get("term15", "#EBDBB2")
-    colors.setdefault("selectionBg", blend_hex(term0, colors.get("primary", "#458588"), 0.35))
-    colors.setdefault("tabInactiveBg", blend_hex(term0, term15, 0.08))
+    primary = colors.get("primary", "#458588")
+    # As much accent as the text allows: 35 % on a dark terminal, less on a light one, never under 4.5:1.
+    factor = 0.35
+    while factor > 0.05 and contrast_hex(term15, blend_hex(term0, primary, factor)) < 4.5:
+        factor -= 0.03
+    colors.setdefault("selectionBg", blend_hex(term0, primary, factor))
+    colors.setdefault("tabInactiveBg", blend_hex(term0, term15, 0.06))
     return colors
+
+
+def contrast_hex(a, b):
+    def lum(h):
+        h = h.lstrip("#")
+        c = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+        c = [x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in c]
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+    la, lb = lum(a), lum(b)
+    return (max(la, lb) + 0.05) / (min(la, lb) + 0.05)
 
 
 def blend_hex(color1, color2, factor=0.5):
@@ -132,7 +147,7 @@ bell_border_color       {colors.get("term1", "#CC241D")}
 # Tab bar colors
 active_tab_foreground   {colors.get("onPrimary", "#FFFFFF")}
 active_tab_background   {colors.get("primary", "#458588")}
-inactive_tab_foreground {colors.get("term7", "#A89984")}
+inactive_tab_foreground {colors.get("term7", "#A89984") if contrast_hex(colors.get("term7", "#A89984"), colors["tabInactiveBg"]) >= 4.5 else colors.get("term15", "#EBDBB2")}
 inactive_tab_background {colors["tabInactiveBg"]}
 tab_bar_background      {colors.get("term0", "#282828")}
 
