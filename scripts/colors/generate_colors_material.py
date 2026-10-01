@@ -810,6 +810,12 @@ if args.termscheme is not None:
             harmonized = boost_chroma_tone(harmonized, user_saturation * 2.0, tone_mult)
             # Ensure minimum chroma for visual distinctiveness
             harmonized = ensure_min_chroma(harmonized, 40)
+            # And a ceiling, so no hue shouts over the others: greens and cyans reach chroma 77 and 54 at a tone
+            # where reds and blues hold 40, and read as neon in the terminal and in every editor theme built on it.
+            ceiling = 24 + 36 * user_saturation
+            hct = Hct.from_int(harmonized)
+            if hct.chroma > ceiling:
+                harmonized = Hct.from_hct(hct.hue, ceiling, hct.tone).to_int()
 
         # Apply additional softening if requested
         if args.soften and args.scheme not in [
