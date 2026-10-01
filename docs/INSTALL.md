@@ -26,7 +26,9 @@ Niri's environment only apply after a reboot. Then pick Niri at the login screen
 **Black screen instead of the login screen?** On laptops with an NVIDIA GPU next to the integrated one,
 SDDM's default X11 greeter can start on the GPU that has no screens. Setup already picks the Wayland login
 screen for those machines; to switch by hand, open `./setup` → Extras → Install ii-pixel-sddm and choose
-**Wayland with Niri**. Updates never change your login screen or turn SDDM back on if you use another one.
+**Wayland with Niri**. If you already use another login screen (GDM, Plasma Login...), iNiR keeps it: a
+first install asks once, and updates or running install again never switch it. To move to SDDM later, use
+`./setup` → Extras → Install ii-pixel-sddm.
 
 ```bash
 systemctl reboot

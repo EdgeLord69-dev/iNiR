@@ -730,6 +730,16 @@ if grep -Fq 'rpmfusion-nonfree-release' "$fedora_installer"; then
     printf 'FAIL: Fedora installer enables RPM Fusion Nonfree without an iNiR dependency requiring it\n' >&2
     exit 1
 fi
+setups_script="$runtime_root/sdata/subcmd-install/2.setups.sh"
+# Install keeps a login screen the machine already has: SDDM takes over only when there is none or the
+# person says so on a first install (#279). Disabling GDM & co. outside that decision put hybrid laptops
+# on a black screen after every reinstall.
+if ! grep -Fq 'take_over=false' "$setups_script" \
+        || ! grep -Fq 'if [[ "$take_over" == true ]]; then' "$setups_script" \
+        || ! grep -Fq 'extras_install_sddm_theme "yes" no' "$runtime_root/sdata/subcmd-install/3.files.sh"; then
+    printf 'FAIL: install can switch an existing display manager to SDDM without asking\n' >&2
+    exit 1
+fi
 sddm_installer="$runtime_root/scripts/sddm/install-pixel-sddm.sh"
 # The theme drop-in holds only the theme; a display server is set only by the separate, chosen greeter
 # drop-in (98-inir-greeter.conf, Wayland with Niri), and InputMethod never.
