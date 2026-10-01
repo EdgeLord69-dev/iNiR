@@ -203,3 +203,7 @@ assets/images/mascot/PROMPTS.md
 # via the optional pack (`setup extras`); this repo ships only the manifest
 assets/images/mascot/inir-mascot-*.png
 assets/images/mascot/inir-mascot-*.gif
+
+# fontconfig marks every scanned font folder; assets/fonts is linked into the user fonts by sync-system-fonts.sh
+assets/fonts/**/.uuid
+assets/fonts/.uuid
