@@ -169,6 +169,21 @@ body .DialogDropDown_Arrow .SVGIcon_DownArrowContextMenu.SVGIcon_DownArrowContex
     background: color-mix(in srgb, transparent, var(--md-sys-color-on-surface) 6%) !important;
 }
 ._2sYIghGVXJr6tsQVvcryy8._2sYIghGVXJr6tsQVvcryy8 ._3cV3O8FnPQqpJO5kIMUlLX { color: var(--md-sys-color-on-surface-variant) !important; }
+
+/* A game without art is a tile of the palette, not Steam's olive placeholder with grey-gradient text */
+._1R9r2OBCxAmtuUVrgBEUBw:has(._13fGPw2BaM5wWIahr2xNKt) { background: var(--md-sys-color-surface-container-high) !important; }
+._1R9r2OBCxAmtuUVrgBEUBw:has(._13fGPw2BaM5wWIahr2xNKt) img { opacity: 0 !important; }
+._13fGPw2BaM5wWIahr2xNKt._13fGPw2BaM5wWIahr2xNKt {
+    background-image: none !important;
+    -webkit-text-fill-color: var(--md-sys-color-on-surface-variant) !important;
+    color: var(--md-sys-color-on-surface-variant) !important;
+}
+
+/* Shelf headers are labels, not rules */
+._2W0O30CG0Q1UtW0Oq2-p6N._2W0O30CG0Q1UtW0Oq2-p6N { background: transparent !important; }
+
+/* What's New titles clamp at two lines but clip at their padding, where the top of a third line showed */
+.DVBcpUzJ0x6kaRMfug0OJ.DVBcpUzJ0x6kaRMfug0OJ { overflow: clip !important; overflow-clip-margin: content-box !important; }
 EOCSS
   if [[ -n "$font" ]]; then
     cat <<EOCSS
