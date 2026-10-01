@@ -55,6 +55,11 @@ def load_generator_colors(scss_path, palette_json_path, terminal_json_path):
     # Explicit contracts should win over SCSS compatibility values.
     colors.update(palette_colors)
     colors.update(terminal_colors)
+    # Selection is a tint of the accent under the text, not the foreground inverted into a full-strength block;
+    # inactive tabs sit on the background (term8 under term7 measured 1.1:1).
+    term0, term15 = colors.get("term0", "#282828"), colors.get("term15", "#EBDBB2")
+    colors.setdefault("selectionBg", blend_hex(term0, colors.get("primary", "#458588"), 0.35))
+    colors.setdefault("tabInactiveBg", blend_hex(term0, term15, 0.08))
     return colors
 
 
@@ -109,8 +114,8 @@ def generate_kitty_config(colors, output_path):
 # The basic colors
 foreground              {colors.get("term15", "#EBDBB2")}
 background              {colors.get("term0", "#282828")}
-selection_foreground    {colors.get("term0", "#282828")}
-selection_background    {colors.get("term15", "#EBDBB2")}
+selection_foreground    {colors.get("term15", "#EBDBB2")}
+selection_background    {colors["selectionBg"]}
 
 # Cursor colors
 cursor                  {colors.get("term15", "#EBDBB2")}
@@ -128,7 +133,7 @@ bell_border_color       {colors.get("term1", "#CC241D")}
 active_tab_foreground   {colors.get("onPrimary", "#FFFFFF")}
 active_tab_background   {colors.get("primary", "#458588")}
 inactive_tab_foreground {colors.get("term7", "#A89984")}
-inactive_tab_background {colors.get("term8", "#928374")}
+inactive_tab_background {colors["tabInactiveBg"]}
 tab_bar_background      {colors.get("term0", "#282828")}
 
 # The 16 terminal colors
@@ -376,8 +381,8 @@ text   = '{colors.get("term0", "#282828")}'
 cursor = '{colors.get("term15", "#EBDBB2")}'
 
 [colors.selection]
-text       = '{colors.get("term0", "#282828")}'
-background = '{colors.get("term15", "#EBDBB2")}'
+text       = '{colors.get("term15", "#EBDBB2")}'
+background = '{colors["selectionBg"]}'
 
 [colors.normal]
 black   = '{colors.get("term0", "#282828")}'
@@ -456,8 +461,8 @@ bright6={colors.get("term14", "#8EC07C")[1:]}  # bright cyan
 bright7={colors.get("term15", "#EBDBB2")[1:]}  # bright white
 
 ## Cursor and selection colors
-selection-foreground={colors.get("term0", "#282828")[1:]}
-selection-background={colors.get("term15", "#EBDBB2")[1:]}
+selection-foreground={colors.get("term15", "#EBDBB2")[1:]}
+selection-background={colors["selectionBg"][1:]}
 jump-labels={colors.get("term0", "#282828")[1:]} {colors.get("term3", "#D79921")[1:]}
 urls={colors.get("term4", "#458588")[1:]}
 """
@@ -492,8 +497,8 @@ return {{
   cursor_fg = '{colors.get("term0", "#282828")}',
   cursor_border = '{colors.get("term15", "#EBDBB2")}',
 
-  selection_fg = '{colors.get("term0", "#282828")}',
-  selection_bg = '{colors.get("term15", "#EBDBB2")}',
+  selection_fg = '{colors.get("term15", "#EBDBB2")}',
+  selection_bg = '{colors["selectionBg"]}',
 
   scrollbar_thumb = '{colors.get("term8", "#928374")}',
   split = '{colors.get("term8", "#928374")}',
@@ -584,8 +589,8 @@ foreground = {colors.get("term15", "#EBDBB2")}
 cursor-color = {colors.get("term15", "#EBDBB2")}
 cursor-text = {colors.get("term0", "#282828")}
 
-selection-background = {colors.get("term15", "#EBDBB2")}
-selection-foreground = {colors.get("term0", "#282828")}
+selection-background = {colors["selectionBg"]}
+selection-foreground = {colors.get("term15", "#EBDBB2")}
 
 # Black
 palette = 0={colors.get("term0", "#282828")}
