@@ -392,7 +392,7 @@ Singleton {
         if (!t) return ""
         return [t.enableTerminal, t.enableVesktop, t.enableZed, t.enableVSCode, t.enableChrome, t.enableSpicetify,
                 t.spicetifyTheme, t.enableSteam, t.enablePearDesktop, t.enableLimusic, t.enableOpenCode,
-                t.enableNeovim, t.enableCava].join("|")
+                t.enableNeovim, t.enableCava, t.enableClaudeCode].join("|")
     }
     // What the config held once loaded: the load itself sets these one by one and must not apply anything.
     property string _appliedAppTargetsKey: ""

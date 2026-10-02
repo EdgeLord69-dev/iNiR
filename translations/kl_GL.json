@@ -7231,5 +7231,7 @@
   "Follows the wallpaper, from the next time LiMusic opens.": "Tunngaviup assiliartaa LiMusic tulliani ammarneqarneraniit malittarpaa.",
   "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)",
   "Apps use this font": "Qinnutit allagaq una atortarpaat",
-  "Your apps' text follows the font the shell shows.": "Qinnutit allagaasa shell-ip allagaa malittarpaat."
+  "Your apps' text follows the font the shell shows.": "Qinnutit allagaasa shell-ip allagaa malittarpaat.",
+  "Claude Code": "Claude Code",
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Claude Code-p qalipaasersuutaanut iNiR-ip qalipaasersuutai ilanngullugit: marluk tunngaviup assiliartaa malittarpaat, marluk Monokai-p qalipaatai aalajangersimasut atortarpaat"
 }

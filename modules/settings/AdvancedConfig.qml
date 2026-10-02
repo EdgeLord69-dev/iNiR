@@ -188,6 +188,18 @@ ContentPage {
                 }
             }
             SettingsSwitch {
+                buttonIcon: "terminal"
+                text: Translation.tr("Claude Code")
+                checked: Config.options?.appearance?.wallpaperTheming?.enableClaudeCode ?? false
+                onCheckedChanged: {
+                    Config.setNestedValue("appearance.wallpaperTheming.enableClaudeCode", checked);
+                    colorRegenTimer.restart();
+                }
+                StyledToolTip {
+                    text: Translation.tr("Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette")
+                }
+            }
+            SettingsSwitch {
                 buttonIcon: "code"
                 text: Translation.tr("Zed editor")
                 checked: Config.options?.appearance?.wallpaperTheming?.enableZed ?? true

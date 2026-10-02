@@ -8879,5 +8879,7 @@
   "Follows the wallpaper, from the next time LiMusic opens.": "从下次打开 LiMusic 起跟随壁纸。",
   "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)",
   "Apps use this font": "应用使用此字体",
-  "Your apps' text follows the font the shell shows.": "应用的文字跟随外壳显示的字体。"
+  "Your apps' text follows the font the shell shows.": "应用的文字跟随外壳显示的字体。",
+  "Claude Code": "Claude Code",
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "向 Claude Code 的主题列表添加 iNiR 主题：两个跟随壁纸颜色，两个使用固定的 Monokai 配色"
 }

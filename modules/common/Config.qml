@@ -1048,6 +1048,7 @@ Singleton {
                     property bool enableSteam: false
                     property bool enablePearDesktop: true
                     property bool enableLimusic: false
+                    property bool enableClaudeCode: false
                     property bool enableOpenCode: false
                     property bool enableNeovim: false
                     property bool enableCava: false

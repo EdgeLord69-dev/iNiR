@@ -151,6 +151,7 @@ The scaffold refuses to overwrite existing files.
 - `cava`
 - `pear-desktop` (YouTube Music's own colour tokens; live over DevTools, port in `~/.config/pear-flags.conf`)
 - `limusic` (writes `~/.config/limusic/matugen.css`, which LiMusic re-reads live when it has Matugen theme support)
+- `claude-code` (writes iNiR, iNiR Soft, iNiR Monokai and iNiR Monokai Soft to Claude Code's `themes/` folder; the first two use the terminal palette's own slots, so code and diffs follow the wallpaper)
 - `zed`
 
 Current declared input model:

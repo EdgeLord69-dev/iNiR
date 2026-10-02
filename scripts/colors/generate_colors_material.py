@@ -885,7 +885,13 @@ if args.termscheme is not None:
             # Keep this bounded so high values don't collapse colors to white/black.
             fg_boost_delta = args.term_fg_boost * 0.25 * (1 if darkmode else -1)
             tone_mult = max(0.60, min(1.45, tone_mult + fg_boost_delta))
-            harmonized = boost_chroma_tone(harmonized, user_saturation * 2.0, tone_mult)
+            # In dark the multiplier took every bright slot to tone 91-95 on all wallpapers (C10-33, the text's own tone) and the
+            # warm yellow to cream (C12): the syntax of Claude Code, git and every editor built on slots 10-14 read as plain
+            # text. Hold the normals at 76 and the brights at 84 so they keep their chroma and stay apart from the foreground.
+            tone_cap = 95.0
+            if darkmode:
+                tone_cap = 84.0 if color in ("term9", "term10", "term11", "term12", "term13", "term14") else 76.0
+            harmonized = boost_chroma_tone(harmonized, user_saturation * 2.0, tone_mult, tone_cap)
             # Ensure minimum chroma for visual distinctiveness
             harmonized = ensure_min_chroma(harmonized, 40)
             # And a ceiling, so no hue shouts over the others: greens and cyans reach chroma 77 and 54 at a tone

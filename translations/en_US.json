@@ -8879,5 +8879,7 @@
   "Follows the wallpaper, from the next time LiMusic opens.": "Follows the wallpaper, from the next time LiMusic opens.",
   "YouTube Music (Pear Desktop)": "YouTube Music (Pear Desktop)",
   "Apps use this font": "Apps use this font",
-  "Your apps' text follows the font the shell shows.": "Your apps' text follows the font the shell shows."
+  "Your apps' text follows the font the shell shows.": "Your apps' text follows the font the shell shows.",
+  "Claude Code": "Claude Code",
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette"
 }

@@ -30,6 +30,7 @@ Examples:
 - `80-pear-desktop.sh`
 - `85-limusic.sh`
 - `90-cava.sh`
+- `95-claude-code.sh`
 
 Rules:
 
