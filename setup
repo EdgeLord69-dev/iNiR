@@ -1653,76 +1653,23 @@ run_logs() {
     tui_title "Runtime Logs"
     echo ""
 
-    local log_sources=()
-    local log_labels=()
+    # `inir logs` owns the shell's log; this menu only picks a view of it.
+    local inir_cmd
+    inir_cmd=$(command -v inir 2>/dev/null || echo "${REPO_ROOT}/scripts/inir")
+    local labels=("Shell: what went wrong since it started" "Shell: last 200 lines")
+    command -v journalctl &>/dev/null && labels+=("Niri: last 100 lines")
+    labels+=("Back")
 
-    # Quickshell logs
-    local qs_log="${XDG_STATE_HOME}/quickshell/log"
-    local qs_log_alt="${XDG_CACHE_HOME}/quickshell/log"
-    local journal_available=false
-    command -v journalctl &>/dev/null && journal_available=true
-
-    [[ -f "$qs_log" ]] && log_sources+=("$qs_log") && log_labels+=("Quickshell log (state)")
-    [[ -f "$qs_log_alt" ]] && log_sources+=("$qs_log_alt") && log_labels+=("Quickshell log (cache)")
-
-    if $journal_available; then
-        log_sources+=("__journal_qs__")
-        log_labels+=("Journal: quickshell (last 200 lines)")
-        log_sources+=("__journal_niri__")
-        log_labels+=("Journal: niri (last 100 lines)")
-    fi
-
-    if [[ ${#log_sources[@]} -eq 0 ]]; then
-        tui_warn "No log sources found"
-        tui_info "Start iNiR first: inir run"
-        echo ""
-        read -rp "Press Enter to continue..."
-        return 0
-    fi
-
-    log_labels+=("Back")
     local choice
-    choice=$(tui_choose "Select log source:" "${log_labels[@]}")
-
-    [[ "$choice" == "Back" ]] && return 0
-
-    # Find matching source
-    local source_idx=0
-    for i in "${!log_labels[@]}"; do
-        if [[ "${log_labels[$i]}" == "$choice" ]]; then
-            source_idx=$i
-            break
-        fi
-    done
-
-    local source="${log_sources[$source_idx]}"
-
+    choice=$(tui_choose "Select log:" "${labels[@]}")
     echo ""
-    case "$source" in
-        __journal_qs__)
-            tui_info "Showing last 200 lines from journalctl..."
-            if $HAS_GUM; then
-                journalctl --user -u quickshell --no-pager -n 200 2>/dev/null | gum pager
-            else
-                journalctl --user -u quickshell --no-pager -n 200 2>/dev/null | less
-            fi
-            ;;
-        __journal_niri__)
-            tui_info "Showing last 100 lines from niri journal..."
-            if $HAS_GUM; then
-                journalctl --user -u niri --no-pager -n 100 2>/dev/null | gum pager
-            else
-                journalctl --user -u niri --no-pager -n 100 2>/dev/null | less
-            fi
-            ;;
-        *)
-            tui_info "Viewing: $source"
-            if $HAS_GUM; then
-                gum pager < "$source"
-            else
-                less "$source"
-            fi
-            ;;
+    local pager=(less -R)
+    $HAS_GUM && pager=(gum pager)
+    case "$choice" in
+        "Shell: what went wrong since it started") bash "$inir_cmd" logs --issues 2>&1 | "${pager[@]}" ;;
+        "Shell: last 200 lines") bash "$inir_cmd" logs -n 200 2>&1 | "${pager[@]}" ;;
+        "Niri: last 100 lines") journalctl --user -u niri --no-pager -n 100 2>/dev/null | "${pager[@]}" ;;
+        *) return 0 ;;
     esac
 }
 
