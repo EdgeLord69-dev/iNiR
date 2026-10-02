@@ -1332,37 +1332,34 @@ run_config() {
         return 0
     fi
 
-    # Show current key settings
-    local panel_family="ii"
-    local bar_position="top"
-    local clock_format="12h"
-    local search_engine="google"
-    local animations="true"
-    local blur="true"
-
+    # Keys as Config.qml names them; a missing key shows the fresh-install value from defaults/config.json.
+    local panel_family="ii" global_style="?" bar_place="?" clock_format="?" search_url="?"
     if command -v jq &>/dev/null; then
-        panel_family=$(jq -r '.panelFamily // "ii"' "$config_file" 2>/dev/null)
-        bar_position=$(jq -r '.bar?.position // "top"' "$config_file" 2>/dev/null)
-        clock_format=$(jq -r '.time?.format // "12h"' "$config_file" 2>/dev/null)
-        search_engine=$(jq -r '.search?.engine // "google"' "$config_file" 2>/dev/null)
-        animations=$(jq -r '.animations?.enabled // true' "$config_file" 2>/dev/null)
-        blur=$(jq -r '.appearance?.blur // true' "$config_file" 2>/dev/null)
+        local defaults="${REPO_ROOT}/defaults/config.json"
+        # Not jq's `//`: it skips false too, and a switch that is off is a value.
+        read_key() { jq -r --slurpfile d "$defaults" "[($1), (\$d[0] | $1)] | map(select(. != null)) | if length > 0 then .[0] else \"?\" end" "$config_file" 2>/dev/null; }
+        panel_family=$(read_key '.panelFamily')
+        global_style=$(read_key '.appearance.globalStyle')
+        clock_format=$(read_key '.time.format')
+        search_url=$(read_key '.search.engineBaseUrl')
+        if [[ "$(read_key '.bar.vertical')" == "true" ]]; then bar_place="vertical"
+        elif [[ "$(read_key '.bar.bottom')" == "true" ]]; then bar_place="bottom"
+        else bar_place="top"; fi
     fi
 
     tui_summary_card "Current Settings" \
         "Panel Family:$panel_family" \
-        "Bar Position:$bar_position" \
+        "Global Style (ii):$global_style" \
+        "Bar (ii):$bar_place" \
         "Clock Format:$clock_format" \
-        "Search Engine:$search_engine" \
-        "Animations:$animations" \
-        "Blur:$blur"
+        "Search:${search_url%%\?*}"
 
     echo ""
 
     local action
     action=$(tui_choose_rich "Configuration" \
         "${ICON_ARROW}|Edit in Editor|Open config.json in your editor" \
-        "${ICON_DOT}|Panel Family|Switch between ii and waffle" \
+        "${ICON_DOT}|Panel Family|Switch between Material ii, Waffle and iRiS" \
         "${ICON_DOT}|Open Config Dir|Open the config directory" \
         "${ICON_DOT}|Reset to Defaults|Restore default configuration" \
         "${ICON_CIRCLE}|Back|Return to main menu")
@@ -1372,20 +1369,21 @@ run_config() {
             local editor="${EDITOR:-${VISUAL:-nano}}"
             tui_info "Opening $config_file with $editor..."
             "$editor" "$config_file"
-            tui_success "Config saved"
-            tui_info "Run 'inir restart' to apply changes"
+            tui_success "Config saved; a running shell applies it as soon as the file changes"
             ;;
         "Panel Family")
             echo ""
             local new_family
-            new_family=$(tui_choose "Select panel family:" "ii" "waffle")
+            new_family=$(tui_choose "Select panel family:" "ii" "waffle" "iris")
             if [[ -n "$new_family" && "$new_family" != "$panel_family" ]]; then
-                if command -v jq &>/dev/null; then
+                # A running shell owns the config in memory and would overwrite a direct write: ask it.
+                if bash "${REPO_ROOT}/scripts/inir" panelFamily set "$new_family" &>/dev/null; then
+                    tui_success "Panel family set to: $new_family"
+                elif command -v jq &>/dev/null; then
                     local tmp_file
                     tmp_file=$(mktemp)
                     jq --arg f "$new_family" '.panelFamily = $f' "$config_file" > "$tmp_file" && mv "$tmp_file" "$config_file"
-                    tui_success "Panel family set to: $new_family"
-                    tui_info "Run 'inir restart' to apply"
+                    tui_success "Panel family set to: $new_family (applies when the shell starts)"
                 else
                     tui_warn "jq required to edit config programmatically"
                     tui_info "Edit $config_file manually"
@@ -1408,8 +1406,7 @@ run_config() {
                 if [[ -f "${REPO_ROOT}/defaults/config.json" ]]; then
                     cp "$config_file" "${config_file}.backup.$(date +%Y%m%d%H%M%S)"
                     cp "${REPO_ROOT}/defaults/config.json" "$config_file"
-                    tui_success "Config reset to defaults (backup created)"
-                    tui_info "Run 'inir restart' to apply"
+                    tui_success "Config reset to defaults (backup created); a running shell applies it now"
                 else
                     tui_error "Default config not found"
                 fi
