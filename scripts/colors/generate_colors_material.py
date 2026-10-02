@@ -497,10 +497,17 @@ def build_app_palette(base_palette: dict[str, str]) -> dict[str, str]:
     layer2_active = mix_hex(layer2, on_layer2, 0.80)
     layer3_hover = mix_hex(layer3, on_layer3, 0.90)
     layer3_active = mix_hex(layer3, on_layer3, 0.80)
-    # Where you are is the accent's quiet sibling, the same in every app: the container over the popup layer.
-    # 18 % of the accent on grey read as no colour at all.
-    selection = mix_hex(primary_container, layer3, 0.75)
-    selection_hover = mix_hex(primary_container, layer3, 0.88)
+    # Where you are is the accent's quiet sibling, the same in every app: the container's hue and tone at the strength
+    # Material gives its secondary container. 18 % of the accent on grey read as no colour at all; 75 % of the container
+    # (chroma 36-43) made every selected row, tab and menu item as loud as a button.
+    # Its tone keeps a step from the window (12 dark, 10 light): over a frost-tinted paper the container's tone 90 was
+    # the background's own, and the row stood out by colour alone (1.1:1).
+    container_hct = Hct.from_int(hex_to_argb(primary_container))
+    layer0_tone = Hct.from_int(hex_to_argb(layer0)).tone
+    selection_tone = (max(container_hct.tone, layer0_tone + 12.0) if layer0_tone < 50
+                      else min(container_hct.tone, layer0_tone - 10.0))
+    selection = argb_to_hex(Hct.from_hct(container_hct.hue, min(container_hct.chroma, 20.0), selection_tone).to_int())
+    selection_hover = argb_to_hex(Hct.from_hct(container_hct.hue, min(container_hct.chroma, 26.0), selection_tone).to_int())
     on_selection = readable_hex(on_layer3, selection, 4.5)
 
     # Status colours that mean what they say (green, amber, red) in the palette's light: each hue leans up to 15
@@ -730,13 +737,17 @@ if args.surface_seed and re.fullmatch(r"#?[0-9A-Fa-f]{6}", args.surface_seed.str
         base_tone = Hct.from_int(hex_to_argb(material_colors["background"])).tone
         # A paper stays a paper and a night a night: past these tones no role can be solved against the ramp.
         seed_tone = max(64.0, seed_hct.tone) if not darkmode else min(30.0, seed_hct.tone)
+        # The body's hue at a neutral's strength. The seed is iRiS's frost over the wallpaper's average, and copying its
+        # chroma (26 on a red wallpaper) painted every app's window, sidebar and dialog the wallpaper's colour; Material
+        # keeps neutrals under ~10 (Vibrant 10, TonalSpot 6), dark and light alike.
+        seed_chroma = min(seed_hct.chroma, 10.0 if darkmode else 8.0)
         for key in SURFACE_RAMP:
             if key not in material_colors:
                 continue
             tone = Hct.from_int(hex_to_argb(material_colors[key])).tone
             shifted = max(0.0, min(100.0, seed_tone + (tone - base_tone)))
             material_colors[key] = argb_to_hex(
-                Hct.from_hct(seed_hct.hue, seed_hct.chroma, shifted).to_int()
+                Hct.from_hct(seed_hct.hue, seed_chroma, shifted).to_int()
             )
         # The ramp moved, and the text and accent roles were solved for the stock paper (or night). Solve them again against
         # the surface they now sit farthest from (the darkest in light, the lightest in dark), keeping hue and chroma, so a
