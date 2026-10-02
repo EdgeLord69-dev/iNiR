@@ -611,7 +611,7 @@ if args.path is not None:
     hct = Hct.from_int(argb)
     if args.smart:
         if hct.chroma < 20:
-            args.scheme = "neutral"
+            args.scheme = "scheme-neutral"
 elif args.color is not None:
     argb = hex_to_argb(args.color)
     hct = Hct.from_int(argb)
@@ -831,10 +831,6 @@ if args.termscheme is not None:
         return material_colors.get("surfaceContainerLow", "#1a1a1a")
 
     for color, val in term_source_colors.items():
-        if args.scheme == "monochrome":
-            term_colors[color] = val
-            continue
-
         # Terminal background: Interpolate based on user_bg_brightness
         # 0.5 = surfaceContainerLow (matches shell surfaces perfectly)
         if color == "term0":
