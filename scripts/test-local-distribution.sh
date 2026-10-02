@@ -2060,6 +2060,9 @@ if command -v python3 &>/dev/null && [[ -f "$runtime_root/scripts/lib/generate-i
     step "QML parses on Qt 6.10 and older"
     python3 "$runtime_root/scripts/test-qml-qt-compat.py"
 
+    step "QML components that parse and fail to load"
+    python3 "$runtime_root/scripts/test-qml-pitfalls.py"
+
     step "iRiS style tokens"
     python3 "$runtime_root/scripts/test-iris-style-tokens.py"
 
