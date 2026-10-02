@@ -102,11 +102,10 @@ THEME_TEMPLATE = """/**
 
 /*
  * Base theme import:
- * - Prefer a local copy if present (more reliable on flaky networks / CSP).
- * - Keep the remote import as fallback.
+ * - A local copy (system24.local.css next to this file) is imported first when it exists.
+ * - The remote import keeps the theme working without it.
  */
-@import url('system24.local.css');
-@import url('https://refact0r.github.io/system24/build/system24.css');
+{local_import}@import url('https://refact0r.github.io/system24/build/system24.css');
 @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700&display=swap');
 
 body {{
@@ -163,8 +162,7 @@ TUI_THEME_TEMPLATE = """/**
  * @source https://github.com/snowarch/inir
  */
 
-@import url('system24.local.css');
-@import url('https://refact0r.github.io/system24/build/system24.css');
+{local_import}@import url('https://refact0r.github.io/system24/build/system24.css');
 
 body {{
     --font: 'JetBrainsMono Nerd Font';
@@ -224,8 +222,7 @@ MIDNIGHT_THEME_TEMPLATE = """/**
  * - Prefer your local copy (if you have it in the same folder).
  * - Fallback to remote so the theme works on fresh installs.
  */
-@import url('midnight-discord.local.css');
-@import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
+{local_import}@import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
 
 /* Material You Palette - Auto-generated */
 {palette_css}
@@ -469,27 +466,34 @@ def _write_palette(palette: Dict[str, str]) -> None:
     for out in system24_outputs + midnight_outputs + tui_outputs:
         _ensure_parent(out)
 
-    system24_content = THEME_TEMPLATE.format(palette_css=palette_css)
-    midnight_content = MIDNIGHT_THEME_TEMPLATE.format(palette_css=palette_css)
-    tui_content = TUI_THEME_TEMPLATE.format(palette_css=palette_css)
-
     for out in system24_outputs:
-        with out.open("w", encoding="utf-8") as fh:
-            fh.write(system24_content)
-        print(f"Generated: {out}")
+        _write_theme(out, THEME_TEMPLATE, palette_css, "system24.local.css")
 
     for out in midnight_outputs:
-        with out.open("w", encoding="utf-8") as fh:
-            fh.write(midnight_content)
+        _write_theme(out, MIDNIGHT_THEME_TEMPLATE, palette_css, "midnight-discord.local.css")
         legacy_out = out.parent / "ii-midnight.theme.css"
         if legacy_out != out:
             legacy_out.unlink(missing_ok=True)
-        print(f"Generated: {out}")
 
     for out in tui_outputs:
-        with out.open("w", encoding="utf-8") as fh:
-            fh.write(tui_content)
-        print(f"Generated: {out}")
+        _write_theme(out, TUI_THEME_TEMPLATE, palette_css, "system24.local.css")
+
+
+def _write_theme(out: Path, template: str, palette_css: str, local_copy: str) -> None:
+    # Vencord serves @imports from the themes folder with net.fetch, and Electron logs a missing
+    # file with console.error in the main process. A client started from a terminal that has
+    # since closed dies on that write (EIO), so the optional local copy is imported only if present.
+    local_import = f"@import url('{local_copy}');\n" if (out.parent / local_copy).is_file() else ""
+    content = template.format(palette_css=palette_css, local_import=local_import)
+    # A running client reloads its theme on any write, even with the same bytes.
+    try:
+        if out.read_text(encoding="utf-8") == content:
+            return
+    except OSError:
+        pass
+    with out.open("w", encoding="utf-8") as fh:
+        fh.write(content)
+    print(f"Generated: {out}")
 
 
 def main() -> None:
