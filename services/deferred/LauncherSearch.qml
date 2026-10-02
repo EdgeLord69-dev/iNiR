@@ -15,6 +15,8 @@ Singleton {
 
     property string query: ""
     property string _debouncedQuery: ""
+    // The query once typing pauses (80 ms), the one `results` answers; empty at once when cleared.
+    readonly property string settledQuery: root._debouncedQuery
     
     // Debounce timer for search - prevents lag while typing
     Timer {

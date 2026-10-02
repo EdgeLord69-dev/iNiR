@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 93618548d3a5c053
+# IPC.md hash: 086d0b5a21218d23
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -376,7 +376,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:notch"]="Melt the Island into its edge (or into the Surround band): \`on\`, \`off\` or \`toggle\`"
   ["iris:surround"]="Close the shell around the screen with a band on every edge: \`on\`, \`off\` or \`toggle\`"
   ["iris:accent"]="Set iRiS accent: \`blue\`, \`mint\`, \`rose\`, \`lilac\` or \`wallpaper\`"
-  ["iris:spotlight"]="Open Spotlight with a query already typed, e.g. \`firefox\` or \`12*7\` (empty for suggestions)"
+  ["iris:spotlight"]="Open Spotlight with a query already typed, e.g. \`firefox\` or \`12*7\` (empty for suggestions); while it is open, replaces the query"
   ["iris:gallerySource"]="Show or hide an online source in the wallpaper gallery: \`wallhaven\`, \`live\`, \`konachan\` or \`yandere\`, then \`on\`, \`off\` or \`toggle\`; returns the sources shown, in order"
   ["iris:orbit"]="Open Orbit with a search already typed, e.g. \`firefox\` (empty for all the workspaces)"
   ["iris:orbitCorner"]="The corner each output's Orbit hot corner is on right now, as JSON (empty where Niri's own corner or the setting leaves none)"
