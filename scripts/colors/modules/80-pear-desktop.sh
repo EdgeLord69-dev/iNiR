@@ -41,13 +41,10 @@ detect_package() {
   elif command -v youtube-music &>/dev/null; then
     PEAR_BINARY="youtube-music"
     PEAR_ASAR_PATTERN="youtube-music/app.asar"
+  elif [[ -d "$PEAR_CONFIG_DIR" ]]; then
+    # No binary on PATH but the app's config is here (an AppImage): themed through that config; the DevTools flag stays alone without a known launcher.
+    PEAR_ASAR_PATTERN="(pear-desktop|youtube-music)/app\.asar"
   else
-    # Neither binary found — check config dir as fallback (app may be installed
-    # via flatpak or appimage with a different binary name)
-    if [[ -d "$PEAR_CONFIG_DIR" ]]; then
-      PEAR_BINARY="pear-desktop"
-      PEAR_ASAR_PATTERN="pear-desktop/app.asar\|youtube-music/app.asar"
-    fi
     return 1
   fi
   return 0
@@ -537,7 +534,7 @@ main() {
     log_module "pear-desktop / youtube-music not installed — skipping"
     exit 0
   fi
-  log_module "detected package: $PEAR_BINARY"
+  log_module "detected package: ${PEAR_BINARY:-an install without a binary on PATH (AppImage)}"
 
   # Generate CSS from generated palette
   local css_file="$GENERATED_CSS"
