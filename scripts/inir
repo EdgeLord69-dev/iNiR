@@ -4254,7 +4254,7 @@ case "$command_name" in
             echo "hyprpicker not found — install it to use colorpicker" >&2
             exit 1
         fi
-        exec /usr/bin/hyprpicker -a
+        exec hyprpicker -a
         ;;
     ipc)
         require_qs
