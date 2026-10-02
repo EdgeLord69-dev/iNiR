@@ -2966,9 +2966,13 @@ run_update() {
         if inir_user_service_is_masked; then
             _step_phase_done "Shell restart skipped: inir.service is masked"
         elif command -v systemctl >/dev/null 2>&1 && systemctl --user cat inir.service >/dev/null 2>&1; then
-            nohup systemctl --user restart inir.service >/dev/null 2>&1 &
-            disown
-            _step_phase_done "Shell restart triggered"
+            restart_shell_and_verify 30
+            case $? in
+                0) _step_phase_done "Shell restarted on the new version" ;;
+                1) _step_phase_done "The shell did not load the new version"
+                   tui_warn "Run './setup rollback' to go back to the previous version" ;;
+                *) _step_phase_done "Shell restart requested; 'inir logs' shows how it went" ;;
+            esac
         elif [[ -x "${II_TARGET}/scripts/inir" ]]; then
             nohup bash "${II_TARGET}/scripts/inir" restart -c "${II_TARGET}" >/dev/null 2>&1 &
             disown

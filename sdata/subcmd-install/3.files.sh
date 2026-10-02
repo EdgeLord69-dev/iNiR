@@ -215,17 +215,16 @@ case "${SKIP_QUICKSHELL}" in
     showfun ensure-ytmusic-js-runtime
     v ensure-ytmusic-js-runtime
 
-    # Verify installation (only on updates, not fresh install)
-    if [[ "${IS_UPDATE}" == "true" && "${SKIP_VERIFICATION}" != "true" ]]; then
-      log_info "Verifying installation..."
-      if ! verify_qs_loads 8; then
-        log_error "Verification failed!"
-        echo ""
-        log_warning "Update may have issues — run './setup doctor' or './setup restore' to rollback"
-        echo ""
-      else
-        log_success "Verification passed"
-      fi
+    if [[ "${IS_UPDATE}" == "true" && "${SKIP_VERIFICATION}" != "true" ]] \
+        && [[ -n "${NIRI_SOCKET:-}${WAYLAND_DISPLAY:-}" ]] && ! inir_user_service_is_masked; then
+      log_info "Restarting the shell on the new files..."
+      restart_shell_and_verify 30
+      case $? in
+        0) log_success "The shell loaded the new files" ;;
+        1) log_error "The shell did not load the new files"
+           log_warning "Run './setup rollback' to go back to the previous version" ;;
+        *) log_warning "Could not confirm the shell loaded; 'inir logs' shows why" ;;
+      esac
     fi
     ;;
 esac
