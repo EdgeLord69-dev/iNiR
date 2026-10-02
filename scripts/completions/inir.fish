@@ -355,7 +355,7 @@ complete -c inir -n '__inir_at_function iris' -a watchSeek -d 'Jump inside the e
 complete -c inir -n '__inir_at_function iris' -a watchSkip -d 'Close the episode that is playing and start the next (defau…'
 complete -c inir -n '__inir_at_value 1 watchSkip iris' -a 'next previous'
 complete -c inir -n '__inir_at_function iris' -a motion -d 'Measure how a Place opens, closes and reverses halfway, fro…'
-complete -c inir -n '__inir_at_value 1 motion iris' -a 'spotlight orbit gallery settings focus today motioned'
+complete -c inir -n '__inir_at_value 1 motion iris' -a 'spotlight orbit gallery settings focus today card motioned'
 complete -c inir -n '__inir_at_function iris' -a motioned -d 'The last motion measurement as JSON: frame pace, continuity…'
 complete -c inir -n '__inir_at_function iris' -a status -d 'JSON with the Island, Dock, Control Center, Spotlight and s…'
 complete -c inir -n '__inir_at_target' -a keyboard -d 'Keyboard layout switching (Niri only)'

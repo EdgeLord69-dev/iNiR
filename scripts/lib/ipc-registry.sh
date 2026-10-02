@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 086d0b5a21218d23
+# IPC.md hash: 4e0803d6655f9183
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -404,7 +404,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:watchSubs"]="Subtitles of the episode that is playing: \`size+\`, \`size-\` (kept for every episode), \`delay+\`, \`delay-\`, \`delay0\` (this episode), \`off\`, \`track:<id>\`, \`file:<path>\` to load one. No argument lists the tracks"
   ["iris:watchSeek"]="Jump inside the episode that is playing by seconds: \`85\` skips an opening, \`-10\` goes back"
   ["iris:watchSkip"]="Close the episode that is playing and start the \`next\` (default) or \`previous\` one without searching again. Its place is saved first"
-  ["iris:motion"]="Measure how a Place opens, closes and reverses halfway, from the expanded Island: \`spotlight\`, \`orbit\`, \`gallery\`, \`settings\`, \`focus\` or \`today\`. Read the result with \`motioned\`"
+  ["iris:motion"]="Measure how a Place opens, closes and reverses halfway, from the expanded Island: \`spotlight\`, \`orbit\`, \`gallery\`, \`settings\`, \`focus\`, \`today\` or \`card\` (the music card). Read the result with \`motioned\`"
   ["iris:motioned"]="The last \`motion\` measurement as JSON: frame pace, continuity, material, one surface, origin and a clean end, each passed or not, with the numbers behind them"
   ["iris:status"]="JSON with the Island, Dock, Control Center, Spotlight and side panel state, which edit modes, Settings or the wallpaper gallery hold the screen (\`editing\`, \`settings\`, \`gallery\`), plus the player the Island follows (title, position, length)"
   ["keyboard:switchLayout"]="Switch to next keyboard layout"
@@ -831,7 +831,7 @@ declare -gA IPC_FUNCTION_VALUES=(
   ["iris:desktopAction"]="wallpaper wallpaperNext nextWallpaper terminal screenshot"
   ["iris:watchSubs"]="size+ size- delay+ delay- delay0 off track: file:"
   ["iris:watchSkip"]="next previous"
-  ["iris:motion"]="spotlight orbit gallery settings focus today motioned"
+  ["iris:motion"]="spotlight orbit gallery settings focus today card motioned"
   ["mascot:setVoice"]="adaptive casual dry composed chaotic"
   ["mascot:appear"]="left right top bottom"
   ["mascot:appearContextual"]="battery media update network dnd mascot.companion.contextualPlacement"
