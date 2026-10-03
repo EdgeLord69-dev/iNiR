@@ -8881,5 +8881,11 @@
   "Apps use this font": "アプリでもこのフォントを使う",
   "Your apps' text follows the font the shell shows.": "アプリの文字がシェルと同じフォントになります。",
   "Claude Code": "Claude Code",
-  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Claude Code のテーマ一覧に iNiR テーマを追加します。2 つは壁紙の色に追従し、2 つは固定の Monokai パレットを使います"
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Claude Code のテーマ一覧に iNiR テーマを追加します。2 つは壁紙の色に追従し、2 つは固定の Monokai パレットを使います",
+  "Open apps": "開いているアプリ",
+  "Pinned apps can keep their place while open, or join the other open apps, which line up in the order you opened them.": "固定したアプリは開いている間も位置を保つか、開いた順に並ぶほかの開いているアプリに加わります。",
+  "Keep pinned place": "固定位置を保つ",
+  "In opening order": "開いた順",
+  "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "アイコンを Dock に沿ってスライドすると移動できます。固定アプリの間に置くと、そこに固定されます。",
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "アイコンを Dock に沿ってスライドすると移動できます。右クリックでウィンドウ一覧やバブルとして浮かせる操作、中クリックで新しいウィンドウを開きます。"
 }

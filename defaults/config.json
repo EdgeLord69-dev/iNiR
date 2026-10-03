@@ -2402,6 +2402,8 @@
             "magnifySize": 150,
             "badges": true,
             "launcher": true,
+            "reorder": true,
+            "arrange": "pinned",
             "revealOnEmpty": true,
             "position": "auto"
         },

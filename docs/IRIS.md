@@ -37,7 +37,10 @@ Weather, notifications, controls, sound, microphone, tools, media, tray and app 
 
 The Dock supports all four edges. `auto` keeps it opposite the Island; explicitly moving one edge owner onto the other's edge swaps their positions instead of stacking them on top of each other.
 
+Slide an icon along the Dock to move it. Drop it among the pinned apps and it stays pinned there. Open apps line up in the order you opened them; Settings, Dock, Apps decides whether a pinned app keeps its place while it's open or joins them.
+
 ```bash
+inir iris dockMove firefox 2
 inir iris dockEdge auto
 inir iris dockEdge left
 inir iris bubble weather edge:right:0.35

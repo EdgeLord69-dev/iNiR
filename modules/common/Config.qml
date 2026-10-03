@@ -3943,6 +3943,8 @@ Singleton {
                     property int magnifySize: 150 // hovered icon at its largest, % of its size
                     property bool badges: true // Unread notification counts on app icons
                     property bool launcher: true // Applications button at the start of the Dock
+                    property bool reorder: true // Slide an icon along the Dock to move it
+                    property string arrange: "pinned" // "pinned" (pinned apps keep their place while open) or "opened" (open apps together, in the order opened)
                     property bool revealOnEmpty: true // Auto-hide keeps the dock shown on an empty workspace
                     property string position: "auto" // "auto" (opposite the Island), "top", "bottom", "left" or "right"
                 }

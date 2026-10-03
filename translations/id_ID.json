@@ -8881,5 +8881,11 @@
   "Apps use this font": "Aplikasi memakai font ini",
   "Your apps' text follows the font the shell shows.": "Teks aplikasi Anda mengikuti font yang ditampilkan shell.",
   "Claude Code": "Claude Code",
-  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Menambahkan tema iNiR ke daftar tema Claude Code: dua mengikuti warna wallpaper Anda, dua memakai palet Monokai tetap"
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Menambahkan tema iNiR ke daftar tema Claude Code: dua mengikuti warna wallpaper Anda, dua memakai palet Monokai tetap",
+  "Open apps": "Aplikasi terbuka",
+  "Pinned apps can keep their place while open, or join the other open apps, which line up in the order you opened them.": "Aplikasi yang disematkan bisa tetap di tempatnya saat terbuka, atau bergabung dengan aplikasi terbuka lainnya yang berjajar sesuai urutan dibuka.",
+  "Keep pinned place": "Tetap di tempat sematan",
+  "In opening order": "Urutan dibuka",
+  "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "Geser ikon di sepanjang Dock untuk memindahkannya. Jika dilepas di antara aplikasi yang disematkan, aplikasi tetap tersemat di sana.",
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "Geser ikon di sepanjang Dock untuk memindahkannya. Klik kanan untuk jendelanya atau untuk mengapungkannya sebagai gelembung; klik tengah membuka yang baru."
 }

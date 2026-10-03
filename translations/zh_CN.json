@@ -8881,5 +8881,11 @@
   "Apps use this font": "应用使用此字体",
   "Your apps' text follows the font the shell shows.": "应用的文字跟随外壳显示的字体。",
   "Claude Code": "Claude Code",
-  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "向 Claude Code 的主题列表添加 iNiR 主题：两个跟随壁纸颜色，两个使用固定的 Monokai 配色"
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "向 Claude Code 的主题列表添加 iNiR 主题：两个跟随壁纸颜色，两个使用固定的 Monokai 配色",
+  "Open apps": "已打开的应用",
+  "Pinned apps can keep their place while open, or join the other open apps, which line up in the order you opened them.": "固定的应用在打开时可以保持原位，也可以加入其他已打开的应用，按打开顺序排列。",
+  "Keep pinned place": "保持固定位置",
+  "In opening order": "按打开顺序",
+  "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "沿 Dock 滑动图标即可移动它。放在固定的应用之间，它就固定在那里。",
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "沿 Dock 滑动图标即可移动它。右键查看其窗口或让它作为气泡浮起；中键打开新窗口。"
 }

@@ -8881,5 +8881,11 @@
   "Apps use this font": "האפליקציות משתמשות בגופן הזה",
   "Your apps' text follows the font the shell shows.": "הטקסט באפליקציות שלך עוקב אחר הגופן שהמעטפת מציגה.",
   "Claude Code": "Claude Code",
-  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "מוסיף ערכות נושא של iNiR לרשימת ערכות הנושא של Claude Code: שתיים עוקבות אחר צבעי הרקע שלך ושתיים שומרות על פלטת Monokai קבועה"
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "מוסיף ערכות נושא של iNiR לרשימת ערכות הנושא של Claude Code: שתיים עוקבות אחר צבעי הרקע שלך ושתיים שומרות על פלטת Monokai קבועה",
+  "Open apps": "אפליקציות פתוחות",
+  "Pinned apps can keep their place while open, or join the other open apps, which line up in the order you opened them.": "אפליקציות מוצמדות יכולות לשמור על מקומן כשהן פתוחות, או להצטרף לשאר האפליקציות הפתוחות, שמסודרות לפי סדר הפתיחה.",
+  "Keep pinned place": "שמירה על המקום המוצמד",
+  "In opening order": "לפי סדר הפתיחה",
+  "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "החליקו סמל לאורך ה-Dock כדי להזיז אותו. אם משחררים אותו בין האפליקציות המוצמדות, הוא נשאר מוצמד שם.",
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "החליקו סמל לאורך ה-Dock כדי להזיז אותו. לחיצה ימנית מציגה את החלונות שלו או מציפה אותו כבועה; לחיצה אמצעית פותחת חלון חדש."
 }

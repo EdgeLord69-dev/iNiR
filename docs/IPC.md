@@ -847,6 +847,7 @@ iRiS bar and Island design. Available while the iRiS bar is enabled.
 | `bubble` | Place an Island bubble (`left`, `right`, `utility`) or an extra bubble (`weather`, `notifications`, `controls`, `sound`, `mic`, `tools`, `media`, `visualizer`, `tray`): a zone (`top-left`, `top-right`, `left`, `right`, `bottom-left`, `bottom-right`), `edge:<top|bottom|left|right>` with an optional `:<fraction>` along that edge (e.g. `edge:top:0.3`), `x,y` fractions of the output, `island` (slots) or `off` (extras) |
 | `dock` | `reveal`, `hide` or `toggle` the iRiS Dock (revealed stays until hidden or an app is chosen) |
 | `dockApp` | Open a Dock app's `windows` or `menu` by app id (e.g. `kitty windows`), `pin` to keep it in the Dock or unpin it (prints which), or `<any> close` |
+| `dockMove` | Move a Dock app to a position, counting icons from 1 with the separator between pinned and open apps (e.g. `firefox 2`): before the separator pins it, after it lines it up among the open apps |
 | `appBubble` | Carry a Dock app out as a bubble of its own (e.g. `kitty right`): a zone, `x,y` fractions of the output, or `dock` to send it back |
 | `focus` | `open`, `close` or `toggle` the Focus panel (the left one), and say whether it is open |
 | `today` | `open`, `close` or `toggle` the Today panel (the right one), and say whether it is open |

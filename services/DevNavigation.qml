@@ -235,5 +235,26 @@ Singleton {
             dragSim.restart()
             return "dragging:" + root.dragSlot + "x" + root.dragPerFrame
         }
+        function dockSlide(appId: string, pixels: string): string {
+            if (!GlobalStates.focusedScreen) return "error:no-screen"
+            root.slideApp = appId.toLowerCase()
+            root.slideDistance = Number(pixels) || 0
+            root.slideStart = Date.now()
+            slideSim.restart()
+            return "sliding:" + root.slideApp + ":" + root.slideDistance
+        }
+    }
+    property string slideApp: ""
+    property real slideDistance: 0
+    property real slideStart: 0
+    FrameAnimation {
+        id: slideSim
+        running: false
+        onTriggered: {
+            const t = Math.min(1, (Date.now() - root.slideStart) / 1000)
+            const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
+            GlobalStates.irisDockSlide = { appId: root.slideApp, along: root.slideDistance * eased, done: t >= 1 }
+            if (t >= 1) { slideSim.stop(); GlobalStates.irisDockSlide = null }
+        }
     }
 }

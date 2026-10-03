@@ -8881,5 +8881,11 @@
   "Apps use this font": "Застосунки використовують цей шрифт",
   "Your apps' text follows the font the shell shows.": "Текст застосунків наслідує шрифт, який показує оболонка.",
   "Claude Code": "Claude Code",
-  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Додає теми iNiR до списку тем Claude Code: дві підхоплюють кольори шпалер, дві мають фіксовану палітру Monokai"
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Додає теми iNiR до списку тем Claude Code: дві підхоплюють кольори шпалер, дві мають фіксовану палітру Monokai",
+  "Open apps": "Відкриті застосунки",
+  "Pinned apps can keep their place while open, or join the other open apps, which line up in the order you opened them.": "Закріплені застосунки можуть зберігати своє місце, поки відкриті, або приєднуватися до інших відкритих застосунків, що шикуються в порядку відкриття.",
+  "Keep pinned place": "Зберігати місце закріплення",
+  "In opening order": "У порядку відкриття",
+  "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "Перетягніть значок уздовж Dock, щоб перемістити його. Відпущений серед закріплених, застосунок залишається там закріпленим.",
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "Перетягніть значок уздовж Dock, щоб перемістити його. Правий клік — його вікна або відправити бульбашкою; середній клік відкриває нове."
 }

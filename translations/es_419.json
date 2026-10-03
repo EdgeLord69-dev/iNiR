@@ -8881,5 +8881,11 @@
   "Apps use this font": "Las apps usan esta fuente",
   "Your apps' text follows the font the shell shows.": "El texto de tus apps sigue la fuente que muestra el shell.",
   "Claude Code": "Claude Code",
-  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Agrega temas de iNiR a la lista de temas de Claude Code: dos siguen los colores de tu fondo y dos mantienen una paleta Monokai fija"
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Agrega temas de iNiR a la lista de temas de Claude Code: dos siguen los colores de tu fondo y dos mantienen una paleta Monokai fija",
+  "Open apps": "Apps abiertas",
+  "Pinned apps can keep their place while open, or join the other open apps, which line up in the order you opened them.": "Las apps fijadas pueden conservar su lugar mientras están abiertas o unirse a las demás apps abiertas, que se ordenan según cuándo las abriste.",
+  "Keep pinned place": "Conservar lugar fijado",
+  "In opening order": "Por orden de apertura",
+  "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "Desliza un ícono a lo largo del Dock para moverlo. Si lo sueltas entre las apps fijadas, queda fijado ahí.",
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "Desliza un ícono a lo largo del Dock para moverlo. Haz clic derecho para ver sus ventanas o hacerlo flotar como burbuja; el clic central abre una nueva."
 }

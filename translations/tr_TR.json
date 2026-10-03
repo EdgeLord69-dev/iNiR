@@ -8881,5 +8881,11 @@
   "Apps use this font": "Uygulamalar bu yazı tipini kullanır",
   "Your apps' text follows the font the shell shows.": "Uygulamalarınızın metni kabuğun gösterdiği yazı tipini izler.",
   "Claude Code": "Claude Code",
-  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Claude Code'un tema listesine iNiR temaları ekler: ikisi duvar kağıdınızın renklerini izler, ikisi sabit bir Monokai paleti kullanır"
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Claude Code'un tema listesine iNiR temaları ekler: ikisi duvar kağıdınızın renklerini izler, ikisi sabit bir Monokai paleti kullanır",
+  "Open apps": "Açık uygulamalar",
+  "Pinned apps can keep their place while open, or join the other open apps, which line up in the order you opened them.": "Sabitlenmiş uygulamalar açıkken yerlerini koruyabilir ya da açtığınız sırayla dizilen diğer açık uygulamalara katılabilir.",
+  "Keep pinned place": "Sabit yeri koru",
+  "In opening order": "Açılış sırasına göre",
+  "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "Taşımak için bir simgeyi Dock boyunca kaydırın. Sabitlenmiş uygulamaların arasına bırakılan uygulama orada sabit kalır.",
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "Taşımak için bir simgeyi Dock boyunca kaydırın. Pencereleri için ya da baloncuk olarak yüzdürmek için sağ tıklayın; orta tık yeni bir tane açar."
 }

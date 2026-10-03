@@ -8881,5 +8881,11 @@
   "Apps use this font": "앱에서도 이 글꼴 사용",
   "Your apps' text follows the font the shell shows.": "앱의 텍스트가 셸에 표시되는 글꼴을 따릅니다.",
   "Claude Code": "Claude Code",
-  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Claude Code의 테마 목록에 iNiR 테마를 추가합니다. 두 가지는 배경화면 색상을 따르고, 두 가지는 고정된 Monokai 팔레트를 사용합니다"
+  "Adds iNiR themes to Claude Code's theme list: two follow your wallpaper, two keep a fixed Monokai palette": "Claude Code의 테마 목록에 iNiR 테마를 추가합니다. 두 가지는 배경화면 색상을 따르고, 두 가지는 고정된 Monokai 팔레트를 사용합니다",
+  "Open apps": "열린 앱",
+  "Pinned apps can keep their place while open, or join the other open apps, which line up in the order you opened them.": "고정된 앱은 열려 있는 동안 자리를 유지하거나, 연 순서대로 정렬되는 다른 열린 앱과 함께할 수 있습니다.",
+  "Keep pinned place": "고정 위치 유지",
+  "In opening order": "연 순서대로",
+  "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "아이콘을 Dock을 따라 밀어 이동하세요. 고정된 앱 사이에 놓으면 그 자리에 고정됩니다.",
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "아이콘을 Dock을 따라 밀어 이동하세요. 오른쪽 클릭으로 창 목록을 보거나 버블로 띄우고, 가운데 클릭으로 새 창을 엽니다."
 }

@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: 4e0803d6655f9183
+# IPC.md hash: 25016b87576c6dda
 # Targets: 70
 
 declare -gA IPC_TARGET_DESC=(
@@ -170,12 +170,12 @@ declare -gA IPC_TARGET_FUNCTIONS=(
   [coverflowSelector]="toggle open close"
   [customWidgets]="reload list create remove"
   [dashboard]="toggle close open"
-  [dev]="list open close reload current meter metered dragSim"
+  [dev]="list open close reload current meter metered dragSim dockSlide"
   [equalizer]="toggle close open refresh ensure status setBand preset configure"
   [gamemode]="toggle activate deactivate status"
   [globalActions]="run runWithArgs list search open"
   [globalStyle]="set get list"
-  [iris]="open page close toggle card theme settings bubble dock dockApp appBubble focus today controlCenter pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource orbit orbitCorner orbitClose spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive palette preset icon control lock utility watch watchPick desktopAction desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
+  [iris]="open page close toggle card theme settings bubble dock dockApp dockMove appBubble focus today controlCenter pin layout strip edge dockEdge zone barPiece arrange edit studio notch surround accent spotlight gallerySource orbit orbitCorner orbitClose spotlightClose bubbleCard tap bubbleMenu morph activity activities set adaptive palette preset icon control lock utility watch watchPick desktopAction desktopMenu menuClose watchSubs watchSeek watchSkip motion motioned status"
   [keyboard]="switchLayout switchLayoutPrevious getCurrentLayout getLayouts"
   [lock]="activate prepareSleep deactivate status focus"
   [mascot]="poke status setVoice romp chase hideSeek tidy appear appearContextual appearWithLine hide snooze"
@@ -328,6 +328,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["dev:meter"]="Measure frame gaps for the given milliseconds (250–20000, default 2500)"
   ["dev:metered"]="Return the last measurement as JSON: frames, mean, p95, worst, frames over 20 and 50 ms"
   ["dev:dragSim"]="Simulate carrying an iRiS bubble (slot id, default \`extra-clock\`) around the focused output for 2.5 s, publishing the given number of moves per frame (1–16); never writes the config"
+  ["dev:dockSlide"]=""
   ["equalizer:toggle"]="Open/close equalizer"
   ["equalizer:close"]="Hide equalizer"
   ["equalizer:open"]="Show equalizer"
@@ -359,6 +360,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["iris:bubble"]="Place an Island bubble (\`left\`, \`right\`, \`utility\`) or an extra bubble (\`weather\`, \`notifications\`, \`controls\`, \`sound\`, \`mic\`, \`tools\`, \`media\`, \`visualizer\`, \`tray\`): a zone (\`top-left\`, \`top-right\`, \`left\`, \`right\`, \`bottom-left\`, \`bottom-right\`), \`edge:<top"
   ["iris:dock"]="\`reveal\`, \`hide\` or \`toggle\` the iRiS Dock (revealed stays until hidden or an app is chosen)"
   ["iris:dockApp"]="Open a Dock app's \`windows\` or \`menu\` by app id (e.g. \`kitty windows\`), \`pin\` to keep it in the Dock or unpin it (prints which), or \`<any> close\`"
+  ["iris:dockMove"]="Move a Dock app to a position, counting icons from 1 with the separator between pinned and open apps (e.g. \`firefox 2\`): before the separator pins it, after it lines it up among the open apps"
   ["iris:appBubble"]="Carry a Dock app out as a bubble of its own (e.g. \`kitty right\`): a zone, \`x,y\` fractions of the output, or \`dock\` to send it back"
   ["iris:focus"]="\`open\`, \`close\` or \`toggle\` the Focus panel (the left one), and say whether it is open"
   ["iris:today"]="\`open\`, \`close\` or \`toggle\` the Today panel (the right one), and say whether it is open"
@@ -673,6 +675,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["dev:open"]="<destination>"
   ["dev:meter"]="<ms>"
   ["dev:dragSim"]="<slot> <perFrame>"
+  ["dev:dockSlide"]="<appId> <pixels>"
   ["equalizer:setBand"]="<index> <gain>"
   ["equalizer:preset"]="<name>"
   ["globalActions:run"]="<actionId>"
@@ -687,6 +690,7 @@ declare -gA IPC_FUNCTION_ARGS=(
   ["iris:bubble"]="<slot> <place>"
   ["iris:dock"]="<action>"
   ["iris:dockApp"]="<appId> <mode>"
+  ["iris:dockMove"]="<appId> <position>"
   ["iris:appBubble"]="<appId> <place>"
   ["iris:focus"]="<action>"
   ["iris:today"]="<action>"
