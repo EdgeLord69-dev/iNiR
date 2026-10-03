@@ -235,6 +235,14 @@ Singleton {
             dragSim.restart()
             return "dragging:" + root.dragSlot + "x" + root.dragPerFrame
         }
+        function dropBubble(slot: string, x: string, y: string): string {
+            const screen = GlobalStates.focusedScreen
+            if (!screen) return "error:no-screen"
+            GlobalStates.irisBubbleDrag = { slot: slot, kind: slot.startsWith("app:") ? "app" : slot.replace(/^extra-/, ""),
+                screen: screen.name, x: Number(x), y: Number(y), size: 40, released: false }
+            dropRelease.restart()
+            return "dropped:" + slot + "@" + x + "," + y
+        }
         function dockSlide(appId: string, pixels: string): string {
             if (!GlobalStates.focusedScreen) return "error:no-screen"
             root.slideApp = appId.toLowerCase()
@@ -243,6 +251,11 @@ Singleton {
             slideSim.restart()
             return "sliding:" + root.slideApp + ":" + root.slideDistance
         }
+    }
+    Timer {
+        id: dropRelease
+        interval: 200
+        onTriggered: if (GlobalStates.irisBubbleDrag) GlobalStates.irisBubbleDrag = Object.assign({}, GlobalStates.irisBubbleDrag, { released: true })
     }
     property string slideApp: ""
     property real slideDistance: 0

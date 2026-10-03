@@ -231,6 +231,7 @@ complete -c inir -n '__inir_at_function dev' -a meter -d 'Measure frame gaps for
 complete -c inir -n '__inir_at_function dev' -a metered -d 'Return the last measurement as JSON: frames, mean, p95, wor…'
 complete -c inir -n '__inir_at_function dev' -a dragSim -d 'Simulate carrying an iRiS bubble (slot id, default extra-cl…'
 complete -c inir -n '__inir_at_value 2 dragSim dev' -a 'extra-clock'
+complete -c inir -n '__inir_at_function dev' -a dropBubble -d 'dropBubble'
 complete -c inir -n '__inir_at_function dev' -a dockSlide -d 'dockSlide'
 complete -c inir -n '__inir_at_target' -a equalizer -d 'Open the ii-family EasyEffects output equalizer'
 complete -c inir -n '__inir_at_function equalizer' -a toggle -d 'Open/close equalizer'

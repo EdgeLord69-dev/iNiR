@@ -448,6 +448,7 @@ Singleton {
     // Opens an app's windows or menu on the focused Dock: { appId, mode: "windows" | "menu" }.
     property var irisDockMenuRequest: null
     property var irisDockSlide: null
+    property var irisDockHome: null
     // A query for Spotlight to type as it opens (IPC); taken and cleared by the palette.
     property string irisSpotlightQuery: ""
     // Orbit (iRiS): Niri's workspaces and windows as a place to find and go. `irisOrbitQuery` is what it types as it opens.
