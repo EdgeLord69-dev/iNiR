@@ -1262,7 +1262,17 @@ if args.render_templates:
 
     dark_palette = _generate_palette(True)
     light_palette = _generate_palette(False)
-    default_palette = dark_palette if darkmode else light_palette
+    # The current mode is the palette the shell and every app module already use (accent band, chroma caps, surface seed, contrast);
+    # the raw templates drew colours nobody else showed. The opposite mode stays the raw scheme.
+    current = dict(_generate_palette(darkmode))
+    current.update(material_colors)
+    current["source_color"] = argb_to_hex(argb)
+    current.update(app_palette_json)
+    if darkmode:
+        dark_palette = current
+    else:
+        light_palette = current
+    default_palette = current
 
     # Build the nested `colors` namespace expected by the compatibility templates:
     #   colors.<token>.dark.hex          → "#rrggbb"
