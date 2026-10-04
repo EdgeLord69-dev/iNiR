@@ -101,11 +101,21 @@ ShellRoot {
     property real _bootDeferredAt: 0
     readonly property string _bootCachePath: (Quickshell.env("XDG_CACHE_HOME") || (Quickshell.env("HOME") + "/.cache")) + "/inir/last-boot.json"
 
+    // No hot reload while the screen is locked: a reload tears the session lock down while it is held and leaves the compositor locked
+    // with no password prompt. Edits load on the next change or restart.
+    Binding {
+        target: Quickshell
+        property: "watchFiles"
+        value: !root.disableHotReload && !GlobalStates.screenLocked
+    }
+    Connections {
+        target: Quickshell
+        function onWatchFilesChanged(): void { console.info("[Boot] hot reload", Quickshell.watchFiles ? "on" : "off") }
+    }
+
     Component.onCompleted: {
         root._bootCompletedAt = Date.now();
         console.info("[Boot] T+0ms: Component.onCompleted (shell.qml ready)");
-        Quickshell.watchFiles = !disableHotReload;
-        
         // Tier 0: startup-critical singletons (no delay)
         root._log("[Boot] Tier 0: startup-critical singletons");
         FirstRunExperience.load();
