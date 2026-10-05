@@ -4064,6 +4064,7 @@ Singleton {
                     property bool themeColoursOnly: false
                     // How iRiS Settings is laid out: "sidebar", "rail" (icons only) or "home" (a grid of areas to open).
                     property string settingsLayout: "sidebar"
+                    property string settingsHost: "overlay"
                     // Looks saved from iRiS Studio: [{ name, values: { "iris.…": value } }].
                     property list<var> saved: []
                     property string themeId: "iris" // the iRiS theme last applied (curated id or a file in ~/.config/inir/iris/themes)

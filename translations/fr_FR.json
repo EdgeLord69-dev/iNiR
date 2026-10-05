@@ -8887,5 +8887,10 @@
   "Keep pinned place": "Garder la place épinglée",
   "In opening order": "Par ordre d'ouverture",
   "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "Faites glisser une icône le long du Dock pour la déplacer. Déposée parmi les apps épinglées, l'app y reste épinglée.",
-  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "Faites glisser une icône le long du Dock pour la déplacer. Clic droit pour ses fenêtres ou pour la faire flotter en bulle ; le clic du milieu en ouvre une nouvelle."
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "Faites glisser une icône le long du Dock pour la déplacer. Clic droit pour ses fenêtres ou pour la faire flotter en bulle ; le clic du milieu en ouvre une nouvelle.",
+  "Over the desktop": "Sur le bureau",
+  "iNiR Settings": "Paramètres d'iNiR",
+  "Over the desktop previews every change on the screen behind it. A window sits with your apps: Niri sizes, maximizes and moves it like any other.": "Sur le bureau, chaque changement s'affiche sur l'écran derrière. Une fenêtre vit avec vos applis : Niri la redimensionne, l'agrandit et la déplace comme les autres.",
+  "Open over the desktop": "Ouvrir sur le bureau",
+  "Open as a window": "Ouvrir dans une fenêtre"
 }

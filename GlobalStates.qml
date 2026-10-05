@@ -107,6 +107,9 @@ Singleton {
     property int settingsOverlayRequestedPage: -1 // Set before opening to navigate to a specific page
     property string settingsOverlayRequestedSection: ""
     property int settingsOverlayCurrentPage: -1 // Published by whichever overlay chrome is loaded
+    // iRiS Settings as a window: open or toggle with it mapped but not focused brings it forward instead.
+    property bool settingsWindowBehind: false
+    property int settingsRaiseRequest: 0
     property var _settingsNativeDialogs: ({})
     readonly property bool settingsNativeDialogOpen:
         Object.keys(root._settingsNativeDialogs).length > 0
@@ -121,6 +124,7 @@ Singleton {
         } else if (Config.options?.panelFamily === "iris" || (Config.options?.settingsUi?.overlayMode ?? false)) {
             root.settingsOverlayRequestedPage = index
             root.settingsOverlayRequestedSection = requestedSection
+            if (root.settingsOverlayOpen) root.settingsRaiseRequest++
             root.settingsOverlayOpen = true
         } else {
             const args = ["/usr/bin/env", `QS_SETTINGS_PAGE=${index}`]
@@ -138,6 +142,7 @@ Singleton {
             Quickshell.execDetached([Quickshell.shellPath("scripts/inir"),
                 "waffle-settings-window"])
         } else if (Config.options?.panelFamily === "iris" || (Config.options?.settingsUi?.overlayMode ?? false)) {
+            if (root.settingsOverlayOpen) root.settingsRaiseRequest++
             root.settingsOverlayOpen = true
         } else {
             Quickshell.execDetached([Quickshell.shellPath("scripts/inir"),
@@ -152,7 +157,8 @@ Singleton {
             Quickshell.execDetached([Quickshell.shellPath("scripts/inir"),
                 "waffle-settings-window", "--toggle"])
         } else if (Config.options?.panelFamily === "iris" || (Config.options?.settingsUi?.overlayMode ?? false)) {
-            root.settingsOverlayOpen = !root.settingsOverlayOpen
+            if (root.settingsOverlayOpen && root.settingsWindowBehind) root.settingsRaiseRequest++
+            else root.settingsOverlayOpen = !root.settingsOverlayOpen
         } else {
             Quickshell.execDetached([Quickshell.shellPath("scripts/inir"),
                 "settings-window", "--toggle"])

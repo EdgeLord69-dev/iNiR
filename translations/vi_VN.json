@@ -8887,5 +8887,10 @@
   "Keep pinned place": "Giữ chỗ đã ghim",
   "In opening order": "Theo thứ tự mở",
   "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "Trượt một biểu tượng dọc Dock để di chuyển nó. Thả giữa các ứng dụng đã ghim, ứng dụng sẽ được ghim tại đó.",
-  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "Trượt một biểu tượng dọc Dock để di chuyển nó. Nhấp chuột phải để xem cửa sổ hoặc thả nổi thành bong bóng; nhấp chuột giữa mở cửa sổ mới."
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "Trượt một biểu tượng dọc Dock để di chuyển nó. Nhấp chuột phải để xem cửa sổ hoặc thả nổi thành bong bóng; nhấp chuột giữa mở cửa sổ mới.",
+  "Over the desktop": "Trên màn hình nền",
+  "iNiR Settings": "Cài đặt iNiR",
+  "Over the desktop previews every change on the screen behind it. A window sits with your apps: Niri sizes, maximizes and moves it like any other.": "Trên màn hình nền hiển thị mọi thay đổi ngay trên màn hình phía sau. Cửa sổ nằm cùng ứng dụng của bạn: Niri đổi kích thước, phóng to và di chuyển nó như mọi cửa sổ khác.",
+  "Open over the desktop": "Mở trên màn hình nền",
+  "Open as a window": "Mở dạng cửa sổ"
 }

@@ -8887,5 +8887,10 @@
   "Keep pinned place": "שמירה על המקום המוצמד",
   "In opening order": "לפי סדר הפתיחה",
   "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "החליקו סמל לאורך ה-Dock כדי להזיז אותו. אם משחררים אותו בין האפליקציות המוצמדות, הוא נשאר מוצמד שם.",
-  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "החליקו סמל לאורך ה-Dock כדי להזיז אותו. לחיצה ימנית מציגה את החלונות שלו או מציפה אותו כבועה; לחיצה אמצעית פותחת חלון חדש."
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "החליקו סמל לאורך ה-Dock כדי להזיז אותו. לחיצה ימנית מציגה את החלונות שלו או מציפה אותו כבועה; לחיצה אמצעית פותחת חלון חדש.",
+  "Over the desktop": "מעל שולחן העבודה",
+  "iNiR Settings": "הגדרות iNiR",
+  "Over the desktop previews every change on the screen behind it. A window sits with your apps: Niri sizes, maximizes and moves it like any other.": "מעל שולחן העבודה מציג כל שינוי על המסך שמאחור. חלון יושב לצד האפליקציות שלך: Niri משנה את גודלו, מגדיל ומזיז אותו כמו כל חלון אחר.",
+  "Open over the desktop": "פתח מעל שולחן העבודה",
+  "Open as a window": "פתח כחלון"
 }

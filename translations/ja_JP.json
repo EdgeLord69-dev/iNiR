@@ -8887,5 +8887,10 @@
   "Keep pinned place": "固定位置を保つ",
   "In opening order": "開いた順",
   "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "アイコンを Dock に沿ってスライドすると移動できます。固定アプリの間に置くと、そこに固定されます。",
-  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "アイコンを Dock に沿ってスライドすると移動できます。右クリックでウィンドウ一覧やバブルとして浮かせる操作、中クリックで新しいウィンドウを開きます。"
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "アイコンを Dock に沿ってスライドすると移動できます。右クリックでウィンドウ一覧やバブルとして浮かせる操作、中クリックで新しいウィンドウを開きます。",
+  "Over the desktop": "デスクトップの上",
+  "iNiR Settings": "iNiR の設定",
+  "Over the desktop previews every change on the screen behind it. A window sits with your apps: Niri sizes, maximizes and moves it like any other.": "デスクトップの上では、変更がすぐ背後の画面に反映されます。ウィンドウはアプリと並び、Niri がほかのウィンドウと同じようにサイズ変更・最大化・移動します。",
+  "Open over the desktop": "デスクトップの上で開く",
+  "Open as a window": "ウィンドウで開く"
 }

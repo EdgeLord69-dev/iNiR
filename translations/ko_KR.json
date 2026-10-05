@@ -8887,5 +8887,10 @@
   "Keep pinned place": "고정 위치 유지",
   "In opening order": "연 순서대로",
   "Slide an icon along the Dock to move it. Dropped among the pinned apps, an app stays pinned there.": "아이콘을 Dock을 따라 밀어 이동하세요. 고정된 앱 사이에 놓으면 그 자리에 고정됩니다.",
-  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "아이콘을 Dock을 따라 밀어 이동하세요. 오른쪽 클릭으로 창 목록을 보거나 버블로 띄우고, 가운데 클릭으로 새 창을 엽니다."
+  "Slide an icon along the Dock to move it. Right-click it for its windows or to float it as a bubble; middle-click opens a new one.": "아이콘을 Dock을 따라 밀어 이동하세요. 오른쪽 클릭으로 창 목록을 보거나 버블로 띄우고, 가운데 클릭으로 새 창을 엽니다.",
+  "Over the desktop": "데스크톱 위",
+  "iNiR Settings": "iNiR 설정",
+  "Over the desktop previews every change on the screen behind it. A window sits with your apps: Niri sizes, maximizes and moves it like any other.": "데스크톱 위에서는 모든 변경이 뒤쪽 화면에 바로 보입니다. 창은 앱과 함께 놓이며, Niri가 다른 창처럼 크기를 바꾸고 최대화하고 옮깁니다.",
+  "Open over the desktop": "데스크톱 위에서 열기",
+  "Open as a window": "창으로 열기"
 }
