@@ -42,10 +42,18 @@ supervised systemd service, and raw quickshell commands leave it unmanaged.
 
 ## Commit Conventions
 
-- **Imperative mood**, max 72 characters: `Fix bar crash when weather widget is disabled`
+- Subject `type(scope): what changed`, lowercase, no period, under 60 characters: `fix(bar): no crash when the weather widget is off`
 - Be specific — not "fix bug" or "update code"
 - One logical change per commit (one feature, one fix, one refactor)
-- Body (optional): explain **why**, not what
+- Body (optional): the **why**, in three short lines at most. No measurements, no history, no list of what you touched
+
+## Comments
+
+A comment earns its place only when it states a constraint the code can't show and would otherwise be broken:
+an engine limit, a binding loop, a cost trap, a packed contract. Never what the code does, how you found the
+bug, a date, or a measurement. One or two lines each, and none around code you did not change.
+
+A PR that is mostly comments is returned to be trimmed before review.
 
 ## Branch Naming
 
