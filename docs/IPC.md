@@ -649,6 +649,7 @@ Media player control. Automatically detects and uses YtMusic controls when activ
 | `playPause` | Toggle play/pause (uses YtMusic if active) |
 | `previous` | Previous track (uses YtMusic if active) |
 | `next` | Next track (uses YtMusic if active) |
+| `select <player>` | Hand the controls to another player: `next`, `prev`, or part of its name (`spotify`, `firefox`) |
 
 ```kdl
 Ctrl+Mod+Space { spawn "inir" "mpris" "playPause"; }

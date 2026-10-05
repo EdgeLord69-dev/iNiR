@@ -414,6 +414,8 @@ complete -c inir -n '__inir_at_function mpris' -a pauseAll -d 'Pause all players
 complete -c inir -n '__inir_at_function mpris' -a playPause -d 'Toggle play/pause (uses YtMusic if active)'
 complete -c inir -n '__inir_at_function mpris' -a previous -d 'Previous track (uses YtMusic if active)'
 complete -c inir -n '__inir_at_function mpris' -a next -d 'Next track (uses YtMusic if active)'
+complete -c inir -n '__inir_at_function mpris' -a select -d 'Hand the controls to another player: next, prev, or part of…'
+complete -c inir -n '__inir_at_value 1 select mpris' -a 'next prev spotify firefox'
 complete -c inir -n '__inir_at_target' -a network -d 'Whether the shell can reach the internet, as NetworkManager…'
 complete -c inir -n '__inir_at_function network' -a status -d 'Print the state as JSON: online, connectivity (full, limite…'
 complete -c inir -n '__inir_at_function network' -a check -d 'Ask NetworkManager to check connectivity again, for example…'
