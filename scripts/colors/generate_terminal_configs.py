@@ -771,7 +771,7 @@ onSecondary = '{colors.get("onSecondary", "#1D2021")}'
 tertiary = '{colors.get("tertiary", "#D3869B")}'
 onTertiary = '{colors.get("onTertiary", "#1D2021")}'
 surface = '{colors.get("surface", "#1D2021")}'
-onSurface = '{colors.get("onSurface", "#EBDBB2")}'
+onSurface = '{colors.get("term15", colors.get("onSurface", "#EBDBB2"))}'
 background = '{colors.get("term0", "#282828")}'
 foreground = '{colors.get("term15", "#EBDBB2")}'
 black = '{colors.get("term0", "#282828")}'
@@ -851,13 +851,13 @@ bright_white = '{colors.get("term15", "#EBDBB2")}'
 def generate_btop_config(colors, output_path):
     """Generate btop theme using Material You design tokens"""
 
-    bg = colors.get("surface", colors.get("background"))
-    surface_low = colors.get("surface_container_low")
+    bg = colors.get("term0", colors.get("surface", colors.get("background")))
+    surface_low = blend_hex(bg, colors.get("term15", "#EBDBB2"), 0.06)
     surface_std = colors.get("surface_container")
-    surface_high = colors.get("surface_container_high")
+    surface_high = blend_hex(bg, colors.get("term15", "#EBDBB2"), 0.14)
 
-    on_surface = colors.get("on_surface")
-    on_surface_variant = colors.get("on_surface_variant")
+    on_surface = colors.get("term15", colors.get("on_surface"))
+    on_surface_variant = colors.get("term7", colors.get("on_surface_variant"))
 
     outline = colors.get("outline")
     outline_variant = colors.get("outline_variant")
@@ -954,11 +954,12 @@ theme[process_end]="{primary_dim}"
 def generate_omp_config(colors, output_path):
     """Generate oh-my-posh theme using Material You design tokens"""
 
-    surface_container = colors.get("surface_container")
-    surface_container_high = colors.get("surface_container_high")
+    term0, term15 = colors.get("term0"), colors.get("term15")
+    surface_container = blend_hex(term0, term15, 0.08) if term0 and term15 else colors.get("surface_container")
+    surface_container_high = blend_hex(term0, term15, 0.14) if term0 and term15 else colors.get("surface_container_high")
 
-    on_surface = colors.get("on_surface")
-    on_surface_variant = colors.get("on_surface_variant")
+    on_surface = term15 or colors.get("on_surface")
+    on_surface_variant = colors.get("term7", colors.get("on_surface_variant"))
 
     primary = colors.get("primary")
     primary_container = colors.get("primary_container")

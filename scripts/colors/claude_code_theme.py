@@ -62,6 +62,8 @@ def dynamic(name: str, soft: bool, term: dict, palette: dict, mode: str) -> dict
     slot = ROLE_SLOT["dark" if dark else "light"]
 
     o = {
+        "text": term["term15"],
+        "inverseText": term["term0"],
         "claude": accent,
         "claudeShimmer": accent_hi,
         "clawd_body": accent,
@@ -74,19 +76,22 @@ def dynamic(name: str, soft: bool, term: dict, palette: dict, mode: str) -> dict
         "inactive": "ansi:blackBright",
         "inactiveShimmer": "ansi:white" if dark else "ansi:black",
         "professionalBlue": ansi(slot["ide"]),
-        # Backgrounds are tints of the terminal's own background (the ANSI slots have no tint to give): a step lighter in
-        # dark, a step darker in light, with the hue of the role they mark.
-        "userMessageBackground": hct_hex(bg.hue, min(bg.chroma, 14), t0 + sign * 9),
-        "userMessageBackgroundHover": hct_hex(bg.hue, min(bg.chroma, 14), t0 + sign * 14),
+        "userMessageBackground": hct_hex(ph, 10 if soft else 14, t0 + sign * 11),
+        "userMessageBackgroundHover": hct_hex(ph, 12 if soft else 16, t0 + sign * 15),
         "composerSidebarBackground": hct_hex(bg.hue, min(bg.chroma, 12), t0 + sign * 5),
         "bashMessageBackgroundColor": hct_hex(to_hct(term["term5"]).hue, 14 if dark else 10, t0 + sign * 10),
         "memoryBackgroundColor": hct_hex(to_hct(term["term6"]).hue, 12 if dark else 9, t0 + sign * 10),
         "selectionBg": hct_hex(ph, 24 if dark else 18, 34 if dark else 84),
     }
+    add_hue, del_hue = to_hct(term["term2"]).hue, to_hct(term["term1"]).hue
+    # Red reads far more saturated than green at one chroma this dark: each takes the chroma that looks as strong as the other.
+    for key, hue, strength in (("Added", add_hue, 1.0), ("Removed", del_hue, 0.7)):
+        o[f"diff{key}"] = hct_hex(hue, (18 if dark else 14) * strength, t0 + sign * 8)
+        o[f"diff{key}Word"] = hct_hex(hue, (30 if dark else 24) * strength, t0 + sign * 16)
+        o[f"diff{key}Dimmed"] = hct_hex(hue, 8 * strength, t0 + sign * 5)
     if soft:
-        # Same roles from the normal slots (tone 76, not the bright 84) at 80 % chroma, and the text one step down: the ANSI names
-        # would paint the full bright slot.
-        text = hct_hex(bg.hue, 6, 80 if dark else 25)
+        fg = to_hct(term["term15"])
+        text = hct_hex(fg.hue, fg.chroma, fg.tone - 4 if dark else fg.tone + 4)
         o["text"] = text
         for role, s in slot.items():
             n = s - 8 if s >= 9 else s
