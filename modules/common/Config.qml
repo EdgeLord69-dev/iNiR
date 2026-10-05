@@ -462,8 +462,26 @@ Singleton {
             root.mascotInstances = root._cloneObject(root._mascotSnapshotForInject);
     }
 
+    // A writer mid-save leaves the file empty or cut: reading it as the config would write the defaults over the settings.
+    property int _loadRetries: 0
+    function _retryLoad(): bool {
+        if (root._loadRetries >= 20)
+            return false;
+        root._loadRetries++;
+        loadRetryTimer.restart();
+        return true;
+    }
+
+    Timer {
+        id: loadRetryTimer
+        interval: 250
+        repeat: false
+        onTriggered: configFileView.reload()
+    }
+
     // Fallback: write the mirror directly when writeAdapter() doesn't emit onSaved.
     function _writeMirrorToDisk(): void {
+        if (!root.ready) return;
         try {
             let obj = root._jsonMirror;
             if (!obj || Object.keys(obj).length === 0) return;
@@ -634,8 +652,12 @@ Singleton {
             try {
                 root._jsonMirror = JSON.parse(configFileView.text());
             } catch (e) {
+                if (root._retryLoad())
+                    return;
+                Quickshell.execDetached(["/usr/bin/cp", "--", root.filePath, root.filePath + ".unreadable"]);
                 root._jsonMirror = {};
             }
+            root._loadRetries = 0;
             // Workaround: JsonAdapter doesn't populate property var inside nested JsonObjects.
             // Manually sync custom widget data from the raw JSON.
             root._syncVarProperties();
@@ -657,6 +679,8 @@ Singleton {
                 root.mascotInstances = {};
                 root.mascotInstancesSynced = true;
                 writeAdapter();
+            } else if (root._retryLoad()) {
+                return;
             }
             // Set ready even on failure so UI doesn't stay blank
             root.ready = true;
