@@ -129,7 +129,6 @@ main() {
     running=$((running - 1))
   done
 
-  # Only a clean run is remembered: a module that failed gets another chance next time.
   if (( ! failed )) && [[ -n "$fingerprint" ]]; then
     printf '%s\n' "$fingerprint" > "$stamp_file"
   fi

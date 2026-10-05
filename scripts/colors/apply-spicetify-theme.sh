@@ -8,10 +8,6 @@
 #   current matugen palette.
 # - Sync the generated user.css directly into the live xpui install so the
 #   running client and the next launch use the same colors.
-# - If Spotify is running with an existing remote-debugging port, swap its
-#   user.css in place over DevTools (Page.reload only when the page has no
-#   theme link). Nothing is sent when the CSS did not change. No watch mode,
-#   no restart, no spawn.
 # - If the live install is not patched yet, fall back to `spicetify -n apply`
 #   so disk state is updated without opening Spotify.
 # - This script never starts/opens Spotify itself.
@@ -338,7 +334,6 @@ EOF
 regenerate_user_css_bridge() {
   local css_file="$1"
 
-  # user.css must already exist (written by write_inir_user_css)
   [[ -f "$css_file" ]] || return 0
 
   # ── Derive bridge values from matugen palette ─────────────────────────────
@@ -417,7 +412,6 @@ regenerate_user_css_bridge() {
   # Use python3 for reliable multi-line regex replace without temp file races.
   # The regex removes ALL occurrences (handles stale duplicate blocks from
   # previous buggy runs) and appends a single fresh block at the end so these
-  # vars win over any earlier definition.
   python3 - "$css_file" "$bridge_block" <<'PYEOF'
 import sys, re, pathlib
 css_path = pathlib.Path(sys.argv[1])
@@ -497,8 +491,6 @@ PYEOF
   log "Playback controls fix regenerated from current palette"
 }
 
-# Inir is iNiR's own theme: Spotify's layout in the shell's palette, face and shapes (templates/spotify-finish.css).
-# It replaces the Sleek download it was built on, whose gradients and 50 px shadows read as blocks on the palette.
 write_inir_user_css() {
   local css_file="$1" font
   font="$(grep -s '^gtk-font-name=' "$XDG_CONFIG_HOME/gtk-3.0/settings.ini" | head -n1)"
@@ -590,8 +582,6 @@ regenerate_tui_overrides() {
   local css_file="$1"
   [[ -f "$css_file" ]] || return 0
 
-  # Upstream text keeps the layout; iNiR adds the shell's mono face, its rounded panes
-  # (templates/spotify-tui-finish.css) and playback control contrast.
   local mono_font
   mono_font=$(jq -r '.appearance.typography.monospaceFont // empty' "$(inir_config_dir)/config.json" 2>/dev/null) || true
   mono_font="${mono_font:-JetBrainsMono Nerd Font}"

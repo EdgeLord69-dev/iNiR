@@ -339,7 +339,6 @@ if command -v sddm &>/dev/null; then
     if [[ "${ask}" == "true" ]]; then
       tui_info "Recommended: install ii-pixel-sddm login theme (matches iNiR lockscreen)."
       if tui_confirm "Install ii-pixel-sddm now?" "yes"; then
-        # The login screen itself was settled in System configuration; this only themes it.
         extras_install_sddm_theme "yes" no
       else
         log_info "Skipping ii-pixel-sddm setup"

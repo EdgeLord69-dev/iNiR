@@ -18,8 +18,6 @@ AUTO_APPLY_MODE="${INIR_SDDM_AUTO_APPLY:-ask}" # ask|yes|no
 # Whether this run may make SDDM the login screen. An update only refreshes the theme: someone who went
 # back to GDM or another display manager keeps it.
 ENABLE_SERVICE="${INIR_SDDM_ENABLE_SERVICE:-yes}" # yes|no
-# Which display server the login screen runs on: keep (whatever is configured), niri (Wayland, Niri as the
-# greeter's compositor) or x11 (drop iNiR's greeter drop-in and go back to the distro's default).
 GREETER_MODE="${INIR_SDDM_GREETER:-keep}"
 GREETER_CONF="/etc/sddm.conf.d/98-inir-greeter.conf"
 GREETER_KDL_SRC="${REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}/dots/sddm/niri-greeter.kdl"

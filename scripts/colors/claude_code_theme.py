@@ -39,8 +39,6 @@ def ansi(slot: int) -> str:
     return "ansi:" + (ANSI[slot] if slot < 8 else ANSI[slot - 8] + "Bright")
 
 
-# role -> terminal slot, per polarity. Dark text-like accents use the bright slots (tone 84), light ones the normal slots,
-# which is how Claude Code's own dark-ansi and light-ansi themes pick them.
 ROLE_SLOT = {
     "dark": dict(success=10, error=9, warning=11, permission=12, suggestion=12, remember=12, planMode=14, autoAccept=13,
                  skill=13, bashBorder=13, merged=13, ide=4),
@@ -69,7 +67,6 @@ def dynamic(name: str, soft: bool, term: dict, palette: dict, mode: str) -> dict
         "clawd_body": accent,
         "rate_limit_fill": accent,
         "rate_limit_empty": hct_hex(bg.hue, min(bg.chroma, 14), t0 + sign * 12),
-        # Borders and dividers take the wallpaper's hue at a low chroma: tinted warm or cool, never the neutral grey.
         "promptBorder": hct_hex(ph, 10 if soft else 16, 48 if dark else 56),
         "promptBorderShimmer": hct_hex(ph, 14 if soft else 22, 62 if dark else 44),
         "subtle": hct_hex(bg.hue, min(bg.chroma, 8), 40 if dark else 72),
@@ -102,7 +99,6 @@ def dynamic(name: str, soft: bool, term: dict, palette: dict, mode: str) -> dict
     return {"name": name, "base": ("dark-ansi" if dark else "light-ansi"), "overrides": o}
 
 
-# The fixed retro pair: Monokai's hues for the interface, so interface and syntax are one palette.
 VIVID = dict(
     text="#F8F8F2", inverse="#1C1A17", amber="#FFA23A", amber_hi="#FFC57A", cyan="#66D9EF", cyan_hi="#A6EAF6",
     green="#A6E22E", green_hi="#C8F26B", red="#FF5C73", red_hi="#FF9AA8", yellow="#FFD04A", yellow_hi="#FFE58F",

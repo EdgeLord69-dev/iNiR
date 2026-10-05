@@ -3341,8 +3341,6 @@ def cmd_remove_bind(args):
 # ─── Main ─────────────────────────────────────────────────────────────
 
 
-# ─── Alt+Tab: Niri's recent-windows switcher or iNiR's ────────────────
-#
 # Niri's switcher is bound in `recent-windows { binds { } }`, which has lower
 # precedence than normal binds, and a later include overrides earlier binds.
 # So iNiR's switcher is a managed normal-binds block at the end of the config

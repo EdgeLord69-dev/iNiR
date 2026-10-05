@@ -30,7 +30,6 @@ async def inject_into_page(ws_url: str, css: str) -> bool:
             js = (
                 "(function(){"
                 f"var e=document.getElementById('{STYLE_ID}');"
-                # The same palette again: leave the page alone.
                 f"if(e&&e.textContent==={json.dumps(css)})return 'same';"
                 "if(e)e.remove();"
                 "var s=document.createElement('style');"

@@ -244,7 +244,6 @@ def generate_comment(action: str) -> str:
     if action in ACTION_MAP:
         return ACTION_MAP[action]
 
-    # recent-windows switcher: next-window / previous-window [filter="app-id"] [scope=...]
     rw_match = re.match(r'(next|previous)-window\b(.*)', action)
     if rw_match:
         same_app = 'app-id' in rw_match.group(2)
@@ -438,7 +437,6 @@ def find_all_binds_blocks(content: str) -> tuple[list[str], list[str]]:
     while i < len(text):
         ch = text[i]
         if ch == '{':
-            # The word right before this brace (longest match wins: `binds`, not `s`).
             name = ''
             for back in range(i - 1, max(-1, i - 64), -1):
                 m = header.match(text, back)

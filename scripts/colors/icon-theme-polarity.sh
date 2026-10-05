@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 # Give a dark icon theme back the icons it borrows from its light sibling.
 #   icon-theme-polarity.sh <theme>
-# Some dark variants link whole folders to the light theme (WhiteSur-dark's mimes/16 -> WhiteSur/mimes/16), so a
-# GTK 3 file chooser draws every folder in the light theme's #363636 on a dark view. For each linked folder, the
-# icons drawn in the light sibling's text colour are written, in the dark theme's own text colour, to the same
-# theme name under the user's icons (GTK merges a theme across its search paths). Nothing outside it is touched.
 set -euo pipefail
 
 theme="${1:-}"
@@ -24,7 +20,6 @@ dark_dir="$(find_theme "$theme")" || exit 0
 light_dir="$(find_theme "$light")" || exit 0
 overlay="${XDG_DATA_HOME:-$HOME/.local/share}/icons/$theme"
 
-# The text colour each theme declares on its own (non-linked) folder icon.
 text_colour() {
     grep -ho 'ColorScheme-Text *{ *color: *#[0-9A-Fa-f]\{6\}' "$1"/places/16/folder.svg 2>/dev/null | grep -o '#[0-9A-Fa-f]\{6\}' | head -n1
 }

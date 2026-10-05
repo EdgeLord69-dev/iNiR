@@ -26,7 +26,7 @@ NAME_SITES = [
 ]
 PARAM = re.compile(rf"(?:^|,)\s*({WORD})\s*(?::|,|$)")
 # ES2019+ built-ins QML's V4 engine lacks: the call throws a TypeError at runtime, the file still parses.
-# Measured on Qt 6.11.2 / Quickshell 0.3.1 (2026-10-01).
+# Measured on Qt 6.11.2 / Quickshell 0.3.1.
 MISSING_JS = re.compile(r"\bObject\.fromEntries\b|\.(?:flat|flatMap|replaceAll|at)\s*\(|\bstructuredClone\s*\(")
 STRING = re.compile(r'"(?:[^"\\]|\\.)*"|\'(?:[^\'\\]|\\.)*\'|`[^`]*`')
 

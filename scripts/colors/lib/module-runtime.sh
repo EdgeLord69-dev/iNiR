@@ -65,7 +65,6 @@ config_json() {
   fi
 }
 
-# The polarity the palette was generated for ("light" or "dark"), from theme-meta.json.
 theme_mode() {
   local meta="$STATE_DIR/user/generated/theme-meta.json" mode=""
   if [[ -f "$meta" ]] && command -v jq >/dev/null 2>&1; then
@@ -84,8 +83,6 @@ append_line_once() {
   printf '%s\n' "$line" >> "$path"
 }
 
-# The face the shell shows, as the system has it: FontSyncService writes the active family's font into GTK's
-# settings (and links iNiR's bundled faces into fontconfig), so app themes that set a font read it from there.
 shell_font_family() {
   local line
   line="$(grep -s '^gtk-font-name=' "$XDG_CONFIG_HOME/gtk-3.0/settings.ini" | head -n1)"

@@ -59,7 +59,6 @@ def load_generator_colors(scss_path, palette_json_path, terminal_json_path):
     # inactive tabs sit on the background (term8 under term7 measured 1.1:1).
     term0, term15 = colors.get("term0", "#282828"), colors.get("term15", "#EBDBB2")
     primary = colors.get("primary", "#458588")
-    # As much accent as the text allows: 35 % on a dark terminal, less on a light one, never under 4.5:1.
     factor = 0.35
     while factor > 0.05 and contrast_hex(term15, blend_hex(term0, primary, factor)) < 4.5:
         factor -= 0.03

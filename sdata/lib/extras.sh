@@ -10,7 +10,6 @@ inir_get_user_wallpapers_dir() {
   printf '%s' "${_xdg_pictures}/Wallpapers"
 }
 
-# A laptop with an NVIDIA GPU next to another one: SDDM's X11 greeter can start on the GPU without screens.
 extras_hybrid_nvidia() {
   local dev vendor devices="" nvidia=false
   for dev in "${INIR_DRM_SYSFS:-/sys/class/drm}"/card[0-9]*/device; do

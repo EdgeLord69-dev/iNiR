@@ -579,9 +579,6 @@ def build_app_palette(base_palette: dict[str, str]) -> dict[str, str]:
     selection_hover = argb_to_hex(Hct.from_hct(container_hct.hue, min(container_hct.chroma, 26.0), selection_tone).to_int())
     on_selection = readable_hex(on_layer3, selection, 4.5)
 
-    # Status colours that mean what they say (green, amber, red) in the palette's light: each hue leans up to 15
-    # degrees toward the accent, sits at the accent's tone and is solved for text on the background. KDE's
-    # Positive/Neutral were Material's secondary and tertiary (a grey lavender and a pink on a purple palette).
     is_dark = Hct.from_int(hex_to_argb(layer0)).tone < 50
     accent_hue = Hct.from_int(hex_to_argb(primary)).hue
 
@@ -757,7 +754,6 @@ if args.scheme != "scheme-monochrome":
             material_colors[key] = argb_to_hex(palette.tone(80))
         elif not darkmode and not 25.0 <= tone <= 50.0:
             material_colors[key] = argb_to_hex(palette.tone(40))
-        # Its container is the quiet sibling (tone 30 / 90): the same copy of the seed made it the accent's twin.
         container, on_container = key + "Container", "on" + key[0].upper() + key[1:] + "Container"
         if container in material_colors:
             ctone = Hct.from_int(hex_to_argb(material_colors[container])).tone
@@ -906,7 +902,6 @@ if args.termscheme is not None:
             term_colors[color] = get_interpolated_surface(user_bg_brightness)
             continue
 
-        # Terminal foreground: Use EXACT Material onSurface color
         if color == "term15":
             term_colors[color] = material_colors.get("onSurface", "#e0e0e0")
             continue
@@ -991,9 +986,6 @@ if args.termscheme is not None:
                 adjusted = ensure_contrast(fg_argb, bg_argb, 4.5, darkmode)
                 term_colors[color] = argb_to_hex(adjusted)
 
-        # The greys (term7 text, term8 suggestions and comments) are neutrals of the terminal's own hue, like
-        # Material's: they came from the base scheme as a warm yellow-grey (hue ~100) on every palette, and
-        # term7 was never checked (3.5:1 on a light blue).
         bg_hct = Hct.from_int(bg_argb)
         grey_chroma = min(bg_hct.chroma, 10.0)
         for color, start_tone, ratio in (("term7", 75.0 if darkmode else 35.0, 4.5), ("term8", 60.0 if darkmode else 50.0, 3.5)):
@@ -1162,7 +1154,6 @@ theme_meta = {
     "harmonize_threshold": args.harmonize_threshold,
     "color_strength": args.color_strength,
     "blend_bg_fg": args.blend_bg_fg,
-    # The surface iRiS asked for: the shell holds the apps until a generation carries the one it wants.
     "surface_seed": ("#" + args.surface_seed.strip().lstrip("#").lower())
     if args.surface_seed and re.fullmatch(r"#?[0-9A-Fa-f]{6}", args.surface_seed.strip())
     else "",

@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Pear Desktop / YouTube Music theming module: generates the theme CSS from the
-# generated palette, registers it in Pear's config (loaded at app start) and
-# swaps it live over DevTools when the app runs with the iNiR port.
 #
 # Supports both package names: "pear-desktop" (AUR) and "youtube-music" (CachyOS).
 # They are the same Electron app — auto-detected at runtime.
@@ -50,9 +47,6 @@ detect_package() {
   return 0
 }
 
-# --- CSS generation from the generated palette ---
-# YouTube Music paints itself from its own system tokens (--yt-sys-color-baseline--*, --ytmusic-*), so the
-# theme sets those and every component follows; selectors are only for what the tokens do not reach.
 # Pear inserts this file once at load (webContents.insertCSS) and the live update appends a <style> over it,
 # so every value here must be able to lose to the next one: same selectors, no rule outside them.
 
@@ -371,9 +365,7 @@ ytmusic-nav-bar ytmusic-logo,
 ytmusic-nav-bar .ytmusic-logo { display: none !important; }
 ytmusic-nav-bar .left-content.ytmusic-nav-bar { width: auto !important; min-width: 56px !important; padding-left: 12px !important; }
 EOCSS
-  # Text YouTube Music colours with literal white or grey, mapped to the palette (no light mode upstream).
   [[ -f "$PEAR_LITERALS_CSS" ]] && cat "$PEAR_LITERALS_CSS"
-  # Chips last: the literal layer above also sets their text.
   cat <<'EOCHIPS'
 ytmusic-chip-cloud-chip-renderer[is-selected] a.ytmusic-chip-cloud-chip-renderer,
 ytmusic-chip-cloud-chip-renderer[chip-style="STYLE_PRIMARY"] a.ytmusic-chip-cloud-chip-renderer {
@@ -401,7 +393,6 @@ ytmusic-chip-cloud-chip-renderer[chip-style="STYLE_SECONDARY"]:not([is-selected]
   --icon-color: var(--inir-bg) !important;
 }
 EOCHIPS
-  # The shell's shapes, surfaces and face on top of the colours.
   local font
   font="$(shell_font_family)"
   printf '\n:root { --inir-font: "%s"; }\n' "${font:-Roboto}"
@@ -440,8 +431,6 @@ register_theme_in_config() {
   fi
 }
 
-# --- DevTools port for live updates ---
-# Pear reads its theme files once, at load; a new palette reaches a running app only over DevTools.
 # The Arch wrapper appends ~/.config/pear-flags.conf to every launch (menu, tray, autostart, terminal),
 # so the port goes there. Other packages get a user .desktop override of the entry that runs the binary.
 
@@ -551,7 +540,6 @@ main() {
   # Register theme in pear-desktop config (for disk-based loading on next app start)
   register_theme_in_config "$css_file" || true
 
-  # Future launches open the DevTools port live updates use
   ensure_cdp_flag
 
   # Reload app with new CSS (CDP injection or restart)

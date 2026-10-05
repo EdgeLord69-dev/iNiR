@@ -25,9 +25,6 @@ if ! flock -w 15 9; then
 fi
 
 status=0
-# The faces iNiR bundles (Inter, Rubik, Montserrat) load only inside the shell; linked into the user's
-# fontconfig dir, the apps that follow the system font (GTK, Qt, Steam, the web-based themes) can use
-# the face the shell shows instead of falling back to another one.
 bundled_fonts="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)/assets/fonts"
 user_fonts="${XDG_DATA_HOME:-$HOME/.local/share}/fonts/inir"
 if [[ -d "$bundled_fonts" && "$(readlink "$user_fonts" 2>/dev/null)" != "$bundled_fonts" ]]; then

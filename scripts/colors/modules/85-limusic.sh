@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# LiMusic (Tauri YouTube Music client) theming module.
-#
 # LiMusic reads ~/.config/limusic/matugen.css, adds it as a <style> after its own sheet and
 # re-reads it whenever the file changes (upstream PR SimoHypers/limusic#351). The file only sets
 # LiMusic's shadcn tokens, so every theme preset, light and dark, takes the iNiR palette. Releases
 # without that support read the same file through iNiR's WebKit theme module (see below).
-#
-# Called from: scripts/colors/applycolor.sh (color pipeline)
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/lib/module-runtime.sh"
 COLOR_MODULE_ID="limusic"
@@ -17,8 +13,6 @@ COLORS_JSON="$STATE_DIR/user/generated/app-palette.json"
 [[ -f "$COLORS_JSON" ]] || COLORS_JSON="$STATE_DIR/user/generated/palette.json"
 [[ -f "$COLORS_JSON" ]] || COLORS_JSON="$STATE_DIR/user/generated/colors.json"
 
-# Installed if its data or config directory exists (AppImage, deb, rpm and AUR all create one on
-# first launch), or a launcher is on PATH.
 limusic_installed() {
   [[ -d "$XDG_CONFIG_HOME/com.limusic.desktop" || -d "${XDG_DATA_HOME:-$HOME/.local/share}/com.limusic.desktop" ]] && return 0
   [[ -d "$XDG_CONFIG_HOME/limusic" ]] && return 0
@@ -97,7 +91,6 @@ html:root:root:not(.art-tint) {
 EOCSS
 }
 
-# --- Builds without the theme file hook ---
 # LiMusic releases before #351 have no way in. A small GTK module (webkit-theme/inir-webkit-theme.c) adds the
 # same file as a WebKit user stylesheet and swaps it when it changes; the launcher loads it through GTK_MODULES.
 WEBKIT_THEME_SRC="$SCRIPT_DIR/webkit-theme/inir-webkit-theme.c"
@@ -124,7 +117,6 @@ build_webkit_theme_module() {
 
 # Every LiMusic launcher (AppImageLauncher, AUR, deb/rpm) gets GTK_MODULES on the Exec lines that run LiMusic itself,
 # not on actions such as AppImageLauncher's "remove". A system entry is copied to ~/.local/share/applications first.
-# Idempotent; a launcher rewritten by an AppImage update is patched again. `--remove` takes the module back out.
 limusic_launchers() {
   local user_apps="$HOME/.local/share/applications" entry
   grep -lisE '^Exec=.*limusic' "$user_apps"/*.desktop /usr/share/applications/*.desktop 2>/dev/null | while IFS= read -r entry; do
@@ -172,7 +164,6 @@ patch_limusic_launchers() {
   done < <(limusic_launchers)
 }
 
-# Off: the stylesheet goes (a running LiMusic drops it at once) and the launchers no longer load the module.
 remove_limusic_theme() {
   local entry
   if [[ -f "$LIMUSIC_CSS" ]] && head -n1 "$LIMUSIC_CSS" | grep -q 'iNiR'; then

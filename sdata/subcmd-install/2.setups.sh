@@ -87,7 +87,6 @@ function setup_systemd_services(){
 
   # SDDM display manager. A machine without a login screen gets SDDM. One that already has another
   # (GDM, plasmalogin...) keeps it: only a first install asks, and the answer defaults to keeping it.
-  # Re-running install switched people back to SDDM every time, a black screen on some hybrid laptops (#279).
   if command -v sddm &>/dev/null && ! systemctl is-enabled sddm.service &>/dev/null; then
     local current_dm="" take_over=false
     if [[ -L /etc/systemd/system/display-manager.service ]]; then

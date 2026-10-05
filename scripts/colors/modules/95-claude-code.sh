@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Claude Code custom themes module.
-#
-# Claude Code lists every file in its themes folder under /theme and repaints a running session when the
-# file changes. iNiR and iNiR Soft use the ANSI base, so their syntax colours are the terminal palette's own
-# slots; the Monokai pair is fixed. Written only when the bytes differ, and taken back when the switch is off.
-#
-# Called from: scripts/colors/applycolor.sh (color pipeline)
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/lib/module-runtime.sh"
 COLOR_MODULE_ID="claude-code"
@@ -34,7 +27,6 @@ if [[ "$(config_bool '.appearance.wallpaperTheming.enableClaudeCode' false)" != 
   exit 0
 fi
 
-# Installed if its config folder exists or the launcher is on PATH.
 if [[ ! -d "$CLAUDE_DIR" ]] && ! command -v claude >/dev/null 2>&1; then
   log_module "Claude Code not found, skipping"
   exit 0

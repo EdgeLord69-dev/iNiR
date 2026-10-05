@@ -84,8 +84,6 @@ ON_PRIMARY=$(jq -r '.app_on_accent // .on_primary // empty' "$COLOR_SOURCE" 2>/d
 PRIMARY_CONTAINER=$(jq -r '.primary_container // empty' "$COLOR_SOURCE" 2>/dev/null)
 ON_PRIMARY_CONTAINER=$(jq -r '.on_primary_container // empty' "$COLOR_SOURCE" 2>/dev/null)
 SURFACE=$(jq -r '.app_view_bg // .surface // empty' "$COLOR_SOURCE" 2>/dev/null || echo "$BG")
-# Text on popovers, menus, dialogs and cards is the window's own text: app_on_surface is the generator's muted
-# layer-1 tone (from on_surface_variant), and menus read dimmer than the window they open from.
 ON_SURFACE=$(jq -r '.app_foreground // .on_surface // empty' "$COLOR_SOURCE" 2>/dev/null || echo "$FG")
 SURFACE_CONTAINER=$(jq -r '.app_surface_elevated // .surface_container // empty' "$COLOR_SOURCE" 2>/dev/null)
 SURFACE_CONTAINER_HIGH=$(jq -r '.app_surface_popup // .surface_container_high // empty' "$COLOR_SOURCE" 2>/dev/null)
@@ -202,7 +200,6 @@ write_if_changed() {
 [[ -z "$SECONDARY" ]]   && SECONDARY="#69db7c"
 [[ -z "$SECONDARY_CONTAINER" ]] && SECONDARY_CONTAINER=$(adjust_color "$PRIMARY_CONTAINER" 8)
 
-# Map to KDE semantic names: the palette's status colours, which mean what they say
 FG_NEGATIVE="${APP_ERROR:-$ERROR_COLOR}"
 FG_NEUTRAL="${APP_WARNING:-$TERTIARY}"
 FG_POSITIVE="${APP_SUCCESS:-$SECONDARY}"
@@ -514,12 +511,9 @@ KDE_COMPLEMENTARY_ALT="$APP_SURFACE_POPUP_ACTIVE"
 # used for item selection. Give Highlight a modest visibility lift so disk
 # usage/progress bars remain readable without turning selections into raw
 # accent blocks.
-# Highlight is the palette's selection (the accent's container), the same token GTK, YouTube Music and Steam
-# select with; it is visible enough for Darkly's capacity bars.
 KDE_SELECTION_BG="${APP_SELECTION:-$(blend_hex_percent "$ROW_ACTIVE_BG" "$PRIMARY" 15)}"
 KDE_SELECTION_ALT="${APP_SELECTION_HOVER:-$(blend_hex_percent "$ROW_ACTIVE_HOVER_BG" "$PRIMARY" 12)}"
 KDE_SELECTION_FG="${APP_ON_SELECTION:-$ROW_SELECTED_FG}"
-# Secondary text on a selected row (Dolphin's columns): the row's text, a little quieter (subtext measured 1.9:1).
 KDE_SELECTION_FG_INACTIVE=$(blend_hex_percent "$KDE_SELECTION_FG" "$KDE_SELECTION_BG" 18)
 # Darkly fills the chosen menu item and the active tab with DecorationFocus under the window's text, so it stays a
 # container tone (the raw accent would put light text on a light fill), from the same family as the selection.
