@@ -20,6 +20,8 @@ PI.md
 GEMINI.md*
 CLAUDE.md
 agents/
+!/AGENTS.md
+!/docs/agents/
 kilo.json
 mcp.json
 /prompts/
