@@ -880,6 +880,7 @@ include current-theme.conf
 # Font configuration
 font_family      JetBrainsMono Nerd Font
 font_size        11.0
+text_composition_strategy legacy
 
 # Cursor
 cursor_shape beam

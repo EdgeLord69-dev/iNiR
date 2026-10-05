@@ -375,6 +375,75 @@ def find_tone_for_contrast(
     return best_color, best_tone, False, best_ratio
 
 
+def apca_lc(text_argb: int, bg_argb: int) -> float:
+    """|Lc| of APCA-W3 0.0.98G: perceived contrast of text on a background, polarity-aware."""
+    def ys(argb: int) -> float:
+        r, g, b = ((argb >> 16) & 0xFF) / 255.0, ((argb >> 8) & 0xFF) / 255.0, (argb & 0xFF) / 255.0
+        y = 0.2126729 * r ** 2.4 + 0.7151522 * g ** 2.4 + 0.0721750 * b ** 2.4
+        return y + (0.022 - y) ** 1.414 if y < 0.022 else y
+    yt, yb = ys(text_argb), ys(bg_argb)
+    if yb > yt:
+        s = (yb ** 0.56 - yt ** 0.57) * 1.14
+        return 0.0 if s < 0.1 else (s - 0.027) * 100
+    s = (yb ** 0.65 - yt ** 0.62) * 1.14
+    return 0.0 if s > -0.1 else -(s + 0.027) * 100
+
+
+def tone_for_lc(hue: float, chroma: float, bg_argb: int, lc: float) -> float:
+    """The darkest tone, lighter than a dark background, whose text reaches `lc` on it."""
+    lo, hi = Hct.from_int(bg_argb).tone, 100.0
+    for _ in range(24):
+        mid = (lo + hi) / 2
+        if apca_lc(Hct.from_hct(hue, chroma, mid).to_int(), bg_argb) >= lc:
+            hi = mid
+        else:
+            lo = mid
+    return hi
+
+
+TERM_READING_LC = {"term15": 70.0, "term7": 56.0, "term8": 42.0}
+TERM_BG_TONE = (6.0, 16.0)
+TERM_BG_CHROMA = 8.0
+
+
+def solve_dark_terminal_reading(term_colors: dict, fg_boost: float) -> None:
+    """Background in the reading band; foreground, term7 and term8 solved for their Lc in the background's hue;
+    no colour slot lighter than the foreground (brights level with it, normals a step under)."""
+    bg = Hct.from_int(hex_to_argb(term_colors["term0"]))
+    bg_tone = max(TERM_BG_TONE[0], min(TERM_BG_TONE[1], bg.tone))
+    bg_argb = Hct.from_hct(bg.hue, min(bg.chroma, TERM_BG_CHROMA), bg_tone).to_int()
+    term_colors["term0"] = argb_to_hex(bg_argb)
+    ink_chroma = min(Hct.from_int(bg_argb).chroma, 6.0)
+    boost = max(-7.0, min(13.0, (fg_boost - 0.35) * 20.0))
+    tones = {}
+    for key, lc in TERM_READING_LC.items():
+        tones[key] = tone_for_lc(bg.hue, ink_chroma, bg_argb, lc + boost * (1.0 if key == "term15" else 0.5))
+        ink = Hct.from_hct(bg.hue, ink_chroma, tones[key]).to_int()
+        floor = {"term15": 7.0, "term7": 4.5, "term8": 3.5}[key]
+        term_colors[key] = argb_to_hex(ensure_contrast(ink, bg_argb, floor, True))
+    fg_tone = Hct.from_int(hex_to_argb(term_colors["term15"])).tone
+    # Every hue of a level carries the same colourfulness, or a highlight in blue reads grey beside a neon green.
+    # Normals and brights each take one chroma, the gamut permitting.
+    chromas = {}
+    for i in list(range(1, 7)) + list(range(9, 15)):
+        key = f"term{i}"
+        if key in term_colors:
+            chromas[key] = Hct.from_int(hex_to_argb(term_colors[key])).chroma
+    level_chroma = {
+        "normal": max(34.0, min(44.0, sorted(chromas.get(f"term{i}", 40.0) for i in range(1, 7))[3])),
+        "bright": max(30.0, min(38.0, sorted(chromas.get(f"term{i}", 34.0) for i in range(9, 15))[3])),
+    }
+    for i in list(range(1, 7)) + list(range(9, 15)):
+        key = f"term{i}"
+        if key not in term_colors:
+            continue
+        c = Hct.from_int(hex_to_argb(term_colors[key]))
+        cap = fg_tone if i >= 9 else fg_tone - 5.0
+        chroma = level_chroma["bright" if i >= 9 else "normal"]
+        evened = Hct.from_hct(c.hue, chroma, min(c.tone, cap)).to_int()
+        term_colors[key] = argb_to_hex(ensure_contrast(evened, bg_argb, 3.5 if i >= 9 else 4.5, True))
+
+
 def ensure_contrast(
     fg_argb: int,
     bg_argb: int,
@@ -939,6 +1008,9 @@ if args.termscheme is not None:
                 fg_argb = hex_to_argb(term_colors[color])
                 adjusted = ensure_contrast(fg_argb, bg_argb, 3.5, darkmode)
                 term_colors[color] = argb_to_hex(adjusted)
+
+    if darkmode and "term0" in term_colors and "term15" in term_colors:
+        solve_dark_terminal_reading(term_colors, args.term_fg_boost)
 
 # Fallback: derive term colors from material colors when no termscheme provided
 if not term_colors and material_colors:

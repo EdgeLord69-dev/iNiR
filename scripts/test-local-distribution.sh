@@ -2069,6 +2069,9 @@ if command -v python3 &>/dev/null && [[ -f "$runtime_root/scripts/lib/generate-i
     step "Auto light/dark reads the wallpaper's brightness"
     python3 "$runtime_root/scripts/test-wallpaper-mode.py"
 
+    step "Terminal prose reads and nothing outshines it"
+    python3 "$runtime_root/scripts/test-terminal-palette.py"
+
     step "iRiS defaults"
     python3 "$runtime_root/scripts/test-iris-defaults.py"
 
