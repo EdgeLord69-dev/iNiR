@@ -625,7 +625,6 @@ Singleton {
     // ("show only the backdrop", ii and iRiS), the main wallpaper otherwise. Glass and Lume read this one,
     // or they sample a wallpaper nobody sees.
     readonly property bool desktopShowsBackdrop: !root.isWaffleFamily && root.useBackdropWallpaper
-    // How Backdrop.qml draws it over the desktop: a black dim, then saturation and contrast (0 when it does not).
     readonly property real desktopDim: root.desktopShowsBackdrop
         ? Math.max(0, Math.min(1, Number(Config.options?.background?.backdrop?.dim ?? 35) / 100)) : 0
     readonly property real desktopSaturation: root.desktopShowsBackdrop ? Number(Config.options?.background?.backdrop?.saturation ?? 0) : 0
@@ -1022,14 +1021,11 @@ Singleton {
     }
 
     function select(filePath, darkMode = Appearance.m3colors.darkmode, monitorName = "", target = "") {
-        // An output only means something with a wallpaper per monitor. Without it, the choice went to that unused
-        // list: nothing changed on screen, and it resurfaced the day the per-monitor mode was turned on.
         const perMonitor = (Config.options?.background?.multiMonitor?.enable ?? false) ? monitorName : ""
         selectProc.select(filePath, darkMode, perMonitor, target)
     }
 
     function randomFromCurrentFolder(darkMode = Appearance.m3colors.darkmode, monitorName = "", target = "") {
-        // The picker lists folders too: drawing one applied nothing.
         const currentPath = Config.options?.background?.wallpaperPath ?? ""
         const files = []
         for (let i = 0; i < folderModel.count; ++i) {
@@ -1319,8 +1315,6 @@ Singleton {
     readonly property int autoWallpaperInterval: Config.options?.background?.autoWallpaper?.intervalMinutes ?? 30
     readonly property bool autoWallpaperGenerateColors: Config.options?.background?.autoWallpaper?.generateColors ?? true
     readonly property string autoWallpaperFolder: Config.options?.background?.autoWallpaper?.folder ?? ""
-    // With no folder of its own the shuffle draws from the current wallpaper's folder. The picker's open folder
-    // went back to the default on every start, so a shuffle set up from another folder drifted to the default.
     readonly property int shuffleCount: shuffleModel.count
     readonly property string shuffleFolder: {
         const own = FileUtils.trimFileProtocol(root.autoWallpaperFolder).replace(/^~(?=\/|$)/, Directories.homePath)
@@ -1355,7 +1349,6 @@ Singleton {
         _pickRandomAndApply()
     }
 
-    // Next wallpaper (desktop menu, `inir wallpaperSelector next`): one step of the shuffle, now.
     function nextWallpaper(darkMode = Appearance.m3colors.darkmode, monitorName = ""): string {
         const filePath = root._pickShuffleFile()
         if (!filePath) return ""
@@ -1380,7 +1373,6 @@ Singleton {
         if (!filePath) return
 
         if (root.autoWallpaperGenerateColors) {
-            // The same path as "Next wallpaper": the selection target (Waffle's own, the overview's) is kept.
             root.select(filePath, Appearance.m3colors.darkmode)
         } else {
             // Just change wallpaper path without running color generation

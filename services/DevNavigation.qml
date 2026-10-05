@@ -201,8 +201,6 @@ Singleton {
         }
     }
 
-    // Development checkouts (Quickshell.watchFiles): reload edits to the QML that Quickshell's scanner never
-    // reaches, the panels loaded by `source:` path (scripts/daemon/dev_hot_reload.py). Exits with the shell.
     Process {
         running: Quickshell.watchFiles
         command: ["python3", Quickshell.shellPath("scripts/daemon/dev_hot_reload.py"), Quickshell.shellDir,
@@ -214,7 +212,6 @@ Singleton {
         function list(): string { return JSON.stringify(root.destinations) }
         function open(destination: string): string { return root.request(destination) }
         function close(): void { root.closeAll() }
-        // The soft reload Quickshell does when a watched file changes.
         function reload(): string { Qt.callLater(() => Quickshell.reload(false)); return "reloading" }
         function current(): string { return root.currentDestination.length > 0 ? root.currentDestination : "closed" }
         function meter(ms: string): string {

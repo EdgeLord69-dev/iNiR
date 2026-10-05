@@ -2652,7 +2652,7 @@ Singleton {
                 }
                 property bool verbose: true
                 property JsonObject media: JsonObject {
-                    property int maxWidth: 220 // Widest the song title gets in the bar; the window title gives way
+                    property int maxWidth: 220
                 }
                 property bool vertical: false
                 property JsonObject clock: JsonObject {
@@ -3946,9 +3946,9 @@ Singleton {
                     property string design: "iris" // "iris" faces, "material" (each widget's own style), "instrument" or "readout"
                     property string material: "glass" // "glass", "clear", "solid" or "tinted"
                     property string weight: "regular" // "light", "regular" or "bold"
-                    property bool rim: false // Legacy: hairline around Transparent widgets, read by outline "auto"
+                    property bool rim: false
                     property string outline: "auto" // "auto" (the shell's outline; Transparent bare), "always" or "none"
-                    property bool brightWallpapers: false // Over a light region a widget turns to frost with dark ink
+                    property bool brightWallpapers: false
                 }
                 property JsonObject desktopMenu: JsonObject {
                     property bool wallpaper: true // The wallpaper at the head of the right-click menu
@@ -3967,7 +3967,7 @@ Singleton {
                     property int magnifySize: 150 // hovered icon at its largest, % of its size
                     property bool badges: true // Unread notification counts on app icons
                     property bool launcher: true // Applications button at the start of the Dock
-                    property bool reorder: true // Slide an icon along the Dock to move it
+                    property bool reorder: true
                     property string arrange: "pinned" // "pinned" (pinned apps keep their place while open) or "opened" (open apps together, in the order opened)
                     property bool revealOnEmpty: true // Auto-hide keeps the dock shown on an empty workspace
                     property string position: "auto" // "auto" (opposite the Island), "top", "bottom", "left" or "right"
@@ -4127,10 +4127,10 @@ Singleton {
                     property string blockStyle: "plain" // desktop page blocks: "plain" on the Island's black or "grouped" on quiet plates
                     property string scrollAction: "volume" // "volume", "brightness" or "none"
                     property string desktopBanner: "wallpaper" // Island Desktop page header: "wallpaper" or "none"
-                    property int desktopBannerFade: 100 // % of the fade into the Island's body (100 = to solid at the bottom)
-                    property int desktopBannerTop: 100 // % of the fade into the Island's body at the top, under its buttons
-                    property int desktopBannerVeil: 100 // % of the legibility veil over the header wallpaper
-                    property int desktopBannerBlur: 0 // % blur of the header wallpaper
+                    property int desktopBannerFade: 100
+                    property int desktopBannerTop: 100
+                    property int desktopBannerVeil: 100
+                    property int desktopBannerBlur: 0
                     property string navFrame: "auto" // the open Island's page buttons: "auto" (Appearance › Button rows), "none", "veil", "glass" or "solid"
                     // Island Desktop page blocks under the hero, in order:
                     // "profile", "context", "vitals", "modules".

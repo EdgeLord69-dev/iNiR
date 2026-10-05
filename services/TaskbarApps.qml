@@ -78,7 +78,6 @@ Singleton {
         const lower = id.toLowerCase()
         const pinned = Config.options?.dock?.pinnedApps ?? []
         const exists = pinned.some(p => String(p).toLowerCase() === lower)
-        // Pin under the desktop entry's own id, the form the list already uses.
         const next = exists ? pinned.filter(p => String(p).toLowerCase() !== lower)
             : pinned.concat([AppSearch.lookupDesktopEntry(id)?.id || id])
         Config.setNestedValue(["dock", "pinnedApps"], next)

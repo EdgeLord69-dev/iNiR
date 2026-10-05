@@ -74,7 +74,6 @@ Singleton {
         removeBindProcess.running = true
     }
 
-    // ── Alt+Tab: Niri's recent-windows switcher or iNiR's ────────────────
     // Niri's config is the truth (a managed block in 90-user-extra.kdl, niri-config.py);
     // "custom" is an Alt+Tab the person bound themselves.
     property string altTabSource: ""

@@ -119,9 +119,6 @@ Item { // Bar content region
         + (root.isIslands
             ? root.islandOuterInset + root.islandPad * 2
             : Appearance.rounding.screenRounding * 2)
-    // Demand is what a zone needs at its narrowest: an elastic module (media) gives way inside its group
-    // first, so hosts are compressed (and clipped) only when even that does not fit. Natural widths here
-    // compressed the whole bar, clock and all, as soon as a long song no longer fitted at full width.
     readonly property real leftCenterDemand: leftCenterGroup.empty ? 0 : leftCenterGroup.minimumContentWidth
     readonly property real rightCenterDemand: rightCenterGroupPill.empty ? 0 : rightCenterGroupPill.minimumContentWidth
     readonly property real centerDemand: middleCenterGroup.empty ? 0 : middleCenterGroup.minimumContentWidth
@@ -131,9 +128,6 @@ Item { // Bar content region
         + ((root.rightEdgeDemand > 0 && root.rightCenterDemand > 0) ? root.hostGap : 0)
     readonly property real centerBoundaryGap: (root.centerDemand > 0
             && (root.leftSideDemand > 0 || root.rightSideDemand > 0)) ? root.hostGap : 0
-    // Each side needs only its own room: a heavy side (a full tray) moves the centre cluster
-    // towards the lighter one instead of squeezing the whole bar. Compressing on the heavier
-    // side mirrored twice clipped clock, weather and music while half the bar stood empty.
     readonly property real naturalHostDemand: root.centerDemand
         + root.leftSideDemand + root.rightSideDemand + root.centerBoundaryGap * 2
     readonly property real hostScale: root.naturalHostDemand > 0 && root.width > 0
@@ -150,15 +144,11 @@ Item { // Bar content region
     function _sideRoom(edgeWidth) {
         const total = root.width
         if (!(total > 0)) return root.baseCenterSideModuleWidth
-        // Islands: an edge section's capsule reaches `islandPad` past its row, and islands keep `hostGap` of air.
         const edge = edgeWidth + (root.isIslands ? root.islandPad + root.hostGap : 0)
         return total / 2 - edge - middleCenterGroup.width / 2 - 12
     }
     readonly property real leftCenterRoom: root._sideRoom(barLeftSideMouseArea.implicitWidth)
     readonly property real rightCenterRoom: root._sideRoom(barRightSideMouseArea.implicitWidth)
-    // Offset of the centre cluster from the screen centre: zero while both pills fit their
-    // side at their narrowest, otherwise just what the heavier side is missing, taken from
-    // the lighter side's spare room. Under compression every host scales around it.
     readonly property real centerShift: {
         if (!(root.width > 0)) return 0
         if (root.layoutCompressionActive)
@@ -169,12 +159,9 @@ Item { // Bar content region
         if (leftNeed > 0) return Math.min(leftNeed, Math.max(0, -rightNeed))
         return 0
     }
-    // Max width a side pill takes: its NATURAL content width is clamped to this, and its
-    // modules elide/clip to fit instead of inflating the pill or pushing into the edges.
     readonly property real leftCenterMaxWidth: Math.max(0, root.leftCenterRoom + root.centerShift)
     readonly property real rightCenterMaxWidth: Math.max(0, root.rightCenterRoom - root.centerShift)
     // Both centre pills share one width = the larger of the two non-empty
-    // content widths (clamped to each side's max width). This keeps the cluster
     // balanced around the workspaces pivot; each BarGroup centres its content,
     // so the narrower side doesn't look stuck to one edge. An empty zone
     // contributes 0 and collapses entirely.
@@ -677,7 +664,6 @@ Item { // Bar content region
     // exclusive: taskbar replaces the active window title).
     // The wrapper deliberately reports implicitWidth: 0 so neither a long title
     // nor extra taskbar items inflate the edge section (which would shrink
-    // the side pills' max widths and shuffle the centre pills on every change). The
     // Loader's Layout.fillWidth (see root._fillWidth) gives this item the
     // leftover horizontal space inside the section, and the inner content
     // elides / clips to fit instead of pushing the bar around.

@@ -162,7 +162,6 @@ Scope {
     IpcHandler {
         target: "altSwitcher"
 
-        // Which switcher Alt+Tab opens: `inir`, `niri`, or `status` (Niri's config holds the answer).
         function opens(which: string): string {
             if (which === "inir" || which === "niri") {
                 NiriKeybinds.setAltTabSource(which)

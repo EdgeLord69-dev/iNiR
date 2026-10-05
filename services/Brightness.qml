@@ -412,7 +412,6 @@ Singleton {
             monitor.ready = false
             monitor.brightness = value
             monitor.ready = true
-            // The monitor may have reset its level while asleep.
             monitor._writtenRaw = -1
             syncBrightness()
         }
@@ -557,8 +556,6 @@ Singleton {
             onExited: (exitCode, exitStatus) => {
                 if (exitCode !== 0) {
                     monitor._writtenRaw = -1
-                    // A wake or hotplug can leave the bus busy for a moment;
-                    // retry a few times, then wait for the next change.
                     if (++monitor._writeFailures <= 3)
                         ddcRetryTimer.restart()
                     else
@@ -574,9 +571,6 @@ Singleton {
             }
         }
 
-        // Writes skip ddcutil's verify, so once the slider settles read the
-        // monitor once: a monitor that clamps or ignores a level must move the
-        // slider to what it really shows instead of disagreeing silently.
         property var readbackTimer: Timer {
             interval: 1500
             onTriggered: {
@@ -585,8 +579,6 @@ Singleton {
             }
         }
 
-        // Re-read the level without writing: the monitor's own buttons or
-        // another tool may have moved it since the shell last wrote it.
         function refresh(): void {
             if (!monitor.ready || writeProc.running || monitor.writePending || readbackProc.running)
                 return
@@ -738,12 +730,10 @@ Singleton {
             root.decreaseBrightness();
         }
 
-        // Re-read every output's level from the hardware, then report it.
         function refresh(): void {
             root.monitors.forEach(m => m.refresh())
         }
 
-        // Level 0-100 on the focused output, the same path the sliders take.
         function set(percent: string): string {
             const value = Number(percent)
             const monitor = root._focusedMonitor()
@@ -753,7 +743,6 @@ Singleton {
             return root.describe(monitor)
         }
 
-        // Per output: the level the shell holds and the last hardware level written.
         function status(): string {
             return root.monitors.map(m => root.describe(m)).join("\n")
         }

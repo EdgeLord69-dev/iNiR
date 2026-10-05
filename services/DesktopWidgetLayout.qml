@@ -69,7 +69,6 @@ Singleton {
         return Math.round(Number(width) || 0) + "x" + Math.round(Number(height) || 0)
     }
 
-    // The size the output's layout was last fitted to, or null before the first fit.
     function outputGeometry(outputName): var {
         const record = root.outputRecord(outputName)
         const width = Math.round(Number(record?.width ?? 0))
@@ -77,8 +76,6 @@ Singleton {
         return width > 0 && height > 0 ? { width: width, height: height } : null
     }
 
-    // How the widget stood the last time the output had this size ({ placementStrategy?, x?, y? }):
-    // resolution and scale changes refit the layout, and coming back restores what was arranged there.
     function rememberedPosition(outputName, widgetKey, width, height): var {
         const record = root.outputRecord(outputName)
         const layout = record?.layouts?.[root._geometryKey(width, height)]
@@ -263,7 +260,6 @@ Singleton {
             record = { output: output, widgets: ({}) }
             list.push(record)
         }
-        // Leaving a size: keep where everything stood on it, before the refit overwrites it.
         const leftWidth = Math.round(Number(record.width ?? 0))
         const leftHeight = Math.round(Number(record.height ?? 0))
         if (leftWidth > 0 && leftHeight > 0

@@ -384,9 +384,6 @@ Singleton {
         }
     }
 
-    // Switching an app's theming on or off (or Spotify's layout) applies at once, from any family's Settings or the
-    // config file. applycolor.sh runs only what changed: modules write a target only when its bytes differ, and a
-    // module switched off takes its theme back where it can (LiMusic).
     readonly property string _appTargetsKey: {
         const t = Config.options?.appearance?.wallpaperTheming
         if (!t) return ""

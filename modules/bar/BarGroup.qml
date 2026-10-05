@@ -65,7 +65,6 @@ Item {
                 slack += Math.max(0, child.implicitWidth - child.Layout.minimumWidth)
         return slack
     }
-    // Narrowest the group lays out without clipping: elastic modules (media) at their minimum.
     readonly property real minimumContentWidth: Math.max(0, contentWidth - elasticSlack)
     default property alias items: gridLayout.children
 

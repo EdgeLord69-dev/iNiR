@@ -20,8 +20,6 @@ Singleton {
     }
 
     // Track the current font from config
-    // The face the shell shows: iRiS and Waffle draw with their own (iRiS's are bundled with iNiR and made
-    // available to apps by sync-system-fonts.sh); Material with the typography setting.
     readonly property string family: Config.options?.panelFamily ?? "ii"
     readonly property string mainFont: root.family === "iris"
         ? (String(Config.options?.iris?.appearance?.fontFamily ?? "") || "Inter")

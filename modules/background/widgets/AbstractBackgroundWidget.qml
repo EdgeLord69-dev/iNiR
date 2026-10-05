@@ -2012,11 +2012,8 @@ AbstractWidget {
     }
 
     property bool needsColText: false
-    // A bare iRiS widget reads its region even with adaptation off: the ink stays put, but the Lume
-    // shadow behind it is sized from what the ink sits on. Material has no such shadow.
     readonly property bool _regionSampling: (root.needsColText && (root.positionColorAdaptationEnabled
         || (root.widgetIrisFamily && !root.widgetHasSurface))) || root.irisReadsRegion
-    // Each family keeps its own switch: iRiS's *On bright wallpapers*, Material's wallpaper-position adaptation.
     readonly property bool positionColorAdaptationEnabled: Boolean(root.widgetIrisFamily
         ? Config.getNestedValue("iris.widgets.brightWallpapers", false)
         : Config.getNestedValue("background.widgets.adaptColorsToWallpaperPosition", true))

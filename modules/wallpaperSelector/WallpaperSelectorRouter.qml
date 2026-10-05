@@ -196,9 +196,7 @@ Scope {
             root.toggle()
         }
         function random(): void { Wallpapers.randomFromCurrentFolder() }
-        // Next wallpaper as the desktop menu does it: from the current wallpaper's folder (or the shuffle's own).
         function next(): string { return Wallpapers.nextWallpaper() || "no wallpaper in " + Wallpapers.shuffleFolder }
-        // A new wallpaper every few minutes: `on`, `off`, a number of minutes (turns it on) or `status`.
         function shuffle(value: string): string {
             const minutes = parseInt(value)
             if (value === "on" || value === "off")
@@ -240,7 +238,6 @@ Scope {
                 selectionTarget: Wallpapers.currentSelectionTarget(),
                 multiMonitor: Config.options?.background?.multiMonitor?.enable ?? false,
                 kind: GlobalStates.wallpaperSelectorKindActive,
-                // What each output shows now.
                 shown: root.shownWallpapers()
             })
         }

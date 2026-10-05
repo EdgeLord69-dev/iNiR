@@ -19,8 +19,6 @@ ContentPage {
     settingsPageName: Translation.tr("Widgets")
 
     property bool isIiActive: ["ii", "iris"].includes(Config.options?.panelFamily ?? "ii")
-    // Under iRiS, widget design, material and colour are iRiS's own (iRiS Settings › Desktop › Widgets);
-    // Material's rows for them would write keys iRiS does not read.
     readonly property bool irisActive: (Config.options?.panelFamily ?? "ii") === "iris"
     function openIrisWidgets(): void {
         const page = SettingsPageRegistry.pages.findIndex(entry => entry.key === "iris")

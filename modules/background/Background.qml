@@ -220,7 +220,6 @@ Scope {
             return widget ? widget.editControlsGeometryReport : "{}"
         }
 
-        // Renders one widget to a PNG offscreen, so it can be checked while windows cover the desktop.
         function widgetSnapshot(widgetName: string, path: string): string {
             const target = String(path ?? "").trim()
             if (!target.endsWith(".png")) return "give a path ending in .png"
@@ -2238,8 +2237,6 @@ Scope {
                     const right = Number(work.right ?? outputWidth)
                     const bottom = Number(work.bottom ?? outputHeight)
                     const leaving = ({})
-                    // A size seen before comes back exactly as it was left: those widgets are placed
-                    // first, untouched by the gap rule, and the others make room around them.
                     const remembered = ({})
                     const restored = ({})
                     for (const item of widgets) {
@@ -2250,7 +2247,7 @@ Scope {
                         if (spot?.x !== undefined) {
                             // Kept where it was arranged on this size, held only by the output's edges: the
                             // work area can be narrower than where it was placed (over the Dock's band), and
-                            // clamping to it moved a widget 34 px on the way back (2026-10-01).
+                            // clamping to it moved a widget on the way back.
                             restored[item.configEntryName] = {
                                 x: Math.round(Math.max(0, Math.min(Math.max(0, outputWidth - item.width), spot.x))),
                                 y: Math.round(Math.max(0, Math.min(Math.max(0, outputHeight - item.height), spot.y)))
@@ -2278,8 +2275,6 @@ Scope {
                             outputName, item.configEntryName, "x")
                         const localY = DesktopWidgetLayout.hasValue(
                             outputName, item.configEntryName, "y")
-                        // A size seen before comes back as arranged on it (strategy and, for a free
-                        // widget, its spot); a new one keeps the same relative spot, not the clamped render.
                         const spot = remembered[item.configEntryName]
                         const target = spot?.placementStrategy ?? strategy
                         if (target !== "free" && target !== strategy) {
