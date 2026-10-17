@@ -168,11 +168,9 @@ glob
 sys
 *.ps
 
-# ── Documentation checkouts and stale builds ───────────────
-# docs/ is the GitHub Wiki source. wiki/ is an optional local checkout used
-# by scripts/wiki-sync.sh; site/ is retained only as an ignored legacy build.
+# ── Documentation and legacy build artifacts ────────────────
+# site/ is retained only as an ignored legacy generated build.
 site/
-wiki/
 
 # ── Stale paths (prevent accidental commits) ─────────────────
 /src/

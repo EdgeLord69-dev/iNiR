@@ -76,7 +76,7 @@ inir/
 ├── translations/                 # i18n strings (17 locales)
 ├── distro/arch/                  # Arch PKGBUILDs (dependency manifests)
 ├── assets/                       # Icons, wallpapers, systemd unit, desktop entry
-└── docs/                         # Canonical public documentation; Wiki is published from here
+└── docs/                         # Repository-native guides and reference documentation
 ```
 
 ## Directory Purposes
@@ -146,8 +146,8 @@ inir/
 - Contains: applications/, icons/, images/, systemd/, wallpapers/
 
 **docs/:**
-- Purpose: User-facing documentation (IPC, packages, setup, etc.)
-- Contains: Markdown documentation files
+- Purpose: Repository-native user-facing guides and reference documentation
+- Contains: Markdown documentation files and supporting assets
 
 ## Key File Locations
 

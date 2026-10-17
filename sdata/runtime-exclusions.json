@@ -87,7 +87,6 @@
   "excludedPaths": [
     "scripts/agents",
     "scripts/release.sh",
-    "scripts/wiki-sync.sh",
     "scripts/verify-docs.sh",
     "scripts/qml-check.fish",
     "scripts/test-local-distribution.sh",

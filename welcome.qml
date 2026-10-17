@@ -3684,13 +3684,13 @@ Scope {
                 WelcomeActionButton {
                     materialIcon: "open_in_new"
                     label: Translation.tr("Troubleshoot")
-                    onClicked: Qt.openUrlExternally("https://github.com/snowarch/inir/wiki/Troubleshooting")
+                    onClicked: Qt.openUrlExternally("https://github.com/snowarch/inir/blob/main/docs/LIMITATIONS.md")
                 }
 
                 WelcomeActionButton {
                     materialIcon: "menu_book"
                     label: Translation.tr("Docs")
-                    onClicked: Qt.openUrlExternally("https://github.com/snowarch/inir/wiki")
+                    onClicked: Qt.openUrlExternally("https://github.com/snowarch/inir/blob/main/docs/index.md")
                 }
 
                 WelcomeActionButton {

@@ -16,9 +16,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/snowarch/inir/wiki/INSTALL">インストール</a> &bull;
-  <a href="https://github.com/snowarch/inir/wiki/KEYBINDS">キーバインド</a> &bull;
-  <a href="https://github.com/snowarch/inir/wiki/IPC">IPC リファレンス</a> &bull;
+  <a href="../INSTALL.md">インストール</a> &bull;
+  <a href="../KEYBINDS.md">キーバインド</a> &bull;
+  <a href="../IPC.md">IPC リファレンス</a> &bull;
   <a href="https://discord.gg/pAPTfAhZUJ">Discord</a> &bull;
   <a href="../../CONTRIBUTING.md">コントリビュート</a>
 </p>
@@ -260,7 +260,7 @@ sudo make install       # system-wide instead of your home
 ./setup rollback        # undo the last update
 ```
 
-**ディストリビューション：** Arch が主なターゲットです。Fedora と Debian/Ubuntu にも、ディストリビューションのリポジトリを優先する依存関係の自動インストールがあります。その他は[パッケージ一覧](https://github.com/snowarch/inir/wiki/PACKAGES)の一般的な手順に従ってください。iNiR には Qt 6.9 以降が必要です：Ubuntu 25.10、Fedora 43、Debian testing 以降。
+**ディストリビューション：** Arch が主なターゲットです。Fedora と Debian/Ubuntu にも、ディストリビューションのリポジトリを優先する依存関係の自動インストールがあります。その他は[パッケージ一覧](../PACKAGES.md)の一般的な手順に従ってください。iNiR には Qt 6.9 以降が必要です：Ubuntu 25.10、Fedora 43、Debian testing 以降。
 
 ---
 
@@ -276,7 +276,7 @@ sudo make install       # system-wide instead of your home
 | <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd> | パネルファミリーの切り替え |
 | <kbd>Super</kbd> + <kbd>/</kbd> | チートシート（ほかを忘れたときに） |
 
-完全なリスト：[キーバインド](https://github.com/snowarch/inir/wiki/KEYBINDS)
+完全なリスト：[キーバインド](../KEYBINDS.md)
 
 ---
 
@@ -288,16 +288,16 @@ sudo make install       # system-wide instead of your home
 
 ## ドキュメント
 
-ユーザー向けの情報はすべて [Wiki](https://github.com/snowarch/inir/wiki)（英語）にあります。
+ユーザー向けのガイドはすべて[ドキュメント](../index.md)にあります。
 
 | ページ | 内容 |
 |---|---|
-| [Install](https://github.com/snowarch/inir/wiki/INSTALL) | 動かすまで |
-| [Setup](https://github.com/snowarch/inir/wiki/SETUP) | 更新、マイグレーション、ロールバック |
-| [Keybinds](https://github.com/snowarch/inir/wiki/KEYBINDS) | すべてのショートカット |
-| [IPC](https://github.com/snowarch/inir/wiki/IPC) | キーバインドやスクリプトで使えるコマンド |
-| [Packages](https://github.com/snowarch/inir/wiki/PACKAGES) | 各依存関係とその理由 |
-| [Limitations](https://github.com/snowarch/inir/wiki/LIMITATIONS) | 既知の不具合と回避策 |
+| [Install](../INSTALL.md) | 動かすまで |
+| [Setup](../SETUP.md) | 更新、マイグレーション、ロールバック |
+| [Keybinds](../KEYBINDS.md) | すべてのショートカット |
+| [IPC](../IPC.md) | キーバインドやスクリプトで使えるコマンド |
+| [Packages](../PACKAGES.md) | 各依存関係とその理由 |
+| [Limitations](../LIMITATIONS.md) | 既知の不具合と回避策 |
 | [Architecture](../../ARCHITECTURE.md) | コードの構成 |
 
 ---
@@ -312,7 +312,7 @@ inir repair                     # doctor + restart + filtered log check
 ./setup rollback                # undo the last update
 ```
 
-issue を開く前に [Limitations](https://github.com/snowarch/inir/wiki/LIMITATIONS) を確認してください。人に聞きたいなら Discord のほうが早いです。
+issue を開く前に [Limitations](../LIMITATIONS.md) を確認してください。人に聞きたいなら Discord のほうが早いです。
 
 ---
 

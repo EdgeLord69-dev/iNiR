@@ -28,8 +28,8 @@ check    Everything publish needs, without changing anything: versions, changelo
          branches, tag, hero image, and make test-local (skipped with --quick;
          --content checks only the files).
 publish  Run check (its tests only if check has not passed on this commit), move
-         main forward to this commit, tag it, push, create the GitHub release
-         and sync the Wiki. Each step is skipped when already done, so a
+         main forward to this commit, tag it, push, and create the GitHub release.
+         Each step is skipped when already done, so a
          publish that stopped halfway can be run again. The title defaults to the
          tag. Issues the notes list as fixed are closed with a pointer to it.
 notes    Print the release notes publish would use.
@@ -312,14 +312,13 @@ run_check() {
 
 # ---------------------------------------------------------------------------- notes
 
-# The footer's three links. Update and install go to the Wiki pages that explain
-# them (synced from docs/ by publish); the changelog is pinned to the tag, so the
-# link keeps showing this release after main moves on.
+# The changelog is pinned to the tag so the footer keeps showing this release
+# after main moves on.
 footer_link() {
   local what="$1" v="$2"
   case "$what" in
-    update) printf 'https://github.com/%s/wiki/SETUP#update' "$github_repo" ;;
-    install) printf 'https://github.com/%s/wiki/INSTALL' "$github_repo" ;;
+    update) printf 'https://github.com/%s/blob/main/docs/SETUP.md#update' "$github_repo" ;;
+    install) printf 'https://github.com/%s/blob/main/docs/INSTALL.md' "$github_repo" ;;
     changelog)
       local anchor
       anchor="$(sed -n "s/^## \[${v//./\\.}\] - \([0-9-]*\)$/${v//./}---\1/p" "$changelog")"
@@ -534,7 +533,7 @@ cmd_publish() {
     rm -f "$notes"
   fi
 
-  "$script_dir/wiki-sync.sh" publish "docs: sync wiki for $tag"
+
 
   local issue
   for issue in $fixed; do

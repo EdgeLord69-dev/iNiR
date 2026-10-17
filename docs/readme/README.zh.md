@@ -16,9 +16,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/snowarch/inir/wiki/INSTALL">安装</a> &bull;
-  <a href="https://github.com/snowarch/inir/wiki/KEYBINDS">快捷键</a> &bull;
-  <a href="https://github.com/snowarch/inir/wiki/IPC">IPC 参考</a> &bull;
+  <a href="../INSTALL.md">安装</a> &bull;
+  <a href="../KEYBINDS.md">快捷键</a> &bull;
+  <a href="../IPC.md">IPC 参考</a> &bull;
   <a href="https://discord.gg/pAPTfAhZUJ">Discord</a> &bull;
   <a href="../../CONTRIBUTING.md">参与贡献</a>
 </p>
@@ -260,7 +260,7 @@ sudo make install       # system-wide instead of your home
 ./setup rollback        # undo the last update
 ```
 
-**发行版：** Arch 是首要目标。Fedora 和 Debian/Ubuntu 也有自动安装依赖的路径，优先使用发行版仓库；其他发行版请参考[软件包列表](https://github.com/snowarch/inir/wiki/PACKAGES)中的通用说明。iNiR 需要 Qt 6.9 或更新版本：Ubuntu 25.10、Fedora 43 以及 Debian testing 或更新版本。
+**发行版：** Arch 是首要目标。Fedora 和 Debian/Ubuntu 也有自动安装依赖的路径，优先使用发行版仓库；其他发行版请参考[软件包列表](../PACKAGES.md)中的通用说明。iNiR 需要 Qt 6.9 或更新版本：Ubuntu 25.10、Fedora 43 以及 Debian testing 或更新版本。
 
 ---
 
@@ -276,7 +276,7 @@ sudo make install       # system-wide instead of your home
 | <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd> | 切换面板家族 |
 | <kbd>Super</kbd> + <kbd>/</kbd> | 快捷键速查，以防你忘了其他的 |
 
-完整列表：[快捷键](https://github.com/snowarch/inir/wiki/KEYBINDS)
+完整列表：[快捷键](../KEYBINDS.md)
 
 ---
 
@@ -288,16 +288,16 @@ sudo make install       # system-wide instead of your home
 
 ## 文档
 
-面向用户的内容都在 [Wiki](https://github.com/snowarch/inir/wiki) 里（英文）。
+面向用户的内容都在[文档](../index.md)里（英文）。
 
 | 页面 | 内容 |
 |---|---|
-| [Install](https://github.com/snowarch/inir/wiki/INSTALL) | 让它跑起来 |
-| [Setup](https://github.com/snowarch/inir/wiki/SETUP) | 更新、迁移、回滚 |
-| [Keybinds](https://github.com/snowarch/inir/wiki/KEYBINDS) | 所有快捷键 |
-| [IPC](https://github.com/snowarch/inir/wiki/IPC) | 可用于绑定或脚本的命令 |
-| [Packages](https://github.com/snowarch/inir/wiki/PACKAGES) | 每个依赖以及为什么需要它 |
-| [Limitations](https://github.com/snowarch/inir/wiki/LIMITATIONS) | 已知问题和绕过方法 |
+| [Install](../INSTALL.md) | 让它跑起来 |
+| [Setup](../SETUP.md) | 更新、迁移、回滚 |
+| [Keybinds](../KEYBINDS.md) | 所有快捷键 |
+| [IPC](../IPC.md) | 可用于绑定或脚本的命令 |
+| [Packages](../PACKAGES.md) | 每个依赖以及为什么需要它 |
+| [Limitations](../LIMITATIONS.md) | 已知问题和绕过方法 |
 | [Architecture](../../ARCHITECTURE.md) | 代码是怎么组织的 |
 
 ---
@@ -312,7 +312,7 @@ inir repair                     # doctor + restart + filtered log check
 ./setup rollback                # undo the last update
 ```
 
-提 issue 之前先看看 [Limitations](https://github.com/snowarch/inir/wiki/LIMITATIONS)。如果你更想直接问人，Discord 会更快。
+提 issue 之前先看看 [Limitations](../LIMITATIONS.md)。如果你更想直接问人，Discord 会更快。
 
 ---
 
