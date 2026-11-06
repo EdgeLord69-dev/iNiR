@@ -7,6 +7,7 @@
 .backups/
 
 # ── AI tooling (local development only; never distributed) ───
+
 AGENTS.md
 AGENTS.override.md
 SKILL.md
@@ -26,7 +27,13 @@ mcp.json
 Session.md*
 session-*.md
 **/codemap.md
+SPEC.md
+SPEC-*.md
+CAPABILITY-MAP.md
+tasks/
+
 # Private design contracts (kept local by the maintainer)
+
 modules/iris/DESIGN.md
 modules/iris/DECISIONS.md
 modules/iris/SYSTEM.md
