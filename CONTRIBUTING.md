@@ -143,14 +143,6 @@ iNiR runs on Arch, Fedora, Debian, Void and Nix. Support for one never changes w
 host has (`/run/systemd/system`, `command -v`), never the distro's name, and keep the existing path beside yours.
 Power actions go through `Session.powerAction`, package updates through `PackageSearch`.
 
-Before opening a PR that touches distro or init support, run:
-
-```bash
-scripts/check-distro-parity.py
-```
-
-It lists every system command and option your branch takes away from the other distributions. Each line needs an
-answer in the PR, or the PR is closed.
 
 ### IPC Functions
 

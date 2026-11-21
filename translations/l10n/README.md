@@ -36,11 +36,9 @@ Translate only `translated`. Keep the other fields unchanged.
 
 ```bash
 python3 translations/tools/l10n.py apply /tmp/es_419-001.json
-bash scripts/verify-docs.sh
 ```
 
 The apply command refuses unknown or duplicate keys, changed English source text, modified placeholders or markup such as `%1`, `{0}`, `<i>` and `</i>`, and translations that rename protected product terms.
-
 ## Rules
 
 - Keep product names and commands unchanged.
