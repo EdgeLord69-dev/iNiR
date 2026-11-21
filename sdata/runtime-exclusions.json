@@ -90,8 +90,6 @@
     "scripts/wiki-sync.sh",
     "scripts/verify-docs.sh",
     "scripts/qml-check.fish",
-    "scripts/test-mascot-pack-flow.sh",
-    "scripts/test-runtime-payload.py",
     "scripts/orbit-visual-audit.sh",
     "scripts/lib/generate-ipc-registry.py",
     "scripts/quickshell-webengine",
