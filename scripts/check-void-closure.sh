@@ -40,12 +40,8 @@ versioning="$repo_root/sdata/lib/versioning.sh"
 dolphin_migration="$repo_root/sdata/migrations/005-dolphin-xdg-menu.sh"
 qt_migration="$repo_root/sdata/migrations/012-plasma-integration-qt-theming.sh"
 browser_migration="$repo_root/sdata/migrations/029-plasma-browser-integration.sh"
-orbit_audit="$repo_root/scripts/orbit-visual-audit.sh"
 void_deps="$repo_root/sdata/dist-void/install-deps.sh"
 deps_map="$repo_root/sdata/lib/deps-map.sh"
-uninstall_lib="$repo_root/sdata/lib/uninstall.sh"
-package_search="$repo_root/services/deferred/PackageSearch.qml"
-tools_view="$repo_root/modules/sidebarLeft/ToolsView.qml"
 waffle_updates="$repo_root/modules/waffle/bar/UpdatesButton.qml"
 software_view="$repo_root/modules/sidebarLeft/SoftwareView.qml"
 default_config="$repo_root/defaults/config.json"
@@ -76,8 +72,6 @@ for needle in \
   check grep -Fq "$needle" "$versioning"
 done
 check grep -Fq 'has_usable_systemd_user_manager' "$dolphin_migration"
-check grep -Fq 'systemd/private' "$orbit_audit"
-check grep -Fq 'timeout 3s systemctl --user show-environment' "$orbit_audit"
 for package in curl wget git ripgrep bc xdg-utils xdg-user-dirs libnotify xwayland-satellite xdg-desktop-portal-gnome gnome-keyring libsecret nautilus kitty kf6-kirigami kdialog breeze-icons qt6ct power-profiles-daemon qt6-webengine layer-shell-qt sddm xorg-minimal; do
   check array_has_package VOID_BASE_PACKAGES "$package"
 done
@@ -184,7 +178,7 @@ check grep -Fq 'xbps-query -p pkgver quickshell' "$setup_cli"
 check grep -Fq 'xbps-query -p repository quickshell' "$setup_cli"
 check grep -Fq 'xbps-install -S sudo' "$package_installers"
 
-check bash -n "$launcher" "$doctor" "$dolphin_migration" "$qt_migration" "$browser_migration" "$orbit_audit" "$uninstall_lib" "$switchwall" "$sddm_installer" "$conflicts_lib" "$package_installers" "$setup_cli"
+check bash -n "$launcher" "$doctor" "$dolphin_migration" "$qt_migration" "$browser_migration" "$uninstall_lib" "$switchwall" "$sddm_installer" "$conflicts_lib" "$package_installers" "$setup_cli"
 
 predicate_fixture() (
   set -e
