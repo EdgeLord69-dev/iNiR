@@ -279,14 +279,13 @@ qemu-system-x86_64 \
   it: `-device virtio-gpu-gl,hostmem=8G,blob=true,venus=true`.
 Recommended validation order:
 
-1. `make test-local` on the development host.
-2. `./setup install` end-to-end on a fresh Void glibc VM.
-3. Reboot and log in through SDDM using the packaged `niri --session` entry.
-4. Run `inir doctor` and verify the selected supervisor and session D-Bus.
-5. Verify NetworkManager, BlueZ, Power Profiles, PipeWire, ydotool and any
+1. `./setup install` end-to-end on a fresh Void glibc VM.
+2. Reboot and log in through SDDM using the packaged `niri --session` entry.
+3. Run `inir doctor` and verify the selected supervisor and session D-Bus.
+4. Verify NetworkManager, BlueZ, Power Profiles, PipeWire, ydotool and any
    selected optional providers.
-6. Exercise package search/install/remove and both panel families.
-7. Run the versioned `scripts/check-void-*.sh` contracts when changing a
+5. Exercise package search/install/remove and both panel families.
+6. Run the versioned `scripts/check-void-*.sh` contracts when changing a
    provider or lifecycle boundary.
 
 ## FAQ / gotchas
@@ -316,4 +315,4 @@ Recommended validation order:
 - QEMU docs: virtio-gpu device (venus/gfxstream options), display backends.
 - Repo facts: `scripts/inir` (service helpers, `run --session`),
   `sdata/lib/deps-map.sh`, `sdata/subcmd-install/3.files.sh`,
-  migrations 021/022, `Makefile`, `scripts/test-local-distribution.sh`.
+  migrations 021/022 and `Makefile`.

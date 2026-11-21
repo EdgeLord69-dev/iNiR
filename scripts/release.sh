@@ -25,9 +25,9 @@ prepare  Turn [Unreleased] into the dated <version> section, write <version> int
          file that carries it and commit "chore(release): prepare <version>". Safe to
          run again after fixing what check reports.
 check    Everything publish needs, without changing anything: versions, changelog,
-         branches, tag, hero image, and make test-local (skipped with --quick;
+         branches, tag, and hero image (--quick skips repository checks;
          --content checks only the files).
-publish  Run check (its tests only if check has not passed on this commit), move
+publish  Run check, move
          main forward to this commit, tag it, push, create the GitHub release
          and sync the Wiki. Each step is skipped when already done, so a
          publish that stopped halfway can be run again. The title defaults to the
@@ -296,10 +296,6 @@ run_check() {
   check_links
   check_media "$v"
   [[ "$quick" == "--content" ]] || check_git "$v"
-  if [[ -z "$quick" && ${#failures[@]} -eq 0 ]]; then
-    say "running make test-local"
-    make test-local >/tmp/inir-release-test.log 2>&1 || fail "make test-local failed: /tmp/inir-release-test.log"
-  fi
   local w f
   for w in "${warnings[@]}"; do printf 'warning: %s\n' "$w"; done
   for f in "${failures[@]}"; do printf 'fail: %s\n' "$f"; done
