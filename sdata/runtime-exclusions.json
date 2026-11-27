@@ -88,7 +88,6 @@
     "scripts/agents",
     "scripts/release.sh",
     "scripts/wiki-sync.sh",
-    "scripts/test-detect-sensors.py",
     "scripts/lib/generate-ipc-registry.py",
     "scripts/quickshell-webengine",
     "scripts/setup/_template.sh.example",

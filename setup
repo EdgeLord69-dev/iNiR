@@ -2719,8 +2719,8 @@ run_update() {
     # Remove orphan files left from previous versions
     cleanup_orphans "$II_TARGET" "${II_TARGET}/.inir-manifest" || return 1
 
-    # Fix runtime command permissions without turning test modules into executables.
-    find "$II_TARGET/scripts" \( -name "*.sh" -o -name "*.fish" -o \( -name "*.py" ! -name "test-*.py" \) \) -exec chmod +x {} \; 2>/dev/null || true
+    # Fix runtime command permissions.
+    find "$II_TARGET/scripts" \( -name "*.sh" -o -name "*.fish" -o -name "*.py" \) -exec chmod +x {} \; 2>/dev/null || true
     [[ -f "${II_TARGET}/setup" ]] && chmod +x "${II_TARGET}/setup"
 
     local launcher_target="${XDG_BIN_HOME}/inir"
