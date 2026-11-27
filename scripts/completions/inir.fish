@@ -60,7 +60,6 @@ complete -c inir -n '__fish_use_subcommand' -a settings-window -d 'Open settings
 complete -c inir -n '__fish_use_subcommand' -a waffle-settings-window -d 'Open waffle settings'
 complete -c inir -n '__fish_use_subcommand' -a repair -d 'Repair shell state'
 complete -c inir -n '__fish_use_subcommand' -a path -d 'Show config path'
-complete -c inir -n '__fish_use_subcommand' -a test-local -d 'Run local tests'
 complete -c inir -n '__fish_use_subcommand' -a setup -d 'Run setup directly'
 complete -c inir -n '__fish_use_subcommand' -a service -d 'Manage systemd service'
 complete -c inir -n '__fish_use_subcommand' -a doctor -d 'Health checks'

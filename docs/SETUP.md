@@ -43,10 +43,6 @@ Use them like this:
   - `inir settings`
   - `inir logs`
   - `inir repair`
-- local distribution validation:
-  - `make test-local`
-  - `inir test-local`
-  - `inir test-local --with-runtime`
 
 ## Install
 
@@ -275,7 +271,6 @@ Useful when you want to see what you've changed or restore defaults after custom
 | `inir logs`          | Show recent runtime logs                                    |
 | `inir repair`        | Doctor + restart + filtered log check                       |
 | `inir status`        | Wrapper around `./setup status`                             |
-| `inir test-local`    | Run local distribution checks                               |
 
 Options: `-y` (skip prompts), `-q` (quiet), `-h` (help)
 
@@ -308,24 +303,6 @@ inir status
 ```
 
 `inir status` is a wrapper around `./setup status`.
-
-## Local validation
-
-For distribution, launcher, or install-flow changes, test locally with:
-
-```bash
-make test-local
-inir test-local
-inir test-local --with-runtime
-```
-
-These checks cover:
-
-- shell syntax for `setup`, `doctor`, `versioning`, `package-installers`, and `scripts/inir`
-- PKGBUILD syntax for the new Arch package roots
-- local `make install` dry-run
-- launcher path and status resolution
-- optional runtime restart and filtered log/error smoke test
 
 ## What Gets Installed
 
