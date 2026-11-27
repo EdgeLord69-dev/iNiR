@@ -404,11 +404,12 @@ check_script_permissions() {
     fi
     target="${target}/scripts"
     [[ ! -d "$target" ]] && return 0
-    
-    local bad=$(find "$target" \( -name "*.sh" -o -name "*.fish" -o -name "*.py" \) ! -executable 2>/dev/null | wc -l)
-    
+
+    local -a script_filter=( \( -name "*.sh" -o -name "*.fish" -o -name "*.py" \) )
+    local bad=$(find "$target" "${script_filter[@]}" ! -executable 2>/dev/null | wc -l)
+
     if [[ $bad -gt 0 ]]; then
-        find "$target" \( -name "*.sh" -o -name "*.fish" -o -name "*.py" \) -exec chmod +x {} \;
+        find "$target" "${script_filter[@]}" -exec chmod +x {} \;
         doctor_fix "Fixed permissions on $bad script(s)"
     else
         doctor_pass "Script permissions OK"

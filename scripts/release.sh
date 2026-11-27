@@ -547,9 +547,8 @@ main() {
   case "$cmd" in
     prepare) cmd_prepare "$2" ;;
     check)
-      if (( $# > 3 )) || { (( $# == 3 )) && [[ "$3" != "--content" ]]; }; then
-        die "unsupported check arguments"
-      fi
+      [[ $# == 2 || ( $# == 3 && "$3" == "--content" ) ]] \
+        || die "unsupported check arguments"
       run_check "$2" "${3:-}"
       ;;
     publish) cmd_publish "$2" "${3:-}" ;;
