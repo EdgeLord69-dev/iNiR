@@ -5,6 +5,13 @@ All notable changes to iNiR will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+This change removes dedicated verification tooling while preserving manual release safeguards.
+
+### Changed
+- Removed the dedicated test suites and their `make test-local` / `inir test-local` entry points, plus the release `check --quick` test gate; the release check retains its non-test safeguards.
+
 ## [2.33.0] - 2026-10-08
 
 **iRiS 0.3**
