@@ -9,7 +9,6 @@ MIGRATION_TARGET_FILE="~/.config/niri/config.kdl"
 MIGRATION_REQUIRED=false
 
 _migration_repo_root="${REPO_ROOT:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)}"
-# shellcheck source=/dev/null
 source "${_migration_repo_root}/sdata/lib/functions.sh" 2>/dev/null || true
 
 migration_check() {

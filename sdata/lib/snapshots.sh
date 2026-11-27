@@ -2,7 +2,6 @@
 # Time-machine style backups before updates
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 SNAPSHOTS_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/quickshell/snapshots"
 MAX_SNAPSHOTS=10

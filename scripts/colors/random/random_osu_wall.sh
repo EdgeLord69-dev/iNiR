@@ -25,7 +25,6 @@ CACHE_DIR="$XDG_CACHE_HOME/quickshell"
 STATE_DIR="$XDG_STATE_HOME/quickshell"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# shellcheck source=scripts/lib/config-path.sh
 source "$SCRIPT_DIR/../../lib/config-path.sh"
 
 mkdir -p "$PICTURES_DIR/Wallpapers"

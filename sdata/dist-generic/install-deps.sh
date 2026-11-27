@@ -2,7 +2,6 @@
 # This script provides instructions for unsupported distributions
 # It can also attempt to install what it can via common methods
 
-# shellcheck shell=bash
 
 #####################################################################################
 # Introduction

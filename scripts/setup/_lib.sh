@@ -18,7 +18,6 @@ _setup_load_distro() {
     DISTRO_ID="unknown"
     DISTRO_LIKE=""
     if [[ -r /etc/os-release ]]; then
-        # shellcheck disable=SC1091
         . /etc/os-release
         DISTRO_ID="${ID:-unknown}"
         DISTRO_LIKE="${ID_LIKE:-}"

@@ -26,7 +26,6 @@ source_config_path_helper() {
     local helper_path
     for helper_path in "${helper_candidates[@]}"; do
         if [[ -f "$helper_path" ]]; then
-            # shellcheck source=/dev/null
             source "$helper_path"
             return
         fi
@@ -78,7 +77,6 @@ source_ipc_registry() {
     local registry_path
     for registry_path in "${registry_candidates[@]}"; do
         if [[ -f "$registry_path" ]]; then
-            # shellcheck source=/dev/null
             source "$registry_path"
             _ipc_registry_loaded=true
             return

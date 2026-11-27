@@ -1,7 +1,6 @@
 # Config file installation for iNiR
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 _FILES_STAGE_START=$SECONDS
 

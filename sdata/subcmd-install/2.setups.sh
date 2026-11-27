@@ -1,7 +1,6 @@
 # System setup for iNiR
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 tui_title "System Setup"
 

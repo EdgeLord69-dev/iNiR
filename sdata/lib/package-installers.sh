@@ -2,7 +2,6 @@
 # This is NOT a script for execution, but for loading functions
 # Shared across all distros
 
-# shellcheck shell=bash
 
 #####################################################################################
 # Privilege escalation helper with environment detection

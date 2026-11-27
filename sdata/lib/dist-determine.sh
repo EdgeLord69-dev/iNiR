@@ -1,7 +1,6 @@
 # Determine distribution for iNiR installer
 # This is NOT a script for execution, but for loading functions
 
-# shellcheck shell=bash
 
 # Global variables set by detection
 OS_GROUP_ID=""

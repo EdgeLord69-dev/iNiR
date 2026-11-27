@@ -1,7 +1,6 @@
 # Core functions for iNiR installer
 # This is NOT a script for execution, but for loading functions
 
-# shellcheck shell=bash
 
 if [[ -n "${REPO_ROOT:-}" && -f "${REPO_ROOT}/scripts/lib/niri-session-env.sh" ]]; then
   source "${REPO_ROOT}/scripts/lib/niri-session-env.sh"

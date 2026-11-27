@@ -55,7 +55,7 @@ prepare_policy_dirs() {
   fi
 
   log_module "requesting writable policy dirs: ${missing[*]}"
-  # shellcheck disable=SC2016 # expanded by the elevated shell, paths passed as arguments
+  # Expanded by the elevated shell; paths are passed as arguments.
   if elevate sh -c 'for d; do mkdir -p "$d" && chmod a+rw "$d" || exit 1; done' sh "${missing[@]}"; then
     rm -f "$POLICY_DECLINED_FILE"
     log_module "policy dirs ready: ${missing[*]}"

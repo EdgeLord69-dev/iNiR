@@ -1,7 +1,6 @@
 # Greeting for iNiR installer
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 #####################################################################################
 # System Detection

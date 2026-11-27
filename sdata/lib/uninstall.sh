@@ -2,7 +2,6 @@
 # Safely removes iNiR while preserving user data and shared resources
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 INIR_CONFIG_DIR="${DOTS_CORE_CONFDIR:-${XDG_CONFIG_HOME}/inir}"
 

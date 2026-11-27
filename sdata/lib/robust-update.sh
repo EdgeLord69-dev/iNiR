@@ -1,7 +1,6 @@
 # Robust update system for iNiR
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 #####################################################################################
 # Configuration

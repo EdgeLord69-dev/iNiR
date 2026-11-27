@@ -3,7 +3,6 @@
 # Ink design: whitespace over borders, color over chrome.
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 ###############################################################################
 # Theme Configuration

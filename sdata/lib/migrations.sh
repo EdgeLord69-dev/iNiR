@@ -2,7 +2,6 @@
 # Respects user configs - never modifies without explicit consent
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 #####################################################################################
 # Migration System Configuration

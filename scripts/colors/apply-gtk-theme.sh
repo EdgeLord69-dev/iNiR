@@ -27,7 +27,6 @@ if ! flock -w 15 9; then
     exit 1
 fi
 
-# shellcheck source=scripts/lib/config-path.sh
 source "$SCRIPT_DIR/../lib/config-path.sh"
 SHELL_CONFIG_FILE="$(inir_config_file)"
 

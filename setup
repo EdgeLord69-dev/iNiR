@@ -874,7 +874,6 @@ show_status_environment() {
     # Distro
     local distro="unknown"
     if [[ -r /etc/os-release ]]; then
-        # shellcheck disable=SC1091
         local pretty
         pretty=$(. /etc/os-release && printf '%s' "${PRETTY_NAME:-${NAME:-unknown}}")
         [[ -n "$pretty" ]] && distro="$pretty"

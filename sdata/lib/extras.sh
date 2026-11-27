@@ -1,5 +1,4 @@
 # Optional extras helpers for setup/install flows
-# shellcheck shell=bash
 
 inir_get_user_wallpapers_dir() {
   local _xdg_pictures

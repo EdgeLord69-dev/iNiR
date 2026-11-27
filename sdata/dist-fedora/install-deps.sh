@@ -1,7 +1,6 @@
 # Install dependencies for iNiR on Fedora-based systems
 # This script is meant to be sourced, not run directly.
 
-# shellcheck shell=bash
 
 #####################################################################################
 # Verify we're on Fedora

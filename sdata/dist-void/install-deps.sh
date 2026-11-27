@@ -1,7 +1,6 @@
 # Install dependencies for iNiR on Void Linux
 # This script is meant to be sourced, not run directly.
 
-# shellcheck shell=bash
 
 if ! command -v xbps-install >/dev/null 2>&1; then
   printf "${STY_RED}[$0]: xbps-install not found. This script is for Void Linux only.${STY_RST}\n"

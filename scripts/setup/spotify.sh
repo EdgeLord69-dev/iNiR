@@ -31,9 +31,7 @@
 set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck disable=SC1091
 . "$SCRIPT_DIR/_lib.sh"
-# shellcheck source=scripts/lib/config-path.sh
 . "$SCRIPT_DIR/../lib/config-path.sh"
 
 # ------------------------------------------------------------------------------

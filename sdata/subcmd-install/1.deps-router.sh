@@ -1,7 +1,6 @@
 # Dependency installation router for iNiR
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 printf "${STY_CYAN}[$0]: 1. Install dependencies${STY_RST}\n"
 

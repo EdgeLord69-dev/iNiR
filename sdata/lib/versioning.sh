@@ -3,7 +3,6 @@
 # Tracks installed version, compares with remote, manages updates
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 #####################################################################################
 # Version Configuration

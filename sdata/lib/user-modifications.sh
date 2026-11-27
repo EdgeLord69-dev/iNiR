@@ -2,7 +2,6 @@
 # Detects and preserves user changes before updates overwrite them
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 USER_MODS_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/quickshell/user-mods"
 MAX_USER_MODS=5

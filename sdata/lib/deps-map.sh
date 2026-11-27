@@ -10,7 +10,6 @@
 #   - "FLATPAK:id" = Flatpak package
 #   - "-" = Not available/not needed
 #
-# shellcheck shell=bash
 
 ###############################################################################
 # Package manager commands per distro

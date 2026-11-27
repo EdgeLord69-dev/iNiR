@@ -2,7 +2,6 @@
 # Diagnoses AND FIXES common issues
 # This script is meant to be sourced.
 
-# shellcheck shell=bash
 
 doctor_passed=0
 doctor_failed=0

@@ -9,7 +9,6 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
-# shellcheck source=scripts/lib/config-path.sh
 source "$SCRIPT_DIR/../lib/config-path.sh"
 SHELL_CONFIG_DIR="$(inir_config_dir)"
 SHELL_CONFIG_FILE="$(inir_config_file)"

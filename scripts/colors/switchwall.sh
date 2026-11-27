@@ -8,7 +8,6 @@ STATE_DIR="$XDG_STATE_HOME/quickshell"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SHELL_ROOT="$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)"
 
-# shellcheck source=scripts/lib/config-path.sh
 source "$SCRIPT_DIR/../lib/config-path.sh"
 SHELL_CONFIG_FILE="$(inir_config_file)"
 TEMPLATE_DIR="$XDG_CONFIG_HOME/matugen"

@@ -8,7 +8,6 @@ XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 STATE_DIR="$XDG_STATE_HOME/quickshell"
 
-# shellcheck source=scripts/lib/config-path.sh
 source "$SCRIPT_DIR/../lib/config-path.sh"
 CONFIG_FILE="$(inir_config_file)"
 MODULE_LOG="$STATE_DIR/user/generated/theming_modules.log"
