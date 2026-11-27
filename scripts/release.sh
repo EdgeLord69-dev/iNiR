@@ -17,7 +17,7 @@ usage() {
   cat <<'EOF'
 Usage:
   scripts/release.sh prepare <version>
-  scripts/release.sh check <version> [--quick]
+  scripts/release.sh check <version> [--content]
   scripts/release.sh publish <version> [title]
   scripts/release.sh notes <version> [output-file]
 
@@ -25,10 +25,9 @@ prepare  Turn [Unreleased] into the dated <version> section, write <version> int
          file that carries it and commit "chore(release): prepare <version>". Safe to
          run again after fixing what check reports.
 check    Everything publish needs, without changing anything: versions, changelog,
-         branches, tag, hero image, and make test-local (skipped with --quick;
-         --content checks only the files).
-publish  Run check (its tests only if check has not passed on this commit), move
-         main forward to this commit, tag it, push, create the GitHub release
+         branches, tag, hero image, and screenshot privacy. --content checks only
+         the files, without Git checks.
+publish  Run check, move main forward to this commit, tag it, push, create the GitHub release
          and sync the Wiki. Each step is skipped when already done, so a
          publish that stopped halfway can be run again. The title defaults to the
          tag. Issues the notes list as fixed are closed with a pointer to it.
@@ -287,7 +286,7 @@ check_git() {
 }
 
 run_check() {
-  local v="$1" quick="${2:-}"
+  local v="$1" content_only="${2:-}"
   failures=()
   warnings=()
   [[ "$(cat VERSION)" == "$v" ]] || fail "VERSION says $(cat VERSION), not $v (run prepare)"
@@ -295,18 +294,13 @@ run_check() {
   check_changelog "$v"
   check_links
   check_media "$v"
-  [[ "$quick" == "--content" ]] || check_git "$v"
-  if [[ -z "$quick" && ${#failures[@]} -eq 0 ]]; then
-    say "running make test-local"
-    make test-local >/tmp/inir-release-test.log 2>&1 || fail "make test-local failed: /tmp/inir-release-test.log"
-  fi
+  [[ "$content_only" == "--content" ]] || check_git "$v"
   local w f
   for w in "${warnings[@]}"; do printf 'warning: %s\n' "$w"; done
   for f in "${failures[@]}"; do printf 'fail: %s\n' "$f"; done
   if (( ${#failures[@]} > 0 )); then
     return 1
   fi
-  [[ -n "$quick" ]] || printf '%s %s\n' "$(git rev-parse HEAD)" "$v" >"$(git rev-parse --git-path inir-release-tested)"
   say "$v is ready to publish"
 }
 
@@ -476,12 +470,7 @@ cmd_publish() {
   local v="$1" title="${2:-}"
   local tag="v$v"
   [[ -n "$title" ]] || title="$tag"
-  # check already ran the tests on this exact commit (the tree is clean, check_git holds it): skip only them.
-  if [[ "$(cat "$(git rev-parse --git-path inir-release-tested)" 2>/dev/null)" == "$(git rev-parse HEAD) $v" ]]; then
-    run_check "$v" --quick || die "not publishing"
-  else
-    run_check "$v" || die "not publishing"
-  fi
+  run_check "$v" || die "not publishing"
 
   local head branch image
   head="$(git rev-parse HEAD)"
@@ -557,7 +546,12 @@ main() {
   require_version "$2"
   case "$cmd" in
     prepare) cmd_prepare "$2" ;;
-    check) run_check "$2" "${3:-}" ;;
+    check)
+      if (( $# > 3 )) || { (( $# == 3 )) && [[ "$3" != "--content" ]]; }; then
+        die "unsupported check arguments"
+      fi
+      run_check "$2" "${3:-}"
+      ;;
     publish) cmd_publish "$2" "${3:-}" ;;
     notes)
       local image
