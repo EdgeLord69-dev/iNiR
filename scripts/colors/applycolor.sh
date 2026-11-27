@@ -9,7 +9,7 @@ source "$SCRIPT_DIR/lib/module-runtime.sh"
 # terminals refreshed on each shell restart. App installs are part of it, so a Spotify update
 # that drops its patch still gets themed again.
 # Runs under `set -e -o pipefail`: a missing path is skipped with `if`, never `[[ -e ]] && …`, whose
-# failure as a loop's last command ends the script before any app is themed (test-applycolor-fingerprint.py).
+# failure as a loop's last command ends the script before any app is themed.
 inputs_fingerprint() {
   local generated="$STATE_DIR/user/generated" name path
   {
