@@ -12,6 +12,9 @@ This change removes dedicated verification tooling while preserving manual relea
 ### Changed
 - Removed the dedicated test suites and their `make test-local` / `inir test-local` entry points, plus the release `check --quick` test gate; the release check retains its non-test safeguards.
 
+### Fixed
+- Release publishing no longer aborts when the notes have no fixed issue links.
+
 ## [2.33.0] - 2026-10-08
 
 **iRiS 0.3**

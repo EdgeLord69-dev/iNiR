@@ -25,8 +25,9 @@ prepare  Turn [Unreleased] into the dated <version> section, write <version> int
          file that carries it and commit "chore(release): prepare <version>". Safe to
          run again after fixing what check reports.
 check    Everything publish needs, without changing anything: versions, changelog,
-         branches, tag, hero image, and screenshot privacy. --content checks only
-         the files, without Git checks.
+         branches, tag, hero image, and screenshot privacy. --content skips
+         branch, worktree, release-tag, remote, and README hero checks, but still
+         compares the changelog with released history.
 publish  Run check, move main forward to this commit, tag it, push, create the GitHub release
          and sync the Wiki. Each step is skipped when already done, so a
          publish that stopped halfway can be run again. The title defaults to the
@@ -412,8 +413,16 @@ EOF
 
 # Issue numbers on the "Fixed ..." line of Issues / PRs.
 fixed_issues() {
-  section_body "$1" | awk '/^### Issues \/ PRs$/ { on = 1; next } on && /^### / { exit } on && /^- Fixed / { print }' \
-    | grep -o 'issues/[0-9]*' | cut -d/ -f2 | sort -un
+  section_body "$1" | awk '
+    /^### Issues \/ PRs$/ { on = 1; next }
+    on && /^### / { exit }
+    on && /^- Fixed / {
+      while (match($0, /issues\/[0-9]+/)) {
+        print substr($0, RSTART + length("issues/"), RLENGTH - length("issues/"))
+        $0 = substr($0, RSTART + RLENGTH)
+      }
+    }
+  ' | sort -un
 }
 
 gallery_html() {

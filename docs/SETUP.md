@@ -304,6 +304,22 @@ inir status
 
 `inir status` is a wrapper around `./setup status`.
 
+## Manual release validation
+
+Before publishing installer or runtime changes, start each scenario from a
+repo-managed install of the previous release in a disposable VM.
+
+- **Reinstall:** Run the candidate's `./setup install` with a working display
+  manager in place. Do not opt into switching it. Reboot and confirm the same
+  greeter starts and can log in.
+- **Update and rollback:**
+  1. Install an optional pack, such as a mascot pack. Advance the VM's tracked
+     branch to the candidate on a test remote, then run `inir update`. Confirm
+     `inir status` reports the candidate and the pack still appears and works.
+  2. Run `./setup rollback` and select the pre-update snapshot. Confirm the
+     previous runtime is restored and the session supervisor restarts iNiR
+     without leaving a second shell running.
+
 ## What Gets Installed
 
 ### Core Files
