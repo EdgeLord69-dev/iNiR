@@ -13,7 +13,7 @@ python3 translations/tools/l10n.py audit-all
 python3 translations/tools/l10n.py audit es_419
 ```
 
-The repository gate requires one writing guide for every supported locale, source coverage in canonical `en_US.json`, locale key parity, placeholders/markup, protected product names and locale-specific semantic terminology guards. Suspected untranslated values are reported for review but are not automatically errors because product names and established technical terms can legitimately remain unchanged. Commands, paths, codecs and common acronyms are excluded through `glossary.json`.
+The audit commands check for one writing guide per supported locale, source coverage in canonical `en_US.json`, locale key parity, placeholders/markup, protected product names and locale-specific terminology. Suspected untranslated values are reported for review but are not automatically errors because product names and established technical terms can legitimately remain unchanged. Commands, paths, codecs and common acronyms are excluded through `glossary.json`.
 
 ## Prepare a review batch
 
@@ -36,7 +36,6 @@ Translate only `translated`. Keep the other fields unchanged.
 
 ```bash
 python3 translations/tools/l10n.py apply /tmp/es_419-001.json
-bash scripts/verify-docs.sh
 ```
 
 The apply command refuses unknown or duplicate keys, changed English source text, modified placeholders or markup such as `%1`, `{0}`, `<i>` and `</i>`, and translations that rename protected product terms.
