@@ -112,7 +112,7 @@ Niri-only session navigator. On ii it presents nearby workspaces and readable wi
 | `orbital` | Open Orbit in the Orbital workspace view for this session |
 | `next` | Switch Niri to the next workspace while Orbit stays open |
 | `previous` | Switch Niri to the previous workspace while Orbit stays open |
-| `status` | Print the effective Orbit runtime state used by diagnostics and visual audits |
+| `status` | Print the effective Orbit runtime state used by diagnostics |
 | `toggleView` | Switch the open Orbit session between Stage and Orbital |
 
 ---

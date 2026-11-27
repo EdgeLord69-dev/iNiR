@@ -2,7 +2,7 @@
 # Auto-generated from QML IpcHandler declarations + docs/IPC.md metadata.
 # Do not edit manually.
 # Regenerate: python3 scripts/lib/generate-ipc-registry.py
-# IPC.md hash: aa0cd9a9782a3c34
+# IPC.md hash: 199bad32510181ef
 # Targets: 73
 
 declare -gA IPC_TARGET_DESC=(
@@ -489,7 +489,7 @@ declare -gA IPC_FUNCTION_DESC=(
   ["orbit:orbital"]="Open Orbit in the Orbital workspace view for this session"
   ["orbit:next"]="Switch Niri to the next workspace while Orbit stays open"
   ["orbit:previous"]="Switch Niri to the previous workspace while Orbit stays open"
-  ["orbit:status"]="Print the effective Orbit runtime state used by diagnostics and visual audits"
+  ["orbit:status"]="Print the effective Orbit runtime state used by diagnostics"
   ["orbit:toggleView"]="Switch the open Orbit session between Stage and Orbital"
   ["osd:volume"]="Show the volume level"
   ["osd:brightness"]="Show the brightness level"

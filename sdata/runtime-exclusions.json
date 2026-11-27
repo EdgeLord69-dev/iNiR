@@ -89,7 +89,6 @@
     "scripts/release.sh",
     "scripts/wiki-sync.sh",
     "scripts/test-detect-sensors.py",
-    "scripts/orbit-visual-audit.sh",
     "scripts/lib/generate-ipc-registry.py",
     "scripts/quickshell-webengine",
     "scripts/setup/_template.sh.example",

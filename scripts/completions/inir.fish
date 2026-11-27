@@ -461,7 +461,7 @@ complete -c inir -n '__inir_at_function orbit' -a stage -d 'Open Orbit in the cl
 complete -c inir -n '__inir_at_function orbit' -a orbital -d 'Open Orbit in the Orbital workspace view for this session'
 complete -c inir -n '__inir_at_function orbit' -a next -d 'Switch Niri to the next workspace while Orbit stays open'
 complete -c inir -n '__inir_at_function orbit' -a previous -d 'Switch Niri to the previous workspace while Orbit stays open'
-complete -c inir -n '__inir_at_function orbit' -a status -d 'Print the effective Orbit runtime state used by diagnostics…'
+complete -c inir -n '__inir_at_function orbit' -a status -d 'Print the effective Orbit runtime state used by diagnostics'
 complete -c inir -n '__inir_at_function orbit' -a toggleView -d 'Switch the open Orbit session between Stage and Orbital'
 complete -c inir -n '__inir_at_target' -a osd -d 'On-screen feedback for any family'
 complete -c inir -n '__inir_at_function osd' -a volume -d 'Show the volume level'
