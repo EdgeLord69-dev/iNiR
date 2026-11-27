@@ -174,7 +174,6 @@ inir/
 - `services/CompositorService.qml`: Compositor detection (Niri vs Hyprland)
 
 **Tests:**
-- `scripts/test-local-distribution.sh`: Local distribution test script
 - Co-located test files are not present in this repo
 
 ## Naming Conventions
