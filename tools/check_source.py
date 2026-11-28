@@ -12,6 +12,7 @@ from pathlib import Path
 
 from check_common import ROOT, CheckError, run_tool, shell_interpreter
 from check_fish import run_fish_check
+from check_go import run_go_check
 from check_qml import run_qml_check
 from check_shell import run_shell_check
 
@@ -203,6 +204,8 @@ def main() -> int:
             run_shell_check(args.target, selected["shell"])
         if selected["fish"] and args.target != "typecheck":
             run_fish_check(args.target, selected["fish"])
+        if selected["go"]:
+            run_go_check(args.target, selected["go"])
     except (CheckError, OSError) as error:
         print(f"check failed: {error}", file=sys.stderr)
         return 1
