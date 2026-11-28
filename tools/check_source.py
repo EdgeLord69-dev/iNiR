@@ -10,8 +10,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-from check_common import ROOT, CheckError, run_tool
+from check_common import ROOT, CheckError, run_tool, shell_interpreter
 from check_qml import run_qml_check
+from check_shell import run_shell_check
 
 LANGUAGES = {
     ".py": "python",
@@ -19,6 +20,8 @@ LANGUAGES = {
     ".qml": "qml",
     ".sh": "shell",
     ".bash": "shell",
+    ".dash": "shell",
+    ".ash": "shell",
     ".fish": "fish",
     ".go": "go",
 }
@@ -28,15 +31,9 @@ EXTENSIONLESS_SHELL = {"setup", "scripts/inir"}
 def language(path: Path) -> str | None:
     kind = LANGUAGES.get(path.suffix)
     if kind == "shell" or not path.suffix:
-        with (ROOT / path).open("rb") as source:
-            line = source.readline(4096)
-        if line.startswith(b"#!"):
-            for interpreter in line[2:].split():
-                name = interpreter.rsplit(b"/", 1)[-1]
-                if name == b"fish":
-                    return "fish"
-                if name in (b"bash", b"sh", b"dash", b"ash"):
-                    return "shell"
+        command = shell_interpreter(ROOT / path)
+        if command:
+            return "fish" if command == "fish" else "shell"
     return kind or ("shell" if path.as_posix() in EXTENSIONLESS_SHELL else None)
 
 
@@ -201,6 +198,8 @@ def main() -> int:
             run_python_check(args.target, selected["python"])
         if selected["qml"]:
             run_qml_check(args.target, selected["qml"])
+        if selected["shell"] and args.target != "typecheck":
+            run_shell_check(args.target, selected["shell"])
     except (CheckError, OSError) as error:
         print(f"check failed: {error}", file=sys.stderr)
         return 1
