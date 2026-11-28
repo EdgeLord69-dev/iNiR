@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 from check_common import ROOT, CheckError, run_tool
+from check_qml import run_qml_check
 
 LANGUAGES = {
     ".py": "python",
@@ -198,6 +199,8 @@ def main() -> int:
     try:
         if selected["python"]:
             run_python_check(args.target, selected["python"])
+        if selected["qml"] and args.target in ("lint", "typecheck"):
+            run_qml_check(args.target, selected["qml"])
     except (CheckError, OSError) as error:
         print(f"check failed: {error}", file=sys.stderr)
         return 1
