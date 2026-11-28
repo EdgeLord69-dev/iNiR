@@ -48,20 +48,20 @@ def _package(directory: Path) -> dict | None:
     if dependency_errors:
         details = "\n".join(error["Err"] for error in dependency_errors)
         raise CheckError(f"Go dependencies unavailable in {relative}:\n{details}")
-    if package_error:
-        if package.get("IgnoredGoFiles") and message.startswith(
-            "build constraints exclude all Go files"
-        ):
-            print(f"{relative}: no Go files match the active build constraints")
-            return None
-        position = package_error.get("Pos", "")
-        if _SOURCE_DIAGNOSTIC.match(f"{position}:") or message.startswith(
-            "found packages "
-        ):
-            print(f"{relative}: {position + ': ' if position else ''}{message}")
-            return None
-        raise CheckError(f"go list could not load {relative}: {message}")
-    return package
+    if not package_error:
+        return package
+    if package.get("IgnoredGoFiles") and message.startswith(
+        "build constraints exclude all Go files"
+    ):
+        print(f"{relative}: no Go files match the active build constraints")
+        return None
+    position = package_error.get("Pos", "")
+    if _SOURCE_DIAGNOSTIC.match(f"{position}:") or message.startswith(
+        "found packages "
+    ):
+        print(f"{relative}: {position + ': ' if position else ''}{message}")
+        return None
+    raise CheckError(f"go list could not load {relative}: {message}")
 
 
 def _go_vet(directory: Path) -> None:

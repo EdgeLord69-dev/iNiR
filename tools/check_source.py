@@ -67,7 +67,7 @@ def checked_path(raw: str, submodules: set[Path]) -> Path:
     return path
 
 
-def source_selection(requested: list[str]) -> dict[str, list[Path]]:
+def _indexed_paths() -> tuple[set[Path], set[Path]]:
     tracked: set[Path] = set()
     submodules: set[Path] = set()
     for record in git_records("ls-files", "--stage", "-z"):
@@ -78,38 +78,51 @@ def source_selection(requested: list[str]) -> dict[str, list[Path]]:
             submodules.add(path)
         elif mode != b"120000":
             tracked.add(path)
+    return tracked, submodules
+
+
+def _requested_paths(
+    requested: list[str], tracked: set[Path], submodules: set[Path]
+) -> set[Path]:
     if not requested:
-        paths = tracked
-    else:
-        paths = set()
-        directories = set()
-        for raw in requested:
-            if not raw:
-                raise CheckError("empty path")
-            candidate = checked_path(raw, submodules)
-            full = ROOT / candidate
-            if full.is_dir():
-                directories.add(candidate)
-            elif full.is_file() and language(candidate):
-                paths.add(candidate)
-            else:
-                raise CheckError(f"unsupported source path: {raw!r}")
-        if directories:
-            paths.update(
-                path for path in tracked if directories.intersection(path.parents)
+        return tracked
+
+    paths = set()
+    directories = set()
+    for raw in requested:
+        if not raw:
+            raise CheckError("empty path")
+        candidate = checked_path(raw, submodules)
+        full = ROOT / candidate
+        if full.is_dir():
+            directories.add(candidate)
+        elif full.is_file() and language(candidate):
+            paths.add(candidate)
+        else:
+            raise CheckError(f"unsupported source path: {raw!r}")
+
+    if directories:
+        paths.update(path for path in tracked if directories.intersection(path.parents))
+        paths.update(
+            Path(os.fsdecode(item))
+            for item in git_records(
+                "ls-files",
+                "--others",
+                "--exclude-standard",
+                "-z",
+                "--",
+                *sorted(map(str, directories)),
             )
-            paths.update(
-                Path(os.fsdecode(item))
-                for item in git_records(
-                    "ls-files",
-                    "--others",
-                    "--exclude-standard",
-                    "-z",
-                    "--",
-                    *sorted(map(str, directories)),
-                )
-            )
-    selected = {key: [] for key in ("python", "qml", "shell", "fish", "go")}
+        )
+    return paths
+
+
+def source_selection(requested: list[str]) -> dict[str, list[Path]]:
+    tracked, submodules = _indexed_paths()
+    paths = _requested_paths(requested, tracked, submodules)
+    selected: dict[str, list[Path]] = {
+        key: [] for key in ("python", "qml", "shell", "fish", "go")
+    }
     for path in sorted(paths):
         full = ROOT / path
         if (
@@ -174,8 +187,8 @@ def python_typecheck(files: list[str]) -> None:
         raise CheckError(f"mypy failed with status {result.returncode}")
     try:
         missing_imports = False
-        syntax_errors = 0
-        other_errors = 0
+        has_syntax_errors = False
+        has_other_errors = False
         for line in result.stdout.strip().splitlines():
             item = json.loads(line)
             code = item["code"]
@@ -186,10 +199,8 @@ def python_typecheck(files: list[str]) -> None:
             if item.get("hint"):
                 print(item["hint"])
             if item["severity"] == "error":
-                if code == "syntax":
-                    syntax_errors += 1
-                else:
-                    other_errors += 1
+                has_syntax_errors |= code == "syntax"
+                has_other_errors |= code != "syntax"
             missing_imports |= code in ("import-not-found", "import-untyped")
     except (ValueError, TypeError, KeyError) as error:
         raise CheckError("invalid mypy diagnostics") from error
@@ -197,9 +208,9 @@ def python_typecheck(files: list[str]) -> None:
         raise CheckError(
             "mypy is missing imports or type stubs; install the analysis dependencies"
         )
-    if result.returncode == 2 and (not syntax_errors or other_errors):
+    if result.returncode == 2 and (not has_syntax_errors or has_other_errors):
         raise CheckError("mypy could not complete checking")
-    if result.returncode == 1 and not (syntax_errors or other_errors):
+    if result.returncode == 1 and not (has_syntax_errors or has_other_errors):
         raise CheckError("mypy could not complete checking")
 
 
