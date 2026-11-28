@@ -17,6 +17,7 @@ This change removes dedicated verification tooling while preserving manual relea
 
 ### Fixed
 - Release publishing no longer aborts when the notes have no fixed issue links.
+- Static checks reject empty rewrite selections, report incomplete QML analysis, support older Qt fix output, and type-check the checker modules and active Go test sources.
 
 ## [2.33.0] - 2026-10-08
 

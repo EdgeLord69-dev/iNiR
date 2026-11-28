@@ -9,7 +9,7 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 
-from check_common import ROOT, CheckError, format_source, run_tool
+from .check_common import ROOT, CheckError, format_source, run_tool
 
 
 @contextmanager
@@ -47,7 +47,15 @@ def _is_missing_import(warning: dict) -> bool:
     if warning["id"] != "import":
         return False
     message = warning["message"]
-    if message.startswith(("Failed to import ", "Cannot load type description")):
+    if message.startswith(
+        (
+            "Failed to import ",
+            "Cannot load type description",
+            "Could not open qmldir file:",
+            "QML types file ",
+            "File or directory you are trying to import does not exist:",
+        )
+    ):
         return True
     message = message.lower()
     return "module" in message and "not installed" in message
@@ -55,41 +63,47 @@ def _is_missing_import(warning: dict) -> bool:
 
 def _diagnostics(
     returncode: int, output: bytes, paths: list[Path]
-) -> tuple[list[dict], bool, bool]:
+) -> tuple[list[dict], bool, int]:
     if returncode not in (0, 255) or not output:
         raise CheckError(f"qmllint failed with status {returncode}")
     try:
-        entries = json.loads(output)["files"]
+        report = json.loads(output)
+        entries = report["files"]
         if len(entries) != len(paths) or {
             Path(item["filename"]) for item in entries
         } != set(paths):
             raise ValueError("qmllint omitted selected files")
         for entry in entries:
-            Path(entry["filename"]).relative_to(ROOT)
+            path = Path(entry["filename"]).relative_to(ROOT)
             warnings = entry["warnings"]
-            if not entry["success"] and not warnings:
-                raise ValueError("qmllint could not read a selected file")
+            if not entry["success"] and (
+                not warnings
+                or any(
+                    warning["message"].startswith("Failed to open file ")
+                    for warning in warnings
+                )
+            ):
+                raise CheckError(f"qmllint could not read {path}")
         return (
             entries,
-            any(item["warnings"] for item in entries),
             any(
                 _is_missing_import(warning)
                 for entry in entries
                 for warning in entry["warnings"]
             ),
+            report["revision"],
         )
     except (ValueError, TypeError, KeyError, AttributeError) as error:
         raise CheckError(f"invalid qmllint JSON diagnostics: {error}") from error
 
 
 def _report_lint_result(result: subprocess.CompletedProcess, paths: list[Path]) -> None:
-    _report_diagnostics(
-        result.returncode, *_diagnostics(result.returncode, result.stdout, paths)
-    )
+    entries, missing_import, _ = _diagnostics(result.returncode, result.stdout, paths)
+    _report_diagnostics(result.returncode, entries, missing_import)
 
 
 def _report_diagnostics(
-    returncode: int, entries: list[dict], has_diagnostics: bool, missing_import: bool
+    returncode: int, entries: list[dict], missing_import: bool
 ) -> None:
     for entry in entries:
         path = Path(entry["filename"]).relative_to(ROOT)
@@ -107,8 +121,30 @@ def _report_diagnostics(
             "qmllint could not resolve required QML imports or metadata; "
             "install Qt/Quickshell QML modules and set QML_IMPORT_PATH"
         )
-    if returncode and not has_diagnostics:
+    if returncode and not any(entry["warnings"] for entry in entries):
         raise CheckError(f"qmllint failed with status {returncode}")
+
+
+def _fix_targets(entry: dict, revision: int, path: Path) -> set[Path]:
+    if revision not in (3, 4, 6):
+        raise CheckError(f"qmllint fix JSON revision {revision} is unsupported")
+    targets: set[Path] = set()
+    for warning in entry["warnings"]:
+        for suggestion in warning.get("suggestions", []):
+            applicable = (
+                not suggestion["isHint"]
+                if revision == 3
+                else suggestion["isAutoApplicable"]
+            )
+            if not applicable:
+                continue
+            if revision == 6:
+                targets.update(
+                    ROOT / edit["filename"] for edit in suggestion["documentEdits"]
+                )
+            else:
+                targets.add(ROOT / suggestion.get("fileName", path))
+    return targets
 
 
 def _fix_qml(paths: list[Path], import_root: Path) -> None:
@@ -134,25 +170,19 @@ def _fix_qml(paths: list[Path], import_root: Path) -> None:
             raise CheckError(
                 f"qmllint did not produce diagnostics for {path.relative_to(ROOT)}"
             )
-        entries, has_diagnostics, missing_import = _diagnostics(
+        entries, missing_import, revision = _diagnostics(
             result.returncode, diagnostics.read_bytes(), [path]
         )
         if missing_import:
-            _report_diagnostics(result.returncode, entries, has_diagnostics, True)
-        suggestions = [
-            suggestion
-            for warning in entries[0]["warnings"]
-            for suggestion in warning.get("suggestions", [])
-            if suggestion.get("isAutoApplicable")
-        ]
-        if not suggestions:
-            _report_diagnostics(result.returncode, entries, has_diagnostics, False)
+            _report_diagnostics(result.returncode, entries, True)
+        try:
+            targets = _fix_targets(entries[0], revision, path)
+        except (KeyError, TypeError) as error:
+            raise CheckError("invalid qmllint fix suggestions") from error
+        if not targets:
+            _report_diagnostics(result.returncode, entries, False)
             continue
-        if any(
-            Path(edit["filename"]) != path
-            for suggestion in suggestions
-            for edit in suggestion.get("documentEdits", [])
-        ):
+        if targets != {path}:
             raise CheckError(
                 f"qmllint fix for {path.relative_to(ROOT)} targets another file"
             )

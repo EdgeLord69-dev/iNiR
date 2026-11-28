@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from check_common import ROOT, CheckError, format_source, run_tool
+from .check_common import ROOT, CheckError, format_source, run_tool
 
 
 def run_fish_check(target: str, paths: list[Path]) -> None:

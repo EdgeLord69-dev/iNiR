@@ -12,11 +12,13 @@ SYSTEMD_USER_DIR ?= $(PREFIX)/lib/systemd/user
 all: build
 
 # Keep dollar signs literal when Make exports the contributor's selection.
+ifneq ($(origin PATHS),undefined)
 override PATHS := $(value PATHS)
 export PATHS
+endif
 
 check lint lint-fix format-check format typecheck:
-	@python3 -B tools/check_source.py $@
+	@python3 -B -m tools.check_source $@
 
 build:
 	@chmod +x scripts/inir

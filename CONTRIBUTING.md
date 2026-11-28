@@ -61,8 +61,9 @@ Without `PATHS`, all six commands select the repository's tracked first-party
 source. An explicit directory adds its non-ignored untracked files recursively;
 an explicit file can be new. Overlaps are deduplicated. Directory scans skip
 symlinks and submodules; explicitly selecting them or unsupported files is an
-error. **Omitting `PATHS` from `make format` or `make lint-fix` can rewrite files
-across the repository.** Scope rewrites to the files you mean to change.
+error. An explicitly empty `PATHS` is rejected by rewrite commands.
+**Omitting `PATHS` from `make format` or `make lint-fix` can rewrite files across
+the repository.** Scope rewrites to the files you mean to change.
 
 ```sh
 make check
@@ -74,7 +75,8 @@ make format PATHS='"path with spaces/example.py"'
 Use outer shell quotes around the `PATHS` assignment and inner quotes around
 individual paths that contain spaces. Go lint and type checks expand to
 containing packages under the active build constraints; `gofmt` stays
-file-scoped. Go compilation does not execute tests or retain binaries.
+file-scoped. Go type checking compiles active test sources without executing
+tests or retaining binaries.
 Python fixes are limited to Ruff's safe fixes. Fish and Go have no `lint-fix`.
 Undeclared `.sh` files sourced by Bash default to Bash; explicit POSIX shebangs
 and `.dash`/`.ash` extensions retain their respective shell analysis.
@@ -98,7 +100,8 @@ Quickshell or Qt modules are outside Qt's default import directory, set
 colons. The runner adds a temporary `qs` import pointing at the checkout;
 do not create that link in the repository. Missing imports or metadata make
 analysis fail. Resolved QML type diagnostics cannot verify dynamic `var` values
-or runtime bindings.
+or runtime bindings. QML `lint-fix` supports `qmllint` fix JSON revisions 3, 4,
+and 6 (used by Qt 6.9–6.12).
 
 The runner requires GNU Make, Git and Python 3.10 or newer. Native tool
 versions exercised: Ruff 0.17.6, mypy 2.4.0, Qt 6.12.1, ShellCheck 0.11,

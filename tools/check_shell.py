@@ -6,7 +6,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from check_common import ROOT, CheckError, format_source, run_tool, shell_interpreter
+from .check_common import ROOT, CheckError, format_source, run_tool, shell_interpreter
 
 
 def dialect(path: Path) -> str:

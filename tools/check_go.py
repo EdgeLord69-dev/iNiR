@@ -9,7 +9,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from check_common import ROOT, CheckError, format_source, run_tool
+from .check_common import ROOT, CheckError, format_source, run_tool
 
 _SOURCE_DIAGNOSTIC = re.compile(r"^(?:vet: )?.+\.go:\d+(?::\d+)?:")
 
@@ -78,14 +78,13 @@ def _go_vet(directory: Path) -> None:
         )
 
 
-def _go_build(directory: Path) -> None:
-    # The temporary output prevents go build from leaving an executable in the
-    # source tree; the temporary directory is removed on every exit path.
+def _go_compile(directory: Path, *, has_tests: bool) -> None:
+    subcommand = ["test", "-c", "-vet=off"] if has_tests else ["build"]
     with tempfile.TemporaryDirectory(prefix="inir-go-check-") as temporary:
         result = run_tool(
             [
                 "go",
-                "build",
+                *subcommand,
                 "-json",
                 "-mod=readonly",
                 "-buildvcs=false",
@@ -109,7 +108,7 @@ def _go_build(directory: Path) -> None:
                 failures.add(item["ImportPath"])
         except (ValueError, KeyError, TypeError) as error:
             raise CheckError(
-                f"go build returned invalid output in {directory.relative_to(ROOT)}"
+                f"go {subcommand[0]} returned invalid output in {directory.relative_to(ROOT)}"
             ) from error
     if result.returncode and not (
         result.returncode == 1
@@ -119,7 +118,8 @@ def _go_build(directory: Path) -> None:
         )
     ):
         raise CheckError(
-            f"go build failed in {directory.relative_to(ROOT)} (status {result.returncode})"
+            f"go {subcommand[0]} failed in {directory.relative_to(ROOT)} "
+            f"(status {result.returncode})"
         )
 
 
@@ -136,10 +136,12 @@ def run_go_check(target: str, paths: list[Path]) -> None:
         package = _package(directory)
         if package is None:
             continue
-        production = package.get("GoFiles") or package.get("CgoFiles")
-        if target == "lint" and (
-            production or package.get("TestGoFiles") or package.get("XTestGoFiles")
-        ):
+        has_tests = bool(package.get("TestGoFiles") or package.get("XTestGoFiles"))
+        has_production = bool(package.get("GoFiles") or package.get("CgoFiles"))
+        if target == "lint" and (has_production or has_tests):
             _go_vet(directory)
-        elif target == "typecheck" and production:
-            _go_build(directory)
+        elif target == "typecheck":
+            if has_production:
+                _go_compile(directory, has_tests=False)
+            if has_tests:
+                _go_compile(directory, has_tests=True)

@@ -10,11 +10,11 @@ import subprocess
 import sys
 from pathlib import Path
 
-from check_common import ROOT, CheckError, run_tool, shell_interpreter
-from check_fish import run_fish_check
-from check_go import run_go_check
-from check_qml import run_qml_check
-from check_shell import run_shell_check
+from .check_common import ROOT, CheckError, run_tool, shell_interpreter
+from .check_fish import run_fish_check
+from .check_go import run_go_check
+from .check_qml import run_qml_check
+from .check_shell import run_shell_check
 
 LANGUAGES = {
     ".py": "python",
@@ -235,9 +235,13 @@ def main() -> int:
     )
     args = parser.parse_args()
     try:
-        requested = shlex.split(os.environ.get("PATHS", ""))
+        raw_paths = os.environ.get("PATHS")
+        requested = shlex.split(raw_paths or "")
+        rewriting = args.target in ("lint-fix", "format")
+        if rewriting and raw_paths is not None and not requested:
+            raise CheckError("PATHS is empty; omit it to rewrite all tracked source")
         selected = source_selection(requested)
-        if args.target in ("lint-fix", "format"):
+        if rewriting:
             for paths in selected.values():
                 for path in paths:
                     if path.stat().st_nlink > 1:
