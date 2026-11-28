@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This change removes dedicated verification tooling while preserving manual release safeguards.
 
+### Added
+- Added scoped `make check` source analysis, with independent lint, format-check and typecheck steps.
+
 ### Changed
 - Removed the dedicated test suites and their `make test-local` / `inir test-local` entry points, plus the release `check --quick` test gate; the release check retains its non-test safeguards.
 

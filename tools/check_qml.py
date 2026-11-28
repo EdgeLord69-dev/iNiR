@@ -43,24 +43,37 @@ def _lint(paths: list[Path], import_root: Path) -> subprocess.CompletedProcess:
     )
 
 
-def _diagnostics(result: subprocess.CompletedProcess, paths: list[Path]) -> tuple[list[dict], bool, bool]:
+def _diagnostics(
+    result: subprocess.CompletedProcess, paths: list[Path]
+) -> tuple[list[dict], bool, bool]:
     if result.returncode not in (0, 255) or not result.stdout:
         raise CheckError(f"qmllint failed with status {result.returncode}")
     try:
         entries = json.loads(result.stdout)["files"]
-        if len(entries) != len(paths) or {Path(item["filename"]) for item in entries} != set(paths):
+        if len(entries) != len(paths) or {
+            Path(item["filename"]) for item in entries
+        } != set(paths):
             raise ValueError("qmllint omitted selected files")
         for entry in entries:
             Path(entry["filename"]).relative_to(ROOT)
             warnings = entry["warnings"]
             if not entry["success"] and not warnings:
                 raise ValueError("qmllint could not read a selected file")
-        return entries, any(item["warnings"] for item in entries), any(
-            warning["id"] == "import" and (
-                warning["message"].startswith(("Failed to import ", "Cannot load type description"))
-                or "module" in warning["message"].lower() and "not installed" in warning["message"].lower()
-            )
-            for item in entries for warning in item["warnings"]
+        return (
+            entries,
+            any(item["warnings"] for item in entries),
+            any(
+                warning["id"] == "import"
+                and (
+                    warning["message"].startswith(
+                        ("Failed to import ", "Cannot load type description")
+                    )
+                    or "module" in warning["message"].lower()
+                    and "not installed" in warning["message"].lower()
+                )
+                for item in entries
+                for warning in item["warnings"]
+            ),
         )
     except (ValueError, TypeError, KeyError, AttributeError) as error:
         raise CheckError(f"invalid qmllint JSON diagnostics: {error}") from error
@@ -71,8 +84,14 @@ def _report_lint_result(result: subprocess.CompletedProcess, paths: list[Path]) 
     for entry in entries:
         path = Path(entry["filename"]).relative_to(ROOT)
         for warning in entry["warnings"]:
-            position = f":{warning['line']}:{warning.get('column', 0)}" if "line" in warning else ""
-            print(f"{path}{position}: {warning['type']} [{warning['id']}]: {warning['message']}")
+            position = (
+                f":{warning['line']}:{warning.get('column', 0)}"
+                if "line" in warning
+                else ""
+            )
+            print(
+                f"{path}{position}: {warning['type']} [{warning['id']}]: {warning['message']}"
+            )
     if missing_import:
         raise CheckError(
             "qmllint could not resolve required QML imports or metadata; "
@@ -88,12 +107,23 @@ def _fix_qml(paths: list[Path], import_root: Path) -> None:
     for path in paths:
         diagnostics.unlink(missing_ok=True)
         result = run_tool(
-            ["qmllint", "-E", "-I", str(import_root), "--fix", "--dry-run",
-             "--json", str(diagnostics), str(path)],
+            [
+                "qmllint",
+                "-E",
+                "-I",
+                str(import_root),
+                "--fix",
+                "--dry-run",
+                "--json",
+                str(diagnostics),
+                str(path),
+            ],
             stdout=subprocess.PIPE,
         )
         if not diagnostics.is_file():
-            raise CheckError(f"qmllint did not produce diagnostics for {path.relative_to(ROOT)}")
+            raise CheckError(
+                f"qmllint did not produce diagnostics for {path.relative_to(ROOT)}"
+            )
         fixed = result.stdout
         result.stdout = diagnostics.read_bytes()
         entries, _, missing_import = _diagnostics(result, [path])
@@ -107,11 +137,16 @@ def _fix_qml(paths: list[Path], import_root: Path) -> None:
         ]
         if any(
             Path(edit["filename"]) != path
-            for suggestion in suggestions for edit in suggestion.get("documentEdits", [])
+            for suggestion in suggestions
+            for edit in suggestion.get("documentEdits", [])
         ):
-            raise CheckError(f"qmllint fix for {path.relative_to(ROOT)} targets another file")
+            raise CheckError(
+                f"qmllint fix for {path.relative_to(ROOT)} targets another file"
+            )
         if suggestions and (not fixed or result.returncode):
-            raise CheckError(f"qmllint could not apply an available fix to {path.relative_to(ROOT)}")
+            raise CheckError(
+                f"qmllint could not apply an available fix to {path.relative_to(ROOT)}"
+            )
         if fixed and suggestions:
             path.write_bytes(fixed)
             changed.append(path)

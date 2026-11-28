@@ -7,7 +7,7 @@ SHELL_INSTALL_DIR = $(SHAREDIR)/quickshell/inir
 DOC_DIR = $(SHAREDIR)/doc/inir-shell
 SYSTEMD_USER_DIR ?= $(PREFIX)/lib/systemd/user
 
-.PHONY: all build install install-bin install-shell install-systemd install-icon install-desktop install-docs uninstall uninstall-bin uninstall-shell uninstall-systemd uninstall-icon uninstall-desktop uninstall-docs lint lint-fix format-check format typecheck
+.PHONY: all build install install-bin install-shell install-systemd install-icon install-desktop install-docs uninstall uninstall-bin uninstall-shell uninstall-systemd uninstall-icon uninstall-desktop uninstall-docs check lint lint-fix format-check format typecheck
 
 all: build
 
@@ -15,7 +15,7 @@ all: build
 override PATHS := $(value PATHS)
 export PATHS
 
-lint lint-fix format-check format typecheck:
+check lint lint-fix format-check format typecheck:
 	@python3 -B tools/check_source.py $@
 
 build:

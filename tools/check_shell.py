@@ -11,18 +11,33 @@ from check_common import ROOT, CheckError, format_source, run_tool, shell_interp
 
 def dialect(path: Path) -> str:
     command = shell_interpreter(path)
-    return "bash" if command == "bash" or (command is None and path.suffix == ".bash") else "sh"
+    if command is not None:
+        return "bash" if command == "bash" else "sh"
+    # Installer fragments without a shebang are sourced by Bash.
+    return "sh" if path.suffix in (".ash", ".dash") else "bash"
 
 
 def _shellcheck(path: Path, shell: str, output: str, cwd: Path = ROOT) -> bytes:
+    relative = path.relative_to(cwd)
     result = run_tool(
-        ["shellcheck", "--norc", "--color=never", "--shell", shell, "--format", output,
-         "--", str(path.relative_to(cwd))],
+        [
+            "shellcheck",
+            "--norc",
+            "--color=never",
+            "--shell",
+            shell,
+            "--format",
+            output,
+            "--",
+            "./-" if relative == Path("-") else str(relative),
+        ],
         cwd=cwd,
         stdout=subprocess.PIPE,
     )
     if result.returncode not in (0, 1):
-        raise CheckError(f"shellcheck failed for {path.name} (status {result.returncode})")
+        raise CheckError(
+            f"shellcheck failed for {path.name} (status {result.returncode})"
+        )
     return result.stdout
 
 
@@ -36,17 +51,30 @@ def _fix(path: Path, shell: str) -> None:
         if not patch:
             return
         if not patch.startswith(b"--- a/source.sh\n+++ b/source.sh\n"):
-            raise CheckError(f"shellcheck produced an unexpected patch for {path.relative_to(ROOT)}")
+            raise CheckError(
+                f"shellcheck produced an unexpected patch for {path.relative_to(ROOT)}"
+            )
         result = run_tool(
-            ["git", "apply", "--no-index", "--include=source.sh", "--whitespace=nowarn", "-"],
+            [
+                "git",
+                "apply",
+                "--no-index",
+                "--include=source.sh",
+                "--whitespace=nowarn",
+                "-",
+            ],
             cwd=root,
             input=patch,
         )
         if result.returncode or not copy.is_file():
-            raise CheckError(f"shellcheck patch could not be applied to {path.relative_to(ROOT)}")
+            raise CheckError(
+                f"shellcheck patch could not be applied to {path.relative_to(ROOT)}"
+            )
         fixed = copy.read_bytes()
         if fixed == original:
-            raise CheckError(f"shellcheck patch made no change to {path.relative_to(ROOT)}")
+            raise CheckError(
+                f"shellcheck patch made no change to {path.relative_to(ROOT)}"
+            )
         path.write_bytes(fixed)
 
 

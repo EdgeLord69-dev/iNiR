@@ -58,7 +58,11 @@ def checked_path(raw: str, submodules: set[Path]) -> Path:
         raise CheckError(f"missing, invalid or external path: {raw!r}") from error
     if resolved != Path(os.path.abspath(full)):
         raise CheckError(f"symlinks are not supported: {raw!r}")
-    if path.parts[:1] == (".git",) or path in submodules or submodules.intersection(path.parents):
+    if (
+        path.parts[:1] == (".git",)
+        or path in submodules
+        or submodules.intersection(path.parents)
+    ):
         raise CheckError(f"path is not in first-party source: {raw!r}")
     return path
 
@@ -91,11 +95,17 @@ def source_selection(requested: list[str]) -> dict[str, list[Path]]:
             else:
                 raise CheckError(f"unsupported source path: {raw!r}")
         if directories:
-            paths.update(path for path in tracked if directories.intersection(path.parents))
+            paths.update(
+                path for path in tracked if directories.intersection(path.parents)
+            )
             paths.update(
                 Path(os.fsdecode(item))
                 for item in git_records(
-                    "ls-files", "--others", "--exclude-standard", "-z", "--",
+                    "ls-files",
+                    "--others",
+                    "--exclude-standard",
+                    "-z",
+                    "--",
                     *sorted(map(str, directories)),
                 )
             )
@@ -116,8 +126,16 @@ def source_selection(requested: list[str]) -> dict[str, list[Path]]:
 def python_lint(target: str, files: list[str]) -> None:
     fix = "--fix" if target == "lint-fix" else "--no-fix"
     result = run_tool(
-        ["ruff", "check", "--no-cache", "--output-format=json",
-         fix, "--no-unsafe-fixes", "--", *files],
+        [
+            "ruff",
+            "check",
+            "--no-cache",
+            "--output-format=json",
+            fix,
+            "--no-unsafe-fixes",
+            "--",
+            *files,
+        ],
         stdout=subprocess.PIPE,
     )
     if result.returncode not in (0, 1):
@@ -129,7 +147,9 @@ def python_lint(target: str, files: list[str]) -> None:
             location = item["location"]
             path = Path(item["filename"]).relative_to(ROOT)
             code = item["code"]
-            print(f"{path}:{location['row']}:{location['column']}: {code}: {item['message']}")
+            print(
+                f"{path}:{location['row']}:{location['column']}: {code}: {item['message']}"
+            )
             failed |= code in ("E902", "io-error")
     except (ValueError, TypeError, KeyError) as error:
         raise CheckError("invalid Ruff diagnostics") from error
@@ -139,28 +159,47 @@ def python_lint(target: str, files: list[str]) -> None:
 
 def python_typecheck(files: list[str]) -> None:
     result = run_tool(
-        ["mypy", "--output=json", "--no-incremental", "--cache-dir=/dev/null", "--", *files],
+        [
+            "mypy",
+            "--output=json",
+            "--no-incremental",
+            "--cache-dir=/dev/null",
+            "--explicit-package-bases",
+            "--",
+            *files,
+        ],
         stdout=subprocess.PIPE,
     )
-    if result.returncode not in (0, 1):
+    if result.returncode not in (0, 1, 2):
         raise CheckError(f"mypy failed with status {result.returncode}")
     try:
-        errors = 0
         missing_imports = False
-        for line in result.stdout.splitlines():
+        syntax_errors = 0
+        other_errors = 0
+        for line in result.stdout.strip().splitlines():
             item = json.loads(line)
             code = item["code"]
-            print(f"{item['file']}:{item['line']}:{item['column']}: "
-                  f"{item['severity']}: {item['message']} [{code}]")
+            print(
+                f"{item['file']}:{item['line']}:{item['column']}: "
+                f"{item['severity']}: {item['message']} [{code}]"
+            )
             if item.get("hint"):
                 print(item["hint"])
-            errors += item["severity"] == "error"
+            if item["severity"] == "error":
+                if code == "syntax":
+                    syntax_errors += 1
+                else:
+                    other_errors += 1
             missing_imports |= code in ("import-not-found", "import-untyped")
     except (ValueError, TypeError, KeyError) as error:
         raise CheckError("invalid mypy diagnostics") from error
     if missing_imports:
-        raise CheckError("mypy is missing imports or type stubs; install the analysis dependencies")
-    if result.returncode == 1 and not errors:
+        raise CheckError(
+            "mypy is missing imports or type stubs; install the analysis dependencies"
+        )
+    if result.returncode == 2 and (not syntax_errors or other_errors):
+        raise CheckError("mypy could not complete checking")
+    if result.returncode == 1 and not (syntax_errors or other_errors):
         raise CheckError("mypy could not complete checking")
 
 
@@ -181,7 +220,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "target",
-        choices=("lint", "lint-fix", "format-check", "format", "typecheck"),
+        choices=("check", "lint", "lint-fix", "format-check", "format", "typecheck"),
     )
     args = parser.parse_args()
     try:
@@ -191,25 +230,36 @@ def main() -> int:
             for paths in selected.values():
                 for path in paths:
                     if path.stat().st_nlink > 1:
-                        raise CheckError(f"cannot rewrite hard-linked source: {path.relative_to(ROOT)}")
+                        raise CheckError(
+                            f"cannot rewrite hard-linked source: {path.relative_to(ROOT)}"
+                        )
     except (CheckError, ValueError, OSError, subprocess.CalledProcessError) as error:
         print(f"source selection failed: {error}", file=sys.stderr)
         return 2
-    try:
-        if selected["python"]:
-            run_python_check(args.target, selected["python"])
-        if selected["qml"]:
-            run_qml_check(args.target, selected["qml"])
-        if selected["shell"] and args.target != "typecheck":
-            run_shell_check(args.target, selected["shell"])
-        if selected["fish"] and args.target != "typecheck":
-            run_fish_check(args.target, selected["fish"])
-        if selected["go"]:
-            run_go_check(args.target, selected["go"])
-    except (CheckError, OSError) as error:
-        print(f"check failed: {error}", file=sys.stderr)
-        return 1
-    return 0
+    aggregate = args.target == "check"
+    targets = ("lint", "format-check", "typecheck") if aggregate else (args.target,)
+    adapters = {
+        "python": run_python_check,
+        "qml": run_qml_check,
+        "shell": run_shell_check,
+        "fish": run_fish_check,
+        "go": run_go_check,
+    }
+    failed = False
+    for target in targets:
+        for kind, adapter in adapters.items():
+            if not selected[kind]:
+                continue
+            if target == "typecheck" and (
+                kind in ("shell", "fish") or (aggregate and kind == "qml")
+            ):
+                continue
+            try:
+                adapter(target, selected[kind])
+            except (CheckError, OSError) as error:
+                print(f"{target} ({kind}) failed: {error}", file=sys.stderr)
+                failed = True
+    return int(failed)
 
 
 if __name__ == "__main__":

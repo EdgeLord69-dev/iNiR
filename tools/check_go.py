@@ -16,7 +16,8 @@ _SOURCE_DIAGNOSTIC = re.compile(r"^(?:vet: )?.+\.go:\d+(?::\d+)?:")
 
 def _source_failure(output: str) -> bool:
     lines = [
-        line for line in output.splitlines()
+        line
+        for line in output.splitlines()
         if line and not line.startswith(("#", " ", "\t"))
     ]
     return bool(lines) and all(
@@ -38,7 +39,9 @@ def _package(directory: Path) -> dict | None:
     try:
         package = json.loads(result.stdout)
     except json.JSONDecodeError as error:
-        raise CheckError(f"go list returned invalid package data in {relative}") from error
+        raise CheckError(
+            f"go list returned invalid package data in {relative}"
+        ) from error
     package_error = package.get("Error") or {}
     message = package_error.get("Err", "")
     dependency_errors = package.get("DepsErrors", [])
@@ -46,11 +49,15 @@ def _package(directory: Path) -> dict | None:
         details = "\n".join(error["Err"] for error in dependency_errors)
         raise CheckError(f"Go dependencies unavailable in {relative}:\n{details}")
     if package_error:
-        if package.get("IgnoredGoFiles") and message.startswith("build constraints exclude all Go files"):
+        if package.get("IgnoredGoFiles") and message.startswith(
+            "build constraints exclude all Go files"
+        ):
             print(f"{relative}: no Go files match the active build constraints")
             return None
         position = package_error.get("Pos", "")
-        if _SOURCE_DIAGNOSTIC.match(f"{position}:") or message.startswith("found packages "):
+        if _SOURCE_DIAGNOSTIC.match(f"{position}:") or message.startswith(
+            "found packages "
+        ):
             print(f"{relative}: {position + ': ' if position else ''}{message}")
             return None
         raise CheckError(f"go list could not load {relative}: {message}")
@@ -66,7 +73,9 @@ def _go_vet(directory: Path) -> None:
     stderr = result.stderr.decode(errors="replace")
     sys.stderr.write(stderr)
     if result.returncode and not (result.returncode == 1 and _source_failure(stderr)):
-        raise CheckError(f"go vet failed in {directory.relative_to(ROOT)} (status {result.returncode})")
+        raise CheckError(
+            f"go vet failed in {directory.relative_to(ROOT)} (status {result.returncode})"
+        )
 
 
 def _go_build(directory: Path) -> None:
@@ -75,8 +84,14 @@ def _go_build(directory: Path) -> None:
     with tempfile.TemporaryDirectory(prefix="inir-go-check-") as temporary:
         result = run_tool(
             [
-                "go", "build", "-json", "-mod=readonly", "-buildvcs=false",
-                "-o", str(Path(temporary) / "check"), ".",
+                "go",
+                "build",
+                "-json",
+                "-mod=readonly",
+                "-buildvcs=false",
+                "-o",
+                str(Path(temporary) / "check"),
+                ".",
             ],
             cwd=directory,
             stdout=subprocess.PIPE,
@@ -93,12 +108,19 @@ def _go_build(directory: Path) -> None:
             elif item["Action"] == "build-fail":
                 failures.add(item["ImportPath"])
         except (ValueError, KeyError, TypeError) as error:
-            raise CheckError(f"go build returned invalid output in {directory.relative_to(ROOT)}") from error
+            raise CheckError(
+                f"go build returned invalid output in {directory.relative_to(ROOT)}"
+            ) from error
     if result.returncode and not (
-        result.returncode == 1 and failures
-        and all(_source_failure("".join(output.get(package, []))) for package in failures)
+        result.returncode == 1
+        and failures
+        and all(
+            _source_failure("".join(output.get(package, []))) for package in failures
+        )
     ):
-        raise CheckError(f"go build failed in {directory.relative_to(ROOT)} (status {result.returncode})")
+        raise CheckError(
+            f"go build failed in {directory.relative_to(ROOT)} (status {result.returncode})"
+        )
 
 
 def run_go_check(target: str, paths: list[Path]) -> None:
@@ -115,7 +137,9 @@ def run_go_check(target: str, paths: list[Path]) -> None:
         if package is None:
             continue
         production = package.get("GoFiles") or package.get("CgoFiles")
-        if target == "lint" and (production or package.get("TestGoFiles") or package.get("XTestGoFiles")):
+        if target == "lint" and (
+            production or package.get("TestGoFiles") or package.get("XTestGoFiles")
+        ):
             _go_vet(directory)
         elif target == "typecheck" and production:
             _go_build(directory)

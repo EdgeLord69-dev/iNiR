@@ -40,6 +40,71 @@ inir logs -f                    # Follow live logs while you test
 Do not run `qs kill -c inir` or a bare `qs -c inir` — the shell runs as a
 supervised systemd service, and raw quickshell commands leave it unmanaged.
 
+### Static source checks
+
+Use `make check` for an overview before testing a change in a real iNiR session.
+It continues with independent checks when a tool fails and reports QML lint
+and type diagnostics together in one pass. Findings alone exit zero. Invalid
+paths, missing prerequisites, tool failures, and unsuccessful rewrites exit
+nonzero. These checks are local tools, not a merge gate.
+
+| Command | Action |
+|---|---|
+| `make check` | Run lint, format-check and typecheck |
+| `make lint` | Lint without rewriting files |
+| `make lint-fix` | Apply supported native lint fixes |
+| `make format-check` | Check formatting without rewriting files |
+| `make format` | Format selected source files |
+| `make typecheck` | Run type and package checks |
+
+Without `PATHS`, all six commands select the repository's tracked first-party
+source. An explicit directory adds its non-ignored untracked files recursively;
+an explicit file can be new. Overlaps are deduplicated. Directory scans skip
+symlinks and submodules; explicitly selecting them or unsupported files is an
+error. **Omitting `PATHS` from `make format` or `make lint-fix` can rewrite files
+across the repository.** Scope rewrites to the files you mean to change.
+
+```sh
+make check
+make lint PATHS='setup scripts/inir'
+make format-check PATHS='modules/common services/Translation.qml'
+make format PATHS='"path with spaces/example.py"'
+```
+
+Use outer shell quotes around the `PATHS` assignment and inner quotes around
+individual paths that contain spaces. Go lint and type checks expand to
+containing packages under the active build constraints; `gofmt` stays
+file-scoped. Go compilation does not execute tests or retain binaries.
+Python fixes are limited to Ruff's safe fixes. Fish and Go have no `lint-fix`.
+Undeclared `.sh` files sourced by Bash default to Bash; explicit POSIX shebangs
+and `.dash`/`.ash` extensions retain their respective shell analysis.
+
+Install the tools for the languages you select separately from the iNiR
+installer, and make them available on `PATH`. Also install the Python
+dependencies and type stubs that mypy needs for the files you check.
+
+| Source | Tools |
+|---|---|
+| Python | `ruff`, `mypy` |
+| QML | Qt 6 `qmllint`, `qmlformat`, and installed Qt/Quickshell QML modules with type metadata |
+| Bash / POSIX shell | `shellcheck`, `shfmt` |
+| Fish | `fish`, `fish_indent` |
+| Go | `go`, `gofmt` (Go 1.26 or compatible newer version per `go.mod`) |
+
+On systems that keep Qt executables outside `PATH`, add the Qt 6 tool
+directory (for example, `export PATH="/usr/lib/qt6/bin:$PATH"`). If the
+Quickshell or Qt modules are outside Qt's default import directory, set
+`QML_IMPORT_PATH` to the directories that contain those modules, separated by
+colons. The runner adds a temporary `qs` import pointing at the checkout;
+do not create that link in the repository. Missing imports or metadata make
+analysis fail. Resolved QML type diagnostics cannot verify dynamic `var` values
+or runtime bindings.
+
+The runner requires GNU Make, Git and Python 3.10 or newer. Native tool
+versions exercised: Ruff 0.17.6, mypy 2.4.0, Qt 6.12.1, ShellCheck 0.11,
+shfmt 3.14.1, Fish 4.9.3, and Go 1.27.4. Static checks do not replace real-session
+verification of changed runtime behavior.
+
 ## Commit Conventions
 
 - Subject `type(scope): what changed`, lowercase, no period, under 60 characters: `fix(bar): no crash when the weather widget is off`
